@@ -1,3 +1,7 @@
+@use "../mixins/checkbox";
+@use "../mixins/labels";
+@use "../variables" as v;
+
 // Group of options, like checkboxes or radio buttons
 // with optional top and bottom containers
 
@@ -7,7 +11,7 @@
 	.cui-button-checkbox {
 		overflow-wrap: break-word;
 
-		@include checkbox-sm();
+		@include checkbox.checkbox-sm();
 
 		[data-max-chars] {
 			width: auto;
@@ -16,20 +20,20 @@
 }
 
 .cui-options-top .cui-label span:not(:empty) {
-	padding-bottom: $spacer-xs;
+	padding-bottom: v.$spacer-xs;
 	display: inline-block;
 }
 
 .cui-options-title {
-	font-weight: $font-weight-bold;
+	font-weight: v.$font-weight-bold;
 }
 
 .cui-options-hint {
-	@include label-form-hint();
+	@include labels.label-form-hint();
 
 	max-width: 250px;
 	padding: 0 !important;
-	margin: $form-hint-margin-bottom ($checkbox-size + $checkbox-margin) $form-hint-margin-bottom 0;
+	margin: v.$form-hint-margin-bottom (v.$checkbox-size + v.$checkbox-margin) v.$form-hint-margin-bottom 0;
 }
 
 // align options with label if there is only one option
@@ -45,7 +49,7 @@
 	.cui-options--columns-#{$i} {
 		> .cui-options-center {
 			columns: #{$i};
-			column-gap: $spacer;
+			column-gap: v.$spacer;
 			
 			.cui-checkbox {
 				width: 100% !important; // have to overwrite the cui-layer data-field auto width rule
@@ -58,7 +62,7 @@
 .cui-options--horizontal {
 	.cui-options-center {
 		.cui-checkbox {
-			margin-right: $spacer-sm;
+			margin-right: v.$spacer-sm;
 		}
 	}
 }
@@ -67,7 +71,7 @@
 	.cui-button-checkbox {
 		height: auto;
 		min-height: 0;
-		line-height: $line-height-sm;
+		line-height: v.$line-height-sm;
 	}
 
 	.cui-options-inactive {
@@ -99,7 +103,7 @@
 		cursor: grab;
 
 		.cui-drag-handle-row {
-			margin-top: $spacer-sm; // no way to calculate this from
+			margin-top: v.$spacer-sm; // no way to calculate this from
 		}
 	}
 }
@@ -108,7 +112,7 @@
 // when dragged the checkbox doesn't have the options-center parent
 .cui-options-sortable-option {
 	.cui-button {
-		padding: $spacer-xs 0;
+		padding: v.$spacer-xs 0;
 	}
 
 	.cui-data-field {

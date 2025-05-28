@@ -51,6 +51,7 @@ $colors: (
 $default-color: map.get($colors, "blue");
 
 @mixin variableList($color) {
+	// todo: convert colors into rgba so the new file will be easier to diff
 	--highlight: #{map.get($color, "highlight")};
 	--highlight-light: #{map.get($color, "highlight-light")};
 	--highlight-light-transparent: #{color.adjust(map.get($color, "highlight-light"), $alpha: -1)}; // needed for gradients from transparent .. highlight-light

@@ -1,3 +1,6 @@
+@use "../mixins/list-view";
+@use "../variables" as v;
+
 // Data Table
 .cui-data-table {
 	flex-shrink: 1;
@@ -28,10 +31,10 @@
 	.cui-list-view {
 		--list-view-border-width: 1px;
 
-		@include list-view-hide-double-bottom-border();
+		@include list-view.list-view-hide-double-bottom-border();
 
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			padding: $toolbar-padding !important;
+			padding: v.$toolbar-padding !important;
 		}
 	}
 }

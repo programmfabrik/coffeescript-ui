@@ -1,3 +1,6 @@
+@use "../mixins/buttons";
+@use "../variables" as v;
+
 .cui-button,
 .cui-button-href {
 	cursor: pointer;
@@ -25,8 +28,8 @@
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
-		font-family: $btn-font-family;
-		font-weight: $btn-font-weight;
+		font-family: v.$btn-font-family;
+		font-weight: v.$btn-font-weight;
 		vertical-align: middle;
 		user-select: none;
 
@@ -42,26 +45,26 @@
 		}
 	}
 
-	@include button-md();
-	@include button-color(transparent, $btn-color, $btn-bordered-hover-background, $btn-bordered-hover-color, $btn-bordered-active-background, $btn-bordered-active-color);
+	@include buttons.button-md();
+	@include buttons.button-color(transparent, v.$btn-color, v.$btn-bordered-hover-background, v.$btn-bordered-hover-color, v.$btn-bordered-active-background, v.$btn-bordered-active-color);
 
 	// Modifier
 
 	&.cui-button--primary {
 		div:not(.cui-buttonbar-group) > & {
-			@include button-primary();
+			@include buttons.button-primary();
 		}
 	}
 
 	&.cui-button--secondary {
 		div:not(.cui-buttonbar-group) > & {
-			@include button-secondary();
+			@include buttons.button-secondary();
 		}
 	}
 
 	&.cui-button--danger {
 		div:not(.cui-buttonbar-group) > & {
-			@include button-danger();
+			@include buttons.button-danger();
 		}
 	}
 
@@ -80,7 +83,7 @@
 
 .cui-button-href {
 	&:not(.cui-button--primary, .cui-button--secondary, .cui-button-download) {
-		@include button-link();
+		@include buttons.button-link();
 	}
 }
 
@@ -90,7 +93,7 @@
 	&:not([role='menu-item'], [button-group='date'], [button-group='time']) {
 		.cui-button-visual {
 			.cui-button-center {
-				padding-right: 0.5 * $btn-padding-x;
+				padding-right: 0.5 * v.$btn-padding-x;
 			}
 		}
 	}
@@ -145,33 +148,33 @@ a[role='button'].cui-button-appearance-link {
 	pointer-events: none;
 
 	.cui-button-visual {
-		opacity: $disabled-opacity;
+		opacity: v.$disabled-opacity;
 	}
 }
 
 .cui-button-tool-play:not(.cui-button-tool-webdvdplayer) {
-	@include button-play();
+	@include buttons.button-play();
 }
 
 .cui-button-tool-webdvdplayer {
-	@include button-color-inverted();
+	@include buttons.button-color-inverted();
 }
 
 // Pin Button
 // small pin icon button, with custom "strike-through"
 // used e.g. to pin the result-card in detail; to pin facet blocks in the facet-manager
 .cui-button-pin {
-	width: $btn-height-sm; // make a large enough click target and leave enough room for the strike-through (::after)
+	width: v.$btn-height-sm; // make a large enough click target and leave enough room for the strike-through (::after)
 	height: 18px;
 
-	@include button-plain();
-	@include button-xs();
+	@include buttons.button-plain();
+	@include buttons.button-xs();
 
-	--btn-color: #{$gray-500};
-	--btn-color-hover: #{$body-color};
-	--btn-color-active: #{$body-color};
+	--btn-color: #{v.$gray-500};
+	--btn-color-hover: #{v.$body-color};
+	--btn-color-active: #{v.$body-color};
 	--btn-background-active: transparent;
-	--btn-through-color: #{$gray-500};
+	--btn-through-color: #{v.$gray-500};
 
 	.fa {
 		font-size: 12px;
@@ -189,7 +192,7 @@ a[role='button'].cui-button-appearance-link {
 			left: 53%;
 			width: 65%;
 			height: 2px;
-			border-bottom: 1px solid var(--btn-through-color-shadow, #{$white});
+			border-bottom: 1px solid var(--btn-through-color-shadow, #{v.$white});
 			transform: translateX(-50%) rotateZ(-42deg);
 			transform-origin: center;
 			background-color: var(--btn-through-color);
@@ -218,13 +221,13 @@ a[role='button'].cui-button-appearance-link {
 }
 
 .cui-button-goto-top {
-	@include button-plain();
+	@include buttons.button-plain();
 
 	--disabled-opacity: 0;
-	--btn-background: #{$body-color};
-	--btn-background-hover: #{$gray-800};
-	--btn-color: #{$body-bg};
-	--btn-color-hover: #{$body-bg};
+	--btn-background: #{v.$body-color};
+	--btn-background-hover: #{v.$gray-800};
+	--btn-color: #{v.$body-bg};
+	--btn-color-hover: #{v.$body-bg};
 
 	.cui-button-visual {
 		border-radius: 45px;

@@ -1,4 +1,7 @@
 @use "sass:map";
+@use "../mixins/layer";
+@use "../mixins/pane";
+@use "../variables" as v;
 // Layer
 
 /*
@@ -20,7 +23,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: $layer-z-index;
+	z-index: v.$layer-z-index;
 	pointer-events: none;
 
 	&[cui-layer-fixed] {
@@ -99,7 +102,7 @@
 
 	> .cui-layer {
 		// blur effect, make layer transparent
-		background-color: rgba($layer-background, 0.4);
+		background-color: rgba(v.$layer-background, 0.4);
 
 		.cui-item-list-body {
 			.cui-button {
@@ -119,22 +122,22 @@
 .cui-layer {
 	display: flex;
 	flex-direction: column;
-	min-width: map.get($layer-sizes, 'min');
+	min-width: map.get(v.$layer-sizes, 'min');
 	min-height: 30px;
-	margin: $spacer-sm;
-	background-color: $layer-background;
+	margin: v.$spacer-sm;
+	background-color: v.$layer-background;
 	outline: none;
-	border-radius: $layer-border-radius;
-	border: $layer-border-size solid $layer-border-color;
+	border-radius: v.$layer-border-radius;
+	border: v.$layer-border-size solid v.$layer-border-color;
 	overflow: auto; /* hidden; */
 	box-shadow:
-		inset 0 0 0 1px rgba($layer-border-color, 0.03),
-		0 2px 4px 0 rgba($layer-shadow-color, 0.2),
-		0 2px 7px 0 rgba($layer-shadow-color, 0.5),
-		0 6px 20px 10px rgba($layer-shadow-color, 0.09);	
+		inset 0 0 0 1px rgba(v.$layer-border-color, 0.03),
+		0 2px 4px 0 rgba(v.$layer-shadow-color, 0.2),
+		0 2px 7px 0 rgba(v.$layer-shadow-color, 0.5),
+		0 6px 20px 10px rgba(v.$layer-shadow-color, 0.09);	
 	
 		// set size attribute within the component (layer, popover etc.)
-	@each $name, $width in $layer-sizes {
+	@each $name, $width in v.$layer-sizes {
 		&--size-#{$name} {
 			width: $width;
 		}
@@ -142,10 +145,10 @@
 
 	&.cui-popover {
 		box-shadow:
-			inset 0 0 0 1px rgba($layer-border-color, 0.03),
-			0 2px 4px 0 rgba($layer-shadow-color, 0.2),
-			0 2px 7px 0 rgba($layer-shadow-color, 0.5),
-			0 6px 20px 10px rgba($layer-shadow-color, 0.55);
+			inset 0 0 0 1px rgba(v.$layer-border-color, 0.03),
+			0 2px 4px 0 rgba(v.$layer-shadow-color, 0.2),
+			0 2px 7px 0 rgba(v.$layer-shadow-color, 0.5),
+			0 6px 20px 10px rgba(v.$layer-shadow-color, 0.55);
 	}
 
 	.cui-pane {
@@ -157,7 +160,7 @@
 	}
 	
 	> .cui-pane {
-		@include layer-pane-layout();
+		@include layer.layer-pane-layout();
 	}
 
 	.cui-form-table {
@@ -200,27 +203,27 @@
 .cui-layer-pointer {
 	position: absolute;
 	z-index: 1;
-	width: $layer-pointer-container-size;
-	height: $layer-pointer-size;
+	width: v.$layer-pointer-container-size;
+	height: v.$layer-pointer-size;
 	margin: 6px;
 	overflow: hidden;
 
 	&::after { // arrow (north)
 		content: '';
 		position: absolute;
-		width: $layer-pointer-size;
-		height: $layer-pointer-size;
-		background: $layer-pointer-background;
+		width: v.$layer-pointer-size;
+		height: v.$layer-pointer-size;
+		background: v.$layer-pointer-background;
 		transform: translate(-50%, -50%) rotate(45deg);
 		box-shadow:
-			inset 0 0 0 1px rgba($layer-shadow-color, 0.28),
-			0 0 1px 0 rgba($layer-shadow-color, 0.43);
+			inset 0 0 0 1px rgba(v.$layer-shadow-color, 0.28),
+			0 0 1px 0 rgba(v.$layer-shadow-color, 0.43);
 	}
 
 	&--n,
 	&--s {
 		margin: 0 6px;
-		height: $layer-pointer-size - 2px;
+		height: v.$layer-pointer-size - 2px;
 
 		&::after {
 			left: 50%;
@@ -237,8 +240,8 @@
 
 	&--e,
 	&--w {
-		width: $layer-pointer-size - 2px;
-		height: $layer-pointer-container-size;
+		width: v.$layer-pointer-size - 2px;
+		height: v.$layer-pointer-container-size;
 		margin: 6px 0;
 
 		&::after {
@@ -262,7 +265,7 @@
 	.cui-pane--has-header &,
 	.cui-date-time-popover + & {
 		&::after {
-			background: $layer-header-background;
+			background: v.$layer-header-background;
 		}
 	}
 }
@@ -273,7 +276,7 @@
 	// only end above the footer
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
-		margin-bottom: $toolbar-height;
+		margin-bottom: v.$toolbar-height;
 	}
 }
 
@@ -282,7 +285,7 @@
 	// only start below the header
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
-		margin-top: $toolbar-height;
+		margin-top: v.$toolbar-height;
 	}
 }
 
@@ -290,13 +293,13 @@
 // * Autocompletion select menu
 
 .cui-autocompletion-popup {
-	background-color: $body-bg;
+	background-color: v.$body-bg;
 
 	> .cui-pane {
 		// reset
 		> .cui-vertical-layout-center {
-			@include pane-padding-reset();
-			@include pane-margin-reset();
+			@include pane.pane-padding-reset();
+			@include pane.pane-margin-reset();
 		}
 	}
 }
@@ -311,7 +314,7 @@
 .cui-hint-popover {
 	// todo: optimize, should not use extra padding class, try to style with context
 	&.cui-hint-popover--padded {
-		padding: $layer-padding-y $layer-padding-x;
+		padding: v.$layer-padding-y v.$layer-padding-x;
 	}
 	
 	.cui-table {
@@ -320,8 +323,8 @@
 
 	+ .cui-layer-pointer {
 		&::after {
-			width: $layer-pointer-size;
-			height: $layer-pointer-size;
+			width: v.$layer-pointer-size;
+			height: v.$layer-pointer-size;
 		}
 	}
 }

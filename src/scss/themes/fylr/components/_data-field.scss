@@ -1,3 +1,8 @@
+@use "../mixins/buttons";
+@use "../mixins/forms";
+@use "../mixins/list-view";
+@use "../variables" as v;
+
 // Data Fields
 
 .cui-data-field {
@@ -18,7 +23,7 @@
 	}
 
 	.cui-list-view-grid-quadrant-3 {
-		min-height: var(--list-view-empty-default-min-height, #{3 * $table-data-height}); // for when using empty lists that can get filled
+		min-height: var(--list-view-empty-default-min-height, #{3 * v.$table-data-height}); // for when using empty lists that can get filled
 	}
 
 	// .cui-lv-row-move-handle-column {
@@ -36,7 +41,7 @@
 		}
 
 		+ .cui-form-hint {
-			opacity: $disabled-opacity;
+			opacity: v.$disabled-opacity;
 		}
 
 		.cui-disabled {
@@ -51,7 +56,7 @@
 	.cui-object-dumper.cui-list-view {
 		--list-view-border-width: 1px;
 		
-		@include list-view-hide-double-bottom-border();
+		@include list-view.list-view-hide-double-bottom-border();
 
 		.cui-list-view-grid-quadrant-3 {
 			min-height: auto;
@@ -63,9 +68,9 @@
 
 		// if focused outline the whole data-field including the right button
 		&.cui-has-focus {
-			border-radius: $input-border-radius;
+			border-radius: v.$input-border-radius;
 
-			@include input-focus();
+			@include forms.input-focus();
 		}
 	}
 }
@@ -101,7 +106,7 @@
 	position: relative;
 
 	.cui-button-button {
-		@include button-combobox('left');
+		@include buttons.button-combobox('left');
 	}
 }
 
@@ -109,7 +114,7 @@
 	position: relative;
 
 	.cui-button-button {
-		@include button-combobox('right');
+		@include buttons.button-combobox('right');
 	}
 }
 

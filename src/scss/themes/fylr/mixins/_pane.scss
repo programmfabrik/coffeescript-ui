@@ -1,5 +1,9 @@
+@use "../variables" as v;
+@use "buttons";
+@use "typography";
+
 @mixin pane-padding() {
-	padding: $pane-padding;
+	padding: v.$pane-padding;
 }
 
 @mixin pane-padding-reset() {
@@ -16,7 +20,7 @@
 
 @mixin pane-header() {
 	--toolbar-gap: 0; // reset default toolbar gap
-	--pane-header-background: #{$body-bg};
+	--pane-header-background: #{v.$body-bg};
 
 	flex-wrap: nowrap;
 	padding-left: 0;
@@ -24,11 +28,11 @@
 	background-color: var(--pane-header-background);
 	
 	.cui-horizontal-layout-left > .cui-label {
-		@include h3(0);
+		@include typography.h3(0);
 	}
 	
 	// Default: all buttons within a direct cui-pane-header should be plain buttons
 	.cui-button {
-		@include button-plain();
+		@include buttons.button-plain();
 	}
 }

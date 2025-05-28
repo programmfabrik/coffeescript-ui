@@ -1,3 +1,6 @@
+@use "../mixins/pane";
+@use "../variables" as v;
+
 // * Tooltip
 
 /*
@@ -13,20 +16,20 @@
 	&--n,
 	&--s {
 		// the pointer is a rotated 8x8 square, the width after the rotation is about 12px
-		width: 1.5 * $tooltip-pointer-size;
-		height: $tooltip-pointer-size;
+		width: 1.5 * v.$tooltip-pointer-size;
+		height: v.$tooltip-pointer-size;
 	}
 
 	&--e,
 	&--w {
-		width: $tooltip-pointer-size;
-		height: 1.5 * $tooltip-pointer-size;
+		width: v.$tooltip-pointer-size;
+		height: 1.5 * v.$tooltip-pointer-size;
 	}
 
 	&::after {
-		background-color: $tooltip-background;
-		width: $tooltip-pointer-size;
-		height: $tooltip-pointer-size;
+		background-color: v.$tooltip-background;
+		width: v.$tooltip-pointer-size;
+		height: v.$tooltip-pointer-size;
 		box-shadow: none;
 	}
 }
@@ -37,27 +40,27 @@
 	min-height: 0;
 	cursor: default;
 	-webkit-overflow-scrolling: touch;
-	background-color: $tooltip-background;
-	color: $tooltip-color;
-	border-radius: $border-radius-sm;
+	background-color: v.$tooltip-background;
+	color: v.$tooltip-color;
+	border-radius: v.$border-radius-sm;
 	box-shadow:
 		0 0 0 1px hsl(0deg 0% 0% / 10%),
 		0 7px 14px hsl(0deg 0% 0% / 10%);
 
 	.cui-label {
-		font-size: $tooltip-font-size;
-		line-height: $line-height-sm;
-		padding: $spacer-xs $spacer-sm 1.25 * $spacer-xs;
+		font-size: v.$tooltip-font-size;
+		line-height: v.$line-height-sm;
+		padding: v.$spacer-xs v.$spacer-sm 1.25 * v.$spacer-xs;
 	}
 
 	> .cui-pane > .cui-vertical-layout-center {
-		@include pane-padding-reset();
+		@include pane.pane-padding-reset();
 		
 		margin: 0;
 	}
 
 	a {
-		--link-color: #{$tooltip-color};
-		--link-hover-color: #{$tooltip-color};
+		--link-color: #{v.$tooltip-color};
+		--link-hover-color: #{v.$tooltip-color};
 	}
 }

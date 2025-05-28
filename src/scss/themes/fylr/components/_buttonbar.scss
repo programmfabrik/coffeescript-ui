@@ -1,8 +1,11 @@
+@use "../mixins/buttonbar";
+@use "../variables" as v;
+
 .cui-buttonbar {
 	display: flex;
 	align-items: center;
 
-	@include buttonbar-horizontal(); // default stack horizontally
+	@include buttonbar.buttonbar-horizontal(); // default stack horizontally
 }
 
 
@@ -17,13 +20,13 @@
 		opacity: 1;
 
 		.cui-button-visual > * {
-			opacity: $disabled-opacity;
+			opacity: v.$disabled-opacity;
 		}
 	}
 }
 
 // * Buttonbar Group with input field, used for navigation
 .cui-buttonbar-group-navi {
-	@include buttonbar-group-navigation();
+	@include buttonbar.buttonbar-group-navigation();
 }
 

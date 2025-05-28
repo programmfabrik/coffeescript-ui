@@ -1,4 +1,6 @@
-@mixin icon($code, $font-size: $icon-font-size) {
+@use "../variables" as v;
+
+@mixin icon($code, $font-size: v.$icon-font-size) {
 	content: $code;
 	display: inline-block;
 	// stylelint-disable-next-line

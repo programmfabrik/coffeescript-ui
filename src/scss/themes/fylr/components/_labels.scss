@@ -1,6 +1,12 @@
+@use "../mixins/buttons";
+@use "../mixins/clickable";
+@use "../mixins/labels";
+@use "../mixins/text-truncate";
+@use "../variables" as v;
+
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
-	@include clickable();
+	@include clickable.clickable();
 }
 
 .cui-label {
@@ -30,14 +36,14 @@ label[data-label-clickable],
 		flex: 0 0 auto;
 		max-width: 100%;
 
-		@include text-truncate();
+		@include text-truncate.text-truncate();
 
 		&:empty {
 			display: none;
 		}
 
 		p {
-			margin-bottom: $spacer-sm;
+			margin-bottom: v.$spacer-sm;
 
 			&:last-child {
 				margin-bottom: 0;
@@ -62,26 +68,26 @@ label[data-label-clickable],
 
 	// todo: make obsolete
 	&.cui-label-appearance-secondary {
-		@include label-secondary();
+		@include labels.label-secondary();
 	}
 
 	// todo: make obsolete
 	&.cui-label-appearance-muted {
-		@include label-muted();
+		@include labels.label-muted();
 	}
 
 	&.cui-label-description {
-		@include label-secondary();
+		@include labels.label-secondary();
 
-		margin-bottom: $spacer;
+		margin-bottom: v.$spacer;
 	}
 
 	&.cui-label-danger {
-		@include label-danger();
+		@include labels.label-danger();
 	}
 
 	&.cui-label-warning {
-		@include label-warning();
+		@include labels.label-warning();
 	}
 
 	// todo: make obsolete
@@ -90,24 +96,24 @@ label[data-label-clickable],
 	// }
 
 	&[data-type='string'] {
-		color: $teal;
+		color: v.$teal;
 	}
 
 	&[data-type='NaN'],
 	&[data-type='number'] {
-		color: $brown;
+		color: v.$brown;
 	}
 
 	&[data-type='boolean'],
 	&[data-type='undefined'],
 	&[data-type='null'] {
-		color: $cyan;
+		color: v.$cyan;
 	}
 
 	// Rotate
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
-		margin: $spacer-sm 0 $spacer-xs;
+		margin: v.$spacer-sm 0 v.$spacer-xs;
 		flex-shrink: 0;
 		max-width: none;
 		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
@@ -116,7 +122,7 @@ label[data-label-clickable],
 		&::before {
 			content: '';
 			float: left;
-			margin-top: calc(100% - #{$spacer});
+			margin-top: calc(100% - #{v.$spacer});
 		}
 
 		> .cui-label-transform {
@@ -153,7 +159,7 @@ label[data-label-clickable],
 
 				.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
 					padding-left: 0;
-					padding-top: $spacer-sm;
+					padding-top: v.$spacer-sm;
 				}
 			}
 		}
@@ -169,14 +175,14 @@ label[data-label-clickable],
 	margin: 0;
 	cursor: default;
 
-	@include label-empty();
+	@include labels.label-empty();
 
 	.cui-label-content {
 		display: inline-block;
 	}
 
 	&.cui-label-centered {
-		@include label-xxl();
+		@include labels.label-xxl();
 
 		.cui-label-content {
 			max-width: 40rem;
@@ -190,7 +196,7 @@ label[data-label-clickable],
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: $spacer-xs;
+	padding: v.$spacer-xs;
 	height: 100%; // allow to grow vertically
 
 	> .cui-label-content {
@@ -229,7 +235,7 @@ label[data-label-clickable],
 		}
 
 		.cui-label-content {
-			padding: 0 $spacer-sm;
+			padding: 0 v.$spacer-sm;
 			flex: 0 1 auto;
 		}
 	}
@@ -240,10 +246,10 @@ label[data-label-clickable],
 	// align-self: stretch;
 	max-width: 100%; // prevent overflow when its the child of a flex parent
 	display: flex;
-	line-height: $line-height-sm;
+	line-height: v.$line-height-sm;
 
 	&:not(.cui-template-empty) + & {
-		margin-top: $spacer-sm;
+		margin-top: v.$spacer-sm;
 	}
 
 	&:not(.cui-label-markdown) {
@@ -255,7 +261,7 @@ label[data-label-clickable],
 
 // Manage Overflow
 .cui-label-manage-overflow {
-	--lh-base: #{$line-height-base};
+	--lh-base: #{v.$line-height-base};
 	--lh: calc(var(--lh-base) * 1em);
 
 	line-height: var(--lh);
@@ -263,7 +269,7 @@ label[data-label-clickable],
 
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
-			margin-bottom: 2 * $spacer;
+			margin-bottom: 2 * v.$spacer;
 		}
 		
 		&:not(.cui-label--show-overflow) > .cui-label-content {
@@ -289,13 +295,13 @@ label[data-label-clickable],
 	}
 
 	.cui-label-manage-overflow-button {
-		@include button-link-sm();
+		@include buttons.button-link-sm();
 
 		z-index: 1;
 		position: absolute;
 		left: 0;
 		right: auto;
-		bottom: $spacer-sm;
+		bottom: v.$spacer-sm;
 
 		.cui-button-visual {
 			position: relative;
@@ -305,7 +311,7 @@ label[data-label-clickable],
 
 			.cui-button-left {
 				padding-left: 0;
-				margin-right: -$spacer-sm;
+				margin-right: -(v.$spacer-sm);
 				transform: translateY(2px);
 			}
 		}
@@ -323,25 +329,25 @@ label[data-label-clickable],
 	display: block;
 
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: $headings-font-weight;
-		line-height: $headings-line-height;
-		margin: 0 0 $spacer-xs;
+		font-weight: v.$headings-font-weight;
+		line-height: v.$headings-line-height;
+		margin: 0 0 v.$spacer-xs;
 	}
 
 	h1 {
-		font-size: $h4-font-size;
+		font-size: v.$h4-font-size;
 	}
 
 	h2 {
-		font-size: $h5-font-size;
+		font-size: v.$h5-font-size;
 	}
 
 	h3 {
-		font-size: $font-size-lg;
+		font-size: v.$font-size-lg;
 	}
 
 	h4, h5, h6 {
-		font-size: $font-size-base;
+		font-size: v.$font-size-base;
 	}
 
 	a {
@@ -369,7 +375,7 @@ label[data-label-clickable],
 	table,
 	ul,
 	ol {
-		margin-bottom: $paragraph-margin-bottom;
+		margin-bottom: v.$paragraph-margin-bottom;
 	}
 
 	& > p,
@@ -403,16 +409,16 @@ label[data-label-clickable],
 		word-break: keep-all;
 
 		tbody tr:nth-child(odd) {
-			background-color: $gray-100;
+			background-color: v.$gray-100;
 		}
 
 		td, th {
-			padding: $spacer-xs $spacer-sm;
-			border: 1px solid $gray-200;
+			padding: v.$spacer-xs v.$spacer-sm;
+			border: 1px solid v.$gray-200;
 		}
 
 		th {
-			font-weight: $font-weight-bold;
+			font-weight: v.$font-weight-bold;
 			text-align: center;
 		}
 
@@ -422,23 +428,23 @@ label[data-label-clickable],
 	}
 
 	blockquote {
-		padding: $spacer-xs $spacer-sm;
-		border-left: 5px solid gray('300');
+		padding: v.$spacer-xs v.$spacer-sm;
+		border-left: 5px solid v.$gray-300;
 	}
 
 	code {
 		border: none;
-		background: theme-color('light');
+		background: v.$light;
 		white-space: pre-wrap;
-		padding: 0 $spacer-xs;
-		border-radius: $border-radius-sm;
+		padding: 0 v.$spacer-xs;
+		border-radius: v.$border-radius-sm;
 	}
 
 	pre {
-		padding: $spacer;
-		background: theme-color('light');
+		padding: v.$spacer;
+		background: v.$light;
 		white-space: pre-wrap;
-		border-radius: $border-radius;
+		border-radius: v.$border-radius;
 		border: none;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
@@ -450,10 +456,10 @@ label[data-label-clickable],
 	}
 
 	hr {
-		margin-top: $spacer-sm;
-		margin-bottom: $spacer-sm;
+		margin-top: v.$spacer-sm;
+		margin-bottom: v.$spacer-sm;
 		border: 0;
-		border-top: $hr-border-width solid $body-color;
+		border-top: v.$hr-border-width solid v.$body-color;
 	}
 }
 

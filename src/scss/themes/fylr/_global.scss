@@ -1,3 +1,6 @@
+@use "mixins/disabled";
+@use "variables" as v;
+
 // global styles and global utility classes
 
 html {
@@ -10,7 +13,7 @@ body {
 	display: flex;
 	width: 100%;
 	height: 100%;
-	background-color: $body-bg;
+	background-color: v.$body-bg;
 }
 
 // * Visibilty
@@ -32,7 +35,7 @@ body {
 }
 
 .cui-disabled {
-	@include disabled();
+	@include disabled.disabled();
 }
 
 // stylelint-disable-next-line keyframes-name-pattern
@@ -44,29 +47,29 @@ body {
 // * Spacing
 
 .cui-space {
-	margin: $spacer;
+	margin: v.$spacer;
 	display: inline-block;
 
 	&:empty {
-		margin: $spacer-sm;
+		margin: v.$spacer-sm;
 	}
 }
 
 .cui-small-space {
-	margin: $spacer-sm;
+	margin: v.$spacer-sm;
 	display: inline-block;
 
 	&:empty {
-		margin: $spacer-xs;
+		margin: v.$spacer-xs;
 	}
 }
 
 .cui-large-space {
-	margin: $spacer-lg;
+	margin: v.$spacer-lg;
 	display: inline-block;
 
 	&:empty {
-		margin: $spacer;
+		margin: v.$spacer;
 	}
 }
 

@@ -1,19 +1,21 @@
+@use "../variables" as v;
+
 @mixin checkbox-sm() {
-	min-height: $input-height-sm;
-	line-height: $input-height-sm;
+	min-height: v.$input-height-sm;
+	line-height: v.$input-height-sm;
 
 	.cui-button-visual {
-		line-height: $line-height-sm;
+		line-height: v.$line-height-sm;
 	}
 }
 
 @mixin checkbox-convert-to-toggle-switch() {
-	font-weight: $font-weight-bold;
+	font-weight: v.$font-weight-bold;
 	
 	.cui-button-left {
 		position: relative;
-		width: $toggle-switch-width;
-		height: $toggle-switch-height;
+		width: v.$toggle-switch-width;
+		height: v.$toggle-switch-height;
 		top: 3px;
 
 		i, span {
@@ -28,20 +30,20 @@
 				content: '';
 				display: block;
 				position: absolute;
-				width: $toggle-switch-nose-size;
-				height: $toggle-switch-nose-size;
+				width: v.$toggle-switch-nose-size;
+				height: v.$toggle-switch-nose-size;
 				border-radius: 50%;
 			}
 		}
 		
 		// checked
 		i {
-			border: 1px solid $toggle-switch-active-background;
-			background-color: $toggle-switch-active-background;
+			border: 1px solid v.$toggle-switch-active-background;
+			background-color: v.$toggle-switch-active-background;
 			
 			&::before {
-				right: $toggle-switch-nose-offset;
-				background-color: $toggle-switch-active-color;
+				right: v.$toggle-switch-nose-offset;
+				background-color: v.$toggle-switch-active-color;
 			}
 
 			&::after {
@@ -51,20 +53,20 @@
 
 		// not checked
 		span {
-			border: 1px solid $toggle-switch-color;
-			background-color: $toggle-switch-background;
+			border: 1px solid v.$toggle-switch-color;
+			background-color: v.$toggle-switch-background;
 
 			&::before {
-				left: $toggle-switch-nose-offset;
-				background-color: $toggle-switch-color;
+				left: v.$toggle-switch-nose-offset;
+				background-color: v.$toggle-switch-color;
 			}
 		}
 	}
 }
 
 @mixin checkbox-inverted() {
-	--checkbox-border-color: #{$white};
-	--checkbox-background: #{$gray-100};
-	--checkbox-active-background: #{$white}; // = active border
-	--checkbox-active-color: #{$body-color};
+	--checkbox-border-color: #{v.$white};
+	--checkbox-background: #{v.$gray-100};
+	--checkbox-active-background: #{v.$white}; // = active border
+	--checkbox-active-color: #{v.$body-color};
 }

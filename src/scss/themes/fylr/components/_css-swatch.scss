@@ -1,3 +1,4 @@
+@use "../variables" as v;
 
 .css-swatch {
 	width: 24px;
@@ -5,9 +6,10 @@
 	box-shadow: 0 0 0 1px hsl(0deg 0% 0% / 14%) inset;
 	background-color: var(--custom-tag-background);
 
-	@each $color, $values in $colors {
+	@each $color, $value in v.$colors {
 		&.cui-swatch-color-#{$color} {
-			background-color: color($color);
+			// todo: sass test
+			background-color: $value;
 		}
 	}
 }

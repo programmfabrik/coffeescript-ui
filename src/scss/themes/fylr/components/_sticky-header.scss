@@ -1,4 +1,7 @@
 @use "sass:color";
+@use "../mixins/text-truncate";
+@use "../variables" as v;
+
 // * StickyHeader
 
 /*
@@ -18,16 +21,16 @@
 
 .cui-sticky-header {
 	position: relative;
-	padding: $spacer-xs 0;
-	font-size: $sticky-header-font-size;
+	padding: v.$spacer-xs 0;
+	font-size: v.$sticky-header-font-size;
 	font-weight: bold;
-	color: $sticky-header-color;
+	color: v.$sticky-header-color;
 	flex-basis: 100%;
 	flex-shrink: 0;
-	border-bottom: 1px solid var(--sticky-header-border-color, #{$sticky-header-border-color});
+	border-bottom: 1px solid var(--sticky-header-border-color, #{v.$sticky-header-border-color});
 
 	> .cui-sticky-header-center {
-		@include text-truncate();
+		@include text-truncate.text-truncate();
 	}
 
 	.cui-tab > & {
@@ -35,7 +38,7 @@
 	}
 
 	.cui-table + & {
-		margin-top: $spacer-sm;
+		margin-top: v.$spacer-sm;
 	}
 }
 
@@ -66,25 +69,25 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		background: var(--sticky-header-background, #{$sticky-header-background});
+		background: var(--sticky-header-background, #{v.$sticky-header-background});
 	}
 }
 
 // 1. Level
 .cui-sticky-header-level-0 {
-	font-weight: $font-weight-bold;
+	font-weight: v.$font-weight-bold;
 }
 
 // 2. Level
 .cui-sticky-header-level-1,
 .cui-sticky-header-level-2 {
-	color: color.adjust(gray('700'), $lightness: 10%);
+	color: color.adjust(v.$gray-700, $lightness: 10%);
 }
 
 // 3. Level
 .cui-sticky-header-level-2 {
-	font-weight: $font-weight-light;
-	color: gray('700');
+	font-weight: v.$font-weight-light;
+	color: v.$gray-700;
 	letter-spacing: 0.03em;
 }
 

@@ -1,3 +1,6 @@
+@use "../variables" as v;
+@use "buttonbar";
+
 @mixin tabs-vertical($tab-width: 200px) {
 	display: grid;
 	grid-template-columns: $tab-width 1fr;
@@ -30,7 +33,7 @@
 		align-items: flex-start;
 		overflow: auto;
 		margin-bottom: 0;
-		margin-right: $spacer;
+		margin-right: v.$spacer;
 
 		> .cui-horizontal-layout-center {
 			overflow: visible !important;
@@ -59,8 +62,8 @@
 		.cui-buttonbar-group {
 			width: 100%;
 
-			@include buttonbar-vertical();
-			@include buttonbar-vertical-tight();
+			@include buttonbar.buttonbar-vertical();
+			@include buttonbar.buttonbar-vertical-tight();
 
 			> * {
 				width: 100%;
@@ -77,7 +80,7 @@
 
 					&::after {
 						border: 0;
-						border-right: 1px solid $tabs-active-border-color;
+						border-right: 1px solid v.$tabs-active-border-color;
 					}
 				}
 
@@ -105,9 +108,9 @@
 						// }
 
 						&::after {
-							border: 1px solid $tabs-active-border-color;
+							border: 1px solid v.$tabs-active-border-color;
 							border-right: 0;
-							border-radius: $btn-border-radius 0 0 $btn-border-radius;
+							border-radius: v.$btn-border-radius 0 0 v.$btn-border-radius;
 						}
 					}
 				}
@@ -132,9 +135,9 @@
 	.cui-tab-header-button,
 	.cui-tab-header-button-overflow {
 		.cui-button-visual {
-			height: $tabs-header-height-sm;
-			line-height: $tabs-header-height-sm;
-			font-size: $font-size-sm;
+			height: v.$tabs-header-height-sm;
+			line-height: v.$tabs-header-height-sm;
+			font-size: v.$font-size-sm;
 		}
 	}
 }

@@ -1,42 +1,47 @@
+@use "../mixins/clickable";
+@use "../mixins/list-view-use-css-grid-layout";
+@use "../mixins/pane";
+@use "../variables" as v;
+
 // * List View & List View Grid
 
 .cui-list-view {
 	// border
-	--list-view-border-color: #{$table-border-color};
+	--list-view-border-color: #{v.$table-border-color};
 	--list-view-border-width: 0;
 	--list-view-background: transparent;
 	--list-view-column-border-width: 1px; // ! header columns and inner column MUST be the same width to allow correct column width calculation
 	--list-view-row-border-width: 1px;
 	// header rows & columns
 	--list-view-header-background: transparent; // #{$table-border-color};
-	--list-view-header-color: #{$body-color};
-	--list-view-header-row-border-color: #{$table-border-color};
+	--list-view-header-color: #{v.$body-color};
+	--list-view-header-row-border-color: #{v.$table-border-color};
 	--list-view-header-row-border-width: var(--list-view-row-border-width);
-	--list-view-header-column-border-color: #{$table-border-color};
+	--list-view-header-column-border-color: #{v.$table-border-color};
 	--list-view-header-column-border-width: var(--list-view-column-border-width); // !
 	// inner rows & columns
-	--list-view-inner-border-color: #{$table-border-color};
+	--list-view-inner-border-color: #{v.$table-border-color};
 	--list-view-inner-row-border-width: var(--list-view-row-border-width);
 	--list-view-inner-row-border-color: var(--list-view-inner-border-color);
-	--list-view-inner-row-min-height: #{$list-view-data-height};
+	--list-view-inner-row-min-height: #{v.$list-view-data-height};
 	--list-view-inner-column-border-color: transparent; // ! "hide" column border by default by making them transparent, do not set border-width to 0
 	--list-view-inner-column-border-width: var(--list-view-column-border-width); // !
 	// selected
 	--list-view-selected-row-border-width: 0;
 	--list-view-selected-row-border-color: transparent;
-	--list-view-selected-row-background: #{$list-view-selected-row-background};
+	--list-view-selected-row-background: #{v.$list-view-selected-row-background};
 	// hover
-	--list-view-hover-row-background: #{$list-view-hover-row-background};
+	--list-view-hover-row-background: #{v.$list-view-hover-row-background};
 	// invalid
-	--list-view-invalid-row-background: #{$danger-bg-light};
+	--list-view-invalid-row-background: #{v.$danger-bg-light};
 
 
 	min-height: 0;
 	flex-direction: column;
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
-	font-size: $list-view-font-size;
-	line-height: $line-height-sm;
+	font-size: v.$list-view-font-size;
+	line-height: v.$line-height-sm;
 	border: var(--list-view-border-width) solid var(--list-view-border-color);
 
 	// todo: add zebra option?
@@ -47,7 +52,7 @@
 		flex-direction: column;
 		background-color: var(--list-view-background); // only apply colored background to the center (bottom might contain buttons etc.)
 
-		@include pane-padding-reset(); // we reset padding, because in most cases the padding will be applied by some outer parent (like cui-pane)
+		@include pane.pane-padding-reset(); // we reset padding, because in most cases the padding will be applied by some outer parent (like cui-pane)
 	}
 
 	// nested
@@ -67,11 +72,11 @@
 
 	// Link Button
 	.cui-button-href {
-		height: $btn-height; // keep alignment in the row
+		height: v.$btn-height; // keep alignment in the row
 	}
 
 	&.use-css-grid-layout {
-		@include list-view-use-css-grid-layout();
+		@include list-view-use-css-grid-layout.list-view-use-css-grid-layout();
 	}
 }
 
@@ -92,7 +97,7 @@
 
 .cui-lv-td {
 	display: block;
-	width: $list-view-data-width;
+	width: v.$list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
 	&:not(.cui-lv-row-move-handle-column, .cui-lv-td-rotate-90) {
@@ -103,7 +108,7 @@
 	flex-shrink: 0;
 	// flex: 1 0 auto; // won't work when resizing the columns
 	box-sizing: content-box;
-	padding: $list-view-padding-y $list-view-padding-x;
+	padding: v.$list-view-padding-y v.$list-view-padding-x;
 
 	&:not(:last-child) {
 		border-right: var(--list-view-inner-column-border-width) solid var(--list-view-inner-column-border-color);
@@ -154,7 +159,7 @@
 .cui-lv-th,
 .list-view-header-row .cui-lv-td {
 	cursor: default;
-	line-height: $btn-height-sm; // make the header rows the same height as a toolbar with small buttons
+	line-height: v.$btn-height-sm; // make the header rows the same height as a toolbar with small buttons
 
 	// We allow regular header labels to overflow onto the next line (do not truncate)
 	.cui-label:not(.cui-label-rotate-90) {
@@ -193,8 +198,8 @@
 
 		> .cui-label-validation {
 			position: absolute;
-			top: $spacer-sm;
-			left: $spacer-sm;
+			top: v.$spacer-sm;
+			left: v.$spacer-sm;
 			z-index: 1;
 		}
 
@@ -237,7 +242,7 @@
 	}
 
 	.cui-label {
-		font-weight: $headings-font-weight;
+		font-weight: v.$headings-font-weight;
 	}
 }
 
@@ -315,7 +320,7 @@
 		align-items: stretch;
 
 		.cui-button-left {
-			padding-right: $spacer-sm;
+			padding-right: v.$spacer-sm;
 		}
 
 		.cui-button-center {
@@ -325,7 +330,7 @@
 	}
 
 	.cui-label {
-		font-weight: $headings-font-weight;
+		font-weight: v.$headings-font-weight;
 
 		&-multiline {
 			flex-shrink: 1;
@@ -376,7 +381,7 @@
 	// }
 
 	.is-scrolling-vertically & {
-		box-shadow: $list-view-scrolling-box-shadow;
+		box-shadow: v.$list-view-scrolling-box-shadow;
 	}
 }
 
@@ -420,7 +425,7 @@
 
 .cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
-	@include clickable();
+	@include clickable.clickable();
 
 	&:hover,
 	&:focus {
@@ -458,7 +463,7 @@
 // Move a row via drag & drop
 .cui-lv-row-move-target {
 	height: 4px;
-	background: $list-view-move-target-area-background;
+	background: v.$list-view-move-target-area-background;
 	margin-top: -2px;
 	position: absolute;
 	z-index: 4;
@@ -468,7 +473,7 @@
 .cui-lv-row-move {
 	position: absolute;
 	z-index: 4;
-	background: $list-view-move-target-area-background;
+	background: v.$list-view-move-target-area-background;
 	opacity: 0.2;
 }
 
@@ -480,8 +485,8 @@
 	}
 
 	&.cui-lv-td {
-		width: $list-view-move-handle-width;
-		padding-left: 0.5 * $table-padding-x;
+		width: v.$list-view-move-handle-width;
+		padding-left: 0.5 * v.$table-padding-x;
 		padding-right: 0;
 		border: 0 !important; // ! column width calculation will be off otherwise
 	}
@@ -530,7 +535,7 @@
 		width: 1px;
 		margin-left: -1px;
 		height: 100%;
-		background: $table-border-color;
+		background: v.$table-border-color;
 	}
 }
 
@@ -545,7 +550,7 @@
 // because input fields or buttons make the rows higher
 // and make the filler higher
 .cui-lv--has-datafields {
-	--list-view-inner-row-min-height: #{$btn-height}; // should always have a min-height so we can better align content within (like drag handles, buttons, labels)
+	--list-view-inner-row-min-height: #{v.$btn-height}; // should always have a min-height so we can better align content within (like drag handles, buttons, labels)
 
 	// its sick.. but the only known way to make sure that it doesn't affect nested elements
 	> .cui-vertical-layout-center {
@@ -559,8 +564,8 @@
 							> .cui-output {
 								display: block; // reset to block to trigger correct aligment with padding
 								min-height: var(--list-view-inner-row-min-height);
-								padding-top: $spacer-xs;
-								padding-bottom: $spacer-xs;
+								padding-top: v.$spacer-xs;
+								padding-bottom: v.$spacer-xs;
 							}
 
 							> .cui-output .cui-label {
@@ -577,13 +582,13 @@
 								> .cui-tree-node-content > .cui-output {
 									display: block; // reset to block to trigger correct aligment with padding
 									min-height: var(--list-view-inner-row-min-height);
-									padding-top: $spacer-xs;
-									padding-bottom: $spacer-xs;
+									padding-top: v.$spacer-xs;
+									padding-bottom: v.$spacer-xs;
 								}
 							}
 
 							> .cui-drag-handle-row {
-								margin-top: $spacer-sm; // needs to be aligned with text AND buttons within a row
+								margin-top: v.$spacer-sm; // needs to be aligned with text AND buttons within a row
 							}
 
 							&.cui-lv-row-move-handle-column {

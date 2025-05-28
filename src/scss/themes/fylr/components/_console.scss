@@ -1,15 +1,17 @@
+@use "../variables" as v;
+
 // Console
 .cui-console {
-	padding: $spacer-sm;
-	font-family: $font-family-monospace;
-	font-size: $font-size-sm;
+	padding: v.$spacer-sm;
+	font-family: v.$font-family-monospace;
+	font-size: v.$font-size-sm;
 
 	.cui-label-multiline {
-		margin: $spacer-xs 0 !important;
+		margin: v.$spacer-xs 0 !important;
 	}
 
 	.cui-label:not(:last-child) {
-		border-bottom: 1px solid gray('300');
-		padding-bottom: $spacer-xs;
+		border-bottom: 1px solid v.$gray-300;
+		padding-bottom: v.$spacer-xs;
 	}
 }

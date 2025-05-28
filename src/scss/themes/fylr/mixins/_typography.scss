@@ -1,9 +1,12 @@
-@mixin _headline($size: 'h1', $margin-bottom: $headings-margin-bottom) {
-	font-family: $headings-font-family;
-	font-size: headline-size($size);
-	font-weight: $headings-font-weight;
-	line-height: $headings-line-height;
-	color: $headings-color;
+@use "sass:map";
+@use "../variables" as v;
+
+@mixin _headline($size: 'h1', $margin-bottom: v.$headings-margin-bottom) {
+	font-family: v.$headings-font-family;
+	font-size: map.get(v.$headline-sizes, $size);
+	font-weight: v.$headings-font-weight;
+	line-height: v.$headings-line-height;
+	color: v.$headings-color;
 	margin-bottom: $margin-bottom;
 
 	.cui-pane-header &,
@@ -13,29 +16,29 @@
 	}
 }
 
-@mixin h1($m: $headings-margin-bottom) {
+@mixin h1($m: v.$headings-margin-bottom) {
 	@include _headline('h1', $m);
 
 	text-transform: uppercase;
 	letter-spacing: 0.035em;
 }
 
-@mixin h2($m: $headings-margin-bottom) {
+@mixin h2($m: v.$headings-margin-bottom) {
 	@include _headline('h2', $m);
 }
 
-@mixin h3($m: $headings-margin-bottom) {
+@mixin h3($m: v.$headings-margin-bottom) {
 	@include _headline('h3', $m);
 }
 
-@mixin h4($m: $headings-margin-bottom) {
+@mixin h4($m: v.$headings-margin-bottom) {
 	@include _headline('h4', $m);
 }
 
-@mixin h5($m: $headings-margin-bottom) {
+@mixin h5($m: v.$headings-margin-bottom) {
 	@include _headline('h5', $m);
 }
 
-@mixin h6($m: $headings-margin-bottom) {
+@mixin h6($m: v.$headings-margin-bottom) {
 	@include _headline('h6', $m);
 }

@@ -1,3 +1,5 @@
+@use "../variables" as v;
+
 // * Tree Node
 
 .cui-tree-node {
@@ -10,7 +12,7 @@
 
 .cui-tree-node-handle, // always keep space of handle even though it might not actually be visible. This is to allow correct vertical alignment of column and column header
 .cui-tree-node-spacer {
-	width: $tree-node-handle-width;
+	width: v.$tree-node-handle-width;
 	flex: 0 0 auto;
 
 	.fa {
@@ -66,7 +68,7 @@
 	}
 
 	> .cui-form {
-		padding-top: $spacer-xs;
+		padding-top: v.$spacer-xs;
 	}
 }
 
@@ -76,7 +78,7 @@
 		.cui-lv-td:first-child::before {
 			content: '';
 			display: inline-block;
-			width: $tree-node-handle-width;
+			width: v.$tree-node-handle-width;
 		}
 	}
 

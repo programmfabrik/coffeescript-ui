@@ -1,3 +1,6 @@
+@use "../variables" as v;
+@use "breakpoints";
+
 @mixin form-hint() {
 	@include form-hint-before();
 
@@ -12,7 +15,7 @@
 @mixin form-hint-before() {
 	order: 0;
 	margin-top: 0;
-	margin-bottom: $form-hint-margin-bottom;
+	margin-bottom: v.$form-hint-margin-bottom;
 
 	// if hint is rendered before a checkbox we reset margin and indent to 0
 	&:has(+ .cui-checkbox) {
@@ -27,31 +30,31 @@
 // - the key-value pairs are rendered "inline" via form-key-value-inline(), for example in the base config on large screens
 @mixin form-hint-after() {
 	order: 1;
-	margin-top: $form-hint-margin-bottom;
+	margin-top: v.$form-hint-margin-bottom;
 	margin-bottom: 0;
 
 	// if hint is rendered after a checkbox we reset margin to 0 and indent the hint
 	&:has(+ .cui-checkbox) {
 		margin-top: 0;
 		// indentation is 0 atm because it only really makes sense visually within a group of checkboxes that all have a hint, e.g. objecttype > PDFCreator
-		margin-left: $checkbox-form-hint-indent;
+		margin-left: v.$checkbox-form-hint-indent;
 	}
 }
 
 @mixin input-sm() {
-	height: $input-height-sm;
-	line-height: $input-height-sm;
+	height: v.$input-height-sm;
+	line-height: v.$input-height-sm;
 }
 
 @mixin input-focus() {
 	// should always win !
-	box-shadow: $input-focus-shadow !important; // see mixins/_buttons
-	border-color: $input-focus-border-color !important;
+	box-shadow: v.$input-focus-shadow !important; // see mixins/_buttons
+	border-color: v.$input-focus-border-color !important;
 	z-index: 1;
 }
 
 @mixin form-key-value-inline() {
-	@include media-breakpoint-up(md) {
+	@include breakpoints.media-breakpoint-up(md) {
 		.cui-form-tr,
 		.cui-form-tr-header {
 			display: flex;
@@ -59,14 +62,14 @@
 
 		.cui-form-key {
 			flex: 0 0 auto;
-			width: var(--form-key-width, #{$form-key-width});
-			min-width: var(--form-key-width, #{$form-key-width});
+			width: var(--form-key-width, #{v.$form-key-width});
+			min-width: var(--form-key-width, #{v.$form-key-width});
 			max-width: none;
-			padding-right: $form-cell-gap;
+			padding-right: v.$form-cell-gap;
 		
 			> label,
 			> .cui-label {
-				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
+				padding-top: var(--form-key-padding-top, #{v.$form-key-padding-top});
 				padding-bottom: 0;
 			}
 		}
@@ -82,7 +85,7 @@
 			> label,
 			> .cui-label,
 			> .cui-output > .cui-data-field-output-label {
-				padding-top: var(--form-key-padding-top, #{$form-key-padding-top});
+				padding-top: var(--form-key-padding-top, #{v.$form-key-padding-top});
 				padding-bottom: 0;
 			}
 
@@ -113,7 +116,7 @@
 		> label,
 		> .cui-label {
 			padding-top: 0;
-			padding-bottom: $form-key-padding-bottom;
+			padding-bottom: v.$form-key-padding-bottom;
 		}
 	}
 
@@ -123,7 +126,7 @@
 		> .cui-output > .cui-data-field-output-label {
 			&:not(.cui-file-upload-drop-zone) {
 				padding-top: 0;
-				padding-bottom: $form-key-padding-bottom;
+				padding-bottom: v.$form-key-padding-bottom;
 			}
 		}
 	}
@@ -141,7 +144,7 @@
 	> div > .cui-form-table {
 		.cui-form-td {
 			display: block;
-			padding: 0 0 $spacer-xs;
+			padding: 0 0 v.$spacer-xs;
 		}
 
 		.cui-form-key {
@@ -154,17 +157,17 @@
 			width: auto;
 		}
 
-		@include media-breakpoint-up(sm) {
+		@include breakpoints.media-breakpoint-up(sm) {
 			display: flex;
 			flex-wrap: wrap;
-			margin: 0 #{-$form-cell-gap};
+			margin: 0 #{-(v.$form-cell-gap)};
 			width: auto; // negative margins!
 
 			.cui-form-tr {
 				display: block;
-				padding: 0 $form-cell-gap;
+				padding: 0 v.$form-cell-gap;
 				width: 100%;
-				margin-bottom: $form-cell-gap;
+				margin-bottom: v.$form-cell-gap;
 
 				$sizes: '1/2', '1/3', '2/3', '1/4', '2/4', '3/4', '1/5', '2/5', '3/5', '4/5';
 
@@ -188,7 +191,7 @@
 		top: var(--data-form-field-group-indicator-top, 0);
 		left: 0;
 		bottom: var(--data-form-field-group-indicator-bottom, 0);
-		width: $data-form-field-group-border-width;
-		background-color: var(--data-form-field-group-border-color, #{$data-form-field-group-border-color});
+		width: v.$data-form-field-group-border-width;
+		background-color: var(--data-form-field-group-border-color, #{v.$data-form-field-group-border-color});
 	}
 }

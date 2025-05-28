@@ -1,5 +1,7 @@
 @use "sass:color";
 @use "sass:map";
+@use "sass:math";
+@use "functions";
 
 /*
 
@@ -119,6 +121,7 @@ $danger-bg-light: 	color.adjust($danger, $lightness: 39%);
 $light:         	$gray-100 !default;
 $dark:          	$gray-800 !default;
 $muted:         	$gray-600 !default; // used in field-label, block description, empty label
+$focused:    		$cyan !default;
 $disabled:      	$muted !default;
 
 $disabled-opacity: 		0.5 !default;
@@ -144,12 +147,37 @@ $theme-colors: map.merge(
 	$theme-colors
 );
 
+// * Color contrast
+// - moved out of functions.scss to avoid circular @use
+
+/* todo: 
+ 	- find a better way to implement this (the function needs variables which are defined in _v.scss
+ 	however we cannot inlcude variables in functions, because we already @use functions in variables
+	- passing the variables every time the function is called is not an option
+*/
+
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
 $yiq-contrasted-threshold:  150 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
 $yiq-text-dark:             $gray-900 !default;
 $yiq-text-light:            $white !default;
+
+// Color contrast
+@function color-yiq($color, $dark: $yiq-text-dark, $light: $yiq-text-light) {
+	$r: color.channel($color, "red", $space: rgb);
+	$g: color.channel($color, "green", $space: rgb);
+	$b: color.channel($color, "blue", $space: rgb);
+
+	$yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
+
+	@if $yiq >= $yiq-contrasted-threshold {
+		@return $dark;
+	} @else {
+		@return $light;
+	}
+}
+// -- end
 
 
 // * Spacing
@@ -206,8 +234,8 @@ $grid-breakpoints: (
 	xl: 1200px
 ) !default;
 
-@include _assert-ascending($grid-breakpoints, '$grid-breakpoints');
-@include _assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
+@include functions.assert-ascending($grid-breakpoints, '$grid-breakpoints');
+@include functions.assert-starts-at-zero($grid-breakpoints, '$grid-breakpoints');
 
 
 // * Grid containers
@@ -221,7 +249,7 @@ $container-max-widths: (
 	xl: 1140px
 ) !default;
 
-@include _assert-ascending($container-max-widths, '$container-max-widths');
+@include functions.assert-ascending($container-max-widths, '$container-max-widths');
 
 
 // * Typography
@@ -286,16 +314,16 @@ $border-radius-sm: 	2px !default;
 $border-radius: 	3px !default;
 $border-radius-lg:  4px !default;
 
-$hr-border-color:   	rgb(gray('400'), 0.5) !default; // make sure hr is visible on white and light backgrounds
-$hr-border-color-dark:  theme-color('dark') !default;
+$hr-border-color:   	rgb($gray-400, 0.5) !default; // make sure hr is visible on white and light backgrounds
+$hr-border-color-dark:  $dark !default;
 $hr-border-width:   	1px !default;
 
-$component-focus-shadow-color: rgb(theme-color('focused'), 0.25) !default;
+$component-focus-shadow-color: rgb($focused, 0.25) !default;
 $component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
-$component-focus-border-color: 	rgb(theme-color('focused'), 0.5) !default;
+$component-focus-border-color: 	rgb($focused, 0.5) !default;
 
 $component-selected-border-width: 1px !default;
-$component-selected-border-color: var(--brand-color, #{theme-color('primary')}) !default;
+$component-selected-border-color: var(--brand-color, #{$primary}) !default;
 
 // * Icons
 // * ==========================================
@@ -316,7 +344,7 @@ $btn-font-weight: 			$font-weight-base !default;
 $btn-box-shadow:			0 2px 3px rgb(0 0 0 / 14%) !default;
 $btn-background: 			transparent !default;
 $btn-color: 				$body-color !default;
-$btn-color-dimmed: 			theme-color('muted') !default;
+$btn-color-dimmed: 			$muted !default;
 $btn-border-width: 			1px !default;
 $btn-border-color: 			$btn-color !default;
 
@@ -328,7 +356,7 @@ $btn-active-background: 	$body-color !default;
 $btn-focus-shadow: 			$component-focus-shadow !default;
 
 // Primary Button states
-$btn-primary-background: 		theme-color('primary') !default;
+$btn-primary-background: 		$primary !default;
 $btn-primary-color: 			color-yiq($btn-primary-background);
 $btn-primary-hover-background: 	color.adjust($btn-primary-background, $lightness: -10%);
 $btn-primary-hover-color: 		$btn-primary-color;
@@ -336,7 +364,7 @@ $btn-primary-active-background: $btn-primary-hover-background;
 $btn-primary-active-color: 		$btn-primary-hover-color;
 
 // Secondary Button states
-$btn-secondary-background: 			gray('200') !default;
+$btn-secondary-background: 			$gray-200 !default;
 $btn-secondary-color: 				color-yiq($btn-secondary-background);
 $btn-secondary-hover-background: 	color.adjust($btn-secondary-background, $lightness: -5%);
 $btn-secondary-hover-color: 		$btn-secondary-color;
@@ -344,7 +372,7 @@ $btn-secondary-active-background: 	$btn-secondary-hover-background;
 $btn-secondary-active-color: 		$btn-secondary-hover-color;
 
 // Danger Button states
-$btn-danger-background: 		color('red') !default;
+$btn-danger-background: 		$red !default;
 $btn-danger-color: 				color-yiq($btn-danger-background);
 $btn-danger-hover-background: 	color.adjust($btn-danger-background, $lightness: -10%);
 $btn-danger-hover-color: 		$btn-danger-color;
@@ -353,7 +381,7 @@ $btn-danger-active-color: 		$btn-danger-hover-color;
 
 // Bordered Button states = Default Button
 $btn-bordered-hover-color:			inherit !default;
-$btn-bordered-hover-background:		rgb(gray('200'), $btn-hover-alpha) !default;
+$btn-bordered-hover-background:		rgb($gray-200, $btn-hover-alpha) !default;
 $btn-bordered-active-color: 		$btn-active-color !default;
 $btn-bordered-active-background: 	$btn-active-background !default;
 $btn-bordered-focus-shadow: 		$btn-focus-shadow !default;
@@ -361,7 +389,7 @@ $btn-bordered-focus-border-color: 	$component-focus-border-color !default;
 
 // Inverted Button 
 $btn-inverted-color: 				$white !default;
-$btn-inverted-background: 			rgb(gray('900'), 0.6) !default; // need an actual background so we can use this on images as well
+$btn-inverted-background: 			rgb($gray-900, 0.6) !default; // need an actual background so we can use this on images as well
 $btn-inverted-border-color: 		rgba($white, 0.85) !default; // its a compromise between black/background image and selected/orange background color, we might need to make this adaptable via CSS vars
 $btn-inverted-hover-color: 			rgba($btn-inverted-color, $btn-hover-alpha) !default;
 $btn-inverted-hover-background: 	$btn-inverted-background !default;
@@ -407,7 +435,7 @@ $handle-color: 		$body-color;
 // * Flex Handle (Resize panes etc.)
 // * ==========================================
 $flex-handle-size: 				11px; // width or height, odd number so we can put a 1px line in the very center
-$flex-handle-color: 			rgb(gray('500'), 0.8);
+$flex-handle-color: 			rgb($gray-500, 0.8);
 $flex-handle-divider-color: 	$flex-handle-color;
 $flex-handle-length: 			0; // 18px;
 $flex-handle-blocker-offset: 	0; // 4px;
@@ -415,7 +443,7 @@ $flex-handle-blocker-offset: 	0; // 4px;
 // * Item list
 // * ==========================================
 $item-list-hover-color: 		$white !default;
-$item-list-hover-background:	theme-color('primary') !default;
+$item-list-hover-background:	$primary !default;
 $item-list-active-color: 		$item-list-hover-color !default;
 $item-list-active-background:	$item-list-hover-background !default;
 $item-list-indent: 				$btn-padding-x !default;
@@ -432,13 +460,13 @@ $panel-content-padding: $spacer !default; // * 1.15 !default;
 // * ==========================================
 $toolbar-background: 	transparent !default; // leave transparent by default and style dependent on where the toolbar is used
 $toolbar-padding: 		$component-padding-base !default;
-$toolbar-height: 		$btn-height + calculate-px(2 * $toolbar-padding) !default; // make toolbar always visible, even when no buttons are displayed in it yet
+$toolbar-height: 		$btn-height + functions.calculate-px(2 * $toolbar-padding) !default; // make toolbar always visible, even when no buttons are displayed in it yet
 
 // * Pane
 // * ==========================================
-$pane-background:  				theme-color('light') !default;
+$pane-background:  				$light !default;
 $pane-padding: 					$component-padding-base !default;
-$pane-window-border-color: 		gray('200') !default;
+$pane-window-border-color: 		$gray-200 !default;
 
 // * Input
 // * ==========================================
@@ -449,7 +477,7 @@ $input-background: 			$white !default;
 $input-background-disabled:	$input-background !default; // disabled state will add opacity:0.5 by default
 $input-border-color: 		transparent !default;
 $input-border-radius: 		$btn-border-radius !default;
-$input-placeholder-color: 	theme-color('muted') !default;
+$input-placeholder-color: 	$muted !default;
 $input-min-width:			100px !default;
 $input-padding-x: 			$component-padding-base !default;
 $input-padding-y: 			$spacer-xs !default;
@@ -458,7 +486,7 @@ $input-focus-border-color:	$component-focus-border-color !default;
 
 // * Combobox
 // * ==========================================
-$combobox-divider-border: 				1px solid gray('200') !default;
+$combobox-divider-border: 				1px solid $gray-200 !default;
 $combobox-input-background: 			$input-background !default;
 $combobox-input-disabled-background: 	$combobox-input-background;
 $combobox-border-color: 				$input-border-color !default;
@@ -471,7 +499,7 @@ $data-field-width: 275px !default; // used to be: "$input-width"
 
 // * Checkbox
 // * ==========================================
-$checkbox-border-color: 		gray('700') !default;
+$checkbox-border-color: 		$gray-700 !default;
 $checkbox-background: 			$white !default;
 $checkbox-active-background: 	$body-color !default;
 $checkbox-active-color: 		$white !default;
@@ -494,11 +522,11 @@ $toggle-switch-active-color: 		$checkbox-active-color !default;
 
 // * Table
 // * ==========================================
-$table-border-color: 	rgb(gray('400'), 0.5) !default;
+$table-border-color: 	rgb($gray-400, 0.5) !default;
 $table-border-radius:	$border-radius-sm !default;
 $table-data-height: 	34px !default;
 $table-data-width: 		135px !default; // old: $td-width
-$table-even-background:	gray('100') !default;
+$table-even-background:	$gray-100 !default;
 $table-odd-background:	transparent !default;
 $table-padding-x:		$component-padding-base !default;
 $table-padding-y:		0.5 * $component-padding-base !default;
@@ -512,11 +540,11 @@ $list-view-data-width: 					125px !default;
 $list-view-padding-x:					$component-padding-base !default; // was: $table-padding-x
 $list-view-padding-y:					0.5 * $component-padding-base !default; // was: $table-padding-y, needs to be small so the explicit height of the fixed rows will cut off the text correctly after the first line
 $list-view-move-handle-width:			14px !default; // ! must be explicit size in px or
-$list-view-move-target-area-background:	rgb(theme-color('focused'), 0.5) !default;
+$list-view-move-target-area-background:	rgb($focused, 0.5) !default;
 $list-view-selected-row-border-width:	1px !default;
-$list-view-selected-row-border-color: 	theme-color('primary') !default;
-$list-view-selected-row-background: 	gray('300') !default;
-$list-view-hover-row-background: 		gray('200') !default;
+$list-view-selected-row-border-color: 	$primary !default;
+$list-view-selected-row-background: 	$gray-300 !default;
+$list-view-hover-row-background: 		$gray-200 !default;
 $list-view-scrolling-box-shadow:		0 1px 5px 0 rgb(0 0 0 / 11%) !default;
 
 // * List View Tree
@@ -592,7 +620,7 @@ $layer-header-color: 		$white !default;
 $layer-border-radius: 		$border-radius-sm !default;
 $layer-border-color:		$body-color !default;
 $layer-border-size:			0 !default;
-$layer-shadow-color:		gray('700');
+$layer-shadow-color:		$gray-700;
 $layer-pointer-size: 		10px !default;
 $layer-pointer-container-size: 	16px !default;
 $layer-pointer-background:	$layer-background !default;
@@ -609,17 +637,17 @@ $menu-border-radius: $layer-border-radius !default;
 $calendar-font-size: 				$font-size-base !default;
 $calendar-cell-size:				28px !default;
 $calendar-cell-count:				8 !default;
-$calendar-background:				theme-color('light') !default;
+$calendar-background:				$light !default;
 $calendar-static-cells-background: 	$calendar-background !default;
-$calendar-static-cells-color: 		theme-color('primary') !default;
-$calendar-date-active-background:	theme-color('primary') !default;
+$calendar-static-cells-color: 		$primary !default;
+$calendar-date-active-background:	$primary !default;
 $calendar-date-hover-background-opacity: 0.2 !default;
-$calendar-date-previous-color:		gray('500') !default;
+$calendar-date-previous-color:		$gray-500 !default;
 
 // * Tooltip
 // * ==========================================
 $tooltip-pointer-size:  8px !default;
-$tooltip-background: 	gray('800') !default;
+$tooltip-background: 	$gray-800 !default;
 $tooltip-color: 		$white !default;
 $tooltip-font-size: 	12px !default;
 
@@ -627,7 +655,7 @@ $tooltip-font-size: 	12px !default;
 // * ==========================================
 $drop-area-focus-shadow: 	$component-focus-shadow !default;
 $drop-area-border-radius: 	$border-radius-sm !default;
-$drag-lasso-background: 	theme-color('primary') !default;
+$drag-lasso-background: 	$primary !default;
 
 // * Sticky Header
 // * ==========================================

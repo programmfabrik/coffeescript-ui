@@ -1,3 +1,8 @@
+@use "../mixins/buttons";
+@use "../mixins/labels";
+@use "../mixins/pane";
+@use "../variables" as v;
+
 // todo: tabs within list-view
 // * Tabs
 
@@ -50,7 +55,7 @@
 	background-color: transparent; // reset cui-pane
 
 	&.cui-absolute > .cui-vertical-layout-center {
-		top: $toolbar-height + 1px; // todo: find use-case
+		top: v.$toolbar-height + 1px; // todo: find use-case
 	}
 
 	.cui-toolbar {
@@ -61,8 +66,8 @@
 	// see admin > usermanagement, admin > datamodel, admin > pollmanager etc.
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
-			padding: $pane-padding 0;
-			margin-bottom: -$pane-padding;
+			padding: v.$pane-padding 0;
+			margin-bottom: -(v.$pane-padding);
 		}
 	}
 
@@ -94,7 +99,7 @@
 				// }
 
 				> .cui-empty-label:only-child {
-					margin: $spacer-sm 0;
+					margin: v.$spacer-sm 0;
 				}
 
 				// ! commented out to fix #65541 ("buttons im datenmodell nicht immer sichtbar")
@@ -107,7 +112,7 @@
 
 	.cui-pane {
 		> .cui-vertical-layout-center {
-			@include pane-padding-reset();
+			@include pane.pane-padding-reset();
 		}
 
 		> .cui-vertical-layout-top,
@@ -127,7 +132,7 @@
 
 	padding: 0; // reset .cui-toolbar
 	min-height: 0; // reset .cui-toolbar
-	margin-bottom: $spacer;
+	margin-bottom: v.$spacer;
 
 	> .cui-horizontal-layout-center {
 		overflow: auto !important; // ! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
@@ -147,36 +152,36 @@
 
 	.cui-tab-header-button,
 	.cui-tab-header-button-overflow {
-		@include button-color-reset();
+		@include buttons.button-color-reset();
 
 		margin: 0;
 
 		.cui-button-visual {
-			@include label-title();
+			@include labels.label-title();
 
-			height: $tabs-header-height;
+			height: v.$tabs-header-height;
 			border-radius: 0;
-			background-color: $tabs-background;
+			background-color: v.$tabs-background;
 
 			.cui-button-center {
-				padding: 0 $tabs-content-padding;
+				padding: 0 v.$tabs-content-padding;
 			}
 		}
 		
 		&:active,
 		&.cui-active {
 			.cui-button-visual {
-				background-color: $tabs-active-background;
-				color: var(--btn-color-active, #{$tabs-active-color});
+				background-color: v.$tabs-active-background;
+				color: var(--btn-color-active, #{v.$tabs-active-color});
 			}
 		}
 
 		&:focus {
 			.cui-button-visual {
 				// add custom focus style
-				background-color: rgb(theme-color('focused'), 0.05);
-				color: var(--btn-color-active, #{$tabs-active-color});
-				box-shadow: $btn-focus-shadow !important;
+				background-color: rgb(v.$focused, 0.05);
+				color: var(--btn-color-active, #{v.$tabs-active-color});
+				box-shadow: v.$btn-focus-shadow !important;
 			}
 		}
 	}
@@ -190,12 +195,12 @@
 
 		.cui-button-visual {
 			position: relative;
-			background-color: $tabs-overflow-button-background;
-			color: $tabs-overflow-button-color;
+			background-color: v.$tabs-overflow-button-background;
+			color: v.$tabs-overflow-button-color;
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
 			border-bottom-right-radius: 0 !important;
-			border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+			border-bottom: 1px solid var(--tabs-active-border-color, v.$tabs-active-border-color);
 
 			.cui-button-left {
 				.fa-ellipsis-h {
@@ -207,22 +212,22 @@
 		&:hover,
 		&:focus {
 			.cui-button-visual {
-				background-color: $tabs-overflow-button-background-hover;
-				color: $tabs-overflow-button-color-hover;
+				background-color: v.$tabs-overflow-button-background-hover;
+				color: v.$tabs-overflow-button-color-hover;
 			}
 		}
 
 		&.cui-layer-open {
 			.cui-button-visual {
-				color: $btn-active-color;
-				background-color: $btn-active-background;
+				color: v.$btn-active-color;
+				background-color: v.$btn-active-background;
 			}
 		}
 
 		// Very special case:
 		// there are buttons AFTER the overflow button, see export manager
 		+ * {
-			margin-left: $spacer;
+			margin-left: v.$spacer;
 		}
 	}
 
@@ -240,7 +245,7 @@
 			display: block;
 			flex: 1 1 auto;
 			height: 1px;
-			background: var(--tabs-active-border-color, $tabs-active-border-color);
+			background: var(--tabs-active-border-color, v.$tabs-active-border-color);
 			align-self: flex-end;
 		}
 
@@ -266,16 +271,16 @@
 						bottom: 0;
 						width: 100%;
 						height: 100%;
-						border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+						border-bottom: 1px solid var(--tabs-active-border-color, v.$tabs-active-border-color);
 					}
 				}
 				
 				&.cui-active {
 					.cui-button-visual {
 						&::after {
-							border: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+							border: 1px solid var(--tabs-active-border-color, v.$tabs-active-border-color);
 							border-bottom: 1px solid transparent;
-							border-radius: $btn-border-radius $btn-border-radius 0 0;
+							border-radius: v.$btn-border-radius v.$btn-border-radius 0 0;
 						}
 					}
 				}

@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "../variables" as v;
+
 [data-max-chars] {
 	box-sizing: content-box; // ! careful
 	text-align: center;
@@ -18,7 +21,7 @@ input[data-max-chars] {
 	}
 
 	input[data-max-chars='#{$i}'] {
-		width: calc(#{$width} + 2 * #{$input-padding-x});
+		width: calc(#{$width} + 2 * #{v.$input-padding-x});
 	}
 }
 
@@ -31,7 +34,7 @@ input[data-max-chars] {
 	}
 
 	input[data-max-chars='#{$i}'] {
-		width: calc(#{$width} + 2 * #{$input-padding-x});
+		width: calc(#{$width} + 2 * #{v.$input-padding-x});
 	}
 }
 

@@ -1,14 +1,19 @@
 @use "sass:map";
+@use "../variables" as v;
+@use "buttonbar";
+@use "buttons";
+@use "pane";
+@use "typography";
 // Mixins for all layer types (popover, modals, menu etc.)
 
 @mixin layer-title() {
-	@include h5(0.1em);
+	@include typography.h5(0.1em);
 
 	margin-top: 0.1em;
 }
 
 @mixin layer-width($size: 'm') {
-	width: map.get($layer-sizes, $size);
+	width: map.get(v.$layer-sizes, $size);
 }
 
 /* Layer pane styles for popovers and fullscreen layer
@@ -22,15 +27,15 @@
 	> .cui-vertical-layout-top > .cui-pane-header,
 	> .cui-vertical-layout-top > .cui-toolbar {
 		&:not(.cui-template-empty) {
-			padding: 0 $layer-padding-x;
+			padding: 0 v.$layer-padding-x;
 		}
 	}
 
 	// layer header only
 	> .cui-vertical-layout-top > .cui-pane-header {
-		border-radius: $layer-border-radius $layer-border-radius 0 0;
-		background-color: $layer-header-background;
-		color: $layer-header-color;
+		border-radius: v.$layer-border-radius v.$layer-border-radius 0 0;
+		background-color: v.$layer-header-background;
+		color: v.$layer-header-color;
 
 		.cui-horizontal-layout-left {
 			flex-shrink: 1; // allows long titles to be truncated with ...
@@ -43,14 +48,14 @@
 
 		// Align buttonbar to the right because we use inverted, borderless buttons in the header
 		> .cui-horizontal-layout-right > .cui-buttonbar {
-			margin-right: -0.5 * $layer-padding-x;
+			margin-right: -0.5 * v.$layer-padding-x;
 
-			@include buttonbar-horizontal-tight();
+			@include buttonbar.buttonbar-horizontal-tight();
 		}
 		
 		// Invert buttons
 		.cui-button {
-			@include button-plain-inverted();
+			@include buttons.button-plain-inverted();
 
 			&:not(:last-child) {
 				margin-right: 0;
@@ -58,19 +63,19 @@
 		}
 
 		.cui-buttonbar .cui-buttonbar-group {
-			@include buttonbar-group-inverted();
+			@include buttonbar.buttonbar-group-inverted();
 		}
 
 		// offset the following top toolbar
 		+ .cui-toolbar {
-			margin-top: $spacer-sm;
+			margin-top: v.$spacer-sm;
 		}
 	}
 
 	// layer-body
 	> .cui-vertical-layout-center {
 		padding: 0;
-		margin: $layer-padding-y $layer-padding-x; // use margin instead of padding so a possible scrollbar will be inside
+		margin: v.$layer-padding-y v.$layer-padding-x; // use margin instead of padding so a possible scrollbar will be inside
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 	}
@@ -78,11 +83,11 @@
 	// layer-footer & toolbar
 	> .cui-vertical-layout-bottom > .cui-pane-footer,
 	> .cui-vertical-layout-bottom > .cui-toolbar {
-		padding: 0 $layer-padding-y $layer-padding-x;
+		padding: 0 v.$layer-padding-y v.$layer-padding-x;
 	}
 
 	> .cui-vertical-layout-bottom > .cui-pane-footer {
-		border-radius: 0 0 $layer-border-radius $layer-border-radius;
+		border-radius: 0 0 v.$layer-border-radius v.$layer-border-radius;
 
 		// make buttons a little more prominent in the footer, they are typically "primary" action buttons ("OK" is pretty short otherwise)
 		.cui-toolbar:not(.cui-navigation-toolbar) {
@@ -94,11 +99,11 @@
 
 	// nested panes
 	.cui-pane > .cui-vertical-layout-center {
-		@include pane-padding-reset();
+		@include pane.pane-padding-reset();
 	}
 }
 
 @mixin fullscreen-layer-pane() {
 	// is .cui-layer
-	background-color: $body-bg;
+	background-color: v.$body-bg;
 }

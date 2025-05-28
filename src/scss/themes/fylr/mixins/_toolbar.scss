@@ -1,5 +1,7 @@
+@use "../variables" as v;
+
 @mixin toolbar-gap() {
-	--toolbar-gap: #{$spacer-sm};
+	--toolbar-gap: #{v.$spacer-sm};
 
 	// add gap between toolbar layout columns (left, center, right)
 	gap: var(--toolbar-gap);

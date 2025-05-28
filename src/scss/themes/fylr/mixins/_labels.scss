@@ -1,12 +1,13 @@
 @use "sass:color";
+@use "../variables" as v;
 
 @mixin label-sm() {
-	font-size: $font-size-sm;
-	line-height: $line-height-sm;
+	font-size: v.$font-size-sm;
+	line-height: v.$line-height-sm;
 }
 
 @mixin label-lg() {
-	font-size: $font-size-lg;
+	font-size: v.$font-size-lg;
 
 	.cui-label-icon {
 		.fa {
@@ -16,7 +17,7 @@
 }
 
 @mixin label-xl() {
-	font-size: $font-size-xl;
+	font-size: v.$font-size-xl;
 
 	.cui-label-icon {
 		.fa {
@@ -26,7 +27,7 @@
 }
 
 @mixin label-xxl() {
-	font-size: $font-size-xxl;
+	font-size: v.$font-size-xxl;
 
 	.cui-label-icon {
 		.fa {
@@ -36,7 +37,7 @@
 }
 
 @mixin label-xxxl() {
-	font-size: $font-size-xxxl;
+	font-size: v.$font-size-xxxl;
 
 	.cui-label-icon {
 		.fa {
@@ -47,20 +48,20 @@
 
 @mixin label-secondary() {
 	// use opacity so the labels can be inverted easily, also working fine with custom brand-foreground-text-color
-	opacity: var(--label-secondary-opacity, #{$label-secondary-opacity});
+	opacity: var(--label-secondary-opacity, #{v.$label-secondary-opacity});
 }
 
 @mixin label-reset() {
 	color: inherit;
-	font-weight: $font-weight-normal;
+	font-weight: v.$font-weight-normal;
 	text-transform: none;
 	letter-spacing: initial;
 }
 
 // Block title, panel title, tab title
 @mixin label-title($letter-spacing: false) {
-	font-size: $font-size-base;
-	font-weight: $font-weight-bold;
+	font-size: v.$font-size-base;
+	font-weight: v.$font-weight-bold;
 	line-height: 1.2;
 	text-transform: uppercase;
 	
@@ -75,59 +76,59 @@
 @mixin label-title-light($letter-spacing: true) {
 	@include label-title($letter-spacing);
 	
-	color: gray('500');
+	color: v.$gray-500;
 }
 
 @mixin label-subtitle() {
-	font-weight: $font-weight-bold;
+	font-weight: v.$font-weight-bold;
 }
 
 @mixin label-muted() {
-	color: theme-color('muted');
+	color: v.$muted;
 
 	.cui-selected & {
-		color: gray('100');
+		color: v.$gray-100;
 	}
 }
 
 @mixin label-danger() {
-	color: theme-color('danger');
+	color: v.$danger;
 }
 
 @mixin label-warning() {
-	color: color.adjust(theme-color('warning'), $lightness: -28%);
+	color: color.adjust(v.$warning, $lightness: -28%);
 
 	.cui-label-content > * {
 		display: inline;
-		background-color: color.scale(theme-color('warning'), $saturation: 50%, $lightness: 20%, $alpha: -85%);
+		background-color: color.scale(v.$warning, $saturation: 50%, $lightness: 20%, $alpha: -85%);
 		line-height: 1.4;
 	}
 }
 
 @mixin label-empty() {
-	color: theme-color('muted');
+	color: v.$muted;
 
 	.cui-selected & {
-		color: var(--brand-foreground-text-color, #{$white}); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
+		color: var(--brand-foreground-text-color, #{v.$white}); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
 		opacity: 0.8;
 	}
 }
 
 // Label in a field
 @mixin label-field() {
-	font-weight: $font-weight-bold;
-	line-height: $line-height-sm; // line-height: 1.1; // don#t do this, not in sync with menu dots position
+	font-weight: v.$font-weight-bold;
+	line-height: v.$line-height-sm; // line-height: 1.1; // don#t do this, not in sync with menu dots position
 	word-wrap: break-word;
 	hyphens: auto;
 }
 
 @mixin label-field-subtitle() {
-	font-weight: $font-weight-normal;
+	font-weight: v.$font-weight-normal;
 }
 
 @mixin label-form-hint() {
 	@include label-secondary();
 	
-	font-size: $form-hint-font-size;
-	line-height: $form-hint-line-height;
+	font-size: v.$form-hint-font-size;
+	line-height: v.$form-hint-line-height;
 }

@@ -1,3 +1,5 @@
+@use "../variables" as v;
+
 
 // Icons
 .cui-icon-svg {
@@ -12,15 +14,15 @@
 }
 
 .cui-no-icon {
-	font-family: $font-family-sans-serif;
-	font-weight: $font-weight-bold;
+	font-family: v.$font-family-sans-serif;
+	font-weight: v.$font-weight-bold;
 	font-style: normal; // reset <i> default style
 	text-transform: uppercase;
 }
 
 .fa:not([class*='fa-stack']) {
-	font-size: $icon-font-size;
-	line-height: $icon-line-height;
+	font-size: v.$icon-font-size;
+	line-height: v.$icon-line-height;
 }
 
 .cui-spin-stepped {
@@ -103,7 +105,7 @@
 // Hourglass animation
 $hourglass-animation-speed: 0.6;
 // if we want the colors to animate as well, use:
-$hourglass-colors: $gray-800, $gray-800, $gray-900, $gray-800, $gray-900;
+$hourglass-colors: v.$gray-800, v.$gray-800, v.$gray-900, v.$gray-800, v.$gray-900;
 
 .cui-hourglass-animation {
 	opacity: 1;

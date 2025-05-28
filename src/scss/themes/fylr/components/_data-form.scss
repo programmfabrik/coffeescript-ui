@@ -1,3 +1,7 @@
+@use "../mixins/buttons";
+@use "../mixins/forms";
+@use "../variables" as v;
+
 // Data Form
 
 /*
@@ -67,10 +71,10 @@
 	&.cui-data-form--multiple-fields {
 		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row {
 			> .cui-horizontal-layout-center {
-				@include data-form-field-group-indicator();
+				@include forms.data-form-field-group-indicator();
 
-				--data-form-field-group-indicator-top: calc(#{$spacer-xs} - 1px);
-				--data-form-field-group-indicator-bottom: #{$spacer}; // = default margin-bottom of .cui-form-tr				
+				--data-form-field-group-indicator-top: calc(#{v.$spacer-xs} - 1px);
+				--data-form-field-group-indicator-bottom: #{v.$spacer}; // = default margin-bottom of .cui-form-tr				
 
 				.cui-form-key label, 
 				.cui-form-key .cui-label {
@@ -79,25 +83,25 @@
 			}
 
 			&:not(:last-child) {
-				margin-bottom: $spacer;
+				margin-bottom: v.$spacer;
 			}
 		}
 	}
 
 	&.cui-data-form--add-button {
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
-			padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset});
-			margin-top: $spacer-xs;
-			margin-bottom: $spacer-sm;
+			padding-left: calc(#{v.$data-form-utilities-count} * #{v.$data-form-utilities-column-width} + #{v.$data-form-border-offset});
+			margin-top: v.$spacer-xs;
+			margin-bottom: v.$spacer-sm;
 
 			.cui-button-button {
-				@include button-sm(); // see .ez5-nested-add-button
+				@include buttons.button-sm(); // see .ez5-nested-add-button
 			}
 		}
 	}
 
 	+ .cui-form-hint {
-		margin-top: $spacer;
+		margin-top: v.$spacer;
 	}
 }
 
@@ -114,12 +118,12 @@
 	// only add space in the columns if we show move handle and/or trash
 	.cui-data-form--movable-rows &,
 	.cui-data-form--add-button & {
-		--data-form-utilities-move-width: #{$data-form-utilities-column-width};
-		--data-form-utilities-delete-width: #{$data-form-utilities-column-width};
+		--data-form-utilities-move-width: #{v.$data-form-utilities-column-width};
+		--data-form-utilities-delete-width: #{v.$data-form-utilities-column-width};
 	}
 
 	&:not(:last-child) {
-		margin-bottom: $spacer-sm;
+		margin-bottom: v.$spacer-sm;
 	}
 
 	> .cui-horizontal-layout-left {
@@ -127,13 +131,13 @@
 		align-self: start;
 
 		.cui-drag-handle-row {
-			margin: $spacer-xs 0;
+			margin: v.$spacer-xs 0;
 			flex-grow: 0;
 			cursor: grab;
 
 			&.is-hidden {
 				pointer-events: none;
-				opacity: $disabled-opacity-icon;
+				opacity: v.$disabled-opacity-icon;
 			}
 		}
 	}
@@ -141,7 +145,7 @@
 	> .cui-horizontal-layout-center {
 		min-width: 0;
 		grid-area: content;
-		margin-left: $data-form-border-offset;
+		margin-left: v.$data-form-border-offset;
 
 		> * {
 			width: 100%;
@@ -157,7 +161,7 @@
 		}
 
 		.cui-button-button {
-			@include button-plain-icon();
+			@include buttons.button-plain-icon();
 		}
 	}
 
@@ -171,7 +175,7 @@
 	// on mouseenter of the row
 	&.cui-data-form-row--trash {
 		> .cui-horizontal-layout-center {
-			opacity: 2 * $disabled-opacity-icon;
+			opacity: 2 * v.$disabled-opacity-icon;
 		}
 	}
 }
