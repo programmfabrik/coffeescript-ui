@@ -259,6 +259,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 			return null
 
 	render: ->
+		super(callOnRender: false)
 		cols = []
 		colClasses = []
 		maxis = []
@@ -341,6 +342,8 @@ class CUI.DataTable extends CUI.DataFieldInput
 
 		@replace(@listView.render())
 
+		@_onRender?(@)
+
 		CUI.Events.listen
 			type: "data-changed"
 			node: @listView
@@ -354,7 +357,7 @@ class CUI.DataTable extends CUI.DataFieldInput
 				@storeValue(CUI.util.copyObject(@rows, true))
 				return
 
-		return super()
+		return @
 
 	loadPage: (page) ->
 		maxPage = Math.floor(@rows?.length / @_chunk_size)
