@@ -6058,7 +6058,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   cursor: pointer;
 }
 .cui-date-time-date .cui-date-time-day:hover span {
-  --calendar-date-hover-background: rgb(var(--brand-color-RGB));
+  --calendar-date-hover-background: rgb(var(--brand-color-rgb));
   color: var(--brand-foreground-text-color, #212121);
   background-color: var(--calendar-date-hover-background, rgba(255, 87, 36, 0.2));
 }
