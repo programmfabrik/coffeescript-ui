@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:math";
+@use "sass:string";
 // *
 // A simple little SCSS mixin for creating scrim gradients
 // Inspired by Andreas Larson - https://github.com/larsenwork
@@ -21,15 +25,15 @@
 		100: 0
 	);
 
-	$hue: hue($startColor);
-	$saturation: saturation($startColor);
-	$lightness: lightness($startColor);
+	$hue: color.hue($startColor);
+	$saturation: color.saturation($startColor);
+	$lightness: color.lightness($startColor);
 	$stops: ();
 
 	@each $colorStop, $alphaValue in $scrim-coordinates {
-		$stop: hsla($hue, $saturation, $lightness, $alphaValue) percentage($colorStop / 100);
-		$stops: append($stops, $stop, comma);
+		$stop: hsla($hue, $saturation, $lightness, $alphaValue) math.percentage($colorStop / 100);
+		$stops: list.append($stops, $stop, comma);
 	}
 
-	background: linear-gradient(unquote($direction), $stops);
+	background: linear-gradient(string.unquote($direction), $stops);
 }

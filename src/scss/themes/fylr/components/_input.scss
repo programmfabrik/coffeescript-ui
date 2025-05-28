@@ -1,3 +1,5 @@
+@use "sass:color";
+
 input,
 textarea {
 	appearance: none;
@@ -80,7 +82,7 @@ textarea {
 			input,
 			.cui-data-field-right .cui-button .cui-button-visual {
 				border-color: color.scale(theme-color('danger'), $saturation: 50%, $alpha: -95%);
-				background: transparentize(theme-color('danger'), 0.85);
+				background: color.adjust(theme-color('danger'), $alpha: -0.85);
 
 
 				.cui-list-view-row-selectable:hover &, 

@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "sass:map";
+
 /*
 
 * Variables
@@ -56,7 +59,7 @@ $black:    #000000 !default;
 
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$grays: map-merge(
+$grays: map.merge(
 	(
 		'100': $gray-100,
 		'200': $gray-200,
@@ -86,7 +89,7 @@ $brown:   #986801 !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$colors: map-merge(
+$colors: map.merge(
 	(
 		'blue':       $blue,
 		'indigo':     $indigo,
@@ -112,7 +115,7 @@ $success:       	$green !default;
 $info:          	$cyan !default;
 $warning:       	$yellow !default;
 $danger:        	$red !default;
-$danger-bg-light: 	lighten($danger, 39%);
+$danger-bg-light: 	color.adjust($danger, $lightness: 39%);
 $light:         	$gray-100 !default;
 $dark:          	$gray-800 !default;
 $muted:         	$gray-600 !default; // used in field-label, block description, empty label
@@ -123,7 +126,7 @@ $disabled-opacity-icon: 0.25 !default;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(
+$theme-colors: map.merge(
 	(
 		'primary':    $primary,
 		'success':    $success,
@@ -259,7 +262,7 @@ $h6-font-size:                $font-size-base !default;	// 14, base font + bold,
 
 $headline-sizes: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
-$headline-sizes: map-merge(
+$headline-sizes: map.merge(
 	(
 		'h1': $h1-font-size,
 		'h2': $h2-font-size,
@@ -327,7 +330,7 @@ $btn-focus-shadow: 			$component-focus-shadow !default;
 // Primary Button states
 $btn-primary-background: 		theme-color('primary') !default;
 $btn-primary-color: 			color-yiq($btn-primary-background);
-$btn-primary-hover-background: 	darken($btn-primary-background, 10%);
+$btn-primary-hover-background: 	color.adjust($btn-primary-background, $lightness: -10%);
 $btn-primary-hover-color: 		$btn-primary-color;
 $btn-primary-active-background: $btn-primary-hover-background;
 $btn-primary-active-color: 		$btn-primary-hover-color;
@@ -335,7 +338,7 @@ $btn-primary-active-color: 		$btn-primary-hover-color;
 // Secondary Button states
 $btn-secondary-background: 			gray('200') !default;
 $btn-secondary-color: 				color-yiq($btn-secondary-background);
-$btn-secondary-hover-background: 	darken($btn-secondary-background, 5%);
+$btn-secondary-hover-background: 	color.adjust($btn-secondary-background, $lightness: -5%);
 $btn-secondary-hover-color: 		$btn-secondary-color;
 $btn-secondary-active-background: 	$btn-secondary-hover-background;
 $btn-secondary-active-color: 		$btn-secondary-hover-color;
@@ -343,7 +346,7 @@ $btn-secondary-active-color: 		$btn-secondary-hover-color;
 // Danger Button states
 $btn-danger-background: 		color('red') !default;
 $btn-danger-color: 				color-yiq($btn-danger-background);
-$btn-danger-hover-background: 	darken($btn-danger-background, 10%);
+$btn-danger-hover-background: 	color.adjust($btn-danger-background, $lightness: -10%);
 $btn-danger-hover-color: 		$btn-danger-color;
 $btn-danger-active-background: 	$btn-danger-hover-background;
 $btn-danger-active-color: 		$btn-danger-hover-color;

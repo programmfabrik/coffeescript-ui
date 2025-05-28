@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin label-sm() {
 	font-size: $font-size-sm;
 	line-height: $line-height-sm;
@@ -93,7 +95,7 @@
 }
 
 @mixin label-warning() {
-	color: darken(theme-color('warning'), 28%);
+	color: color.adjust(theme-color('warning'), $lightness: -28%);
 
 	.cui-label-content > * {
 		display: inline;

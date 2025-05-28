@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
 // Functions
 //
 // Utility mixins and functions for evaluating source code across our variables, maps, and mixins.
@@ -10,9 +14,9 @@
 	$prev-num: null;
 
 	@each $key, $num in $map {
-		@if not $prev-num or unit($num) == '%' {
+		@if not $prev-num or math.unit($num) == '%' {
 			// Do nothing
-		} @else if not comparable($prev-num, $num) {
+		} @else if not math.compatible($prev-num, $num) {
 			@warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
 		} @else if $prev-num >= $num {
 			@warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
@@ -25,8 +29,8 @@
 // Starts at zero
 // Used to ensure the min-width of the lowest breakpoint starts at 0.
 @mixin _assert-starts-at-zero($map, $map-name: '$grid-breakpoints') {
-	$values: map-values($map);
-	$first-value: nth($values, 1);
+	$values: map.values($map);
+	$first-value: list.nth($values, 1);
 
 	@if $first-value != 0 {
 		@warn 'First breakpoint in #{$map-name} must start at 0, but starts at #{$first-value}.';
@@ -35,9 +39,9 @@
 
 // Color contrast
 @function color-yiq($color, $dark: $yiq-text-dark, $light: $yiq-text-light) {
-	$r: red($color);
-	$g: green($color);
-	$b: blue($color);
+	$r: color.red($color);
+	$g: color.green($color);
+	$b: color.blue($color);
 
 	$yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
 
@@ -50,15 +54,15 @@
 
 // Retrieve color Sass maps
 @function color($key: 'blue') {
-	@return map-get($colors, $key);
+	@return map.get($colors, $key);
 }
 
 @function theme-color($key: 'primary') {
-	@return map-get($theme-colors, $key);
+	@return map.get($theme-colors, $key);
 }
 
 @function gray($key: '100') {
-	@return map-get($grays, $key);
+	@return map.get($grays, $key);
 }
 
 // Pixel to rem conversion
@@ -72,7 +76,7 @@
 
 // Retrieve headline font-size
 @function headline-size($key: 'h1') {
-	@return map-get($headline-sizes, $key);
+	@return map.get($headline-sizes, $key);
 }
 
 
