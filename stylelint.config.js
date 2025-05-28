@@ -8,6 +8,8 @@ module.exports = {
         'scss/dollar-variable-colon-space-after': null,
         'scss/dollar-variable-empty-line-before': null,
         'scss/double-slash-comment-empty-line-before': null,
+        'scss/at-import-no-partial-leading-underscore': null,
+        "scss/load-no-partial-leading-underscore": null,
         'scss/at-mixin-argumentless-call-parentheses': 'always',
         'scss/at-mixin-pattern': [
             '^_?(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', // This allows kebab-case with an optional starting underscore
@@ -64,8 +66,9 @@ module.exports = {
                     'responsive',
                     'variants',
                     'screen',
-                    'use',
                     'container',
+                    'use',
+                    'forward',
                 ],
             },
         ],
