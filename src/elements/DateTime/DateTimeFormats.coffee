@@ -87,7 +87,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Datum"
-		support_bc: false
+		support_bc: true
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
@@ -109,6 +109,8 @@ CUI.DateTimeFormats["de-DE"] =
 			"M/DD/YYYY"
 			"Y-M-D"
 			"D.M.Y"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"
@@ -229,6 +231,8 @@ CUI.DateTimeFormats["it-IT"] =
 			"YYYYMMDD"
 			"YYYY-M-D"
 			"Y-M-D"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"
@@ -478,6 +482,8 @@ CUI.DateTimeFormats["en-US"] =
 			"YYYYMMDD"
 			"YYYY-M-D"
 			"Y-M-D"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"

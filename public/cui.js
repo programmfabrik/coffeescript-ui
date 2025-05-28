@@ -41798,7 +41798,7 @@ CUI.DateTimeFormats["de-DE"] = {
       parse: ["YYYY-MM-DDTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss"]
     }, {
       text: "Datum",
-      support_bc: false,
+      support_bc: true,
       input: "DD.MM.YYYY",
       invalid: "Datum ungültig",
       display: "dd, DD.MM.YYYY",
@@ -41808,7 +41808,7 @@ CUI.DateTimeFormats["de-DE"] = {
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY", "Y-M-D", "D.M.Y"]
+      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "M/D/YYYY", "MM/D/YYYY", "M/DD/YYYY", "Y-M-D", "D.M.Y", "M/D/Y", "MM/DD/Y"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,
@@ -41886,7 +41886,7 @@ CUI.DateTimeFormats["it-IT"] = {
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D"]
+      parse: ["D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/Y", "MM/DD/Y"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,
@@ -42044,7 +42044,7 @@ CUI.DateTimeFormats["en-US"] = {
       store: "YYYY-MM-DD",
       type: "date",
       clock: false,
-      parse: ["MM/DD/YYYY", "D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D"]
+      parse: ["MM/DD/YYYY", "D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/Y", "MM/DD/Y"]
     }, {
       text: "Jahr-Monat",
       support_bc: false,
@@ -51127,6 +51127,36 @@ CUI.Label = (function(superClass) {
     return nodes;
   };
 
+  Label.parseWithRegex = function(text, regexp, getElement) {
+    var lastIndex, match, matchIndex, matchText, node, nodes, preText, tail;
+    nodes = [];
+    lastIndex = 0;
+    if (!regexp.global) {
+      throw new Error("RegExp must have the /g flag");
+    }
+    regexp.lastIndex = 0;
+    while (match = regexp.exec(text)) {
+      matchText = match[0];
+      matchIndex = match.index;
+      if (matchIndex > lastIndex) {
+        preText = text.substring(lastIndex, matchIndex);
+        nodes.push(CUI.dom.text(preText));
+      }
+      node = getElement(matchText, matchIndex, text);
+      if (node != null) {
+        nodes.push(node);
+      } else {
+        nodes.push(CUI.dom.text(matchText));
+      }
+      lastIndex = regexp.lastIndex;
+    }
+    if (lastIndex < text.length) {
+      tail = text.substring(lastIndex);
+      nodes.push(CUI.dom.text(tail));
+    }
+    return nodes;
+  };
+
   return Label;
 
 })(CUI.DOMElement);
@@ -51853,11 +51883,12 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.getCellByTarget = function($target) {
-    var cell;
-    if (CUI.dom.is($target, ".cui-lv-td")) {
+    var cell, target;
+    target = CUI.dom.closest($target, ".cui-lv-td");
+    if (target) {
       cell = {
-        col_i: parseInt($target.getAttribute("col")),
-        row_i: parseInt($target.getAttribute("row"))
+        col_i: parseInt(target.getAttribute("col")),
+        row_i: parseInt(target.getAttribute("row"))
       };
       cell.display_col_i = this.getDisplayColIdx(cell.col_i);
       cell.display_row_i = this.getDisplayRowIdx(cell.row_i);

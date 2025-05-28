@@ -35,4 +35,15 @@
 	.cui-button {
 		@include buttons.button-plain();
 	}
+
+	.cui-buttonbar {
+		gap: 0; // make buttonbar more compact
+
+		// make buttonbar even more compact when there are at least two buttons
+		&:has(.cui-button:nth-child(2)) {
+			.cui-button-visual {
+				min-width: 28px;
+			}
+		}
+	}
 }

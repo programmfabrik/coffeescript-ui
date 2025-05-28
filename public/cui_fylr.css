@@ -6956,6 +6956,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
   box-shadow: none;
 }
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar {
+  gap: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar:has(.cui-button:nth-child(2)) .cui-button-visual {
+  min-width: 28px;
+}
 
 .cui-simple-pane > .cui-vertical-layout-center {
   overflow: auto;
