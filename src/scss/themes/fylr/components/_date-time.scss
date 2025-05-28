@@ -300,7 +300,7 @@
 
 		&:hover {
 			span {
-				--calendar-date-hover-background: rgb(var(--brand-color-RGB));
+				--calendar-date-hover-background: rgb(var(--brand-color-rgb));
 
 				color: var(--brand-foreground-text-color, #{$body-color});
 				background-color: var(--calendar-date-hover-background, #{rgba($calendar-date-active-background, $calendar-date-hover-background-opacity)});
