@@ -111,8 +111,9 @@ module.exports = function (env, argv) {
                         {
                             loader: 'sass-loader',
                             options: {
-                              implementation: require('sass'),
-                              sourceMap: true, // <-- IMPORTANT for resolve-url-loader!
+                                api: "modern",
+                                implementation: require('sass'),
+                                sourceMap: true, // <-- IMPORTANT for resolve-url-loader!
                             },
                         },
                     ]
