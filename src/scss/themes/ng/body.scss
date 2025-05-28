@@ -1,14 +1,14 @@
 @use "sass:color";
 @use "sass:list";
 @use "sass:map";
+@use "sass:math";
+
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
  * MIT Licence
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
-
-@use "sass:math";
 
 // Third Party Components loaded from thirdparty
 @use '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
