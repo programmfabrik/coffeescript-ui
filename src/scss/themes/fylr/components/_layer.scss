@@ -117,13 +117,6 @@
 // * Layer
 
 .cui-layer {
-	// set size attribute within the component (layer, popover etc.)
-	@each $name, $width in $layer-sizes {
-		&--size-#{$name} {
-			width: $width;
-		}
-	}
-
 	display: flex;
 	flex-direction: column;
 	min-width: map.get($layer-sizes, 'min');
@@ -138,7 +131,14 @@
 		inset 0 0 0 1px rgba($layer-border-color, 0.03),
 		0 2px 4px 0 rgba($layer-shadow-color, 0.2),
 		0 2px 7px 0 rgba($layer-shadow-color, 0.5),
-		0 6px 20px 10px rgba($layer-shadow-color, 0.09);
+		0 6px 20px 10px rgba($layer-shadow-color, 0.09);	
+	
+		// set size attribute within the component (layer, popover etc.)
+	@each $name, $width in $layer-sizes {
+		&--size-#{$name} {
+			width: $width;
+		}
+	}
 
 	&.cui-popover {
 		box-shadow:
