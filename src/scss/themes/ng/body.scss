@@ -16,16 +16,17 @@
 @use '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
 
 
-@import '../../icons/_svg-dimensions.scss';
+@use '../../icons/_svg-dimensions.scss';
+@use "header";
 
 html {
-	@include variableList($default-color);
-	--top-header-background: #{$header-background};
+	@include header.variableList(header.$default-color);
+	--top-header-background: #{header.$header-background};
 }
 
-@each $name, $color in $colors {
+@each $name, $color in header.$colors {
 	[data-theme-color="#{$name}"] {
-		@include variableList($color);
+		@include header.variableList($color);
 	}
 }
 
@@ -48,7 +49,7 @@ ul {
 
 a {
 	text-decoration: none;
-	color: $color;
+	color: header.$color;
 }
 
 kbd {
@@ -70,7 +71,7 @@ html {
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
-	color: $color;
+	color: header.$color;
 }
 
 label {
@@ -78,11 +79,11 @@ label {
 }
 
 body {
-	font-family: $font-family;
-	font-size: $font-size;
-	line-height: $line-height;
-	background: $background;
-	color: $color;
+	font-family: header.$font-family;
+	font-size: header.$font-size;
+	line-height: header.$line-height;
+	background: header.$background;
+	color: header.$color;
 	display: flex;
 	width: 100%;
 	height: 100%;
@@ -96,14 +97,14 @@ textarea {
 	-webkit-appearance: none;
 	        appearance: none;
 	width: 100%;
-	min-width: $input-min-width;
+	min-width: header.$input-min-width;
 	font-size: inherit;
 	color: inherit;
-	border: 1px solid $input-border;
-	border-top-color: color.adjust($input-border, $lightness: -3%);
-	border-radius: $input-radius;
-	box-shadow: $input-shadow;
-	background: $input-background;
+	border: 1px solid header.$input-border;
+	border-top-color: color.adjust(header.$input-border, $lightness: -3%);
+	border-radius: header.$input-radius;
+	box-shadow: header.$input-shadow;
+	background: header.$input-background;
 	font-family: inherit;
 	padding: 2px 3px;
 	margin: 0;
@@ -165,7 +166,7 @@ input[data-max-chars] {
 	height: 12px;
 	box-shadow: 0 0 0 1px hsla(0,0%,0%,.14) inset;
 
-	@each $color, $values in $colors {
+	@each $color, $values in header.$colors {
 		&.cui-swatch-color-#{$color} {
 			background: map.get($values, 'highlight-light');
 		}
@@ -389,7 +390,7 @@ li > div {
 
 	.cui-button {
 		width: 100%;
-		padding: calc($padding / 2) calc($padding / 2) 0;
+		padding: calc(header.$padding / 2) calc(header.$padding / 2) 0;
 		
 		&-left {
 			min-width: 0;
@@ -403,7 +404,7 @@ li > div {
 		&:after {
 			content: "";
 			top: 0;
-			left: $padding - 1px;
+			left: header.$padding - 1px;
 			border-right: 3px dotted var(--highlight);
 			height: 100%;
 			opacity: 0.5;
@@ -533,31 +534,31 @@ li > div {
 }
 
 .cui-border {
-	border: 1px solid $border;
+	border: 1px solid header.$border;
 }
 
 .cui-border-top {
-	border-top: 1px solid $border;
+	border-top: 1px solid header.$border;
 }
 
 .cui-border-bottom {
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid header.$border;
 }
 
 .cui-border-right {
-	border-right: 1px solid $border;
+	border-right: 1px solid header.$border;
 }
 
 .cui-border-left {
-	border-left: 1px solid $border;
+	border-left: 1px solid header.$border;
 }
 
 // Toolbar
 .cui-toolbar {
 	display: flex;
-	min-height: $toolbar-height;
+	min-height: header.$toolbar-height;
 	justify-content: space-between;
-	background: $toolbar-background;
+	background: header.$toolbar-background;
 	// needed in listview, to align all: content-box for all!
 	box-sizing: content-box;
 	overflow: visible !important;
@@ -571,7 +572,7 @@ li > div {
 	}
 
 	&.cui-pane-toolbar {
-		border-bottom: 1px solid $border;
+		border-bottom: 1px solid header.$border;
 	}
 
 	> .cui-horizontal-layout-left,
@@ -606,7 +607,7 @@ li > div {
 		> .cui-label {
 			// reset padding: 0 $padding; in cui-horizontal-layout-left
 			&:first-child {
-				padding-left: $padding;
+				padding-left: header.$padding;
 			}
 
 			&:last-child {
@@ -620,7 +621,7 @@ li > div {
 
 		> .cui-label {
 			&:last-child {
-				padding-right: $padding;
+				padding-right: header.$padding;
 			}
 		}
 	}
@@ -711,31 +712,31 @@ li > div {
 }
 
 .cui-result-navigation-toolbar {
-	min-height: $toolbar-height;
+	min-height: header.$toolbar-height;
 }
 
 // Pane
 .cui-pane--window {
 	> .cui-vertical-layout-top > .cui-pane-header {
-		background: $header-background;
-		border-color: $header-border;
-		min-height: $toolbar-height;
+		background: header.$header-background;
+		border-color: header.$header-border;
+		min-height: header.$toolbar-height;
 
 		.cui-popover & {
-			background: $popover-header-background;
-			border-color: $popover-header-border;
+			background: header.$popover-header-background;
+			border-color: header.$popover-header-border;
 		}
 
 		.cui-label {
-			color: $header-color;
-			font-weight: $header-weight;
+			color: header.$header-color;
+			font-weight: header.$header-weight;
 		}
 	}
 }
 
 .cui-pane-header {
 	flex-wrap: nowrap;
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid header.$border;
 	padding-right: 0;
 
 	.cui-label {
@@ -746,15 +747,15 @@ li > div {
 		align-items: center;
 
 		&-size-mini {
-			font-size: $label-mini;
+			font-size: header.$label-mini;
 		}
 
 		&-size-big {
-			font-size: $label-big;
+			font-size: header.$label-big;
 		}
 
 		&-size-bigger {
-			font-size: $label-bigger;
+			font-size: header.$label-bigger;
 		}
 	}
 
@@ -765,7 +766,7 @@ li > div {
 	}
 
 	> .cui-horizontal-layout-center {
-		margin-right: calc($padding / 2);
+		margin-right: calc(header.$padding / 2);
 	}
 
 	> .cui-horizontal-layout-right {
@@ -781,8 +782,8 @@ li > div {
 }
 
 .cui-pane-footer {
-	border-top: 1px solid $border;
-	min-height: $toolbar-height;
+	border-top: 1px solid header.$border;
+	min-height: header.$toolbar-height;
 
 	.cui-horizontal-layout-left,
 	.cui-horizontal-layout-right {
@@ -794,15 +795,15 @@ li > div {
 		font-size: 12px;
 
 		&-size-mini {
-			font-size: $label-mini;
+			font-size: header.$label-mini;
 		}
 
 		&-size-big {
-			font-size: $label-big;
+			font-size: header.$label-big;
 		}
 
 		&-size-bigger {
-			font-size: $label-bigger;
+			font-size: header.$label-bigger;
 		}
 	}
 
@@ -814,7 +815,7 @@ li > div {
 // Pane
 .cui-pane--padded {
 	> .cui-vertical-layout-center {
-		padding: $padding;
+		padding: header.$padding;
 	}
 }
 
@@ -852,7 +853,7 @@ li > div {
 	}
 
 	> .cui-list-view {
-		border: 1px solid $border;
+		border: 1px solid header.$border;
 	}
 
 	.cui-pane-footer {
@@ -876,7 +877,7 @@ li > div {
 		.cui-horizontal-layout-left > .cui-label:first-child {
 			color: hsl(205,7%,70%);
 			font-weight: normal;
-			padding-left: calc($padding / 2);
+			padding-left: calc(header.$padding / 2);
 			margin-right: 0;
 		}
 
@@ -897,7 +898,7 @@ li > div {
 
 	> .cui-horizontal-layout-left {
 		> .cui-label:last-child {
-			margin-right: $padding;
+			margin-right: header.$padding;
 		}
 	}
 }
@@ -916,9 +917,9 @@ li > div {
 }
 
 .cui-no-icon {
-	font-family: $font-family;
-	font-size: $font-size;
-	line-height: $line-height;
+	font-family: header.$font-family;
+	font-size: header.$font-size;
+	line-height: header.$line-height;
 	font-style: normal; // reset <i> default style
 }
 
@@ -1044,42 +1045,42 @@ li > div {
 	vertical-align: top; // prevents weird button jumping when its content changes from empty to filled with text
 
 	.cui-button-visual {
-	  padding: 0 calc($padding / 2);
-	  height: $button-height;
-	  font-size: $button-font-size;
-	  line-height: $button-height - 2px;
-	  color: $button-color;
-	  background: $button-background;
-	  border: 1px solid $button-border;
-	  border-radius: $button-radius;
+	  padding: 0 calc(header.$padding / 2);
+	  height: header.$button-height;
+	  font-size: header.$button-font-size;
+	  line-height: header.$button-height - 2px;
+	  color: header.$button-color;
+	  background: header.$button-background;
+	  border: 1px solid header.$button-border;
+	  border-radius: header.$button-radius;
 	}
 
 	&.cui-layer-open,
 	&:active,
 	&.cui-active {
 		.cui-button-visual {
-	  	background: $button-pressed;
+	  	background: header.$button-pressed;
 	  }
 	}
 
 	&.cui-active {
 		.cui-button-visual {
-			color: $button-active-text;
-			background: $button-active;
-			border-color: $button-active-border;
+			color: header.$button-active-text;
+			background: header.$button-active;
+			border-color: header.$button-active-border;
 		}
 
 		&.cui-layer-open,
 		&:active {
 			.cui-button-visual {
-				color: $button-active-pressed-text;
-				background: $button-active-pressed;
-				border-color: $button-active-pressed;
+				color: header.$button-active-pressed-text;
+				background: header.$button-active-pressed;
+				border-color: header.$button-active-pressed;
 			}
 		}
 
 		.cui-label-appearance-secondary {
-			color: $button-active-text;
+			color: header.$button-active-text;
 		}
 	}
 
@@ -1087,7 +1088,7 @@ li > div {
 		outline: none;
 
 		.cui-button-visual {
-			@include border-focus;
+			@include header.border-focus;
 		}
 	}
 }
@@ -1099,22 +1100,22 @@ li > div {
 		pointer-events: auto;
 
 		.cui-button-visual {
-			color: $disabled-color;
-			border-color: $button-border;
+			color: header.$disabled-color;
+			border-color: header.$button-border;
 		}
 
 		&:active {
 			.cui-button-visual {
-				background: $button-background;
+				background: header.$button-background;
 			}
 		}
 
 		&.cui-active,
 		&.cui-active:active {
 			.cui-button-visual {
-				color: $button-active-disabled-text;
-				background: $button-active;
-				border-color: $button-active-border;
+				color: header.$button-active-disabled-text;
+				background: header.$button-active;
+				border-color: header.$button-active-border;
 			}
 		}
 	}
@@ -1149,7 +1150,7 @@ li > div {
 	&.cui-button--danger {
 		.cui-button-visual {
 			color: white;
-			background: $negative-color;
+			background: header.$negative-color;
 			border-color: hsla(0,0%,0%,.14);
 		}
 
@@ -1166,7 +1167,7 @@ li > div {
 
 			&:active {
 				.cui-button-visual {
-					background: $negative-color;
+					background: header.$negative-color;
 				}
 			}
 		}
@@ -1191,14 +1192,14 @@ li > div {
 
 	&:active {
 		.cui-button-visual {
-	  	background: color.adjust($button-background,$alpha: -.5);
+	  	background: color.adjust(header.$button-background,$alpha: -.5);
 	  }
 	}
 
 	&.cui-layer-open,
 	&.cui-active {
 		.cui-button-visual {
-	  	box-shadow: 0 0 0 1px $button-active-border;
+	  	box-shadow: 0 0 0 1px header.$button-active-border;
 	  }
 	}
 
@@ -1211,7 +1212,7 @@ li > div {
 
 	.cui-button-visual {
 		padding: 0 4px;
-		border-radius: $button-radius - 1px;
+		border-radius: header.$button-radius - 1px;
 		height: 22px;
 		border-color: transparent;
 		box-shadow: 0 0 0 1px hsla(0,0%,0%,.1);
@@ -1229,10 +1230,10 @@ li > div {
 	vertical-align: top;
 
 	.cui-button-visual {
-		@include button-reset;
+		@include header.button-reset;
 		height: 24px;
 		padding: 3px 0;
-		border-radius: $button-radius; // for the focus outline
+		border-radius: header.$button-radius; // for the focus outline
 		color: var(--highlight);
 	}
 
@@ -1248,7 +1249,7 @@ li > div {
 
   &:focus {
   	.cui-button-visual {
-  		@include inner-focus;
+  		@include header.inner-focus;
   	}
   }
 }
@@ -1300,7 +1301,7 @@ li > div {
 	min-width: 0;
 
 	span {
-		@include ellipsis;
+		@include header.ellipsis;
 	}
 }
 
@@ -1310,7 +1311,7 @@ li > div {
 	.cui-button-visual {
 		min-width: 22px;
 		height: 20px;
-		padding: 0 calc($padding / 4);
+		padding: 0 calc(header.$padding / 4);
 	}
 
 	.fa {
@@ -1349,7 +1350,7 @@ li > div {
 		height: auto;
 		flex-direction: column;
 		border-width: 0;
-		padding: 1px calc($padding / 2);
+		padding: 1px calc(header.$padding / 2);
 	}
 
 	.cui-button-left {
@@ -1383,13 +1384,13 @@ a[role="button"].cui-button-appearance-link {
 	align-self: flex-start;
 	
 	&.cui-button-size-mini .cui-button-visual {
-		font-size: $label-mini;
+		font-size: header.$label-mini;
 	}
 
 	&,
 	&:active {
 		.cui-button-visual {
-			@include button-reset;
+			@include header.button-reset;
 			color: var(--highlight);
 			line-height: 18px;
 		}
@@ -1411,7 +1412,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-data-field {
-	max-width: $input-width;
+	max-width: header.$input-width;
 	margin: 0;
 	
 	.cui-form-value & {
@@ -1438,7 +1439,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-list-view-grid-quadrant-3 {
-		min-height: 3*$table-data-height; // for when using empty lists that can get filled
+		min-height: 3*header.$table-data-height; // for when using empty lists that can get filled
 	}
 
 	.cui-lv-row-move-handle-column {
@@ -1470,7 +1471,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-object-dumper {
-		border: 1px solid $table-border;
+		border: 1px solid header.$table-border;
 
 		.cui-list-view-grid-quadrant-3 {
 			min-height: auto;
@@ -1521,7 +1522,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-			padding: 0 calc($padding / 2);
+			padding: 0 calc(header.$padding / 2);
 		}
 
 		&:focus {
@@ -1541,7 +1542,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
-			padding: 0 calc($padding / 2);
+			padding: 0 calc(header.$padding / 2);
 		}
 
 		&:focus {
@@ -1645,7 +1646,7 @@ a[role="button"].cui-button-appearance-link {
 
 		.cui-button-left span,
 		.cui-button-left i {
-			@include border-focus;
+			@include header.border-focus;
 		}
 	}
 
@@ -1754,8 +1755,8 @@ a[role="button"].cui-button-appearance-link {
 
 // Panel
 .cui-panel {
-	border-top: 1px solid $header-border;
-	border-bottom: 1px solid $header-border;
+	border-top: 1px solid header.$header-border;
+	border-bottom: 1px solid header.$header-border;
 
 	& + &,
 	&:first-child {
@@ -1774,7 +1775,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-panel-header {
-	background: $toolbar-background;
+	background: header.$toolbar-background;
 	position: relative;
 	flex-shrink: 0;
 	box-sizing: content-box;
@@ -1790,23 +1791,23 @@ a[role="button"].cui-button-appearance-link {
 
 		&.cui-active .cui-button-visual {
 			padding-bottom: 5px;
-			border-bottom: 1px solid $border;
+			border-bottom: 1px solid header.$border;
 		}
 
 		.cui-button-visual {
-			@include button-reset;
+			@include header.button-reset;
 			line-height: 22px;
 			justify-content: flex-start;
 			padding: 6px;
-			color: $button-color;
+			color: header.$button-color;
 			font-weight: bold;
 		}
 
 		&:active {
 			.cui-button-visual {
-				background: color.adjust($zebra-color, $lightness: -5%);
-				color: $button-color;
-				border-color: $border;
+				background: color.adjust(header.$zebra-color, $lightness: -5%);
+				color: header.$button-color;
+				border-color: header.$border;
 			}
 		}
 
@@ -1837,7 +1838,7 @@ a[role="button"].cui-button-appearance-link {
 	max-width: 100%;
 
 	> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout > .cui-horizontal-layout-center {
-		max-width: $input-width;
+		max-width: header.$input-width;
 		overflow: visible; // show focus outline
 	}
 
@@ -1964,7 +1965,7 @@ a[role="button"].cui-button-appearance-link {
 		.cui-button-visual {
 			min-width: 0;
 			padding: 0 5px;
-			color: $drag-handle-color;
+			color: header.$drag-handle-color;
 		}
 	}
 }
@@ -1989,7 +1990,7 @@ a[role="button"].cui-button-appearance-link {
 
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
-		margin: calc($padding / 2) 0;
+		margin: calc(header.$padding / 2) 0;
 		flex-shrink: 0;
 		max-width: none;
 		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
@@ -1997,7 +1998,7 @@ a[role="button"].cui-button-appearance-link {
 		&:before {
 			content: "";
 			float: left;
-			margin-top: calc(100% - #{$padding});
+			margin-top: calc(100% - #{header.$padding});
 		}
 
 		> .cui-label-transform {
@@ -2022,7 +2023,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-size-mini {
-		font-size: $label-mini;
+		font-size: header.$label-mini;
 		line-height: 14px;
 	}
 
@@ -2036,11 +2037,11 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-size-big {
-		font-size: $label-big;
+		font-size: header.$label-big;
 	}
 
 	&-size-bigger {
-		font-size: $label-bigger;
+		font-size: header.$label-bigger;
 	}
 
 	&-icon:not(:empty) + .cui-label-content:not(:empty) {
@@ -2051,7 +2052,7 @@ a[role="button"].cui-button-appearance-link {
 	&-content {
 		flex: 0 0 auto;
 		max-width: 100%;
-		@include ellipsis;
+		@include header.ellipsis;
 
 		&:empty {
 			display: none;
@@ -2075,7 +2076,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-appearance-secondary {
-		color: $secondary-color;
+		color: header.$secondary-color;
 
 		.cui-selected & {
 			color: var(--on-highlight-light-secondary-color);
@@ -2093,7 +2094,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&-appearance-muted {
-		color: $muted-color;
+		color: header.$muted-color;
 
 		.cui-selected & {
 			color: var(--on-highlight-light-muted-color);
@@ -2101,16 +2102,16 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&--padded {
-		padding: $padding;
+		padding: header.$padding;
 
 		+ .cui-block > .cui-block-header {
-			padding-top: calc($padding / 2);
+			padding-top: calc(header.$padding / 2);
 		}
 	}
 
 	&-description {
-		color: $secondary-color;
-		margin-bottom: $padding;
+		color: header.$secondary-color;
+		margin-bottom: header.$padding;
 	}
 
 	&[data-type="string"] {
@@ -2129,7 +2130,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	&.cui-label-danger {
-		color: $error-color;
+		color: header.$error-color;
 	}
 }
 
@@ -2352,7 +2353,7 @@ a[role="button"].cui-button-appearance-link {
 
 // Label: Placeholder
 .cui-empty-label {
-	color: $muted-color;
+	color: header.$muted-color;
 	font-style: italic;
 	margin: 0;
 	cursor: default;
@@ -2368,7 +2369,7 @@ a[role="button"].cui-button-appearance-link {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: $padding;
+	padding: header.$padding;
 
 	> .cui-label-content {
 		text-align: center;
@@ -2388,7 +2389,7 @@ a[role="button"].cui-button-appearance-link {
 	// }
 
 	.cui-label {
-		margin: 0 $small-gap;
+		margin: 0 header.$small-gap;
 		align-self: center;
 
 		// CONFLICT: spacing needed around first/last labels
@@ -2411,7 +2412,7 @@ a[role="button"].cui-button-appearance-link {
 		+ .cui-button,
 		+ .cui-button-button,
 		+ .cui-data-field-input {
-			margin-left: $padding;
+			margin-left: header.$padding;
 		}
 	}
 
@@ -2419,7 +2420,7 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-button-button,
 	> .cui-data-field-input {
 		+ .cui-buttonbar-group {
-			margin-left: calc($padding / 2);
+			margin-left: calc(header.$padding / 2);
 		}
 	}
 
@@ -2430,7 +2431,7 @@ a[role="button"].cui-button-appearance-link {
 	.cui-buttonbar-group {
 		+ .cui-button,
 		+ .cui-button-href {
-			margin-left: calc($padding / 2);
+			margin-left: calc(header.$padding / 2);
 		}
 	}
 }
@@ -2457,8 +2458,8 @@ a[role="button"].cui-button-appearance-link {
 
 			.cui-button-visual,
 			.cui-input {
-				border-top-left-radius: $button-radius;
-				border-bottom-left-radius: $button-radius;
+				border-top-left-radius: header.$button-radius;
+				border-bottom-left-radius: header.$button-radius;
 			}
 
 			&:before {
@@ -2470,8 +2471,8 @@ a[role="button"].cui-button-appearance-link {
 		&.cui-last-visible-child {
 			.cui-button-visual,
 			.cui-input {
-				border-top-right-radius: $button-radius;
-				border-bottom-right-radius: $button-radius;
+				border-top-right-radius: header.$button-radius;
+				border-bottom-right-radius: header.$button-radius;
 			}
 		}
 
@@ -2481,12 +2482,12 @@ a[role="button"].cui-button-appearance-link {
 	}
 
 	.cui-label {
-		border: 1px solid $button-border;
-		background: $foreground;
+		border: 1px solid header.$button-border;
+		background: header.$foreground;
 		margin-left: -1px;
 		margin-right: 0;
 		padding: 0 7px;
-		color: $secondary-color;
+		color: header.$secondary-color;
 		
 		&.cui-label-appearance-transparent-border {
 			border: none;
@@ -2534,8 +2535,8 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-input-has-check-input {
 		&.cui-input-invalid {
 			input {
-				border-color: $error-color;
-				background: $error-color-background;
+				border-color: header.$error-color;
+				background: header.$error-color-background;
 			}
 		}
 	}
@@ -2554,32 +2555,32 @@ a[role="button"].cui-button-appearance-link {
 		vertical-align: bottom;
 
 		&:focus {
-			@include border-focus;
+			@include header.border-focus;
 		}
 
 		&::-webkit-input-placeholder {
-			color: $input-placeholder;
+			color: header.$input-placeholder;
 		}
 
 		&::-moz-input-placeholder {
-			color: $input-placeholder;
+			color: header.$input-placeholder;
 		}
 
 		&:-ms-input-placeholder {
-			color: $input-placeholder;
+			color: header.$input-placeholder;
 		}
 
 		&::-ms-input-placeholder {
-			color: $input-placeholder;
+			color: header.$input-placeholder;
 		}
 
 		&::placeholder {
-			color: $input-placeholder;
+			color: header.$input-placeholder;
 		}
 		
 		// Password input placeholder should be regular body color
 		&[placeholder^='***']::placeholder {
-			color: $color;
+			color: header.$color;
 		}					
 	}
 
@@ -2595,7 +2596,7 @@ a[role="button"].cui-button-appearance-link {
 	&.cui-has-focus {
 		input,
 		textarea {
-			@include border-focus;
+			@include header.border-focus;
 		}
 	}
 
@@ -2603,7 +2604,7 @@ a[role="button"].cui-button-appearance-link {
 	+ .cui-label {
 		margin-top: 5px;
 		font-size: 12px;
-		color: $muted-color;
+		color: header.$muted-color;
 	}
 
 	&-appearance-code {
@@ -2640,9 +2641,9 @@ a[role="button"].cui-button-appearance-link {
 	height: 400px;
 	margin: auto;
 
-	border: 1px solid $input-border;
-	border-top-color: color.adjust($input-border, $lightness: -3%);
-	border-radius: $input-radius;
+	border: 1px solid header.$input-border;
+	border-top-color: color.adjust(header.$input-border, $lightness: -3%);
+	border-radius: header.$input-radius;
 }
 
 .cui-browser-ie:not(.cui-browser-edge) {
@@ -2675,7 +2676,7 @@ a[role="button"].cui-button-appearance-link {
 .cui-hint,
 .cui-form-hint {
 	font-size: 12px;
-	color: $muted-color;
+	color: header.$muted-color;
 	
 	.cui-label {
 		line-height: 1.38;
@@ -2683,7 +2684,7 @@ a[role="button"].cui-button-appearance-link {
 }
 
 .cui-form-hint {
-	max-width: $input-width;
+	max-width: header.$input-width;
 	margin-bottom: 5px;
 	
 	.cui-checkbox + &,
@@ -2721,7 +2722,7 @@ a[role="button"].cui-button-appearance-link {
 
 .cui-input-valid-hint {
 	font-size: 11px;
-	margin-top: calc($padding / 4);
+	margin-top: calc(header.$padding / 4);
 }
 
 ::-ms-clear {
@@ -2760,10 +2761,10 @@ a[role="button"].cui-button-appearance-link {
 .cui-layer {
 	min-width: 200px;
 	min-height: 30px;
-	margin: $padding;
+	margin: header.$padding;
 	display: flex;
 	flex-direction: column;
-	background: $layer-background;
+	background: header.$layer-background;
 	outline: none;
 	border-radius: 5px;
 	overflow: auto; /* hidden; */
@@ -2792,7 +2793,7 @@ a[role="button"].cui-button-appearance-link {
 			> .cui-data-table {
 				&:first-child > .cui-list-view {
 					border: none;
-					border-bottom: 1px solid $border;
+					border-bottom: 1px solid header.$border;
 				}
 
 				&:only-child > .cui-list-view {
@@ -2803,8 +2804,8 @@ a[role="button"].cui-button-appearance-link {
 
 		// layer-footer
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			border-top-color: $header-border;
-			background: $header-background;
+			border-top-color: header.$header-border;
+			background: header.$header-background;
 			border-radius: 0 0 5px 5px;
 			
 			.cui-toolbar {
@@ -2812,13 +2813,13 @@ a[role="button"].cui-button-appearance-link {
 			}
 
 			.cui-label {
-				color: $header-color;
+				color: header.$header-color;
 			}
 		}
 	}
 
 	.cui-toolbar {
-		min-height: $toolbar-height;
+		min-height: header.$toolbar-height;
 	}
 
 	.cui-data-table .cui-pane-footer {
@@ -2904,7 +2905,7 @@ $layer-sizes: (
 		position: absolute;
     width: 18px;
     height: 18px;
-		background: $layer-background;
+		background: header.$layer-background;
 		transform: rotate(45deg);
 		box-shadow:
 			0 0 0 1px hsla(205,20%,30%,.15),
@@ -2927,14 +2928,14 @@ $layer-sizes: (
 
 .cui-pane--has-footer {
 	.cui-layer-pointer--s:after {
-		background: $header-background;
+		background: header.$header-background;
 	}
 
 	// make sure that white layer pointers on the side
 	// only end above the footer
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
-		margin-bottom: $toolbar-height;
+		margin-bottom: header.$toolbar-height;
 	}
 }
 
@@ -2945,12 +2946,12 @@ $layer-sizes: (
 .cui-pane--has-header {
 	// color northern layer pointer in header color
 	.cui-layer-pointer--n:after {
-		background: $header-background;
+		background: header.$header-background;
 	}
 
 	&.cui-layer-root-popover {
 		.cui-layer-pointer--n:after {
-			background: $popover-header-background;
+			background: header.$popover-header-background;
 		}
 	}
 
@@ -2958,7 +2959,7 @@ $layer-sizes: (
 	// only start below the header
 	.cui-layer-pointer--e,
 	.cui-layer-pointer--w {
-		margin-top: $toolbar-height;
+		margin-top: header.$toolbar-height;
 	}
 }
 
@@ -3123,7 +3124,7 @@ $layer-sizes: (
 					content: "\f071";
 					font-size: 42px;
 					line-height: 1;
-					color: $neutral-color;
+					color: header.$neutral-color;
 					left: 14px;
 					top: 14px;
 					position: absolute;
@@ -3146,8 +3147,8 @@ $layer-sizes: (
 
 // Tooltip
 .cui-layer-root-tooltip .cui-layer-pointer {
-	width: calc($padding / 2);
-	height: calc($padding / 2);
+	width: calc(header.$padding / 2);
+	height: calc(header.$padding / 2);
 
 	&:after {
 		display: none;
@@ -3161,7 +3162,7 @@ $layer-sizes: (
 	min-height: 0;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
-	background: $layer-background;
+	background: header.$layer-background;
 	border-radius: 2px;
 	box-shadow:
 		0 0 0 1px hsla(0,0%,0%,0.1),
@@ -3196,7 +3197,7 @@ $layer-sizes: (
 	cursor: default;
 
 	> .cui-layer-pane > .cui-vertical-layout-center {
-		padding: 7px $padding;
+		padding: 7px header.$padding;
 	}
 }
 
@@ -3226,11 +3227,11 @@ $layer-sizes: (
 	}
 
 	.cui-item-list-body > .cui-options:last-child {
-		border-top: 1px solid $border;
+		border-top: 1px solid header.$border;
 		padding: 6px 0;
 		margin-top: 4px;
 		margin-bottom: -4px;
-		background: $toolbar-background;
+		background: header.$toolbar-background;
 		font-size: 12px;
 
 		.cui-button-checkbox {
@@ -3238,7 +3239,7 @@ $layer-sizes: (
 
 			.cui-button-visual {
 				min-height: 0;
-				padding: 1px $padding;
+				padding: 1px header.$padding;
 				background: none;
 				color: inherit;
 			}
@@ -3304,7 +3305,7 @@ $layer-sizes: (
 	}
 
 	.cui-menu-item.cui-label {
-		padding: $padding+3px $padding 3px;
+		padding: header.$padding+3px header.$padding 3px;
 		color: hsl(205,3%,50%);
 	}
 
@@ -3313,8 +3314,8 @@ $layer-sizes: (
 	}
 
 	.cui-empty-label {
-		padding: 6px $padding;
-		color: $disabled-color;
+		padding: 6px header.$padding;
+		color: header.$disabled-color;
 	}
 
 	.cui-button,
@@ -3325,12 +3326,12 @@ $layer-sizes: (
 		.cui-button-visual {
 			justify-content: flex-start;
 			flex-grow: 1;
-			padding: 0 $padding;
+			padding: 0 header.$padding;
 			border: none;
 			border-radius: 0;
 			height: auto;
-			min-height: $button-height;
-			line-height: $line-height;
+			min-height: header.$button-height;
+			line-height: header.$line-height;
 			padding-top: 5px;
 			padding-bottom: 5px;
 
@@ -3343,23 +3344,23 @@ $layer-sizes: (
 		&.cui-layer-open,
 		&:active {
 			.cui-button-visual {
-				color: $item-list-color;
-				background: $item-list-pressed;
+				color: header.$item-list-color;
+				background: header.$item-list-pressed;
 			}
 		}
 
 		&:hover {
 			.cui-button-visual {
-				color: $item-list-color;
-				background: $item-list-hover;
+				color: header.$item-list-color;
+				background: header.$item-list-hover;
 			}
 		}
 
 		&.cui-active,
 		&.cui-active:hover {
 			.cui-button-visual {
-				color: $button-active-text;
-				background: $button-active;
+				color: header.$button-active-text;
+				background: header.$button-active;
 			}
 		}
 
@@ -3368,7 +3369,7 @@ $layer-sizes: (
 			&:hover,
 			&.cui-active {
 				.cui-button-visual {
-					color: $disabled-color;
+					color: header.$disabled-color;
 					background: none;
 				}
 			}
@@ -3377,7 +3378,7 @@ $layer-sizes: (
 		&.cui-button-appearance-important:not(:hover):not(.cui-active) {
 			.cui-button-visual {
 				background: none;
-				color: $button-color;
+				color: header.$button-color;
 			}
 		}
 
@@ -3429,7 +3430,7 @@ $layer-sizes: (
 	&.cui-item-list--has-button-left {
 		// this button always has a left side
 		.cui-button-left {
-			padding-right: $padding;
+			padding-right: header.$padding;
 			min-width: 15px;
 			box-sizing: content-box;
 			padding-left: 1px;
@@ -3440,7 +3441,7 @@ $layer-sizes: (
 		}
 		// add space to button without icon
 		.cui-button-center:first-child {
-			padding-left: 3px + $padding + 13px;
+			padding-left: 3px + header.$padding + 13px;
 		}
 	}
 }
@@ -3448,7 +3449,7 @@ $layer-sizes: (
 // Popover
 
 .cui-popover {
-	background: $layer-background;
+	background: header.$layer-background;
 	min-width: 247px;
 }
 
@@ -3477,7 +3478,7 @@ $layer-sizes: (
 
 	&:after {
 		top: 3px;
-		background: $popover-hint-background;
+		background: header.$popover-hint-background;
 		box-shadow:
 			3px 3px 14px hsla(0,0%,0%,0.1);
 	}
@@ -3492,7 +3493,7 @@ $layer-sizes: (
 	bottom: 0;
 	z-index: 1;
 	display: flex;
-	color: $muted-color;
+	color: header.$muted-color;
 }
 
 .cui-wait-block-glass {
@@ -3502,7 +3503,7 @@ $layer-sizes: (
 	right: 0;
 	bottom: 0;
 	opacity: 0.5;
-	background: $foreground;
+	background: header.$foreground;
 }
 
 .cui-wait-block-inner {
@@ -3524,7 +3525,7 @@ $layer-sizes: (
 		}
 
 		.cui-label-content {
-			padding-left: $padding;
+			padding-left: header.$padding;
 		}
 	}
 }
@@ -3555,21 +3556,21 @@ $layer-sizes: (
 	}
 
 	&.cui-absolute > .cui-vertical-layout-center {
-		top: $toolbar-height + 1px; // 1px border
+		top: header.$toolbar-height + 1px; // 1px border
 	}
 
 	> .cui-vertical-layout-center {
 		> .cui-tabs-bodies {
 			> .cui-tab-body.cui-tab--padded {
-				padding: $padding;
+				padding: header.$padding;
 			}
 		}
 	}
 }
 
 .cui-tabs-pane-header {
-	min-height: $toolbar-height;
-	background: $toolbar-background;
+	min-height: header.$toolbar-height;
+	background: header.$toolbar-background;
 
 	&.cui-tabs-pane-header--mini {
 		background: none;
@@ -3620,7 +3621,7 @@ $layer-sizes: (
 	}
 
 	> .cui-empty-label:only-child {
-		margin: $padding 0;
+		margin: header.$padding 0;
 	}
 }
 
@@ -3632,11 +3633,11 @@ $layer-sizes: (
 
 	.cui-button-visual {
 		background: none;
-		color: $button-active;
+		color: header.$button-active;
 		height: 26px;
 		line-height: 24px;
 		min-width: 40px;
-		padding: 0 $padding;
+		padding: 0 header.$padding;
 		border: 1px solid;
 	}
 
@@ -3660,27 +3661,27 @@ $layer-sizes: (
 	&.cui-active {
 		.cui-button-visual {
 			color: var(--on-highlight-color);
-			background: $button-active;
-			border-color: $button-active-border;
+			background: header.$button-active;
+			border-color: header.$button-active-border;
 		}
 
 		&:active {
 			.cui-button-visual {
-				color: $button-active-pressed-text;
-				background: $button-active-pressed;
-				border-color: $button-active-pressed-border;
+				color: header.$button-active-pressed-text;
+				background: header.$button-active-pressed;
+				border-color: header.$button-active-pressed-border;
 			}
 		}
 	}
 
 	&.cui-disabled {
 		.cui-button-visual {
-			color: color.adjust($button-active, $lightness: 32%);
+			color: color.adjust(header.$button-active, $lightness: 32%);
 		}
 
 		&:not(:first-child) {
 			.cui-button-visual {
-				border-left-color: $button-active;
+				border-left-color: header.$button-active;
 			}
 		}
 
@@ -3694,16 +3695,16 @@ $layer-sizes: (
 
 .cui-toolbar .cui-tab-header-button {
 	&:first-child {
-		padding-left: $padding;
+		padding-left: header.$padding;
 	}
 
 	&:last-child {
-		padding-right: $padding;
+		padding-right: header.$padding;
 	}
 }
 
 .cui-toolbar .cui-tab-header-button-overflow {
-	padding-right: $padding;
+	padding-right: header.$padding;
 }
 
 .cui-toolbar {
@@ -3759,7 +3760,7 @@ $layer-sizes: (
 	.cui-tabs-pane-header {
 		border-bottom: none;
 		padding: 0 !important;
-		border-right: 1px solid $border;
+		border-right: 1px solid header.$border;
 		display: block;
 		overflow: auto;
 		height: 100%;
@@ -3814,7 +3815,7 @@ $layer-sizes: (
 	flex-direction: column;
 
 	.cui-label-size-normal {
-		line-height: $table-data-height - $table-data-padding*2;
+		line-height: header.$table-data-height - header.$table-data-padding*2;
 	}
 
 	// Conflict: looks bad in list-views that include buttons
@@ -3847,7 +3848,7 @@ $layer-sizes: (
 		.cui-list-view-tree-hierarchy &:first-child:before {
 			content: "";
 			display: inline-block;
-			width: $tree-node-handle-width;
+			width: header.$tree-node-handle-width;
 		}
 	}
 }
@@ -3869,9 +3870,9 @@ $layer-sizes: (
 }
 
 .cui-lv-td {
-	padding: $table-data-padding $padding;
+	padding: header.$table-data-padding header.$padding;
 	width: 125px;
-	min-height: $td-height;
+	min-height: header.$td-height;
 	overflow: hidden;
 	flex-shrink: 0;
 	display: block;
@@ -3967,7 +3968,7 @@ $layer-sizes: (
 		}
 
 		.cui-button-visual {
-			@include button-reset;
+			@include header.button-reset;
 		}
 	}
 
@@ -3998,7 +3999,7 @@ $layer-sizes: (
 			top: 0;
 			bottom: 0;
 			width: 1px;
-			background: $table-header-border;
+			background: header.$table-header-border;
 		}
 	}
 }
@@ -4018,7 +4019,7 @@ $layer-sizes: (
 .cui-list-view-grid-has-fixed-rows {
 	.cui-list-view-grid-inner-top {
 		.cui-list-view-grid-quadrant {
-			border-bottom: 1px solid $table-border;
+			border-bottom: 1px solid header.$table-border;
 
 			&:empty {
 				border-bottom-width: 0;
@@ -4075,7 +4076,7 @@ $layer-sizes: (
 	.cui-lv-tr-outer {
 		&:nth-child(even) {
 			> .cui-lv-tr > .cui-lv-td {
-				background: $zebra-color;
+				background: header.$zebra-color;
 			}
 		}
 	}
@@ -4117,11 +4118,11 @@ $layer-sizes: (
 
 	&:focus,
 	&:focus:nth-child(even) {
-		@include inner-focus;
+		@include header.inner-focus;
 	}
 
 	&.cui-lv-tree-node--is-branch {
-		@include clickable;
+		@include header.clickable;
 	}
 
 	&.cui-row-invalid {
@@ -4143,7 +4144,7 @@ $layer-sizes: (
 	&.cui-row-invalid:hover,
 	&.cui-row-invalid:focus {
 		> .cui-lv-tr {
-			background-color: $error-color-background;
+			background-color: header.$error-color-background;
 		}
 	}		
 }
@@ -4159,7 +4160,7 @@ $layer-sizes: (
 }
 
 .cui-list-view-row-selectable {
-	@include clickable;
+	@include header.clickable;
 }
 
 .cui-lv-row-move-handle-column {
@@ -4168,8 +4169,8 @@ $layer-sizes: (
 	}
 
 	&.cui-lv-td {
-		width: $row-move-handle-width;
-		padding-left: $table-data-padding+2;
+		width: header.$row-move-handle-width;
+		padding-left: header.$table-data-padding+2;
 		padding-right: 0;
 	}
 
@@ -4193,8 +4194,8 @@ $layer-sizes: (
 
 	> .cui-lv-tr > .cui-lv-td {
 		border-style: none;
-		background: linear-gradient($zebra-color 50%, white 50%);
-		background-size: 100% ($td-height + 2*$table-data-padding)*2;
+		background: linear-gradient(header.$zebra-color 50%, white 50%);
+		background-size: 100% (header.$td-height + 2*header.$table-data-padding)*2;
 	}
 
 	.cui-lv-td {
@@ -4210,13 +4211,13 @@ $layer-sizes: (
 }
 
 .cui-list-view-grid-rows-even .cui-lv-tr-fill-outer > .cui-lv-tr > .cui-lv-td {
-	background-image: linear-gradient(white 50%, $zebra-color 50%);
+	background-image: linear-gradient(white 50%, header.$zebra-color 50%);
 }
 
 .cui-data-table {
 	.cui-lv-tr-fill-outer {
 		> .cui-lv-tr > .cui-lv-td {
-			background-size: 100% $table-data-height*2;
+			background-size: 100% header.$table-data-height*2;
 		}
 	}
 }
@@ -4231,7 +4232,7 @@ $layer-sizes: (
 		width: 1px;
 		margin-left: -1px;
 		height: 100%;
-		background: $table-header-border;
+		background: header.$table-header-border;
 	}
 }
 
@@ -4275,8 +4276,8 @@ $layer-sizes: (
 							}
 
 							&.cui-lv-row-move-handle-column {
-								padding-top: $table-data-padding;
-								padding-bottom: $table-data-padding;
+								padding-top: header.$table-data-padding;
+								padding-bottom: header.$table-data-padding;
 							}
 						}
 					}
@@ -4299,7 +4300,7 @@ $layer-sizes: (
 
 .cui-tree-node-handle,
 .cui-tree-node-spacer {
-	width: $tree-node-handle-width;
+	width: header.$tree-node-handle-width;
 	flex: 0 0 auto;
 
 	.fa {
@@ -4384,7 +4385,7 @@ $layer-sizes: (
 	}
 
 	&--bordered {
-		border: 1px solid $table-border;
+		border: 1px solid header.$table-border;
 	}
 
 	&--has-datafields {
@@ -4405,7 +4406,7 @@ $layer-sizes: (
 		}
 
 		.cui-td--key {
-			width: $td-width;
+			width: header.$td-width;
 			flex-shrink: 0;
 			word-wrap: break-word;
 			display: block;
@@ -4435,7 +4436,7 @@ $layer-sizes: (
 
 .cui-table-row {
 	&:nth-child(even) .cui-table-td {
-		background: $zebra-color;
+		background: header.$zebra-color;
 	}
 }
 
@@ -4446,7 +4447,7 @@ $layer-sizes: (
 .cui-table-header {
 	~ .cui-table-row {
 		&:nth-child(odd) .cui-table-td {
-			background: $zebra-color;
+			background: header.$zebra-color;
 		}
 
 		&:nth-child(even) .cui-table-td {
@@ -4470,13 +4471,13 @@ $layer-sizes: (
 .cui-th,
 .cui-td {
 	display: table-cell;
-	padding: calc($padding / 2) $padding;
+	padding: calc(header.$padding / 2) header.$padding;
 	vertical-align: top;
 
 	&[colspan]{
 		> label,
 		> .cui-label {
-			margin-bottom: calc($padding / 2);
+			margin-bottom: calc(header.$padding / 2);
 		}
 	}
 
@@ -4486,8 +4487,8 @@ $layer-sizes: (
 }
 
 .cui-td--key {
-	color: $form-label-color;
-	font-weight: $form-label-weight;
+	color: header.$form-label-color;
+	font-weight: header.$form-label-weight;
 	padding-right: 0;
 	vertical-align: top;
 }
@@ -4515,8 +4516,8 @@ $layer-sizes: (
 
 .cui-th {
 	position: relative;
-	border-bottom: 1px solid $table-header-border;
-	padding: calc($padding / 2 - 1px) $padding;
+	border-bottom: 1px solid header.$table-header-border;
+	padding: calc(header.$padding / 2 - 1px) header.$padding;
 	font-size: 0.85em;
 
 	&:after { // table-head line
@@ -4526,7 +4527,7 @@ $layer-sizes: (
 		top: 2px;
 		bottom: 2px;
 		width: 1px;
-		background: $table-header-border;
+		background: header.$table-header-border;
 	}
 
 	&:last-child:after {
@@ -4535,27 +4536,27 @@ $layer-sizes: (
 }
 
 .status-2d-map {
-	border: 1px solid $table-border;
+	border: 1px solid header.$table-border;
 	display: table;
 
 	.cui-block & .cui-td {
 		&:first-child {
-			padding-left: $padding;
+			padding-left: header.$padding;
 		}
 
 		&:last-child {
-			padding-right: $padding;
+			padding-right: header.$padding;
 		}
 	}
 
 	.cui-tr {
 		&:nth-child(odd):not(:first-child) {
-			background: $zebra-color;
+			background: header.$zebra-color;
 		}
 
 		&:first-child {
 			.cui-td {
-				border-bottom: 1px solid $table-border;
+				border-bottom: 1px solid header.$table-border;
 				position: relative;
 
 				&:not(:last-child):after {
@@ -4566,7 +4567,7 @@ $layer-sizes: (
 					top: 0;
 					bottom: 0;
 					width: 1px;
-					background: $table-border;
+					background: header.$table-border;
 				}
 			}
 		}
@@ -4576,7 +4577,7 @@ $layer-sizes: (
 // Nested Table
 .cui-table .cui-table {
 	.cui-tr {
-		background: $foreground;
+		background: header.$foreground;
 	}
 }
 
@@ -4585,7 +4586,7 @@ $layer-sizes: (
 	overflow: visible;
 	
 	&--padded {
-		padding: $padding;
+		padding: header.$padding;
 	}
 
 	&--condensed {
@@ -4607,12 +4608,12 @@ $layer-sizes: (
 	> div > .cui-form-table {
 		display: flex;
 		flex-wrap: wrap;
-		margin: $padding #{-$padding} !important; 
+		margin: header.$padding #{-(header.$padding)} !important; 
 		width: 100% !important;
 
 		.cui-form-tr {
 			display: block;
-			padding: 0 $padding;
+			padding: 0 header.$padding;
 			width: 100%;
 
 			$sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
@@ -4623,7 +4624,7 @@ $layer-sizes: (
 				}
 			}
 
-			@include xs {
+			@include header.xs {
 				width: 100% !important;
 			}
 		}
@@ -4631,7 +4632,7 @@ $layer-sizes: (
 		.cui-form-td {
 			display: block; // block will disable the change of order applied to the regular side-by-side form, see .cui-form-tr
 
-			@include xs {
+			@include header.xs {
 				&.cui-form-key {
 					padding-bottom: 2px;
 				}
@@ -4677,7 +4678,7 @@ $layer-sizes: (
 			}
 			min-width: 0;
 			margin-bottom: 0;
-			margin-right: $padding;
+			margin-right: header.$padding;
 
 			&:last-child {
 				margin-right: 0;
@@ -4692,7 +4693,7 @@ $layer-sizes: (
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: $padding;
+	margin-bottom: header.$padding;
 
 	&:last-child {
 		margin-bottom: 0;
@@ -4729,7 +4730,7 @@ $layer-sizes: (
 	}
 
 	+ .cui-form-table {
-		margin-top: $padding;
+		margin-top: header.$padding;
 	}
 }
 
@@ -4739,7 +4740,7 @@ $layer-sizes: (
 	
 	+ .cui-form-block {
 		padding-top: 0;
-		margin-top: $padding;
+		margin-top: header.$padding;
 	}
 }
 
@@ -4760,7 +4761,7 @@ $layer-sizes: (
 	}
 
 	// < 767
-	@include phone {
+	@include header.phone {
 		display: block;		
 		margin-bottom: 15px;
 
@@ -4783,8 +4784,8 @@ $layer-sizes: (
 .cui-form-tr {
 	.cui-form-options-table,
 	.cui-form-table-horizontal {
-		margin-top: -$padding;
-		margin-bottom: -$padding;
+		margin-top: -(header.$padding);
+		margin-bottom: -(header.$padding);
 
 		.cui-form-tr {
 			&:before {
@@ -4812,7 +4813,7 @@ $layer-sizes: (
 }
 
 .cui-form-td {
-	padding: calc($padding / 2) 0;
+	padding: calc(header.$padding / 2) 0;
 	vertical-align: top;
 	
 	.cui-form-tr:first-child & {
@@ -4826,8 +4827,8 @@ $layer-sizes: (
 
 .cui-form-key {
 	flex-shrink: 0;
-	width: $td-width;
-	min-width: $td-width;
+	width: header.$td-width;
+	min-width: header.$td-width;
 	max-width: none;
 	padding-right: 10px;
 
@@ -4836,12 +4837,12 @@ $layer-sizes: (
 		display: inline-block;
 		margin: 4px 0;
 		white-space: normal;
-		min-width: $td-min-width;
+		min-width: header.$td-min-width;
 		max-width: 100%;
 		word-wrap: break-word;
-		color: $form-label-color;
-		font-size: $form-label-font-size;
-		font-weight: $form-label-weight;
+		color: header.$form-label-color;
+		font-size: header.$form-label-font-size;
+		font-weight: header.$form-label-weight;
 	}
 
 	.cui-form-field-type--checkbox > & {
@@ -4855,7 +4856,7 @@ $layer-sizes: (
 
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
-	@include clickable;
+	@include header.clickable;
 }
 
 .cui-form-value {
@@ -4914,25 +4915,25 @@ label[data-label-clickable],
 
 .cui-output {
 	&-empty {
-		color: $muted-color;
+		color: header.$muted-color;
 	}
 
 	&--deletable {
 		display: flex;
-		border: 1px solid $button-border;
-		border-radius: $button-radius;
-		color: $button-color;
+		border: 1px solid header.$button-border;
+		border-radius: header.$button-radius;
+		color: header.$button-color;
 		cursor: default;
 
 		.cui-label {
 			flex: 1 1 0;
 			min-width: 0;
-			margin-left: $padding;
+			margin-left: header.$padding;
 			padding: 2px 0;
 		}
 
 		.cui-button {
-			margin-left: calc($padding / 2);
+			margin-left: calc(header.$padding / 2);
 
 			&-visual {
 				color: inherit;
@@ -4966,11 +4967,11 @@ label[data-label-clickable],
 	.cui-form-key {
 		line-height: 24px;
 		text-align: right;
-		@include ellipsis;
+		@include header.ellipsis;
 	}
 
 	.cui-form-value {
-		padding-right: $padding;
+		padding-right: header.$padding;
 	}
 
 	.cui-form-td {
@@ -5049,7 +5050,7 @@ label[data-label-clickable],
 }
 
 .cui-options-inactive {
-	margin-top: $padding;
+	margin-top: header.$padding;
 
 	&:empty {
 		margin-top: 0;
@@ -5148,7 +5149,7 @@ label[data-label-clickable],
 
 .cui-options-hint {
 	max-width: 250px;
-	margin-top: $compensating-padding;
+	margin-top: header.$compensating-padding;
 	margin-left: 18px;
 	margin-bottom: 4px !important;
 	@extend .cui-hint;
@@ -5189,7 +5190,7 @@ label[data-label-clickable],
 	height: 10px;
 	width: 100%;
 
-	background: linear-gradient($drag-handle-color 1px, transparent 1px, transparent 2px);
+	background: linear-gradient(header.$drag-handle-color 1px, transparent 1px, transparent 2px);
 	background-size: 100% 3px;
 
 	&:hover {
@@ -5241,8 +5242,8 @@ label[data-label-clickable],
 
 .cui-date-time-calendar .cui-buttonbar {
 	justify-content: space-between;
-	background: $header-background;
-	padding: calc($padding / 2);
+	background: header.$header-background;
+	padding: calc(header.$padding / 2);
 
 	[cui-data-field-name="year"] .cui-button-select .cui-button-center {
 		min-width: 39px;
@@ -5283,8 +5284,8 @@ label[data-label-clickable],
 
 		&:last-child .cui-button .cui-button-visual {
 			border-right-width: 1px;
-			border-top-right-radius: $button-radius;
-			border-bottom-right-radius: $button-radius;
+			border-top-right-radius: header.$button-radius;
+			border-bottom-right-radius: header.$button-radius;
 			padding-right: 4px;
 		}
 
@@ -5319,13 +5320,13 @@ label[data-label-clickable],
 }
 
 .cui-buttonbar-group-time {
-	margin-left: $padding;
+	margin-left: header.$padding;
 }
 
 .cui-date-time-footer {
 	overflow: visible !important; // show year input outline
-	background: $header-background;
-	border-top: 1px solid $header-border;
+	background: header.$header-background;
+	border-top: 1px solid header.$header-border;
 
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
@@ -5337,7 +5338,7 @@ label[data-label-clickable],
 
 	> .cui-horizontal-layout-left {
 		flex: 1 0 auto;
-		margin-right: $gap;
+		margin-right: header.$gap;
 
 		.cui-label { // June, September
 			flex: 1 1 auto;
@@ -5355,7 +5356,7 @@ label[data-label-clickable],
 	}
 
 	.cui-button-visual {
-		padding: 0 calc($padding / 2);
+		padding: 0 calc(header.$padding / 2);
 	}
 }
 
@@ -5363,7 +5364,7 @@ label[data-label-clickable],
 
 .cui-date-time-date {
 	width: 100%;
-	background: $border;
+	background: header.$border;
 	flex-grow: 1;
 	border: none;
 
@@ -5378,9 +5379,9 @@ label[data-label-clickable],
 		}
 
 		&.cui-date-time-month-header {
-			background: $toolbar-background;
-			border-top: 1px solid $header-border;
-			border-bottom: 1px solid $border;
+			background: header.$toolbar-background;
+			border-top: 1px solid header.$header-border;
+			border-bottom: 1px solid header.$border;
 		}
 	}
 
@@ -5421,8 +5422,8 @@ label[data-label-clickable],
 
 	.cui-date-time-week {
 		font-size: 12px;
-		background: $toolbar-background;
-		color: $secondary-color;
+		background: header.$toolbar-background;
+		color: header.$secondary-color;
 	}
 
 	.cui-date-time-day {
@@ -5534,7 +5535,7 @@ label[data-label-clickable],
 	flex-direction: column;
   align-items: stretch;
 	flex: 1 1 auto;
-	min-width: $input-min-width;
+	min-width: header.$input-min-width;
 }
 
 .cui-data-field-multi-input-center {
@@ -5550,18 +5551,18 @@ label[data-label-clickable],
 	display: flex;
 	margin-left: 0;
 	margin-right: 0;
-	@include margin-top(0.5);
+	@include header.margin-top(0.5);
 	position: relative;
 	max-width: 100%;
 
-	border: 1px solid $input-border;
-	border-top-color: color.adjust($input-border, $lightness: -3%);
-	border-radius: $input-radius;
-	background: $input-background;
+	border: 1px solid header.$input-border;
+	border-top-color: color.adjust(header.$input-border, $lightness: -3%);
+	border-radius: header.$input-radius;
+	background: header.$input-background;
 
 	&:focus,
 	&.cui-has-focus {
-		@include border-focus;
+		@include header.border-focus;
 
 		textarea {
 			box-shadow: none;
@@ -5579,7 +5580,7 @@ label[data-label-clickable],
 		background: none;
 		border-radius: 0;
 		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
-		@include disable-focus;
+		@include header.disable-focus;
 	}
 }
 
@@ -5594,11 +5595,11 @@ label[data-label-clickable],
 
 .cui-multi-input-tag-button {
 	.cui-button-visual {
-		@include button-reset;
+		@include header.button-reset;
 		color: hsl(0,0%,30%);
 		font-size: 10px;
   	line-height: 22px !important;
-  	box-shadow: $input-shadow;
+  	box-shadow: header.$input-shadow;
 
   	.cui-button-center {
   		padding: 0 6px;
@@ -5611,7 +5612,7 @@ label[data-label-clickable],
 .cui-data-field-multi-output {
 	display: flex;
 	padding: 2px 0;
-	border-bottom: 1px solid $light-border-transparent;
+	border-bottom: 1px solid header.$light-border-transparent;
 
 	&:first-child {
 		padding-top: 0;
@@ -5635,7 +5636,7 @@ label[data-label-clickable],
 			min-width: 13px;
 			font-size: 9px;
 			justify-content: flex-start;
-			color: $muted-color;
+			color: header.$muted-color;
 		}
 
 		.cui-button-center {
@@ -5816,7 +5817,7 @@ label[data-label-clickable],
 
 .cui-block {
 	flex-shrink: 0;
-	padding-top: 1.5*$padding;
+	padding-top: 1.5*header.$padding;
 
 	&:first-child {
 		padding-top: 0;
@@ -5829,32 +5830,32 @@ label[data-label-clickable],
 	}
 
 	.cui-block-description {
-		color: $secondary-color;
+		color: header.$secondary-color;
 		margin-top: 0;
-		margin-bottom: $padding;
+		margin-bottom: header.$padding;
 	}
 
 	&.appearance-muted {
 		.cui-block-header > .cui-block-title {
-			color: $muted-color;
+			color: header.$muted-color;
 		}
 	}
 
 	&.cui-block-level-1,
 	&.cui-block-level-2 {
 		&.appearance-wide {
-			background: $toolbar-background;
-			padding: 2*$padding;
+			background: header.$toolbar-background;
+			padding: 2*header.$padding;
 			position: relative;
 
 			&:after {
 				content: "";
 				bottom: 0;
-				margin: 0 $padding;
+				margin: 0 header.$padding;
 				left: 0;
 				right: 0;
 				height: 1px;
-				background: $border;
+				background: header.$border;
 				position: absolute;
 			}
 
@@ -5880,12 +5881,12 @@ label[data-label-clickable],
 				.cui-block-title {
 					font-size: 28px;
 					line-height: 1.5;
-					color: color.adjust($header-color, $lightness: -6%);
+					color: color.adjust(header.$header-color, $lightness: -6%);
 				}
 			}
 
 			> .cui-block-content {
-				color: $secondary-color;
+				color: header.$secondary-color;
 			}
 		}
 	}
@@ -5908,21 +5909,21 @@ label[data-label-clickable],
 			> .cui-block-header {
 				width: 200px;
 				flex-grow: .2;
-				padding-right: $padding * 1.5;
+				padding-right: header.$padding * 1.5;
 				position: sticky;
 				top: 0;
 
 				.cui-block-title {
 					font-size: 15px;
-					color: color.adjust($header-color, $lightness: -14%);
-					padding: $padding 0;
+					color: color.adjust(header.$header-color, $lightness: -14%);
+					padding: header.$padding 0;
 				}
 			}
 
 			> .cui-block-content {
-				$p: 1.5*$padding;
-				background: $foreground;
-				border: 1px solid $border;
+				$p: 1.5*header.$padding;
+				background: header.$foreground;
+				border: 1px solid header.$border;
 				border-radius: 5px;
 				padding: $p;
 				min-width: 500px;
@@ -5935,8 +5936,8 @@ label[data-label-clickable],
 				}
 
 				.cui-block-level-3 {
-					border-top: 1px solid $border;
-					border-bottom: 1px solid $border;
+					border-top: 1px solid header.$border;
+					border-bottom: 1px solid header.$border;
 					margin: $p -#{$p};
 					padding: $p;
 
@@ -5957,11 +5958,11 @@ label[data-label-clickable],
 	}
 
 	&.cui-block-level-3 {
-		padding-bottom: $padding;
+		padding-bottom: header.$padding;
 		
 		&.appearance-wide {
 			> .cui-block-header {
-				padding-bottom: 1.5*$padding;
+				padding-bottom: 1.5*header.$padding;
 			}
 		}
 
@@ -5992,14 +5993,14 @@ label[data-label-clickable],
 	}
 
 	&--padded {
-		padding: $padding;
+		padding: header.$padding;
 
 		&:first-child {
-			padding-top: $padding;
+			padding-top: header.$padding;
 		}
 
 		&:last-child {
-			padding-bottom: $padding;
+			padding-bottom: header.$padding;
 		}
 	}
 }
@@ -6019,7 +6020,7 @@ label[data-label-clickable],
 
 	.cui-form-table {
 		width: 100%;
-		margin: $padding 0;
+		margin: header.$padding 0;
 
 		&:first-child {
 			margin-top: 0;
@@ -6057,13 +6058,13 @@ label[data-label-clickable],
 // StickyHeader
 
 .cui-sticky-header {
-	padding: 5px $padding;
+	padding: 5px header.$padding;
 	font-size: 13px;
 	font-weight: bold;
-	color: $color;
+	color: header.$color;
 	flex-basis: 100%;
 	flex-shrink: 0;
-	border-bottom: 1px solid color.adjust(color.adjust($soft-border, $lightness: -50%), $alpha: -0.85);
+	border-bottom: 1px solid color.adjust(color.adjust(header.$soft-border, $lightness: -50%), $alpha: -0.85);
 
 	.cui-label {
 		line-height: normal;
@@ -6106,9 +6107,9 @@ label[data-label-clickable],
 		width: 100%;
 		max-width: 200px;
 		min-width: 30px;
-		height: $button-height;
-		line-height: $button-height;
-		border-radius: $button-radius;
+		height: header.$button-height;
+		line-height: header.$button-height;
+		border-radius: header.$button-radius;
 		overflow: hidden;
 		position: relative;
 		// to make sure that the border-radius will cut off all child backgrounds
@@ -6136,7 +6137,7 @@ label[data-label-clickable],
 			position: relative;
 
 			.svg-spinner {
-				height: $button-height;
+				height: header.$button-height;
 			}
 		}
 
@@ -6206,29 +6207,29 @@ label[data-label-clickable],
 
 // Space
 .cui-space {
-	margin: $padding;
+	margin: header.$padding;
 	display: inline-block;
 
 	&:empty {
-		margin: calc($padding / 2);
+		margin: calc(header.$padding / 2);
 	}
 }
 
 .cui-small-space {
-	margin: calc($padding / 2);
+	margin: calc(header.$padding / 2);
 	display: inline-block;
 
 	&:empty {
-		margin: calc($padding / 4);
+		margin: calc(header.$padding / 4);
 	}
 }
 
 .cui-large-space {
-	margin: $padding*2;
+	margin: header.$padding*2;
 	display: inline-block;
 
 	&:empty {
-		margin: $padding;
+		margin: header.$padding;
 	}
 }
 
@@ -6238,7 +6239,7 @@ label[data-label-clickable],
 
 // Console
 .cui-console {
-	padding: $padding;
+	padding: header.$padding;
 	font-family: monospace;
 
 	.cui-label-multiline {
@@ -6299,7 +6300,7 @@ label[data-label-clickable],
   &-track-visual {
 		width: 100%;
 		background: hsl(208,10%,93%);
-		border: 1px solid $button-border;
+		border: 1px solid header.$button-border;
 		border-radius: 999px;
 	}
 
@@ -6315,8 +6316,8 @@ label[data-label-clickable],
 		margin-top: -8px;
 		width: 16px;
 		height: 16px;
-		background: $button-background;
-		border: 1px solid $button-border;
+		background: header.$button-background;
+		border: 1px solid header.$button-border;
 		border-radius: 999px;
 	}
 
