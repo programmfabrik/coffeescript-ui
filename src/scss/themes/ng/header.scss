@@ -1,3 +1,5 @@
+@use "sass:color";
+@use "sass:map";
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
@@ -46,17 +48,17 @@ $colors: (
 	)
 );
 
-$default-color: map-get($colors, "blue");
+$default-color: map.get($colors, "blue");
 
 @mixin variableList($color) {
-	--highlight: #{map-get($color, "highlight")};
-	--highlight-light: #{map-get($color, "highlight-light")};
-	--highlight-light-transparent: #{transparentize(map-get($color, "highlight-light"), 1)}; // needed for gradients from transparent .. highlight-light
+	--highlight: #{map.get($color, "highlight")};
+	--highlight-light: #{map.get($color, "highlight-light")};
+	--highlight-light-transparent: #{color.adjust(map.get($color, "highlight-light"), $alpha: -1)}; // needed for gradients from transparent .. highlight-light
 	--on-highlight-color: white;
-	--on-highlight-muted-color: #{desaturate(map-get($color, "highlight-light"), 50%)};
-	--on-highlight-border: #{lighten(desaturate(map-get($color, "highlight"), 17%), 28%)};
-	--on-highlight-light-muted-color: #{darken(desaturate(map-get($color, "highlight-light"), 70%), 25%)};
-	--on-highlight-light-secondary-color: #{darken(desaturate(map-get($color, "highlight-light"), 75%), 40%)};
+	--on-highlight-muted-color: #{color.adjust(map.get($color, "highlight-light"), $saturation: -50%)};
+	--on-highlight-border: #{color.adjust(color.adjust(map.get($color, "highlight"), $saturation: -17%), $lightness: 28%)};
+	--on-highlight-light-muted-color: #{color.adjust(color.adjust(map.get($color, "highlight-light"), $saturation: -70%), $lightness: -25%)};
+	--on-highlight-light-secondary-color: #{color.adjust(color.adjust(map.get($color, "highlight-light"), $saturation: -75%), $lightness: -40%)};
 }
 
 $padding: 10px;
@@ -98,10 +100,10 @@ $button-pressed: hsl(205,10%,91%);
 $button-active: hsl(205,15%,43%);
 $button-active-text: white;
 $button-active-border: hsl(205,15%,43%);
-$button-active-pressed: darken($button-active, 9%);
-$button-active-pressed-text: darken($button-active-text, 9%);
-$button-active-pressed-border: darken($button-active-pressed, 5%);
-$button-active-disabled-text: lighten($button-active, 17%);
+$button-active-pressed: color.adjust($button-active, $lightness: -9%);
+$button-active-pressed-text: color.adjust($button-active-text, $lightness: -9%);
+$button-active-pressed-border: color.adjust($button-active-pressed, $lightness: -5%);
+$button-active-disabled-text: color.adjust($button-active, $lightness: 17%);
 $button-color: hsl(205,8%,34%);
 $button-border: hsl(205,10%,75%);
 $button-radius: 4px;
@@ -136,7 +138,7 @@ $row-move-handle-width: (0.5 * $padding) + $table-data-padding*2+2;
 $tree-node-handle-width: 14px;
 
 $error-color: hsl(10,90%,52%);
-$error-color-background: transparentize($error-color, 0.85);
+$error-color-background: color.adjust($error-color, $alpha: -0.85);
 $on-error-color: white;
 $neutral-color: hsl(48,100%,58%);
 $positive-color: hsl(100,69%,50%);
@@ -147,8 +149,8 @@ $toolbar-height: 34px;
 
 $layer-background: $foreground;
 
-$popover-header-background: lighten($header-background, 3%);
-$popover-header-border: lighten($header-border, 3%);
+$popover-header-background: color.adjust($header-background, $lightness: 3%);
+$popover-header-border: color.adjust($header-border, $lightness: 3%);
 
 $item-list-color: hsl(205,7%,22%);
 $item-list-hover: $button-pressed;
