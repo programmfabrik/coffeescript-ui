@@ -2462,8 +2462,8 @@ label[data-label-clickable],
   color: #f5f5f5;
 }
 .cui-label.cui-label-description {
-  opacity: var(--label-secondary-opacity, 0.65);
   margin-bottom: 1rem;
+  opacity: var(--label-secondary-opacity, 0.65);
 }
 .cui-label.cui-label-danger {
   color: #dc3545;
@@ -5370,12 +5370,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 
 .cui-options-hint {
-  opacity: var(--label-secondary-opacity, 0.65);
-  font-size: 13px;
-  line-height: 1.2;
   max-width: 250px;
   padding: 0 !important;
   margin: 0.5rem 22px 0.5rem 0;
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: var(--label-secondary-opacity, 0.65);
 }
 
 .cui-options-center {
@@ -6437,10 +6437,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-input-invalid-hint .cui-label,
 .cui-input-valid-hint .cui-label,
 .cui-input-empty-hint .cui-label {
-  opacity: var(--label-secondary-opacity, 0.65);
+  padding: 0 !important;
   font-size: 13px;
   line-height: 1.2;
-  padding: 0 !important;
+  opacity: var(--label-secondary-opacity, 0.65);
 }
 .cui-hint .cui-button,
 .cui-form-hint .cui-button,
