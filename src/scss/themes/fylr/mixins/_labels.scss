@@ -47,10 +47,8 @@
 }
 
 @mixin label-secondary() {
-	& {
-		// use opacity so the labels can be inverted easily, also working fine with custom brand-foreground-text-color
-		opacity: var(--label-secondary-opacity, #{$label-secondary-opacity});
-	}
+	// use opacity so the labels can be inverted easily, also working fine with custom brand-foreground-text-color
+	opacity: var(--label-secondary-opacity, #{$label-secondary-opacity});
 }
 
 @mixin label-reset() {
