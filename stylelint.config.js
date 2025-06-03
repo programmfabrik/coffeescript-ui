@@ -1,15 +1,15 @@
 module.exports = {
 	'extends': 'stylelint-config-standard-scss',
-	"ignoreFiles": [
-		"src/scss/themes/debug/*.scss",
-		"src/scss/themes/ng/*.scss",
+	'ignoreFiles': [
+		'src/scss/themes/debug/*.scss',
+		'src/scss/themes/ng/*.scss',
 	],
     'rules': {
         'scss/dollar-variable-colon-space-after': null,
         'scss/dollar-variable-empty-line-before': null,
         'scss/double-slash-comment-empty-line-before': null,
         'scss/at-import-no-partial-leading-underscore': null,
-        "scss/load-no-partial-leading-underscore": null,
+        'scss/load-no-partial-leading-underscore': null,
         'scss/at-mixin-argumentless-call-parentheses': 'always',
         'scss/at-mixin-pattern': [
             '^_?(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', // This allows kebab-case with an optional starting underscore
@@ -33,9 +33,15 @@ module.exports = {
             {
                 'ignoreProperties': ['aspect-ratio', 'container-type', 'container-name'],
             }
-        ],        
-        "at-rule-empty-line-before": [
-            "always",
+        ],       
+        'unit-no-unknown' : [
+            true,
+            {
+                'ignoreUnits': ['cwq', 'cqh', 'cqi', 'cqb', 'cqmin', 'cqmax'],
+            }
+        ],         
+        'at-rule-empty-line-before': [
+            'always',
             {
               except: ['blockless-after-same-name-blockless', 'first-nested'],
               ignore: ['after-comment'],
