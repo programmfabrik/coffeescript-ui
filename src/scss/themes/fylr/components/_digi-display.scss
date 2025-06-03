@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 // * DigiDisplay
 
@@ -24,9 +24,9 @@
 		text-align: center;
 		overflow: hidden;
 		padding: 1px;
-		font-family: v.$digi-display-font-family;
-		font-size: v.$digi-display-font-size;
-		line-height: v.$digi-display-line-height;
+		font-family: $digi-display-font-family;
+		font-size: $digi-display-font-size;
+		line-height: $digi-display-line-height;
 	}
 
 	.cui-digi-display-digit {

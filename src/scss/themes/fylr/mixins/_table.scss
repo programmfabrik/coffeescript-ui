@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 @mixin table-zebra() {
 	// .cui-table
@@ -7,11 +7,11 @@
 
 	.cui-table-row {
 		&:nth-child(odd) .cui-table-td {
-			background: v.$table-odd-background;
+			background: $table-odd-background;
 		}
 
 		&:nth-child(even) .cui-table-td {
-			background: v.$table-even-background;
+			background: $table-even-background;
 		}
 	}
 }
@@ -20,7 +20,7 @@
 	.cui-table-row {
 		&:hover {
 			.cui-table-td {
-				background-color: v.$table-row-hover-background;
+				background-color: $table-row-hover-background;
 			}
 		}
 	}

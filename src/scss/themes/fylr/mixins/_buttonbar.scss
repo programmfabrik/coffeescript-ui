@@ -1,11 +1,11 @@
-@use "../variables" as v;
-@use "buttons";
-@use "forms";
-@use "labels";
+@use "../variables" as *;
+@use "buttons" as *;
+@use "forms" as *;
+@use "labels" as *;
 
 @mixin buttonbar-horizontal() {
 	flex-direction: row;
-	gap: v.$buttonbar-gap;
+	gap: $buttonbar-gap;
 
 	.cui-buttonbar-group {
 		.cui-button,
@@ -32,8 +32,8 @@
 		.cui-button-hidden + .cui-button,
 		.cui-button-hidden + .cui-select {
 			&:last-child:not(:only-child) .cui-button-visual {
-				border-top-left-radius: v.$btn-border-radius;
-				border-bottom-left-radius: v.$btn-border-radius;
+				border-top-left-radius: $btn-border-radius;
+				border-bottom-left-radius: $btn-border-radius;
 			}
 		}
 	}
@@ -43,7 +43,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
-	gap: v.$buttonbar-gap;
+	gap: $buttonbar-gap;
 
 	.cui-buttonbar-group {
 		display: flex;
@@ -54,7 +54,7 @@
 		.cui-button,
 		.cui-select {
 			.cui-button-visual {
-				border-right: v.$btn-border-width solid v.$btn-border-color !important; // need to override the 0 reset from the default buttonbar-horizontal()
+				border-right: $btn-border-width solid $btn-border-color !important; // need to override the 0 reset from the default buttonbar-horizontal()
 			}
 
 			&:not(:last-child) .cui-button-visual {
@@ -64,15 +64,15 @@
 			&:first-child:not(:only-child) .cui-button-visual {
 				border-bottom-left-radius: 0;
 				border-bottom-right-radius: 0;
-				border-top-left-radius: v.$btn-border-radius;
-				border-top-right-radius: v.$btn-border-radius;
+				border-top-left-radius: $btn-border-radius;
+				border-top-right-radius: $btn-border-radius;
 			}
 
 			&:last-child:not(:only-child) .cui-button-visual {
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
-				border-bottom-left-radius: v.$btn-border-radius;
-				border-bottom-right-radius: v.$btn-border-radius;
+				border-bottom-left-radius: $btn-border-radius;
+				border-bottom-right-radius: $btn-border-radius;
 			}
 
 			&:not(:first-child, :last-child) .cui-button-visual {
@@ -89,7 +89,7 @@
 
 	.cui-button {
 		~ .cui-buttonbar-group {
-			margin: 0 v.$buttonbar-gap;
+			margin: 0 $buttonbar-gap;
 		}
 	}
 }
@@ -99,7 +99,7 @@
 
 	.cui-button {
 		~ .cui-buttonbar-group {
-			margin: v.$buttonbar-gap 0;
+			margin: $buttonbar-gap 0;
 		}
 	}
 }
@@ -108,11 +108,11 @@
 	// use separate border to cirumvent border styles on hover for the inverted buttons	
 	@include ungroup-visually();
 
-	border-radius: v.$btn-border-radius;
+	border-radius: $btn-border-radius;
 	overflow: hidden;
 
 	@if $border == 1 {
-		--border-color: #{v.$btn-border-color};
+		--border-color: #{$btn-border-color};
 
 		position: relative;
 
@@ -125,7 +125,7 @@
 			right: 0;
 			bottom: 0;
 			pointer-events: none;
-			border-radius: v.$btn-border-radius;
+			border-radius: $btn-border-radius;
 			border: 1px solid var(--border-color);
 		}
 	}
@@ -135,24 +135,24 @@
 	}
 
 	.cui-number-input {
-		margin: 0 v.$spacer-xs;
+		margin: 0 $spacer-xs;
 	}
 }
 
 @mixin buttonbar-group-navigation-sm() {
 	.cui-button-button {
-		@include buttons.button-sm();
+		@include button-sm();
 	}
 
 	.cui-label {
-		@include labels.label-sm();
+		@include label-sm();
 
 		line-height: 1;
 		padding: 0;
 	}
 
 	.cui-number-input input {
-		@include forms.input-sm();
+		@include input-sm();
 	}
 }
 
@@ -172,37 +172,37 @@
 	@include buttonbar-group-navigation($border);
 
 	// add background to buttonbar-group !
-	background-color: v.$btn-inverted-background;
+	background-color: $btn-inverted-background;
 
 	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
 	.cui-button-button.cui-button-button,
 	.cui-button-select.cui-button-select {
-		@include buttons.button-color(transparent, v.$btn-inverted-color, transparent, v.$btn-inverted-hover-color, transparent, v.$btn-inverted-color);
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
 	}
 	
 	.cui-label,
 	.cui-number-input {
-		color: v.$btn-inverted-color;
+		color: $btn-inverted-color;
 	}
 
 	@if $border == 1 {
-		--border-color: #{v.$btn-inverted-border-color};
+		--border-color: #{$btn-inverted-border-color};
 	}
 }
 
 @mixin buttonbar-group-inverted($border: 0) {
 	// add background to buttonbar-group !
-	background-color: v.$btn-inverted-background;
-	border-radius: v.$btn-border-radius;
+	background-color: $btn-inverted-background;
+	border-radius: $btn-border-radius;
 
 	// must override @include button-bordered() in the buttonbar-horizontal() mixin that is applied by default
 	.cui-button-button.cui-button-button,
 	.cui-button-select.cui-button-select {
-		@include buttons.button-color(transparent, v.$btn-inverted-color, transparent, v.$btn-inverted-hover-color, transparent, v.$btn-inverted-color);
+		@include button-color(transparent, $btn-inverted-color, transparent, $btn-inverted-hover-color, transparent, $btn-inverted-color);
 
 		@if $border == 1 {
 			.cui-button-visual {
-				border-color: v.$btn-inverted-border-color;
+				border-color: $btn-inverted-border-color;
 			}
 		}
 	}
@@ -211,12 +211,12 @@
 // Helper
 @mixin ungroup-visually() {
 	.cui-button {
-		@include buttons.button-plain();
+		@include button-plain();
 	}
 }
 
 @mixin ungroup-visually-inverted() {
 	.cui-button {
-		@include buttons.button-plain-inverted();
+		@include button-plain-inverted();
 	}
 }

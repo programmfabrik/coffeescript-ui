@@ -1,5 +1,5 @@
-@use "../mixins/list-view";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/list-view" as *;
 
 // Data Table
 .cui-data-table {
@@ -31,10 +31,10 @@
 	.cui-list-view {
 		--list-view-border-width: 1px;
 
-		@include list-view.list-view-hide-double-bottom-border();
+		@include list-view-hide-double-bottom-border();
 
 		> .cui-vertical-layout-bottom > .cui-pane-footer {
-			padding: v.$toolbar-padding !important;
+			padding: $toolbar-padding !important;
 		}
 	}
 }

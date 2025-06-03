@@ -1,5 +1,5 @@
-@use "../variables" as v;
-@use "buttons";
+@use "../variables" as *;
+@use "buttons" as *;
 
 @mixin list-view-row-hover() {
 	.cui-list-view-grid-quadrant-2,
@@ -7,7 +7,7 @@
 		> .cui-lv-tr-outer {
 			&:not(.cui-selected):hover {
 				> .cui-lv-tr > .cui-lv-td {
-					background: v.$table-row-hover-background;
+					background: $table-row-hover-background;
 				}
 
 				> .cui-lv-tr > .cui-lv-td.cui-lv-row-move-handle-column {
@@ -51,7 +51,7 @@
 	.cui-lv-tbody .cui-lv-tr {
 		@each $level in $levels {
 			> .cui-tree-node-level-#{$level} {
-				font-weight: v.$font-weight-bold;
+				font-weight: $font-weight-bold;
 			}
 		}
 	}
@@ -74,10 +74,10 @@
 
 // turn buttons into a clickable table header
 @mixin list-view-header-button-sortable() {
-	@include buttons.button-plain();
+	@include button-plain();
 
 	.cui-button-visual {
-		font-weight: v.$font-weight-bold;
+		font-weight: $font-weight-bold;
 
 		.cui-button-center {
 			padding: 0;

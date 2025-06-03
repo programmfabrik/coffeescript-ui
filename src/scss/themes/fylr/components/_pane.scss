@@ -1,6 +1,6 @@
-@use "../mixins/layer";
-@use "../mixins/pane";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/layer" as *;
+@use "../mixins/pane" as *;
 
 // * Pane
 
@@ -10,13 +10,13 @@
 }
 
 .cui-pane {
-	--pane-background: #{v.$pane-background};
+	--pane-background: #{$pane-background};
 
 	background-color: var(--pane-background);
 
 	// todo: we should probably do this if this is the most used case, and then override if necessary
 	> .cui-vertical-layout-center {
-		padding: v.$pane-padding;
+		padding: $pane-padding;
 	}
 }
 
@@ -25,7 +25,7 @@
 
 	.cui-horizontal-layout-left {
 		.cui-label {
-			margin-right: v.$spacer-sm;
+			margin-right: $spacer-sm;
 		}
 	}
 
@@ -36,11 +36,11 @@
 	// }
 
 	.cui-select {
-		margin-right: v.$spacer-xs;
+		margin-right: $spacer-xs;
 	}
 
 	.cui-pane-close-button {
-		transform: translateX(v.$spacer-sm);
+		transform: translateX($spacer-sm);
 	}
 }
 
@@ -58,7 +58,7 @@
 .cui-pane--window {
 	&:not(.cui-layer-pane) {
 		> .cui-vertical-layout-top > .cui-pane-header {
-			@include pane.pane-header();
+			@include pane-header();
 		}
 	}
 }
@@ -114,7 +114,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: v.$body-bg;
+		background-color: $body-bg;
 
 		.cui-pane-fill-screen-inner {
 			width: 100%;
@@ -126,7 +126,7 @@
 
 			// apply layout and style just like the popover layer
 			> .cui-pane {
-				@include layer.layer-pane-layout();
+				@include layer-pane-layout();
 			}
 		}
 	}

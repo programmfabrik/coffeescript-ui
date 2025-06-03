@@ -1,19 +1,19 @@
-@use "../mixins/toolbar";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/toolbar" as *;
 
 // Toolbar
 .cui-toolbar {
 	display: flex;
-	min-height: v.$toolbar-height;
+	min-height: $toolbar-height;
 	justify-content: space-between;
 	align-items: center;
-	background: v.$toolbar-background;
-	padding: v.$toolbar-padding;
+	background: $toolbar-background;
+	padding: $toolbar-padding;
 	// needed in listview, to align all: content-box for all!
 	// box-sizing: content-box; // todo
 	overflow: visible !important;
 
-	@include toolbar.toolbar-gap();
+	@include toolbar-gap();
 
 	// reset if toolbar within another toolbar
 	.cui-toolbar {
@@ -108,7 +108,7 @@
 	}
 
 	.cui-buttonbar + .cui-label {
-		margin-left: v.$spacer-sm;
+		margin-left: $spacer-sm;
 	}
 }
 
@@ -120,7 +120,7 @@
 
 	> .cui-horizontal-layout-left {
 		> .cui-label:last-child {
-			margin-right: v.$spacer;
+			margin-right: $spacer;
 		}
 	}
 }

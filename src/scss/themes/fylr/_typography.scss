@@ -1,6 +1,6 @@
+@use "variables" as *;
 @use "functions";
-@use "mixins/typography";
-@use "variables" as v;
+@use "mixins/typography" as *;
 
 // Typography
 //
@@ -10,59 +10,59 @@ html {
 }
 
 body {
-	font-family: v.$font-family-base, sans-serif;
-	font-weight: v.$font-weight-base;
-	font-size: v.$font-size-base;
-	line-height: v.$line-height-base;
-	color: v.$body-color;
+	font-family: $font-family-base, sans-serif;
+	font-weight: $font-weight-base;
+	font-size: $font-size-base;
+	line-height: $line-height-base;
+	color: $body-color;
 }
 
 h1, .h1 {
-	@include typography.h1();
+	@include h1();
 }
 
 h2, .h2 {
-	@include typography.h2();
+	@include h2();
 }
 
 h3, .h3 {
-	@include typography.h3();
+	@include h3();
 }
 
 h4, .h4 {
-	@include typography.h4();
+	@include h4();
 }
 
 h5, .h5 {
-	@include typography.h5();
+	@include h5();
 }
 
 h6, .h6 {
-	@include typography.h6();
+	@include h6();
 }
 
 p {
-	margin-bottom: v.$paragraph-margin-bottom;
+	margin-bottom: $paragraph-margin-bottom;
 }
 
 a:not(.cui-button-button) {
-	color: var(--link-color, #{v.$link-color});
-	text-decoration: v.$link-decoration;
+	color: var(--link-color, #{$link-color});
+	text-decoration: $link-decoration;
 
 	&:hover,
 	&:focus {
-		color: var(--link-hover-color, #{v.$link-hover-color});
-		text-decoration: v.$link-hover-decoration;
+		color: var(--link-hover-color, #{$link-hover-color});
+		text-decoration: $link-hover-decoration;
 	}
 
 	&:focus {
-		outline: 1px solid v.$component-focus-border-color;
-		box-shadow: inset 0 0 0 1px v.$component-focus-shadow-color, 0 0 0 1px v.$component-focus-shadow-color;
+		outline: 1px solid $component-focus-border-color;
+		box-shadow: inset 0 0 0 1px $component-focus-shadow-color, 0 0 0 1px $component-focus-shadow-color;
 	}
 }
 
 b, strong {
-	font-weight: v.$font-weight-bold;
+	font-weight: $font-weight-bold;
 }
 
 .italic {
@@ -70,14 +70,14 @@ b, strong {
 }
 
 ul, ol {
-	padding-left: v.$spacer;
+	padding-left: $spacer;
 }
 
 kbd {
-	padding: 1px v.$spacer-xs;
+	padding: 1px $spacer-xs;
 	display: inline-block;
-	border: 1px solid v.$gray-400;
+	border: 1px solid $gray-400;
 	background: white;
-	border-radius: v.$border-radius-sm;
+	border-radius: $border-radius-sm;
 	text-align: center;
 }

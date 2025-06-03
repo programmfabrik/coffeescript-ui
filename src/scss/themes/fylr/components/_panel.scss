@@ -1,10 +1,10 @@
-@use "../mixins/buttons";
-@use "../mixins/labels";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttons" as *;
+@use "../mixins/labels" as *;
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid v.$panel-border-color;
+	border-bottom: 1px solid $panel-border-color;
 
 	&-closed {
 		> .cui-panel-body {
@@ -14,25 +14,25 @@
 }
 
 .cui-panel-header {
-	padding-left: v.$spacer-sm;
-	padding-right: v.$spacer-sm;
+	padding-left: $spacer-sm;
+	padding-right: $spacer-sm;
 
 	.cui-button-button {
-		@include buttons.button-color-reset();
+		@include button-color-reset();
 
 		display: flex;
 		width: auto;
-		padding: v.$spacer-xs 0;
+		padding: $spacer-xs 0;
 		justify-content: flex-start;
-		margin: 0 -#{v.$spacer-sm};
-		min-height: v.$btn-height;
+		margin: 0 -#{$spacer-sm};
+		min-height: $btn-height;
 
 		&-select {
 			max-width: 100%;
 		}
 
 		.cui-button-visual {
-			@include labels.label-title();
+			@include label-title();
 
 			height: auto;
 			justify-content: flex-start;
@@ -41,7 +41,7 @@
 
 
 			.cui-button-left {
-				width: v.$panel-content-padding;
+				width: $panel-content-padding;
 				justify-content: center;
 				padding-left: 0;
 				margin-right: 0;
@@ -68,14 +68,14 @@
 		&:hover,
 		&:focus {
 			.cui-button-visual {
-				color: var(--btn-color-hover, #{v.$body-color});
+				color: var(--btn-color-hover, #{$body-color});
 				background: none;
 			}
 		}
 
 		&.cui-active {
 			.cui-button-visual {
-				color: var(--btn-color-active, #{v.$body-color});
+				color: var(--btn-color-active, #{$body-color});
 				background: none;
 			}
 		}
@@ -83,5 +83,5 @@
 }
 
 .cui-panel-body {
-	padding: v.$spacer-xs v.$spacer-sm v.$spacer v.$panel-content-padding; // left aligned with panel header text
+	padding: $spacer-xs $spacer-sm $spacer $panel-content-padding; // left aligned with panel header text
 }

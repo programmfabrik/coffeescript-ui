@@ -1,7 +1,7 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 @mixin disabled() {
 	user-select: none;
-	opacity: var(--disabled-opacity, #{v.$disabled-opacity});
+	opacity: var(--disabled-opacity, #{$disabled-opacity});
 	pointer-events: var(--pointer-events-when-disabled, none);
 }

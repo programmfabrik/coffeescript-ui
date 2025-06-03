@@ -1,12 +1,12 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 .cui-table {
 	// specific chrome fix to allow horizontal scrollbars: `display: block` instead of `display: table` and `overflow-x: auto`
 	// display: block;
 	display: inline-table; // todo: ??
 	overflow-x: auto;
-	border: 1px solid var(--table-border-color, #{v.$table-border-color});
-	border-radius: v.$table-border-radius;
+	border: 1px solid var(--table-border-color, #{$table-border-color});
+	border-radius: $table-border-radius;
 
 	// use .cui-table-row or .cui-table-td when styling data tables
 	// .cui-tr and .cui-td will be used in a more generic layouty way as well (without cui-table-td class)
@@ -17,13 +17,13 @@
 	.cui-th,
 	.cui-td {
 		display: table-cell;
-		padding: v.$table-padding-y v.$table-padding-x;
+		padding: $table-padding-y $table-padding-x;
 		vertical-align: top;
 
 		&[colspan] {
 			> label,
 			> .cui-label {
-				margin-bottom: v.$table-padding-y; // todo: find use-case
+				margin-bottom: $table-padding-y; // todo: find use-case
 			}
 		}
 
@@ -33,12 +33,12 @@
 	}
 
 	.cui-th {
-		font-weight: v.$headings-font-weight;
+		font-weight: $headings-font-weight;
 	}
 
 	> .cui-tr + .cui-tr {
 		> .cui-table-td {
-			border-top: 1px solid var(--table-border-color, #{v.$table-border-color});
+			border-top: 1px solid var(--table-border-color, #{$table-border-color});
 		}
 	}
 
@@ -48,7 +48,7 @@
 
 	.cui-td--key {
 		word-wrap: break-word;
-		font-weight: v.$font-weight-bold;
+		font-weight: $font-weight-bold;
 	}
 
 	.cui-td--value {
@@ -65,11 +65,11 @@
 
 	.cui-td--key,
 	.cui-td--value {
-		line-height: v.$line-height-sm;
+		line-height: $line-height-sm;
 	}
 
 	> .cui-button {
-		margin: v.$spacer-sm;
+		margin: $spacer-sm;
 	}
 
 	// with --flex you can set a fixed width for .cui-td--key via --table-data-key-width for an individual cui-table
@@ -84,8 +84,8 @@
 
 		.cui-td--key {
 			flex-shrink: 0;
-			width: v.$table-data-width;
-			width: var(--table-data-key-width, v.$table-data-width);
+			width: $table-data-width;
+			width: var(--table-data-key-width, $table-data-width);
 		}
 
 		.cui-td--value {

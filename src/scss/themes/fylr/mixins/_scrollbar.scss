@@ -1,8 +1,8 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 // custom thumb-color track-color (#c1c1c1 is the color of the native Chrome thumb)
 // works in all major browsers except Safari (and iOS)
 
 @mixin scrollbar-inverted() {
-	scrollbar-color: #c1c1c1 v.$gray-800;
+	scrollbar-color: #c1c1c1 $gray-800;
 }

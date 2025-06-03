@@ -1,8 +1,8 @@
-@use "../mixins/block";
-@use "../mixins/checkbox";
-@use "../mixins/forms";
-@use "../mixins/labels";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/block" as *;
+@use "../mixins/checkbox" as *;
+@use "../mixins/forms" as *;
+@use "../mixins/labels" as *;
 
 // * Block
 // very basic block section styling, must work anywhere
@@ -14,14 +14,14 @@
 	position: relative;
 	margin-left: var(--block-indent, 0);
 
-	@include block.block-separator();
+	@include block-separator();
 
 	&:not(:last-child) {
-		margin-bottom: v.$block-margin;
+		margin-bottom: $block-margin;
 	}
 
 	*:not(.cui-block) + & {
-		margin-top: v.$block-margin; // ? not sure we should do it globally, reset for nested blocks
+		margin-top: $block-margin; // ? not sure we should do it globally, reset for nested blocks
 	}
 
 	.cui-block-header,
@@ -33,17 +33,17 @@
 	}
 
 	.cui-block-description {
-		@include labels.label-secondary();
+		@include label-secondary();
 	}
 
 	
 	// * Titles 
 	.cui-block-header {
-		margin-bottom: v.$spacer-sm;
+		margin-bottom: $spacer-sm;
 		
 		> .cui-block-title {
 			// * Inverted Block Header (default)
-			@include block.block-header-title-inverted();
+			@include block-header-title-inverted();
 		}
 	}
 
@@ -68,15 +68,15 @@
 	// * Nested Blocks
 
 	.cui-block {
-		@include block.block-separator-reset(); // only blocks that are not nested within another block should have border, we need to reset border
+		@include block-separator-reset(); // only blocks that are not nested within another block should have border, we need to reset border
 
 		*:not(.cui-block) + .cui-block {
 			margin-top: 0; // reset
 		}
 
 		.cui-block-header > .cui-block-title {
-			@include block.block-header-title-inverted-reset();
-			@include labels.label-title();
+			@include block-header-title-inverted-reset();
+			@include label-title();
 		}
 	}
 }
@@ -96,17 +96,17 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 */
 
 .cui-form-block--has-checkbox {
-	--block-indent: #{v.$block-checkbox-indent-width};
+	--block-indent: #{$block-checkbox-indent-width};
 
 	> .cui-block-header {
 		// ! be careful, this only makes sense if the toggle-switches are within a form that has key/value pairs
-		margin-left: calc(-1 * (#{v.$toggle-switch-width} + #{v.$checkbox-margin}));
+		margin-left: calc(-1 * (#{$toggle-switch-width} + #{$checkbox-margin}));
 		margin-bottom: 0;
 
 		.cui-button-checkbox {
 			&[role='checkbox'],
 			&[role='radio'] {
-				@include checkbox.checkbox-convert-to-toggle-switch();
+				@include checkbox-convert-to-toggle-switch();
 			}
 		}
 	}
@@ -117,7 +117,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 
 	// stack by default
 	.cui-form {
-		@include forms.form-key-value-stacked();
+		@include form-key-value-stacked();
 	}
 }
 
@@ -131,7 +131,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 	bottom: 0;
 	z-index: 1;
 	display: flex;
-	color: v.$muted;
+	color: $muted;
 }
 
 .cui-wait-block-glass {
@@ -141,7 +141,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 	right: 0;
 	bottom: 0;
 	opacity: 0.5;
-	background: v.$body-bg;
+	background: $body-bg;
 }
 
 .cui-wait-block-inner {
@@ -163,7 +163,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 		}
 
 		.cui-label-content {
-			padding-left: v.$spacer-sm;
+			padding-left: $spacer-sm;
 		}
 	}
 }

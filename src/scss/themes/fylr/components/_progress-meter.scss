@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 // ProgressMeter
 .cui-progress-meter {
@@ -8,7 +8,7 @@
 
 		.cui-progress-meter-fill {
 			display: none;
-			background: var(--brand-color, #{v.$primary});
+			background: var(--brand-color, #{$primary});
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -30,7 +30,7 @@
 			text-align: center;
 
 			.svg-spinner {
-				height: v.$btn-height;
+				height: $btn-height;
 			}
 		}
 	}
@@ -42,7 +42,7 @@
 	// spinner
 	&[state='spinning'] {
 		.cui-progress-meter-icon {
-			color: v.$body-color;
+			color: $body-color;
 		}
 	}
 
@@ -54,11 +54,11 @@
 			max-width: 200px;
 			min-width: 30px;
 			overflow: hidden;
-			height: v.$btn-height; // if we need other height (sm | lg), see button sizes
-			line-height: v.$btn-height;
-			border-radius: v.$btn-border-radius;
-			background: v.$gray-500;
-			color: v.$white;
+			height: $btn-height; // if we need other height (sm | lg), see button sizes
+			line-height: $btn-height;
+			border-radius: $btn-border-radius;
+			background: $gray-500;
+			color: $white;
 		}
 
 		.cui-progress-meter-icon {

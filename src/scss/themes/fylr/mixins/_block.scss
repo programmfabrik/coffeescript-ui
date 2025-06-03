@@ -1,25 +1,25 @@
-@use "../variables" as v;
-@use "breakpoints";
-@use "forms";
-@use "typography";
+@use "../variables" as *;
+@use "breakpoints" as *;
+@use "forms" as *;
+@use "typography" as *;
 
 // * Block Separator
 // adds simple section divider border
 
 @mixin block-separator() {
 	--block-separator-width: 1px;
-	--block-separator-margin: #{v.$block-margin};
+	--block-separator-margin: #{$block-margin};
 	
 	&:not(:last-child, :has(+ .cui-form-table)) {
 		padding-bottom: var(--block-separator-margin);
-		border-bottom: var(--block-separator-width) solid v.$block-border-color;
+		border-bottom: var(--block-separator-width) solid $block-border-color;
 	}
 
 	.cui-block-content {
 		.cui-form-table {
 			&:not(:last-child) {
 				padding-bottom: calc(0.5 * var(--block-separator-margin)); // smaller because the form rows in the form-table have a bottom margin
-				border-bottom: var(--block-separator-width) solid v.$block-border-color;
+				border-bottom: var(--block-separator-width) solid $block-border-color;
 			}
 		}
 	}
@@ -35,17 +35,17 @@
 @mixin block-header-title-inverted() {
 	// ! make sure to only style cui-block-title so the styles do not interfere with other block header properties
 	display: inline-block;
-	background-color: v.$body-color;
-	color: v.$white;
-	font-weight: v.$font-weight-bold;
-	padding: 0.1em v.$spacer-sm;
+	background-color: $body-color;
+	color: $white;
+	font-weight: $font-weight-bold;
+	padding: 0.1em $spacer-sm;
 }
 
 @mixin block-header-title-inverted-reset() {
 	display: block;
 	background-color: transparent;
-	color: v.$body-color;
-	font-weight: v.$font-weight-normal;
+	color: $body-color;
+	font-weight: $font-weight-normal;
 	padding: 0;
 }
 
@@ -54,12 +54,12 @@
 
 @mixin block-bracket() {
 	--block-bracket-length: 10px;
-	--block-color: #{v.$gray-900};
+	--block-color: #{$gray-900};
 
 	position: relative;
 	border-bottom: 0; // reset default block border
-	padding-bottom: v.$block-margin;
-	padding-top: v.$block-margin;
+	padding-bottom: $block-margin;
+	padding-top: $block-margin;
 
 	&::before,
 	&::after {
@@ -84,17 +84,17 @@
 
 	.cui-block-header,
 	.cui-block-content {
-		padding-left: v.$block-bracket-padding;
-		padding-right: v.$block-bracket-padding;
+		padding-left: $block-bracket-padding;
+		padding-right: $block-bracket-padding;
 	}
 
 	.cui-block-header {
 		> .cui-block-title {
 			@include block-header-title-inverted-reset();
-			@include typography.h6(0);
+			@include h6(0);
 			
 			text-transform: uppercase;
-			margin-bottom: v.$spacer;
+			margin-bottom: $spacer;
 			color: var(--block-color);
 		}
 	}
@@ -106,8 +106,8 @@
 @mixin block-form() {
 	&:not(.cui-form-block--has-checkbox) {
 		display: grid;
-		grid-template-columns: var(--block-form-col-left-width, #{v.$form-key-width}) minmax(0, var(--block-form-col-right-width, 850px));
-		gap: 0 v.$spacer;
+		grid-template-columns: var(--block-form-col-left-width, #{$form-key-width}) minmax(0, var(--block-form-col-right-width, 850px));
+		gap: 0 $spacer;
 		align-items: baseline;
 	}
 	
@@ -132,10 +132,10 @@
 	--block-inline-content-max-width: #{$content-max-width};
 	--block-indent: 0;
 
-	@include breakpoints.media-breakpoint-up(lg) {
+	@include media-breakpoint-up(lg) {
 		&:not(.cui-form-block--has-checkbox) {
 			> .cui-block-header {
-				margin-bottom: v.$block-margin;
+				margin-bottom: $block-margin;
 			}
 			
 			> .cui-block-content {
@@ -155,7 +155,7 @@
 	}
 
 	.cui-form {
-		@include forms.form-key-value-stacked();
+		@include form-key-value-stacked();
 	}
 }
 

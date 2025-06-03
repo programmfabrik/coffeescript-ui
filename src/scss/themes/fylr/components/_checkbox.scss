@@ -1,5 +1,5 @@
-@use "../mixins/forms";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/forms" as *;
 
 // Checkbox
 .cui-checkbox {
@@ -11,8 +11,8 @@
 		.cui-button-checkbox {
 			.cui-button-left i {
 				// just a tiny bit bigger so the icon is not too cramped
-				width: v.$checkbox-size * 1.15;
-				height: v.$checkbox-size * 1.1;
+				width: $checkbox-size * 1.15;
+				height: $checkbox-size * 1.1;
 			}
 		}
 	}
@@ -45,8 +45,8 @@
 	// todo: should we really set a min-height by default?
 	// pro: checkboxes will be visually more in sync with regular inputs, escpecially when they are next to each other
 	// contra: in some cases they will use more space than needed, e.g. within cui-data-field, see Admin > Base Config > Connector > > Connector > EasyDB Instanzen für Connector > Checkbox "Aktivieren"
-	min-height: v.$input-height;
-	line-height: v.$input-height;
+	min-height: $input-height;
+	line-height: $input-height;
 	cursor: pointer;
 
 	[data-max-chars] {
@@ -58,8 +58,8 @@
 		justify-content: flex-start;
 		
 		> .cui-button-left {
-			min-width: v.$checkbox-size;
-			margin-right: v.$checkbox-margin;
+			min-width: $checkbox-size;
+			margin-right: $checkbox-margin;
 			
 			// empty checkbox: span
 			// filled checkbox: i
@@ -70,19 +70,19 @@
 				display: inline-flex;
 				justify-content: center;
 				align-items: center;
-				width: v.$checkbox-size;
-				height: v.$checkbox-size;
-				border: 1px solid var(--checkbox-border-color, #{v.$checkbox-border-color});
-				background: var(--checkbox-background, #{v.$checkbox-background});
-				font-size: v.$checkbox-icon-size;
-				line-height: v.$checkbox-icon-size + 2px;
-				border-radius: v.$checkbox-border-radius;
+				width: $checkbox-size;
+				height: $checkbox-size;
+				border: 1px solid var(--checkbox-border-color, #{$checkbox-border-color});
+				background: var(--checkbox-background, #{$checkbox-background});
+				font-size: $checkbox-icon-size;
+				line-height: $checkbox-icon-size + 2px;
+				border-radius: $checkbox-border-radius;
 				vertical-align: middle; // keep <i> and <span> in sync
 	
 				// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 				.cui-active &,
 				.cui-layer-open & {
-					border-color: v.$light;
+					border-color: $light;
 				}
 			}
 		}
@@ -91,8 +91,8 @@
 			display: flex; // the child span[data-max-chars] will set explicit width
 			min-width: 0;
 			flex: 1 1 auto;
-			padding-right: v.$spacer-sm;
-			line-height: v.$line-height-sm;
+			padding-right: $spacer-sm;
+			line-height: $line-height-sm;
 	
 			&:empty {
 				display: none;
@@ -112,23 +112,23 @@
 	&.cui-active {
 		// checkbox
 		> .cui-button-visual > .cui-button-left i {
-			background: var(--checkbox-active-background, #{v.$checkbox-active-background});
-			color: var(--checkbox-active-color, #{v.$checkbox-active-color});
-			border-color: var(--checkbox-active-background, #{v.$checkbox-active-background});
+			background: var(--checkbox-active-background, #{$checkbox-active-background});
+			color: var(--checkbox-active-color, #{$checkbox-active-color});
+			border-color: var(--checkbox-active-background, #{$checkbox-active-background});
 
 			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 			.cui-active &,
 			.cui-layer-open & {
-				color: v.$light;
+				color: $light;
 			}
 		}
 
 		// radio
 		&[role='radio'] {
 			> .cui-button-visual > .cui-button-left i {
-				background: var(--checkbox-active-background, #{v.$checkbox-active-background});
+				background: var(--checkbox-active-background, #{$checkbox-active-background});
 				color: transparent;
-				border-color: var(--checkbox-active-background, #{v.$checkbox-active-background});
+				border-color: var(--checkbox-active-background, #{$checkbox-active-background});
 
 				&::after { // radio dot
 					content: '';
@@ -139,7 +139,7 @@
 					height: 6px;
 					margin: -3px 0 0 -3px;
 					border-radius: 100%;
-					background: var(--checkbox-active-color, #{v.$checkbox-active-color});
+					background: var(--checkbox-active-color, #{$checkbox-active-color});
 				}
 			}
 		}
@@ -150,13 +150,13 @@
 
 		> .cui-button-visual > .cui-button-left span,
 		> .cui-button-visual > .cui-button-left i {
-			@include forms.input-focus();
+			@include input-focus();
 		}
 
 		&.cui-active {
 			> .cui-button-visual > .cui-button-left span,
 			> .cui-button-visual > .cui-button-left i {
-				background-color: v.$focused; // make more prominent
+				background-color: $focused; // make more prominent
 			}
 		}
 	}
@@ -169,7 +169,7 @@
 			.cui-active &,
 			.cui-layer-open & {
 				// background-color: transparent;
-				border-color: v.$light;
+				border-color: $light;
 			}
 
 			&::after {

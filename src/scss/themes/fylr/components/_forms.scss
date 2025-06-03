@@ -1,7 +1,7 @@
-@use "../mixins/buttons";
-@use "../mixins/forms";
-@use "../mixins/labels";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttons" as *;
+@use "../mixins/forms" as *;
+@use "../mixins/labels" as *;
 
 // cui-form
 // cui-form-table
@@ -25,7 +25,7 @@
 		overflow: visible; // override a possible overflow: hidden that could be applied via .cui-maximize-horizontal/.cui-maximize-horizontal
 	}
 	
-	background-color: v.$light; // ? we set a default background because of the default white form elements like inputs
+	background-color: $light; // ? we set a default background because of the default white form elements like inputs
 	width: 100%; // see datamodel >  definition > options popover
 
 	.cui-selected &,
@@ -34,7 +34,7 @@
 		background-color: transparent;
 	}
 
-	@include forms.form-key-value-inline(); // default, override in different context using form-key-value-stacked()
+	@include form-key-value-inline(); // default, override in different context using form-key-value-stacked()
 
 	// obsolete
 	// &--padded {}
@@ -56,13 +56,13 @@
 */
 
 .cui-form-table {
-	--form-key-width: #{v.$form-key-width};
-	--form-data-max-width: #{v.$form-data-max-width};
+	--form-key-width: #{$form-key-width};
+	--form-data-max-width: #{$form-data-max-width};
 }
 
 .cui-form-tr,
 .cui-form-tr-header {
-	margin-bottom: v.$form-cell-gap; // ! make sure to use the same margin as for cui-form-row
+	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
 
 	// see base config > Datei Erzeugung > Vorschau > Versionen
 	// see objecttypes > PDFCreator > New > Add asset/Datei > Settings pane
@@ -84,7 +84,7 @@
 // Examples: search > Table Options ("Repeat data for each row")
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox, 					// see admin > usermanagement > system-rights
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-	margin-top: -0.5 * v.$form-cell-gap;
+	margin-top: -0.5 * $form-cell-gap;
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
@@ -93,10 +93,10 @@
 	.cui-label {
 		display: inline-block;
 		white-space: normal;
-		min-width: v.$form-key-min-width;
+		min-width: $form-key-min-width;
 		max-width: 100%;
 
-		@include labels.label-field();
+		@include label-field();
 	}
 }
 
@@ -113,7 +113,7 @@
 	> .cui-data-field {
 		min-width: 0;
 		// make data output (cui-output, cui-multi-output, cui-data-field) at least the same height as the selects in a form
-		min-height: v.$btn-height;
+		min-height: $btn-height;
 
 		&:not(.cui-data-table) {
 			max-width: var(--form-data-max-width); // restrict data input fields so they do not run across the whole screen, especially on wide admin screens, see admin > usermanagement
@@ -123,7 +123,7 @@
 	// see: Base Config > Plugins: "TYPO3"
 	> .cui-select {
 		.cui-button-select {
-			@include buttons.button-select-as-input();
+			@include button-select-as-input();
 		}
 	}
 
@@ -136,7 +136,7 @@
 	*/
 	.cui-form-field-type--select & {
 		.cui-data-field-input {
-			@include buttons.button-select-as-input();
+			@include button-select-as-input();
 		}
 	}
 
@@ -151,19 +151,19 @@
 					<cui-select.cui-data-field-input>
 	*/
 	> .cui-form .cui-form-field-type--select > .cui-select {
-		@include buttons.button-select-as-input();
+		@include button-select-as-input();
 	}
 
 	// see eventmanager > Left Pane "Search" : Type (Select Field)
 	> .cui-form-popover .cui-button--has-caret {
 		width: 100%;
 		
-		@include buttons.button-select-as-input();
+		@include button-select-as-input();
 	}
 
 	// see "New Records" modal > "Field For Files" and "Metadata mapping" 
 	> .cui-data-field-proxy .cui-select {
-		@include buttons.button-select-as-input();
+		@include button-select-as-input();
 	}
 }
 
@@ -245,7 +245,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
-	margin-bottom: v.$form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
+	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
 
 	&:only-child {
 		margin-bottom: 0;
@@ -269,7 +269,7 @@
 		margin-bottom: 0;
 
 		&:not(:last-child) {
-			margin-right: v.$form-cell-gap;
+			margin-right: $form-cell-gap;
 		}
 
 		&.cui-maximize-horizontal {
@@ -280,7 +280,7 @@
 	// there can never be a label in a cui-form-row, so we need to render the hint after the input field
 	// (if a label is configured in the form then a cui-form-table with cui-form-tr etc. is rendered instead)
 	> .cui-form-hint {
-		@include forms.form-hint-after();
+		@include form-hint-after();
 	}
 }
 
@@ -310,21 +310,21 @@
 .cui-input-invalid-hint,
 .cui-input-valid-hint,
 .cui-input-empty-hint {
-	@include forms.form-hint();
+	@include form-hint();
 
 	.cui-label {
-		@include labels.label-form-hint();
-		
 		padding: 0 !important;
+
+		@include label-form-hint();
 	}
 
 	.cui-button {
-		@include buttons.button-link-sm();
+		@include button-link-sm();
 	}
 }
 
 .cui-input-invalid-hint {
-	color: v.$danger;
+	color: $danger;
 }
 
 .cui-form-hint {
@@ -334,7 +334,7 @@
 	}
 
 	.cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
-		padding-left: v.$spacer-sm;
+		padding-left: $spacer-sm;
 	}
 
 	.fa {
@@ -364,7 +364,7 @@
 		display: block;
 
 		+ .cui-vertical-layout-bottom {
-			margin: v.$spacer-xs 0 0;
+			margin: $spacer-xs 0 0;
 
 			&:empty {
 				display: none;

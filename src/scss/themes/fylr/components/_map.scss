@@ -1,5 +1,5 @@
-@use "../mixins/buttons";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttons" as *;
 
 // ? obsolete
 .cui-google-map {
@@ -30,7 +30,7 @@
 
 		.cui-pane-fill-screen & {
 			margin: 0 !important;
-			padding: v.$pane-padding !important;
+			padding: $pane-padding !important;
 		}
 	}
 }
@@ -40,11 +40,11 @@
 .cui-map-buttons-bottom {
 	position: absolute;
 	z-index: 1000;
-	left: v.$spacer-xs;
-	right: v.$spacer-xs;
+	left: $spacer-xs;
+	right: $spacer-xs;
 	display: flex;
 	justify-content: space-between;
-	gap: v.$spacer-xs;
+	gap: $spacer-xs;
 	
 	> * {
 		pointer-events: all;
@@ -52,11 +52,11 @@
 }
 
 .cui-map-buttons-top {
-	top: v.$spacer-xs;
+	top: $spacer-xs;
 }
 
 .cui-map-buttons-bottom {
-	bottom: v.$spacer-xs;
+	bottom: $spacer-xs;
 }
 
 .cui-map-popover-options {
@@ -100,7 +100,7 @@
 		z-index: 1;
 		height: 100%;
 
-		@include buttons.button-plain();
+		@include button-plain();
 
 		&:active .cui-button-visual {
 			color: inherit;
@@ -119,8 +119,8 @@
 	.buttons-upper-right {
 		.cui-button-button,
 		.cui-button-select {
-			@include buttons.button-sm();
-			@include buttons.button-color-inverted();
+			@include button-sm();
+			@include button-color-inverted();
 		}
 	}
 }

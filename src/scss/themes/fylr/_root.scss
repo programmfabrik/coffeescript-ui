@@ -1,6 +1,6 @@
 @use "sass:meta";
 //
-@use "variables" as v;
+@use "variables" as *;
 
 :root {
 	// ! don't specify brand colors as CSS colors, so we can use the fallback in var(--brand-color, FALLBACK)
@@ -8,43 +8,43 @@
 	// --brand-color-hover: #{darken(theme-color('primary'), 10%)};
 
 	// Custom variable values only support SassScript inside `#{}`.
-	@each $color, $value in v.$colors {
+	@each $color, $value in $colors {
 		--#{$color}: #{$value};
 	}
 
-	@each $color, $value in v.$theme-colors {
+	@each $color, $value in $theme-colors {
 		--#{$color}: #{$value};
 	}
 
-	@each $color, $value in v.$grays {
+	@each $color, $value in $grays {
 		--gray-#{$color}: #{$value};
 	}
 
-	@each $bp, $value in v.$grid-breakpoints {
+	@each $bp, $value in $grid-breakpoints {
 		--breakpoint-#{$bp}: #{$value};
 	}
 
 	// Use `inspect` for lists so that quoted items keep the quotes.
 	// See https://github.com/sass/sass/issues/2383#issuecomment-336349172
-	--font-family-sans-serif: #{meta.inspect(v.$font-family-sans-serif)};
-	--font-family-monospace: #{meta.inspect(v.$font-family-monospace)};
+	--font-family-sans-serif: #{meta.inspect($font-family-sans-serif)};
+	--font-family-monospace: #{meta.inspect($font-family-monospace)};
 	
 	// other colors
-	--body-bg: #{v.$body-bg};
-	--body-color: #{v.$body-color};
-	--top-header-background: #{v.$body-bg};
+	--body-bg: #{$body-bg};
+	--body-color: #{$body-color};
+	--top-header-background: #{$body-bg};
 	
 	// headings
-	@each $size, $value in v.$headline-sizes {
+	@each $size, $value in $headline-sizes {
 		--headline-size-#{$size}: #{$value};
 	}
 
-	--headings-font-family: #{meta.inspect(v.$headings-font-family)};
-	--headings-font-weight: #{v.$headings-font-weight};
-	--headings-line-height: #{v.$headings-line-height};
-	--headings-color: #{v.$headings-color};
+	--headings-font-family: #{meta.inspect($headings-font-family)};
+	--headings-font-weight: #{$headings-font-weight};
+	--headings-line-height: #{$headings-line-height};
+	--headings-color: #{$headings-color};
 
 	// spacing
-	--pane-padding: #{v.$pane-padding};
-	--toolbar-padding: #{v.$toolbar-padding};
+	--pane-padding: #{$pane-padding};
+	--toolbar-padding: #{$toolbar-padding};
 }

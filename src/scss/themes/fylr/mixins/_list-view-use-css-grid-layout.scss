@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 @mixin list-view-use-css-grid-layout() {
 	@supports (grid-template-columns: subgrid) {
@@ -41,7 +41,7 @@
 					}
 
 					&.cui-lv-row-move-handle-column .cui-drag-handle-row {
-						width: v.$list-view-move-handle-width;
+						width: $list-view-move-handle-width;
 					}
 				}
 			}
@@ -86,7 +86,7 @@
 				}
                 
 				&.is-scrolling-vertically {
-					--box-shadow-vertical: #{v.$list-view-scrolling-box-shadow};
+					--box-shadow-vertical: #{$list-view-scrolling-box-shadow};
 				}
 			}
 		}

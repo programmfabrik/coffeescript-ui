@@ -1,5 +1,5 @@
-@use "../mixins/handles";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/handles" as *;
 
 // * Drag row handlle
 
@@ -8,7 +8,7 @@
 	flex: 1 1 auto;
 	height: 10px;
 	width: 12px;
-	background: linear-gradient(var(--handle-color, #{v.$handle-color}) 1px, transparent 1px, transparent 2px);
+	background: linear-gradient(var(--handle-color, #{$handle-color}) 1px, transparent 1px, transparent 2px);
 	background-size: 100% 2px;
 }
 
@@ -98,14 +98,14 @@
 }
 
 .cui-flex-handle-row {
-	width: v.$flex-handle-size;
+	width: $flex-handle-size;
 	margin: 0;
 
 	&:hover {
-		@include handles.flex-handle-row();
+		@include flex-handle-row();
 
 		.cui-pane & {
-			@include handles.flex-handle-row(v.$pane-background);
+			@include flex-handle-row($pane-background);
 		}
 	}
 
@@ -121,7 +121,7 @@
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {
 		width: 32px;
 		margin: 0;
-		background: v.$body-bg;
+		background: $body-bg;
 
 		.cui-label.cui-label-rotate-90 {
 			@supports (writing-mode: vertical-rl) {
@@ -130,22 +130,22 @@
 			}
 
 			.cui-label-transform {
-				line-height: v.$line-height-sm;
+				line-height: $line-height-sm;
 			}
 		}
 	}
 }
 
 .cui-flex-handle-column {
-	height: v.$flex-handle-size;
+	height: $flex-handle-size;
 	margin: 0;
 	width: 100%;
 
 	&:hover {
-		@include handles.flex-handle-column();
+		@include flex-handle-column();
 	
 		.cui-pane & {
-			@include handles.flex-handle-column(v.$pane-background);
+			@include flex-handle-column($pane-background);
 		}
 	}
 

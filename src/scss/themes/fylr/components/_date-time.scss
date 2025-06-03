@@ -1,22 +1,22 @@
 @use "sass:math";
-@use "../mixins/buttonbar";
-@use "../mixins/buttons";
-@use "../mixins/layer";
-@use "../mixins/pane";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttonbar" as *;
+@use "../mixins/buttons" as *;
+@use "../mixins/layer" as *;
+@use "../mixins/pane" as *;
 
 // Calendar Popup
 .cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {
 	overflow: hidden; // override default, see: .cui-layer > .cui-pane > .cui-vertical-layout-center
 
-	@include pane.pane-padding-reset();
+	@include pane-padding-reset();
 
 	margin: 0;
 }
 
 .cui-date-time-popover .cui-date-time-popover-inner {
-	--calendar-background: #{v.$calendar-background};
-	--calendar-static-cells-background: #{v.$calendar-static-cells-background};
+	--calendar-background: #{$calendar-background};
+	--calendar-static-cells-background: #{$calendar-static-cells-background};
 
 	background-color: var(--calendar-background);
 	flex: 1 1 auto;
@@ -54,60 +54,60 @@
 // Calendar
 // DateTime Format | Day:Month:Year | Hour:Minute |
 .cui-date-time-calendar {
-	font-size: v.$calendar-font-size;
+	font-size: $calendar-font-size;
 
 	.cui-table {
 		border: 0;
-		margin-top: v.$spacer-sm;
+		margin-top: $spacer-sm;
 	}
 
 	.cui-buttonbar {
-		padding: v.$spacer-sm;
+		padding: $spacer-sm;
 		justify-content: space-between;
 	}
 	
 	// Apply layer header styling
 	> .cui-buttonbar {
-		background: v.$layer-header-background;
-		color: v.$layer-header-color;
-		padding: v.$spacer v.$spacer-sm;
+		background: $layer-header-background;
+		color: $layer-header-color;
+		padding: $spacer $spacer-sm;
 		display: grid;
 		grid-template-columns: auto auto;
 		grid-template-rows: auto 1fr;
 		grid-template-areas:
 			'd_title t_title'
 			'date time';
-		gap: 0 v.$spacer;
+		gap: 0 $spacer;
 
 		> *:not(:last-child) {
 			margin: 0;
 		}
 
-		@include buttonbar.ungroup-visually-inverted();
+		@include ungroup-visually-inverted();
 		
 		.cui-buttonbar-group {
-			@include buttonbar.buttonbar-group-inverted();
+			@include buttonbar-group-inverted();
 			
 			.cui-button-select {
-				@include buttons.button-color-inverted();
+				@include button-color-inverted();
 	
 				.cui-button-center {
-					padding-left: math.div(v.$btn-padding-x, 2) !important;
-					padding-right: math.div(v.$btn-padding-x, 2) !important;
+					padding-left: math.div($btn-padding-x, 2) !important;
+					padding-right: math.div($btn-padding-x, 2) !important;
 				}
 	
 				.cui-button-right {
-					padding-right: v.$spacer-xs;
+					padding-right: $spacer-xs;
 				}
 			}
 		}
 
 		.cui-select-date-title,
 		.cui-select-time-title {
-			@include layer.layer-title();
+			@include layer-title();
 	
-			margin-bottom: v.$spacer-sm;
-			margin-left: math.div(v.$btn-padding-x, 2);
+			margin-bottom: $spacer-sm;
+			margin-left: math.div($btn-padding-x, 2);
 		}
 	
 		.cui-select-date-title {
@@ -124,7 +124,7 @@
 	
 		.cui-buttonbar-group-time {
 			grid-area: time;
-			padding-right: v.$spacer-xs;
+			padding-right: $spacer-xs;
 		}
 	}
 
@@ -141,7 +141,7 @@
 			position: relative;
 			top: 4px;
 			left: 2px;
-			color: v.$muted;
+			color: $muted;
 		}
 	}
 
@@ -167,7 +167,7 @@
 
 .cui-date-time-footer {
 	overflow: visible !important; // show year input outline
-	margin-bottom: v.$spacer-xs;
+	margin-bottom: $spacer-xs;
 
 	.cui-buttonbar > *:not(:last-child) {
 		margin-right: 0;
@@ -175,11 +175,11 @@
 		
 	.cui-date-time-header-month,
 	.cui-date-time-header-year .cui-buttonbar-group {
-		@include buttonbar.ungroup-visually();
+		@include ungroup-visually();
 	}
 
 	[cui-data-field-name='year'] input {
-		$year-padding: v.$spacer-xs;
+		$year-padding: $spacer-xs;
 
 		width: calc(4ch + 4 * #{$year-padding});
 		min-width: 0;
@@ -198,7 +198,7 @@
 
 	> .cui-horizontal-layout-left {
 		flex: 1 0 auto;
-		margin-right: v.$spacer;
+		margin-right: $spacer;
 
 		.cui-label { // June, September
 			flex: 1 1 auto;
@@ -233,7 +233,7 @@
 		&.cui-date-time-month-header {
 			position: relative;
 			background: var(--calendar-static-cells-background);
-			color: var(--brand-color-on-white, #{v.$calendar-static-cells-color});
+			color: var(--brand-color-on-white, #{$calendar-static-cells-color});
 
 			&::after {
 				content: '';
@@ -249,7 +249,7 @@
 
 	.cui-td,
 	.cui-th {
-		$width: calc((100% - 7px) / #{v.$calendar-cell-count});
+		$width: calc((100% - 7px) / #{$calendar-cell-count});
 
 		position: relative;
 		width: $width;
@@ -279,27 +279,27 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			width: v.$calendar-cell-size;
-			height: v.$calendar-cell-size;
-			line-height: v.$calendar-cell-size;
+			width: $calendar-cell-size;
+			height: $calendar-cell-size;
+			line-height: $calendar-cell-size;
 			text-align: center;
 			border-radius: 999px;
 		}
 	}
 
 	.cui-th {
-		font-size: v.$calendar-font-size * 0.8575;
+		font-size: $calendar-font-size * 0.8575;
 		border: 0;
 	}
 
 	.cui-date-time-week {
-		font-size: v.$calendar-font-size * 0.8575;
+		font-size: $calendar-font-size * 0.8575;
 		background: var(--calendar-static-cells-background);
-		color: var(--brand-color-on-white, #{v.$calendar-static-cells-color});
+		color: var(--brand-color-on-white, #{$calendar-static-cells-color});
 	}
 
 	.cui-date-time-week-title {
-		font-weight: v.$font-weight-normal;
+		font-weight: $font-weight-normal;
 	}
 
 	.cui-date-time-day {
@@ -309,15 +309,15 @@
 			span {
 				--calendar-date-hover-background: rgb(var(--brand-color-rgb));
 
-				color: var(--brand-foreground-text-color, #{v.$body-color});
-				background-color: var(--calendar-date-hover-background, #{rgba(v.$calendar-date-active-background, v.$calendar-date-hover-background-opacity)});
+				color: var(--brand-foreground-text-color, #{$body-color});
+				background-color: var(--calendar-date-hover-background, #{rgba($calendar-date-active-background, $calendar-date-hover-background-opacity)});
 			}
 		}
 	}
 
 	.cui-date-time-previous-month,
 	.cui-date-time-next-month {
-		color: v.$calendar-date-previous-color;
+		color: $calendar-date-previous-color;
 	}
 
 	.cui-date-time-now {
@@ -329,8 +329,8 @@
 	.cui-date-time-selected {
 		&:hover span,
 		span {
-			color: var(--brand-foreground-text-color, #{v.$white});
-			background: var(--brand-color, #{v.$calendar-date-active-background});
+			color: var(--brand-foreground-text-color, #{$white});
+			background: var(--brand-color, #{$calendar-date-active-background});
 		}
 	}
 }
@@ -362,7 +362,7 @@
 		.cui-button-visual {
 			display: flex;
 			height: auto;
-			min-height: v.$btn-height-sm + 2px;
+			min-height: $btn-height-sm + 2px;
 			justify-content: center;
 			border-radius: 0;
 		}

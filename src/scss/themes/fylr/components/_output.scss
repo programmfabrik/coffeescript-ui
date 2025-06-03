@@ -1,10 +1,10 @@
-@use "../mixins/buttons";
-@use "../mixins/labels";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttons" as *;
+@use "../mixins/labels" as *;
 
 .cui-output {
 	.cui-output-empty {
-		@include labels.label-secondary();
+		@include label-secondary();
 	}
 
 	&.cui-output--deletable {
@@ -18,9 +18,9 @@
 		}
 
 		.cui-button {
-			margin-left: #{v.$spacer-xs};
+			margin-left: #{$spacer-xs};
 
-			@include buttons.button-plain-icon();
+			@include button-plain-icon();
 
 			.svg-close {
 				width: 10px;
@@ -36,7 +36,7 @@
 	}
 
 	&.cui-label-appearance-secondary {
-		@include labels.label-secondary();
+		@include label-secondary();
 	}
 }
 
@@ -55,10 +55,10 @@
 		grid-column: 1 / 2;
 		position: relative;
 		top: 1px;
-		margin-left: -#{v.$spacer-xs};
+		margin-left: -#{$spacer-xs};
 
 		.cui-button-button {
-			@include buttons.button-plain();
+			@include button-plain();
 
 			.cui-button-visual {
 				font-size: 10px;
@@ -67,7 +67,7 @@
 				line-height: 18px;
 		
 				.cui-button-center {
-					padding: 0 v.$spacer-xs;
+					padding: 0 $spacer-xs;
 				}
 			}
 		}

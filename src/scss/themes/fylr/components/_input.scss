@@ -1,39 +1,39 @@
 @use "sass:color";
-@use "../mixins/buttons";
-@use "../mixins/forms";
-@use "../variables" as v;
+@use "../variables" as *;
+@use "../mixins/buttons" as *;
+@use "../mixins/forms" as *;
 
 input,
 textarea {
 	appearance: none;
 	width: 100%;
-	min-width: v.$input-min-width;
+	min-width: $input-min-width;
 	max-width: 100%;
 	outline: none;
 	font-size: inherit;
-	background-color: v.$input-background;
-	border: 1px solid v.$input-border-color;
-	border-radius: v.$input-border-radius;
-	padding: v.$input-padding-y v.$input-padding-x;
+	background-color: $input-background;
+	border: 1px solid $input-border-color;
+	border-radius: $input-border-radius;
+	padding: $input-padding-y $input-padding-x;
 	flex: 1 1 auto;
 	resize: vertical;
 	vertical-align: bottom; // see listView demo
 
 	&::placeholder {
-		color: v.$input-placeholder-color;
+		color: $input-placeholder-color;
 	}
 
 	// Password input placeholder should be regular body color
 	&[placeholder^='***']::placeholder {
-		color: v.$body-color;
+		color: $body-color;
 	}
 
 	&:focus {
-		@include forms.input-focus();
+		@include input-focus();
 	}
 
 	.cui-data-field-disabled & {
-		background-color: v.$input-background-disabled;
+		background-color: $input-background-disabled;
 	}
 
 	// keep this exactly here, do not move into .cui-input selector
@@ -48,13 +48,13 @@ textarea {
 }
 
 input {
-	height: v.$input-height;
-	line-height: v.$input-height;
+	height: $input-height;
+	line-height: $input-height;
 
 	&[type='file'] {
 		height: auto;
-		line-height: v.$line-height-base;
-		padding: v.$input-padding-y;
+		line-height: $line-height-base;
+		padding: $input-padding-y;
 	}
 }
 
@@ -62,8 +62,8 @@ textarea {
 	--textarea-min-rows: 1;
 
 	resize: none; // todo: bad UI ?
-	min-height: calc(#{v.$line-height-base} * 1em * var(--textarea-min-rows) + #{v.$spacer-xs} + 2px); // 16px: Line height, 6px: padding, 2px: border.
-	line-height: v.$line-height-base;
+	min-height: calc(#{$line-height-base} * 1em * var(--textarea-min-rows) + #{$spacer-xs} + 2px); // 16px: Line height, 6px: padding, 2px: border.
+	line-height: $line-height-base;
 }
 
 .cui-input {
@@ -84,14 +84,14 @@ textarea {
 		&.cui-input-invalid {
 			input,
 			.cui-data-field-right .cui-button .cui-button-visual {
-				border-color: color.scale(v.$danger, $saturation: 50%, $alpha: -95%);
-				background: color.adjust(v.$danger, $alpha: -0.85);
+				border-color: color.scale($danger, $saturation: 50%, $alpha: -95%);
+				background: color.adjust($danger, $alpha: -0.85);
 
 
 				.cui-list-view-row-selectable:hover &, 
 				.cui-list-view-row-selectable.cui-selected & {
 					border-color: transparent;
-					background: color.scale(v.$danger, $lightness: 50%);
+					background: color.scale($danger, $lightness: 50%);
 				}
 			}
 		}
@@ -110,13 +110,13 @@ textarea {
 	&.cui-input-appearance-code {
 		input,
 		textarea {
-			font-family: v.$font-family-monospace;
-			color: v.$teal; // todo
-			background: v.$gray-900;
-			border-color: v.$gray-900;
+			font-family: $font-family-monospace;
+			color: $teal; // todo
+			background: $gray-900;
+			border-color: $gray-900;
 
 			&:focus {
-				border-color: v.$gray-900;
+				border-color: $gray-900;
 			}
 		}
 	}
@@ -130,8 +130,8 @@ textarea {
 .cui-code-input pre {
 	height: 400px;
 	margin: auto;
-	border: 1px solid v.$input-border-color;
-	border-radius: v.$input-border-radius;
+	border: 1px solid $input-border-color;
+	border-radius: $input-border-radius;
 	
 	// stylelint-disable-next-line selector-class-pattern
 	&.ace_editor {
@@ -151,7 +151,7 @@ textarea {
 	flex-direction: column;
 	align-items: stretch;
 	flex: 1 1 auto;
-	min-width: v.$input-min-width;
+	min-width: $input-min-width;
 }
 
 .cui-data-field-multi-input-center {
@@ -162,10 +162,10 @@ textarea {
 	position: relative;
 	display: flex;
 	max-width: 100%;
-	border-radius: v.$input-border-radius;
+	border-radius: $input-border-radius;
 
 	+ .cui-multi-input-input {
-		margin-top: v.$spacer-xs;
+		margin-top: $spacer-xs;
 	}
 
 	&.cui-data-field-hidden {
@@ -182,15 +182,15 @@ textarea {
 }
 
 .cui-multi-input-tag-button {
-	@include buttons.button-combobox();
+	@include button-combobox();
 
 	.cui-button-visual {
 		.cui-button-center {
-			@include buttons.button-combobox-center-icon();
+			@include button-combobox-center-icon();
 
-			font-size: v.$font-size-sm;
+			font-size: $font-size-sm;
 			line-height: 1;
-			padding: 0 v.$spacer-xs;
+			padding: 0 $spacer-xs;
 		}
 	}
 }
@@ -297,7 +297,7 @@ textarea {
 	> .cui-button.is-empty > .cui-button-visual {
 		--btn-background: transparent;
 
-		background: linear-gradient(135deg, v.$gray-200 0, v.$gray-200 50%, v.$gray-300 50.01%, v.$gray-300);
+		background: linear-gradient(135deg, $gray-200 0, $gray-200 50%, $gray-300 50.01%, $gray-300);
 	}
 }
 
@@ -305,9 +305,9 @@ textarea {
 .cui-icon-input {
 	> .cui-button {
 		> .cui-button-visual {
-			--btn-background: #{v.$input-background};
+			--btn-background: #{$input-background};
 
-			border-right: 1px solid v.$hr-border-color;
+			border-right: 1px solid $hr-border-color;
 		}
 
 		&.is-empty .cui-button-left i {

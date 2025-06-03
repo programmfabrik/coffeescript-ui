@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 // ItemList
 .cui-item-list-body {
@@ -24,8 +24,8 @@
 
 			// make sure the buttons could wrap onto new line
 			height: auto;
-			min-height: v.$item-list-height;
-			line-height: v.$line-height-sm;
+			min-height: $item-list-height;
+			line-height: $line-height-sm;
 
 			.cui-select-menu & {
 				padding: 0.4rem 0; // see: events > select for "Object Types"
@@ -41,8 +41,8 @@
 		&:active,
 		&:hover {
 			.cui-button-visual {
-				color: var(--brand-foreground-text-color, #{v.$item-list-hover-color});
-				background: var(--brand-color, #{v.$item-list-hover-background});
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
@@ -51,22 +51,22 @@
 		// workaround
 		&[aria-pressed='true'] {
 			.cui-button-visual {
-				color: var(--brand-foreground-text-color, #{v.$item-list-active-color});
-				background: var(--brand-color, #{v.$item-list-active-background});
+				color: var(--brand-foreground-text-color, #{$item-list-active-color});
+				background: var(--brand-color, #{$item-list-active-background});
 			}
 		}
 
 		&.cui-active:hover {
 			.cui-button-visual {
-				color: var(--brand-foreground-text-color, #{v.$item-list-hover-color});
-				background: var(--brand-color, #{v.$item-list-hover-background});
+				color: var(--brand-foreground-text-color, #{$item-list-hover-color});
+				background: var(--brand-color, #{$item-list-hover-background});
 			}
 		}
 
 		&.cui-button-appearance-important,
 		&.cui-button--primary {
 			.cui-button-visual {
-				color: var(--brand-color, #{v.$item-list-hover-background});
+				color: var(--brand-color, #{$item-list-hover-background});
 				background: none;
 			}
 		}
@@ -79,19 +79,19 @@
 	// Labels within item-list
 	// --------------------------------
 	.cui-label {
-		font-size: v.$item-list-label-font-size;
+		font-size: $item-list-label-font-size;
 		cursor: default;
 	}
 
 	> .cui-label {
-		padding: 0 v.$btn-padding-x;
+		padding: 0 $btn-padding-x;
 	}
 
 	> .cui-empty-label {
-		margin-bottom: v.$spacer-sm;
+		margin-bottom: $spacer-sm;
 
 		&:last-child {
-			padding-bottom: v.$spacer-xs;
+			padding-bottom: $spacer-xs;
 		}
 	}
 
@@ -115,7 +115,7 @@
 	// --------------------------------
 	// see Menu.coffee, RootMenu.coffee (root has pretty much its own custom styling)
 	&.cui-item-list--has-button-left {
-		$indent: 1.5 * v.$spacer;
+		$indent: 1.5 * $spacer;
 
 		// this button always has a left side
 		.cui-button-left {
@@ -124,7 +124,7 @@
 
 			&:only-child {
 				width: auto;
-				margin-left: v.$btn-padding-x;
+				margin-left: $btn-padding-x;
 			}
 		}
 
@@ -136,6 +136,6 @@
 }
 
 .cui-item-list-divider {
-	height: v.$hr-border-width;
-	background: v.$hr-border-color;
+	height: $hr-border-width;
+	background: $hr-border-color;
 }

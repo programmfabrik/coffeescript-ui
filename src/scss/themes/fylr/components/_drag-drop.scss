@@ -1,4 +1,4 @@
-@use "../variables" as v;
+@use "../variables" as *;
 
 .cui-drag-drop-select-draggable,
 .cui-drag-drop-select-sortable {
@@ -39,8 +39,8 @@
 }
 
 .cui-droppable-drop-helper {
-	box-shadow: v.$drop-area-focus-shadow;
-	border-radius: v.$drop-area-border-radius;
+	box-shadow: $drop-area-focus-shadow;
+	border-radius: $drop-area-border-radius;
 	position: absolute;
 	z-index: 2;
 	pointer-events: none;
@@ -90,7 +90,7 @@
 	height: 1px;
 	left: 0;
 	top: 0;
-	background-color: var(--brand-color, #{v.$drag-lasso-background});
+	background-color: var(--brand-color, #{$drag-lasso-background});
 	display: block;
 	pointer-events: none;
 	z-index: 10;
@@ -122,8 +122,8 @@
 		&::after {
 			content: '';
 			top: 0;
-			left: #{v.$spacer-sm} - 1px;
-			border-right: 3px dotted var(--brand-color, #{v.$drag-lasso-background});
+			left: #{$spacer-sm} - 1px;
+			border-right: 3px dotted var(--brand-color, #{$drag-lasso-background});
 			height: 100%;
 			opacity: 0.5;
 			position: absolute;
