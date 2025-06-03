@@ -24045,7 +24045,9 @@ CUI.DataField = (function(superClass) {
     return this.__isRendered;
   };
 
-  DataField.prototype.render = function() {
+  DataField.prototype.render = function(arg) {
+    var callOnRender, ref;
+    callOnRender = (ref = (arg != null ? arg : {}).callOnRender) != null ? ref : true;
     CUI.util.assert(!this.__isRendered, this.__cls + ".render", "Cannot be called when already rendered.", {
       opts: this.opts,
       dataField: this
@@ -24058,8 +24060,10 @@ CUI.DataField = (function(superClass) {
     if (this.isHidden()) {
       this.hide(true);
     }
-    if (typeof this._onRender === "function") {
-      this._onRender(this);
+    if (callOnRender) {
+      if (typeof this._onRender === "function") {
+        this._onRender(this);
+      }
     }
     return this;
   };
@@ -39721,7 +39725,9 @@ CUI.DataTable = (function(superClass) {
 
   DataTable.prototype.render = function() {
     var cls, colClasses, cols, f, i, idx, j, label, len1, len2, maxis, name, ref, ref1, ref2, ref3, ref4, ref5;
-    DataTable.__super__.render.call(this);
+    DataTable.__super__.render.call(this, {
+      callOnRender: false
+    });
     cols = [];
     colClasses = [];
     maxis = [];
@@ -39817,6 +39823,9 @@ CUI.DataTable = (function(superClass) {
       this.listView.setInactive(true, null);
     }
     this.replace(this.listView.render());
+    if (typeof this._onRender === "function") {
+      this._onRender(this);
+    }
     CUI.Events.listen({
       type: "data-changed",
       node: this.listView,
