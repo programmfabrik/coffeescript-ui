@@ -18,7 +18,7 @@ module.exports = {
             },
         ],  
         'selector-class-pattern': [
-			'^[a-z][a-z0-9]*(?:-{1,2}[a-z0-9]+)*$',
+			'^[a-z][a-z0-9_-]*(?:--[a-z0-9_-]+)?$',
 			{
 				message: (selector) => `Expected class selector "${selector}" to be kebab-case, --modifier is allowed`,
 			},
