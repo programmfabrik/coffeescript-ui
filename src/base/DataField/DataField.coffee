@@ -333,7 +333,7 @@ class CUI.DataField extends CUI.DOMElement
 	isRendered: ->
 		@__isRendered
 
-	render: ->
+	render: ({ callOnRender = true } = {}) ->
 		CUI.util.assert(not @__isRendered, "#{@__cls}.render", "Cannot be called when already rendered.", opts: @opts, dataField: @)
 		# for p of @__tmpl.map
 		# 	content = @["__#{p}"]
@@ -347,7 +347,8 @@ class CUI.DataField extends CUI.DOMElement
 			@disable()
 		if @isHidden()
 			@hide(true)
-		@_onRender?(@)
+		if callOnRender
+			@_onRender?(@)
 		@
 
 	displayValue: ->

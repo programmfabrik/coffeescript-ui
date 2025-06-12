@@ -2124,6 +2124,10 @@ a[role="button"].cui-button-appearance-link {
 	&[data-type="null"] {
 		color: #0184bb;
 	}
+
+	&.cui-label-danger {
+		color: $error-color;
+	}
 }
 
 // Label: Markdown
@@ -2528,7 +2532,7 @@ a[role="button"].cui-button-appearance-link {
 		&.cui-input-invalid {
 			input {
 				border-color: $error-color;
-				background: transparentize($error-color, 0.85);
+				background: $error-color-background;
 			}
 		}
 	}
@@ -4116,6 +4120,29 @@ $layer-sizes: (
 	&.cui-lv-tree-node--is-branch {
 		@include clickable;
 	}
+
+	&.cui-row-invalid {
+		position: relative;
+
+		> .cui-label-validation {
+			position: absolute;
+			top: 6px;
+			left: 6px;
+			z-index: 1;
+		}
+
+		> .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+			display: none;
+		}
+	}
+
+	&.cui-row-invalid,
+	&.cui-row-invalid:hover,
+	&.cui-row-invalid:focus {
+		> .cui-lv-tr {
+			background-color: $error-color-background;
+		}
+	}		
 }
 
 .cui-lv-tr {

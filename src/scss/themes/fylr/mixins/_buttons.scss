@@ -336,6 +336,7 @@
 		height: auto;
 		line-height: $line-height-base;
 		align-items: baseline;
+		min-width: 0;
 		
 		.cui-button-center {
 			text-decoration: underline;
@@ -352,6 +353,19 @@
 		.cui-button-center:only-child {
 			padding-right: 0;
 		}
+
+		// very special case, where clients build custom buttons with only a right icon (better would be to use the left spot for the icon)
+		// see uni-heidelberg (.ez5-custom-data-type-ubhdgnd)
+		.cui-button-left:empty + .cui-button-center:empty {
+			margin: 0;
+			padding: 0;
+		}
+
+		.cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+			padding-right: 0;
+			margin-left: 0;
+		}
+		// end: special case
 	}
 
 	&:not(.cui-disabled) {

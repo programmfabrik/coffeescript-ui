@@ -80,6 +80,10 @@ label[data-label-clickable],
 		@include label-danger();
 	}
 
+	&.cui-label-warning {
+		@include label-warning();
+	}
+
 	// todo: make obsolete
 	// &.cui-label--padded {
 	// 	padding: $label-padding;
@@ -103,7 +107,7 @@ label[data-label-clickable],
 	// Rotate
 	&.cui-label-rotate-90 {
 		white-space: nowrap;
-		margin: $spacer-sm 0;
+		margin: $spacer-sm 0 $spacer-xs;
 		flex-shrink: 0;
 		max-width: none;
 		display: inline-block; // has to be a non-flex element because in Firefox percentage margin is not dependent on the element width in flex elements, see #https://bugzilla.mozilla.org/show_bug.cgi?id=958714
