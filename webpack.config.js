@@ -113,6 +113,9 @@ module.exports = function (env, argv) {
                             options: {
                                 api: "modern",
                                 implementation: require('sass'),
+                                sassOptions: {
+                                    silenceDeprecations: ['mixed-decls'], // https://github.com/sass/dart-sass/issues/2420
+                                },
                                 sourceMap: true, // <-- IMPORTANT for resolve-url-loader!
                             },
                         },
