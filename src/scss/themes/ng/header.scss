@@ -62,6 +62,16 @@ $default-color: map.get($colors, "blue");
 	--on-highlight-light-secondary-color: #{color.adjust(color.adjust(map.get($color, "highlight-light"), $saturation: -75%), $lightness: -40%)};
 }
 
+$layer-sizes: (
+	"xs": 400,
+	"s": 500,
+	"m": 600,
+	"l": 700,
+	"xl": 800,
+	"xxl": 900,
+	"xxxl": 1000
+);
+
 $padding: 10px;
 // compensating padding compensates for line-height
 $compensating-padding: 7px;
