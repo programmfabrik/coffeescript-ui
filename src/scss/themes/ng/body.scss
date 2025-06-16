@@ -1192,14 +1192,14 @@ li > div {
 
 	&:active {
 		.cui-button-visual {
-	  	background: color.adjust($button-background,$alpha: -.5);
+	  		background: color.adjust($button-background,$alpha: -.5);
 	  }
 	}
 
 	&.cui-layer-open,
 	&.cui-active {
 		.cui-button-visual {
-	  	box-shadow: 0 0 0 1px $button-active-border;
+	  		box-shadow: 0 0 0 1px $button-active-border;
 	  }
 	}
 
