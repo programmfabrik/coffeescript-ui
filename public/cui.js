@@ -56473,7 +56473,7 @@ CUI.Map = (function(superClass) {
       buttonsUpperRight.push(CUI.Pane.getToggleFillScreenButton(fullscreenButtonOpts));
     }
     if (this._buttonsUpperRight) {
-      buttonsUpperRight = buttonsUpperRight.concat(this._buttonsUpperRight);
+      buttonsUpperRight = this._buttonsUpperRight.concat(buttonsUpperRight);
     }
     if (buttonsUpperRight.length) {
       buttonBar = new CUI.Buttonbar({
