@@ -53650,11 +53650,11 @@ CUI.ListViewTree = (function(superClass) {
               row.focus();
             };
             if (ev.getKeyboard() === "Right" && !node.isOpen()) {
-              node.open().done(function() {
+              _this.__runTrigger(ev, "open", node).done(function() {
                 return focusNode(node);
               });
             } else if (ev.getKeyboard() === "Left" && node.isOpen()) {
-              node.close().done(function() {
+              _this.__runTrigger(ev, "close", node).done(function() {
                 return focusNode(node);
               });
             }
@@ -53667,17 +53667,17 @@ CUI.ListViewTree = (function(superClass) {
 
   ListViewTree.prototype.toggleNode = function(ev, node) {
     if (node.isOpen()) {
-      this.__runTrigger(ev, "close", node);
+      return this.__runTrigger(ev, "close", node);
     } else {
-      this.__runTrigger(ev, "open", node);
+      return this.__runTrigger(ev, "open", node);
     }
   };
 
   ListViewTree.prototype.__runTrigger = function(ev, action, node) {
     if (ev.ctrlKey() || ev.metaKey()) {
-      this.__actionOnNode(ev, action + "Recursively", node);
+      return this.__actionOnNode(ev, action + "Recursively", node);
     } else {
-      this.__actionOnNode(ev, action, node);
+      return this.__actionOnNode(ev, action, node);
     }
   };
 
