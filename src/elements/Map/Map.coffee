@@ -112,7 +112,7 @@ class CUI.Map extends CUI.Pane
 			buttonsUpperRight.push(CUI.Pane.getToggleFillScreenButton(fullscreenButtonOpts))
 
 		if @_buttonsUpperRight
-			buttonsUpperRight = buttonsUpperRight.concat(@_buttonsUpperRight)
+			buttonsUpperRight = @_buttonsUpperRight.concat(buttonsUpperRight)
 
 		if buttonsUpperRight.length
 			buttonBar = new CUI.Buttonbar(buttons: buttonsUpperRight)
