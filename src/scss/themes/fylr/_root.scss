@@ -1,6 +1,6 @@
-@use "sass:meta";
+@use 'sass:meta';
 //
-@use "variables' as *;
+@use 'variables' as *;
 
 :root {
 	// ! don't specify brand colors as CSS colors, so we can use the fallback in var(--brand-color, FALLBACK)

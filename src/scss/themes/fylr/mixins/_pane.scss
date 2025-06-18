@@ -1,6 +1,6 @@
 @use '../variables' as *;
-@use "buttons' as *;
-@use "typography' as *;
+@use 'buttons' as *;
+@use 'typography' as *;
 
 @mixin pane-padding() {
 	padding: $pane-padding;

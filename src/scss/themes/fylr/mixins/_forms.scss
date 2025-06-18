@@ -1,5 +1,5 @@
 @use '../variables' as *;
-@use "breakpoints' as *;
+@use 'breakpoints' as *;
 
 @mixin form-hint() {
 	@include form-hint-before();
