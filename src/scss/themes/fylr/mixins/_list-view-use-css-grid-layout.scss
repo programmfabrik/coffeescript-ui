@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 @mixin list-view-use-css-grid-layout() {
 	@supports (grid-template-columns: subgrid) {

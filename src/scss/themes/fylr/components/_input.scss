@@ -1,7 +1,7 @@
-@use "sass:color";
-@use "../variables" as *;
-@use "../mixins/buttons" as *;
-@use "../mixins/forms" as *;
+@use 'sass:color';
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/forms' as *;
 
 input,
 textarea {

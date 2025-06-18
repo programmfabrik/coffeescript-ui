@@ -1,9 +1,9 @@
-@use "sass:math";
-@use "../variables" as *;
-@use "../mixins/buttonbar" as *;
-@use "../mixins/buttons" as *;
-@use "../mixins/layer" as *;
-@use "../mixins/pane" as *;
+@use 'sass:math';
+@use '../variables' as *;
+@use '../mixins/buttonbar' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/layer' as *;
+@use '../mixins/pane' as *;
 
 // Calendar Popup
 .cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {

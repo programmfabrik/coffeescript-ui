@@ -1,8 +1,8 @@
-@use "../variables" as *;
-@use "../mixins/buttons" as *;
-@use "../mixins/clickable" as *;
-@use "../mixins/labels" as *;
-@use "../mixins/text-truncate" as *;
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/clickable' as *;
+@use '../mixins/labels' as *;
+@use '../mixins/text-truncate' as *;
 
 label[data-label-clickable],
 .cui-label[data-label-clickable] {

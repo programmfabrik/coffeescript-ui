@@ -1,5 +1,5 @@
-@use "../variables" as *;
-@use "buttonbar" as *;
+@use '../variables' as *;
+@use "buttonbar' as *;
 
 @mixin tabs-vertical($tab-width: 200px) {
 	display: grid;

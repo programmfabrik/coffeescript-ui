@@ -1,6 +1,6 @@
-@use "sass:color";
-@use "sass:map";
-@use "sass:math";
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
 @use "functions";
 
 /*
@@ -151,8 +151,8 @@ $theme-colors: map.merge(
 // - moved out of functions.scss to avoid circular @use
 
 /* todo: 
- 	- find a better way to implement this (the function needs variables which are defined in _v.scss
- 	however we cannot inlcude variables in functions, because we already @use functions in variables
+ 	- find a better way to implement this (the function needs variables which are defined in _variables.scss
+ 	however we cannot include variables in functions, because we already @use functions in variables
 	- passing the variables every time the function is called is not an option
 */
 

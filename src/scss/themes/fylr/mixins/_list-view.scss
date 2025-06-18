@@ -1,5 +1,5 @@
-@use "../variables" as *;
-@use "buttons" as *;
+@use '../variables' as *;
+@use "buttons' as *;
 
 @mixin list-view-row-hover() {
 	.cui-list-view-grid-quadrant-2,

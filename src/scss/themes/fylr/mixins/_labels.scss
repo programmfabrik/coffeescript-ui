@@ -1,5 +1,5 @@
-@use "sass:color";
-@use "../variables" as *;
+@use 'sass:color';
+@use '../variables' as *;
 
 @mixin label-sm() {
 	font-size: $font-size-sm;

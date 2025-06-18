@@ -1,7 +1,7 @@
-@use "sass:color";
+@use 'sass:color';
 @use "sass:list";
-@use "sass:map";
-@use "sass:math";
+@use 'sass:map';
+@use 'sass:math';
 
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -17,7 +17,7 @@
 
 
 @use '../../icons/_svg-dimensions.scss';
-@use "header" as *;
+@use "header' as *;
 
 html {
 	@include variableList($default-color);

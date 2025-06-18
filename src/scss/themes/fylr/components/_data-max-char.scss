@@ -1,5 +1,5 @@
-@use "sass:math";
-@use "../variables" as *;
+@use 'sass:math';
+@use '../variables' as *;
 
 [data-max-chars] {
 	box-sizing: content-box; // ! careful

@@ -1,4 +1,4 @@
-@use "../mixins/layer" as *;
+@use '../mixins/layer' as *;
 
 .ez5-developer-menu {
 	@include layer-width('xs');

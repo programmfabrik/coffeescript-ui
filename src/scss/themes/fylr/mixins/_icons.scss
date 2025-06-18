@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 @mixin icon($code, $font-size: $icon-font-size) {
 	content: $code;

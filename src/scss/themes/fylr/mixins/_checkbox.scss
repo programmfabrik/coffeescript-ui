@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 @mixin checkbox-sm() {
 	min-height: $input-height-sm;

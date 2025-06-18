@@ -1,9 +1,9 @@
-@use "sass:map";
-@use "../variables" as *;
-@use "buttonbar" as *;
-@use "buttons" as *;
-@use "pane" as *;
-@use "typography" as *;
+@use 'sass:map';
+@use '../variables' as *;
+@use "buttonbar' as *;
+@use "buttons' as *;
+@use "pane' as *;
+@use "typography' as *;
 // Mixins for all layer types (popover, modals, menu etc.)
 
 @mixin layer-title() {
