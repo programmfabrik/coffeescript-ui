@@ -892,6 +892,12 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --body-bg: #ffffff;
   --body-color: #212121;
   --top-header-background: #ffffff;
+  --font-size-xxxl: 1.37rem;
+  --font-size-xxl: 1.25rem;
+  --font-size-xl: 1.125rem;
+  --font-size-lg: 1rem;
+  --font-size-base: 0.875rem;
+  --font-size-sm: 0.75rem;
   --headline-size-h1: 1.5rem;
   --headline-size-h2: 1.5rem;
   --headline-size-h3: 1.25rem;
