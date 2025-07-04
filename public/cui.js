@@ -24826,7 +24826,7 @@ CUI.whenAllReject = (function(_this) {
       for (i = 0, len = arguments.length; i < len; i++) {
         promise = arguments[i];
         if (promise.state === "rejected") {
-          dfr.reject();
+          dfr.reject(promise);
           return;
         }
       }
