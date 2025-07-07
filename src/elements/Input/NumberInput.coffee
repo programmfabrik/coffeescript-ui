@@ -49,17 +49,20 @@ class CUI.NumberInput extends CUI.Input
 				check: (v) ->
 					CUI.util.isNumber(v)
 
+			prevent_invalid_input:
+				default: true
+				check: Boolean
+
 		@removeOpt("checkInput")
 		@removeOpt("getValueForDisplay")
 		@removeOpt("getValueForInput")
 		@removeOpt("correctValueForInput")
-		@removeOpt("prevent_invalid_input")
 
 	readOpts: ->
 		super()
 		if @_json_number
 			@_decimals = 13
-		@_prevent_invalid_input = true
+
 		@_checkInput = @__checkInput
 		@setMin(@_min)
 		@setMax(@_max)
