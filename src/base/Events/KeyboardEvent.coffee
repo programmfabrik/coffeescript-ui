@@ -76,6 +76,9 @@ class CUI.KeyboardEvent extends CUI.Event
 	key: ->
 		@getNativeEvent().key
 
+	code: ->
+		@getNativeEvent().code
+
 	hasDefaultActionModifier: ->
 		# os detection is tricky and behavior of current solutions might change in the future
 		# navigator.platform is deprecated, according to MDN, but using it for detecting ctrl vs cmd on mac is still a valid use case
