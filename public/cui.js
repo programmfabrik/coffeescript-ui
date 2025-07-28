@@ -28504,6 +28504,16 @@ CUI.KeyboardEvent = (function(superClass) {
     return this.getNativeEvent().key;
   };
 
+  KeyboardEvent.prototype.hasDefaultActionModifier = function() {
+    var isAppleDevice;
+    isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+    if (isAppleDevice) {
+      return this.metaKey();
+    } else {
+      return this.ctrlKey();
+    }
+  };
+
   KeyboardEvent.prototype.dump = function() {
     var keyboard, txt;
     txt = this.__cls + ": **" + this.getType() + "**";
