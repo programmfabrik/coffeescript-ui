@@ -28504,6 +28504,10 @@ CUI.KeyboardEvent = (function(superClass) {
     return this.getNativeEvent().key;
   };
 
+  KeyboardEvent.prototype.code = function() {
+    return this.getNativeEvent().code;
+  };
+
   KeyboardEvent.prototype.hasDefaultActionModifier = function() {
     var isAppleDevice;
     isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
