@@ -53664,10 +53664,12 @@ CUI.ListViewTree = (function(superClass) {
               row.focus();
             };
             if (ev.getKeyboard() === "Right" && !node.isOpen()) {
+              ev.preventDefault();
               _this.__runTrigger(ev, "open", node).done(function() {
                 return focusNode(node);
               });
             } else if (ev.getKeyboard() === "Left" && node.isOpen()) {
+              ev.preventDefault();
               _this.__runTrigger(ev, "close", node).done(function() {
                 return focusNode(node);
               });
