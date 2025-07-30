@@ -165,9 +165,11 @@ class CUI.ListViewTree extends CUI.ListView
 						return
 
 					if ev.getKeyboard() == "Right" and not node.isOpen()
-						node.open().done(() => focusNode(node))
+						ev.preventDefault()
+						@__runTrigger(ev, "open", node).done(() => focusNode(node))
 					else if ev.getKeyboard() == "Left" and node.isOpen()
-						node.close().done(() => focusNode(node))
+						ev.preventDefault()
+						@__runTrigger(ev, "close", node).done(() => focusNode(node))
 
 					return
 
@@ -175,20 +177,16 @@ class CUI.ListViewTree extends CUI.ListView
 
 	toggleNode: (ev, node) ->
 		if node.isOpen()
-			@__runTrigger(ev, "close", node)
+			return @__runTrigger(ev, "close", node)
 		else
-			@__runTrigger(ev, "open", node)
-
-		return
+			return @__runTrigger(ev, "open", node)
 
 
 	__runTrigger: (ev, action, node) ->
 		if ev.ctrlKey() or ev.metaKey()
-			@__actionOnNode(ev, action+"Recursively", node)
+			return @__actionOnNode(ev, action+"Recursively", node)
 		else
-			@__actionOnNode(ev, action, node)
-
-		return
+			return @__actionOnNode(ev, action, node)
 
 
 	__actionOnNode: (ev, action, node) =>
@@ -223,10 +221,7 @@ class CUI.ListViewTree extends CUI.ListView
 					type: "content-resize"
 					node: @DOM
 
-
-
 		return ret
-		# console.timeEnd("#{@__uniqueId}: action on node #{action}")
 
 	deselectRow: (ev, row, newRow) ->
 		# deselect if we allow multiple rows or the selection is a toggle
