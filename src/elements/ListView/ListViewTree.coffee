@@ -165,8 +165,10 @@ class CUI.ListViewTree extends CUI.ListView
 						return
 
 					if ev.getKeyboard() == "Right" and not node.isOpen()
+						ev.preventDefault()
 						@__runTrigger(ev, "open", node).done(() => focusNode(node))
 					else if ev.getKeyboard() == "Left" and node.isOpen()
+						ev.preventDefault()
 						@__runTrigger(ev, "close", node).done(() => focusNode(node))
 
 					return
