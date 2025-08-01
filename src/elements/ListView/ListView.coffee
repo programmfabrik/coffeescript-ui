@@ -127,6 +127,9 @@ class CUI.ListView extends CUI.SimplePane
 				check: Boolean
 			colResize:
 				check: Boolean
+			colMove:
+				default: false
+				check: Boolean
 			useCSSGridLayout:
 				check: Boolean
 			selectableRows:
@@ -140,6 +143,8 @@ class CUI.ListView extends CUI.SimplePane
 			onScroll:
 				check: Function
 			onColumnResize:
+				check: Function
+			onColumnMove:
 				check: Function
 			header:
 				deprecated: true
@@ -164,6 +169,25 @@ class CUI.ListView extends CUI.SimplePane
 		super()
 		@__selectableRows = @_selectableRows
 		@
+
+	__rebuildTableWithNewColumnOrder: ->
+		# Save all current rows
+		savedRows = []
+		for row_i in @rowsOrder
+			listViewRow = @getListViewRow(row_i)
+			if listViewRow
+				savedRows.push(listViewRow)
+
+		# Clear the current table completely
+		@removeAllRows()
+
+		# Force recreation of headers by clearing and rebuilding the grid
+		@__grid = null
+		@__scheduleLayout()
+
+		# Re-add all rows (they will be rendered with the new column order)
+		for listViewRow in savedRows
+			@appendRow(listViewRow)
 
 	destroy: ->
 		# console.error "#{CUI.util.getObjectClass(@)}.destroy list-view-#{@listViewCounter} called. This is NOT an error."
@@ -190,6 +214,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	hasResizableColumns: ->
 		@__colResize
+
+	hasMovableColumns: ->
+		@_colMove
 
 	hasCSSGridLayout: ->
 		@__useCSSGridLayout
@@ -642,6 +669,56 @@ class CUI.ListView extends CUI.SimplePane
 					to_i: to_i
 					display_from_i: display_from_i
 					display_to_i: display_to_i
+					after: after
+		@
+
+	moveCol: (from_col_i, to_col_i, after=false, trigger_col_moved=true) ->
+
+		CUI.util.assert(from_col_i >= @fixedColsCount and to_col_i >= @fixedColsCount, "ListView.moveCol", "from_col_i and to_col_i must not be in fixed area of the list view", from_col_i: from_col_i, to_col_i: to_col_i, fixed_i: @fixedColsCount)
+
+		display_from_col_i = @getDisplayColIdx(from_col_i)
+		display_to_col_i = @getDisplayColIdx(to_col_i)
+
+		# Move the column in the display order array
+		element = @colsOrder[display_from_col_i]
+
+		# Calculate the final position before removing the element
+		if after
+			# Insert after the target position
+			if display_from_col_i < display_to_col_i
+				# Moving right: target position shifts left after removal
+				finalPos = display_to_col_i
+			else
+				# Moving left: target position stays the same
+				finalPos = display_to_col_i + 1
+		else
+			# Insert before the target position
+			if display_from_col_i < display_to_col_i
+				# Moving right: target position shifts left after removal
+				finalPos = display_to_col_i - 1
+			else
+				# Moving left: target position stays the same
+				finalPos = display_to_col_i
+
+		# Remove element from original position
+		@colsOrder.splice(display_from_col_i, 1)
+
+		# Insert element at final position
+		@colsOrder.splice(finalPos, 0, element)
+
+		# Force a complete rebuild of the table
+		@__rebuildTableWithNewColumnOrder()
+
+		if trigger_col_moved
+			@_onColumnMove?(display_from_col_i, display_to_col_i, after)
+			CUI.Events.trigger
+				type: "column_moved"
+				node: @grid
+				info:
+					from_col_i: from_col_i
+					to_col_i: to_col_i
+					display_from_col_i: display_from_col_i
+					display_to_col_i: display_to_col_i
 					after: after
 		@
 

@@ -68,6 +68,18 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 			column: @
 
 		CUI.dom.append(@__element, move_handle)
+
+		# Add column move handle if ListView has movable columns enabled
+		if listView.hasMovableColumns() and @getColumnIdx() >= listView.fixedColsCount
+			drag_handle = CUI.dom.element("DIV", class: "cui-lv-col-move-handle")
+
+			new CUI.ListViewColMove
+				element: drag_handle
+				row: @getRow()
+				column: @
+
+			CUI.dom.append(@__element, drag_handle)
+
 		@__element
 
 	render: ->
@@ -82,4 +94,6 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 			arr.push(@__label)
 
 		arr
+
+
 

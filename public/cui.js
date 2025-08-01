@@ -78884,6 +78884,10 @@ CUI.ListView = (function(superClass) {
       colResize: {
         check: Boolean
       },
+      colMove: {
+        "default": false,
+        check: Boolean
+      },
       useCSSGridLayout: {
         check: Boolean
       },
@@ -78903,6 +78907,9 @@ CUI.ListView = (function(superClass) {
         check: Function
       },
       onColumnResize: {
+        check: Function
+      },
+      onColumnMove: {
         check: Function
       },
       header: {
@@ -78936,6 +78943,28 @@ CUI.ListView = (function(superClass) {
     return this;
   };
 
+  ListView.prototype.__rebuildTableWithNewColumnOrder = function() {
+    var j, k, len1, len2, listViewRow, ref, results, row_i, savedRows;
+    savedRows = [];
+    ref = this.rowsOrder;
+    for (j = 0, len1 = ref.length; j < len1; j++) {
+      row_i = ref[j];
+      listViewRow = this.getListViewRow(row_i);
+      if (listViewRow) {
+        savedRows.push(listViewRow);
+      }
+    }
+    this.removeAllRows();
+    this.__grid = null;
+    this.__scheduleLayout();
+    results = [];
+    for (k = 0, len2 = savedRows.length; k < len2; k++) {
+      listViewRow = savedRows[k];
+      results.push(this.appendRow(listViewRow));
+    }
+    return results;
+  };
+
   ListView.prototype.destroy = function() {
     var ref;
     delete this.colsOrder;
@@ -78967,6 +78996,10 @@ CUI.ListView = (function(superClass) {
 
   ListView.prototype.hasResizableColumns = function() {
     return this.__colResize;
+  };
+
+  ListView.prototype.hasMovableColumns = function() {
+    return this._colMove;
   };
 
   ListView.prototype.hasCSSGridLayout = function() {
@@ -79507,6 +79540,57 @@ CUI.ListView = (function(superClass) {
           to_i: to_i,
           display_from_i: display_from_i,
           display_to_i: display_to_i,
+          after: after
+        }
+      });
+    }
+    return this;
+  };
+
+  ListView.prototype.moveCol = function(from_col_i, to_col_i, after, trigger_col_moved) {
+    var display_from_col_i, display_to_col_i, element, finalPos;
+    if (after == null) {
+      after = false;
+    }
+    if (trigger_col_moved == null) {
+      trigger_col_moved = true;
+    }
+    CUI.util.assert(from_col_i >= this.fixedColsCount && to_col_i >= this.fixedColsCount, "ListView.moveCol", "from_col_i and to_col_i must not be in fixed area of the list view", {
+      from_col_i: from_col_i,
+      to_col_i: to_col_i,
+      fixed_i: this.fixedColsCount
+    });
+    display_from_col_i = this.getDisplayColIdx(from_col_i);
+    display_to_col_i = this.getDisplayColIdx(to_col_i);
+    element = this.colsOrder[display_from_col_i];
+    if (after) {
+      if (display_from_col_i < display_to_col_i) {
+        finalPos = display_to_col_i;
+      } else {
+        finalPos = display_to_col_i + 1;
+      }
+    } else {
+      if (display_from_col_i < display_to_col_i) {
+        finalPos = display_to_col_i - 1;
+      } else {
+        finalPos = display_to_col_i;
+      }
+    }
+    this.colsOrder.splice(display_from_col_i, 1);
+    this.colsOrder.splice(finalPos, 0, element);
+    this.__rebuildTableWithNewColumnOrder();
+    if (trigger_col_moved) {
+      if (typeof this._onColumnMove === "function") {
+        this._onColumnMove(display_from_col_i, display_to_col_i, after);
+      }
+      CUI.Events.trigger({
+        type: "column_moved",
+        node: this.grid,
+        info: {
+          from_col_i: from_col_i,
+          to_col_i: to_col_i,
+          display_from_col_i: display_from_col_i,
+          display_to_col_i: display_to_col_i,
           after: after
         }
       });
@@ -80585,7 +80669,7 @@ CUI.ListViewHeaderColumn = (function(superClass) {
   };
 
   ListViewHeaderColumn.prototype.setElement = function(__element) {
-    var coldef, listView, move_handle;
+    var coldef, drag_handle, listView, move_handle;
     this.__element = __element;
     ListViewHeaderColumn.__super__.setElement.call(this, this.__element);
     if (this._rotate_90) {
@@ -80617,6 +80701,17 @@ CUI.ListViewHeaderColumn = (function(superClass) {
       column: this
     });
     CUI.dom.append(this.__element, move_handle);
+    if (listView.hasMovableColumns() && this.getColumnIdx() >= listView.fixedColsCount) {
+      drag_handle = CUI.dom.element("DIV", {
+        "class": "cui-lv-col-move-handle"
+      });
+      new CUI.ListViewColMove({
+        element: drag_handle,
+        row: this.getRow(),
+        column: this
+      });
+      CUI.dom.append(this.__element, drag_handle);
+    }
     return this.__element;
   };
 
@@ -82606,6 +82701,231 @@ CUI.ListViewTreeNode = (function(superClass) {
   return ListViewTreeNode;
 
 })(CUI.ListViewRow);
+
+
+/***/ }),
+
+/***/ "./elements/ListView/tools/ListViewColMove.coffee":
+/*!********************************************************!*\
+  !*** ./elements/ListView/tools/ListViewColMove.coffee ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.ListViewColMove = (function(superClass) {
+  extend(ListViewColMove, superClass);
+
+  function ListViewColMove() {
+    return ListViewColMove.__super__.constructor.apply(this, arguments);
+  }
+
+  ListViewColMove.prototype.initOpts = function() {
+    ListViewColMove.__super__.initOpts.call(this);
+    this.removeOpt("helper");
+    return this.addOpts({
+      row: {
+        mandatory: true,
+        check: CUI.ListViewRow
+      },
+      column: {
+        mandatory: true,
+        check: CUI.ListViewColumn
+      }
+    });
+  };
+
+  ListViewColMove.prototype.readOpts = function() {
+    ListViewColMove.__super__.readOpts.call(this);
+    this.__row_i = this._row.getRowIdx();
+    this.__display_row_i = this._row.getDisplayRowIdx();
+    this.__listView = this._row.getListView();
+    this.__col_i = this._column.getColumnIdx();
+    return this.__display_col_i = this.__listView.getDisplayColIdx(this.__col_i);
+  };
+
+  ListViewColMove.prototype.get_helper = function(ev, gd, diff) {
+    var headerCell, helper;
+    helper = this.get_marker("cui-lv-col-move");
+    headerCell = this._column.getElement();
+    if (headerCell) {
+      helper.innerHTML = headerCell.innerHTML;
+    }
+    CUI.dom.setStyle(helper, {
+      backgroundColor: "rgba(255, 102, 0, 0.9)",
+      border: "2px solid #ff6600",
+      borderRadius: "4px",
+      opacity: "0.9",
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center",
+      lineHeight: "normal",
+      padding: "4px"
+    });
+    return helper;
+  };
+
+  ListViewColMove.prototype.get_helper_contain_element = function() {
+    return this.__listView.getGrid();
+  };
+
+  ListViewColMove.prototype.get_axis = function() {
+    return "x";
+  };
+
+  ListViewColMove.prototype.get_cursor = function(gd) {
+    return "move";
+  };
+
+  ListViewColMove.prototype.get_init_helper_pos = function(node, gd) {
+    var headerCell, rect;
+    headerCell = this._column.getElement();
+    if (headerCell) {
+      rect = CUI.dom.getRect(headerCell);
+      return {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+    rect = this.__listView.getCellGridRect(this.__row_i, this.__col_i);
+    return {
+      top: rect.top_abs,
+      left: rect.left_abs,
+      width: rect.width,
+      height: rect.height
+    };
+  };
+
+  ListViewColMove.prototype.init_helper = function() {
+    this.movableTargetDiv = this.get_marker("cui-lv-col-move-target");
+    CUI.dom.append(this.__listView.getGrid(), this.movableTargetDiv);
+    return ListViewColMove.__super__.init_helper.call(this);
+  };
+
+  ListViewColMove.prototype.do_drag = function(ev, $target, diff) {
+    var cell;
+    ListViewColMove.__super__.do_drag.call(this, ev, $target, diff);
+    cell = this.__listView.getCellByTarget($target);
+    if (cell) {
+      cell.clientX = ev.clientX();
+      cell.clientY = ev.clientY();
+      if (cell.display_row_i === 0 && cell.display_col_i >= this.__listView.fixedColsCount) {
+        this.showVerticalTargetMarker(cell);
+      } else {
+        CUI.dom.setStyle(this.movableTargetDiv, {
+          display: "none"
+        });
+        this.target = null;
+      }
+    }
+  };
+
+  ListViewColMove.prototype.showVerticalTargetMarker = function(cell) {
+    var gridRect, headerCell, headerCells, i, left, leftBoundary, len, middle, rect, rightBoundary, showAfter, targetHeaderCell, top;
+    if (cell.col_i === this.__col_i) {
+      CUI.dom.setStyle(this.movableTargetDiv, {
+        display: "none"
+      });
+      this.target = null;
+      return;
+    }
+    headerCells = CUI.dom.matchSelector(this.__listView.getGrid(), ".cui-lv-th");
+    targetHeaderCell = null;
+    for (i = 0, len = headerCells.length; i < len; i++) {
+      headerCell = headerCells[i];
+      if (parseInt(CUI.dom.getAttribute(headerCell, "col")) === cell.col_i) {
+        targetHeaderCell = headerCell;
+        break;
+      }
+    }
+    if (!targetHeaderCell) {
+      CUI.dom.setStyle(this.movableTargetDiv, {
+        display: "none"
+      });
+      this.target = null;
+      return;
+    }
+    rect = CUI.dom.getRect(targetHeaderCell);
+    leftBoundary = rect.left + rect.width * 0.3;
+    rightBoundary = rect.left + rect.width * 0.7;
+    if (cell.clientX < leftBoundary) {
+      showAfter = false;
+    } else if (cell.clientX > rightBoundary) {
+      showAfter = true;
+    } else {
+      middle = rect.left + rect.width / 2;
+      showAfter = cell.clientX > middle;
+    }
+    gridRect = CUI.dom.getRect(this.__listView.getGrid());
+    if (showAfter) {
+      left = rect.left + rect.width - gridRect.left;
+    } else {
+      left = rect.left - gridRect.left;
+    }
+    top = rect.top - gridRect.top;
+    CUI.dom.setStyle(this.movableTargetDiv, {
+      display: "block",
+      left: left + "px",
+      top: top + "px",
+      width: "4px",
+      height: rect.height + "px",
+      backgroundColor: "#ff6600",
+      borderRadius: "2px",
+      boxShadow: "0 0 8px rgba(255, 102, 0, 0.6)",
+      zIndex: "1000"
+    });
+    return this.target = {
+      col_i: cell.col_i,
+      after: showAfter
+    };
+  };
+
+  ListViewColMove.prototype.cleanup_drag = function(ev) {
+    ListViewColMove.__super__.cleanup_drag.call(this, ev);
+    CUI.dom.remove(this.movableTargetDiv);
+    return this.movableTargetDiv = null;
+  };
+
+  ListViewColMove.prototype.end_drag = function(ev) {
+    var source_col_i, target_col_i;
+    ListViewColMove.__super__.end_drag.call(this, ev);
+    if (!this.target) {
+      return;
+    }
+    source_col_i = this.__col_i;
+    target_col_i = this.target.col_i;
+    if (source_col_i === target_col_i) {
+      return;
+    }
+    CUI.globalDrag.noClickKill = true;
+    return this.__listView.moveCol(source_col_i, target_col_i, this.target.after);
+  };
+
+  ListViewColMove.prototype.destroy = function() {
+    return ListViewColMove.__super__.destroy.call(this);
+  };
+
+  return ListViewColMove;
+
+})(CUI.ListViewDraggable);
+
+CUI.ready(function() {
+  return CUI.Events.registerEvent({
+    type: "column_moved",
+    bubble: true
+  });
+});
 
 
 /***/ }),
@@ -91602,6 +91922,8 @@ __webpack_require__(/*! ./elements/ListView/tools/ListViewColumnRowMoveHandlePla
 __webpack_require__(/*! ./elements/ListView/tools/ListViewDraggable.coffee */ "./elements/ListView/tools/ListViewDraggable.coffee");
 
 __webpack_require__(/*! ./elements/ListView/tools/ListViewRowMove.coffee */ "./elements/ListView/tools/ListViewRowMove.coffee");
+
+__webpack_require__(/*! ./elements/ListView/tools/ListViewColMove.coffee */ "./elements/ListView/tools/ListViewColMove.coffee");
 
 __webpack_require__(/*! ./elements/ListView/tools/ListViewColResize.coffee */ "./elements/ListView/tools/ListViewColResize.coffee");
 
