@@ -62856,6 +62856,9 @@ CUI.util = (function() {
     if (obj === null || ((ref = typeof obj) === 'string' || ref === 'number' || ref === 'boolean' || ref === 'function')) {
       return obj;
     }
+    if (CUI.util.isPromise(obj)) {
+      return obj;
+    }
     if (visited.has(obj)) {
       return visited.get(obj);
     }
