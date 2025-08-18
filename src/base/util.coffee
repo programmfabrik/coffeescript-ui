@@ -336,6 +336,10 @@ class CUI.util
 		if obj is null or typeof obj in ['string', 'number', 'boolean', 'function']
 			return obj
 
+		# If its a promise, we don't copy it.
+		if CUI.util.isPromise(obj)
+			return obj
+
 		# If the object has already been copied, return its copy to handle cyclic references.
 		if visited.has(obj)
 			return visited.get(obj)
