@@ -3082,8 +3082,11 @@ $layer-sizes: (
 
 // detached from layer root, inline
 .cui-layer.cui-confirmation-dialog--show-inline {
-	// temp fix
-	z-index: 1;
+	flex: 1 0 auto;
+
+	> .cui-pane.cui-vertical-layout.cui-maximize-vertical > .cui-vertical-layout-center {
+		flex: 1 0 auto;
+	}
 }
 
 // Confirmation Choice
