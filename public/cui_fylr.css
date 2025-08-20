@@ -9276,7 +9276,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 
 .cui-layer.cui-confirmation-dialog--show-inline {
-  z-index: 1;
+  flex: 1 0 auto;
+}
+.cui-layer.cui-confirmation-dialog--show-inline > .cui-pane.cui-vertical-layout.cui-maximize-vertical > .cui-vertical-layout-center {
+  flex: 1 0 auto;
+  padding: 1rem;
+  margin: 0;
 }
 
 .cui-layer-root-toaster .cui-layer {
