@@ -24826,7 +24826,7 @@ CUI.whenAllReject = (function(_this) {
       for (i = 0, len = arguments.length; i < len; i++) {
         promise = arguments[i];
         if (promise.state === "rejected") {
-          dfr.reject();
+          dfr.reject(promise);
           return;
         }
       }
@@ -28502,6 +28502,20 @@ CUI.KeyboardEvent = (function(superClass) {
 
   KeyboardEvent.prototype.key = function() {
     return this.getNativeEvent().key;
+  };
+
+  KeyboardEvent.prototype.code = function() {
+    return this.getNativeEvent().code;
+  };
+
+  KeyboardEvent.prototype.hasDefaultActionModifier = function() {
+    var isAppleDevice;
+    isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+    if (isAppleDevice) {
+      return this.metaKey();
+    } else {
+      return this.ctrlKey();
+    }
   };
 
   KeyboardEvent.prototype.dump = function() {
@@ -35438,6 +35452,9 @@ CUI.util = (function() {
       visited = new WeakMap();
     }
     if (obj === null || ((ref = typeof obj) === 'string' || ref === 'number' || ref === 'boolean' || ref === 'function')) {
+      return obj;
+    }
+    if (CUI.util.isPromise(obj)) {
       return obj;
     }
     if (visited.has(obj)) {
@@ -53650,11 +53667,13 @@ CUI.ListViewTree = (function(superClass) {
               row.focus();
             };
             if (ev.getKeyboard() === "Right" && !node.isOpen()) {
-              node.open().done(function() {
+              ev.preventDefault();
+              _this.__runTrigger(ev, "open", node).done(function() {
                 return focusNode(node);
               });
             } else if (ev.getKeyboard() === "Left" && node.isOpen()) {
-              node.close().done(function() {
+              ev.preventDefault();
+              _this.__runTrigger(ev, "close", node).done(function() {
                 return focusNode(node);
               });
             }
@@ -53667,17 +53686,17 @@ CUI.ListViewTree = (function(superClass) {
 
   ListViewTree.prototype.toggleNode = function(ev, node) {
     if (node.isOpen()) {
-      this.__runTrigger(ev, "close", node);
+      return this.__runTrigger(ev, "close", node);
     } else {
-      this.__runTrigger(ev, "open", node);
+      return this.__runTrigger(ev, "open", node);
     }
   };
 
   ListViewTree.prototype.__runTrigger = function(ev, action, node) {
     if (ev.ctrlKey() || ev.metaKey()) {
-      this.__actionOnNode(ev, action + "Recursively", node);
+      return this.__actionOnNode(ev, action + "Recursively", node);
     } else {
-      this.__actionOnNode(ev, action, node);
+      return this.__actionOnNode(ev, action, node);
     }
   };
 
@@ -56473,7 +56492,7 @@ CUI.Map = (function(superClass) {
       buttonsUpperRight.push(CUI.Pane.getToggleFillScreenButton(fullscreenButtonOpts));
     }
     if (this._buttonsUpperRight) {
-      buttonsUpperRight = buttonsUpperRight.concat(this._buttonsUpperRight);
+      buttonsUpperRight = this._buttonsUpperRight.concat(buttonsUpperRight);
     }
     if (buttonsUpperRight.length) {
       buttonBar = new CUI.Buttonbar({
