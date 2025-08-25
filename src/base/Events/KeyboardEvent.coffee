@@ -76,6 +76,16 @@ class CUI.KeyboardEvent extends CUI.Event
 	key: ->
 		@getNativeEvent().key
 
+	code: ->
+		@getNativeEvent().code
+
+	hasDefaultActionModifier: ->
+		# os detection is tricky and behavior of current solutions might change in the future
+		# navigator.platform is deprecated, according to MDN, but using it for detecting ctrl vs cmd on mac is still a valid use case
+		# https://developer.mozilla.org/en-US/docs/Web/API/Navigator/platform#examples
+		isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+		return if isAppleDevice then @metaKey() else @ctrlKey()
+
 	dump: ->
 		txt = @__cls+": **"+@getType()+"**"
 		txt += " Key: **"+@key()+"** KeyCode: **"+@keyCode()+"**"

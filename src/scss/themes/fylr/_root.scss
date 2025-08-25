@@ -33,6 +33,14 @@
 	--body-bg: #{$body-bg};
 	--body-color: #{$body-color};
 	--top-header-background: #{$body-bg};
+
+	// font-sizes
+	--font-size-xxxl: #{$font-size-xxxl};
+	--font-size-xxl: #{$font-size-xxl};
+	--font-size-xl: #{$font-size-xl};
+	--font-size-lg: #{$font-size-lg};
+	--font-size-base: #{$font-size-base};
+	--font-size-sm: #{$font-size-sm};
 	
 	// headings
 	@each $size, $value in $headline-sizes {
