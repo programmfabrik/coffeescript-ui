@@ -1,3 +1,11 @@
+/*
+This mixin will apply a css grid layout to the list-view-grid, 
+essentailly overriding the fixed width columns layout. 
+Either this mixin is @included in the specific component style or 
+it can be turned on by using the CUI.ListViewGrid option "useCSSGridLayout", 
+which will apply the class "use-css-grid-layout"
+*/
+
 @use '../variables' as *;
 
 @mixin list-view-use-css-grid-layout() {
