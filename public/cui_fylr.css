@@ -837,6 +837,13 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 	- Button modifier
 		- inverted (default, link ?, simple ?)
 */
+/*
+This mixin will apply a css grid layout to the list-view-grid, 
+essentailly overriding the fixed width columns layout. 
+Either this mixin is @included in the specific component style or 
+it can be turned on by using the CUI.ListViewGrid option "useCSSGridLayout", 
+which will apply the class "use-css-grid-layout"
+*/
 /* Layer pane styles for popovers and fullscreen layer
  - spacing
  - black header and white title
