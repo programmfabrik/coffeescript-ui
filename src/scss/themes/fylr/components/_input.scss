@@ -219,7 +219,7 @@ textarea {
 	}
 
 	.cui-input {
-		min-width: 90px; // date-short
+		min-width: 85px; // date-short
 	}
 
 	/*
@@ -234,20 +234,20 @@ textarea {
 	*/
 
 	&[data-cui-date-time-format='date'] .cui-input {
-		min-width: 112px;
+		min-width: var(--input-date-min-width-1);
 	}
 
 	&[data-cui-date-time-format='date-time-short'] .cui-input {
-		min-width: 129px;
+		min-width: var(--input-date-min-width-2);
 	}
 
 	&[data-cui-date-time-format='date-time'] .cui-input,
 	&[data-cui-date-time-format='date-time-seconds-short'] .cui-input {
-		min-width: 150px;
+		min-width: var(--input-date-min-width-3);
 	}
 
 	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
-		min-width: 175px;
+		min-width: var(--input-date-min-width-4);
 	}
 }
 
