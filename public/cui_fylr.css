@@ -862,6 +862,10 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
   --headings-color: ;
   --pane-padding: 0.5rem;
   --toolbar-padding: 0.5rem;
+  --input-date-min-width-1: 108px;
+  --input-date-min-width-2: 120px;
+  --input-date-min-width-3: 140px;
+  --input-date-min-width-4: 160px;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -3796,19 +3800,19 @@ textarea {
   display: none;
 }
 .cui-date-time .cui-input {
-  min-width: 90px;
+  min-width: 85px;
 }
 .cui-date-time[data-cui-date-time-format=date] .cui-input {
-  min-width: 112px;
+  min-width: var(--input-date-min-width-1);
 }
 .cui-date-time[data-cui-date-time-format=date-time-short] .cui-input {
-  min-width: 129px;
+  min-width: var(--input-date-min-width-2);
 }
 .cui-date-time[data-cui-date-time-format=date-time] .cui-input, .cui-date-time[data-cui-date-time-format=date-time-seconds-short] .cui-input {
-  min-width: 150px;
+  min-width: var(--input-date-min-width-3);
 }
 .cui-date-time[data-cui-date-time-format=date-time-seconds] .cui-input {
-  min-width: 175px;
+  min-width: var(--input-date-min-width-4);
 }
 
 .cui-input.cui-password:has(> .cui-input-control-element) {
@@ -7174,6 +7178,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   right: var(--layer-sidebar-width) !important;
 }
 
+/*
+This mixin will apply a css grid layout to the list-view-grid, 
+essentailly overriding the fixed width columns layout. 
+Either this mixin is @included in the specific component style or 
+it can be turned on by using the CUI.ListViewGrid option "useCSSGridLayout", 
+which will apply the class "use-css-grid-layout"
+*/
 .cui-list-view {
   --list-view-border-color: rgba(206, 212, 218, 0.5);
   --list-view-border-width: 0;
