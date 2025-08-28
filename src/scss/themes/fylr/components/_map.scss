@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../variables' as *;
 @use '../mixins/buttons' as *;
 
@@ -115,12 +116,59 @@
 
 // * OpenLayers Map
 .cui-open-layers-map {
-	.map-zoom-buttons,
+	.cui-map-search-selector {
+		input {
+			background-color: $btn-inverted-background;
+			color: $btn-inverted-color;
+			border-right-color: $btn-inverted-color !important;
+
+			&::placeholder {
+				color: $gray-300;
+			}
+
+			&:focus,
+			&:active {
+				box-shadow: none !important;
+				border-top-color: transparent !important;
+				border-bottom-color: transparent !important;
+				border-left-color: transparent !important;
+				background-color: color.adjust($btn-inverted-background, $lightness: -10%);
+			}
+		}
+
+		> .cui-vertical-layout > .cui-vertical-layout-center > .cui-horizontal-layout {
+			&:focus-within > .cui-horizontal-layout-right .cui-button-button .cui-button-visual {
+				margin-left: 0; // reset combobox
+			}
+			
+			> .cui-horizontal-layout-right {
+				.cui-buttonbar {
+					height: 100%;
+				}
+				
+				.cui-button-button {
+					@include button-color-inverted();
+				}
+			}
+		}
+	}
+	
+	.map-zoom-buttons > .cui-buttonbar-group,
 	.buttons-upper-right {
 		.cui-button-button,
 		.cui-button-select {
-			@include button-sm();
 			@include button-color-inverted();
+		}
+	}
+
+	.map-zoom-buttons {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto auto;
+
+		.cui-map-search-selector {
+			grid-column: 1 / -1;
+			grid-row: 1;
 		}
 	}
 }

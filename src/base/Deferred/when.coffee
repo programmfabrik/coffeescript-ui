@@ -14,7 +14,7 @@ CUI.whenAllReject = =>
 	CUI.whenAll.apply(@, args).done(=>
 		for promise in arguments
 			if promise.state == "rejected"
-				dfr.reject()
+				dfr.reject(promise)
 				return
 		dfr.resolve()
 		return
