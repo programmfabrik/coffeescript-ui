@@ -6653,6 +6653,13 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding: 0;
 }
 
+.cui-form--has-checkbox-labels .cui-form-field-type--checkbox .cui-form-hint {
+  padding-left: calc(16px + 6px + 1px);
+}
+.cui-form--has-checkbox-labels .cui-form-field-type--checkbox .cui-checkbox {
+  font-weight: 700;
+}
+
 .cui-panel {
   border-bottom: 1px solid #212121;
 }
