@@ -376,3 +376,16 @@
 		}
 	}
 }
+
+// Special forms with checkboxes
+.cui-form--has-checkbox-labels {
+	.cui-form-field-type--checkbox {
+		.cui-form-hint {
+			padding-left: calc(#{$checkbox-size} + #{$checkbox-margin} + 1px);
+		}
+
+		.cui-checkbox {
+			font-weight: $font-weight-bold;
+		}
+	}
+}
