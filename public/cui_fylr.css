@@ -3968,7 +3968,6 @@ textarea {
 .cui-data-field-multi-output .cui-data-field-multi-output-aside {
   grid-column: 1/2;
   position: relative;
-  top: 1px;
   margin-left: -0.25rem;
 }
 .cui-data-field-multi-output .cui-data-field-multi-output-aside .cui-button-button {
