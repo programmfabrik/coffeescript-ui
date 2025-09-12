@@ -9651,7 +9651,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
 }
-.cui-open-layers-map .map-zoom-buttons .cui-map-search-selector {
+.cui-open-layers-map .map-zoom-buttons .cui-search-selector {
   grid-column: 1/-1;
   grid-row: 1;
 }
