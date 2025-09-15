@@ -9687,7 +9687,7 @@ which will apply the class "use-css-grid-layout"
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
 }
-.cui-open-layers-map .map-zoom-buttons .cui-map-search-selector {
+.cui-open-layers-map .map-zoom-buttons .cui-search-selector {
   grid-column: 1/-1;
   grid-row: 1;
 }
