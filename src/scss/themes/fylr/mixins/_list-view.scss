@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use 'buttons' as *;
+
 @mixin list-view-row-hover() {
 	.cui-list-view-grid-quadrant-2,
 	.cui-list-view-grid-quadrant-3 {

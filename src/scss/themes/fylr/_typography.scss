@@ -1,3 +1,7 @@
+@use 'variables' as *;
+@use 'functions';
+@use 'mixins/typography' as *;
+
 // Typography
 //
 
@@ -72,7 +76,7 @@ ul, ol {
 kbd {
 	padding: 1px $spacer-xs;
 	display: inline-block;
-	border: 1px solid gray('400');
+	border: 1px solid $gray-400;
 	background: white;
 	border-radius: $border-radius-sm;
 	text-align: center;

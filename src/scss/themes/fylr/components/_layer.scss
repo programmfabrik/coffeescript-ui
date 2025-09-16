@@ -1,3 +1,7 @@
+@use 'sass:map';
+@use '../variables' as *;
+@use '../mixins/layer' as *;
+@use '../mixins/pane' as *;
 // Layer
 
 /*
@@ -71,7 +75,7 @@
 	z-index: -1;
 
 	&--visible {
-		background: radial-gradient(hsla(205, 30%, 20%, 0.4), hsla(205, 30%, 20%, 0.6));
+		background: radial-gradient(hsl(205deg 30% 20% / 40%), hsl(205deg 30% 20% / 60%));
 	}
 
 	> div {
@@ -116,16 +120,9 @@
 // * Layer
 
 .cui-layer {
-	// set size attribute within the component (layer, popover etc.)
-	@each $name, $width in $layer-sizes {
-		&--size-#{$name} {
-			width: $width;
-		}
-	}
-
 	display: flex;
 	flex-direction: column;
-	min-width: map-get($layer-sizes, 'min');
+	min-width: map.get($layer-sizes, 'min');
 	min-height: 30px;
 	margin: $spacer-sm;
 	background-color: $layer-background;
@@ -137,7 +134,14 @@
 		inset 0 0 0 1px rgba($layer-border-color, 0.03),
 		0 2px 4px 0 rgba($layer-shadow-color, 0.2),
 		0 2px 7px 0 rgba($layer-shadow-color, 0.5),
-		0 6px 20px 10px rgba($layer-shadow-color, 0.09);
+		0 6px 20px 10px rgba($layer-shadow-color, 0.09);	
+	
+		// set size attribute within the component (layer, popover etc.)
+	@each $name, $width in $layer-sizes {
+		&--size-#{$name} {
+			width: $width;
+		}
+	}
 
 	&.cui-popover {
 		box-shadow:

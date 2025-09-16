@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 @mixin disabled() {
 	user-select: none;
 	opacity: var(--disabled-opacity, #{$disabled-opacity});

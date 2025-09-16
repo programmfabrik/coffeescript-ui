@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/labels' as *;
+@use '../mixins/pane' as *;
+
 // todo: tabs within list-view
 // * Tabs
 
@@ -62,7 +67,7 @@
 	> .cui-vertical-layout-bottom {
 		.cui-toolbar {
 			padding: $pane-padding 0;
-			margin-bottom: -$pane-padding;
+			margin-bottom: -($pane-padding);
 		}
 	}
 
@@ -130,7 +135,7 @@
 	margin-bottom: $spacer;
 
 	> .cui-horizontal-layout-center {
-		overflow: auto !important; //! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
+		overflow: auto !important; // ! need to reset "visible !important" in .cui-toolbar > .cui-horizontal-layout-center to calculate if the modifier --overflow should be applied
 		justify-content: flex-start; // reset .cui-toolbar
 	}
 
@@ -174,7 +179,7 @@
 		&:focus {
 			.cui-button-visual {
 				// add custom focus style
-				background-color: rgba(theme-color('focused'), 0.05);
+				background-color: rgb($focused, 0.05);
 				color: var(--btn-color-active, #{$tabs-active-color});
 				box-shadow: $btn-focus-shadow !important;
 			}

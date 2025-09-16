@@ -1,3 +1,9 @@
+@use '../variables' as *;
+@use '../mixins/block' as *;
+@use '../mixins/checkbox' as *;
+@use '../mixins/forms' as *;
+@use '../mixins/labels' as *;
+
 // * Block
 // very basic block section styling, must work anywhere
 // override specifics in ez5-fields-renderer-block or else
@@ -125,7 +131,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 	bottom: 0;
 	z-index: 1;
 	display: flex;
-	color: theme-color('muted');
+	color: $muted;
 }
 
 .cui-wait-block-glass {

@@ -1,3 +1,8 @@
+@use 'sass:color';
+@use "sass:list";
+@use 'sass:map';
+@use 'sass:math';
+
 /*
  * coffeescript-ui - Coffeescript User Interface System (CUI)
  * Copyright (c) 2013 - 2016 Programmfabrik GmbH
@@ -5,15 +10,14 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 */
 
-@use "sass:math";
-
 // Third Party Components loaded from thirdparty
-@import '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
+@use '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
 // add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
-@import '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
+@use '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
 
 
-@import '../../icons/_svg-dimensions.scss';
+@use '../../icons/_svg-dimensions.scss';
+@use 'header' as *;
 
 html {
 	@include variableList($default-color);
@@ -97,7 +101,7 @@ textarea {
 	font-size: inherit;
 	color: inherit;
 	border: 1px solid $input-border;
-	border-top-color: darken($input-border, 3%);
+	border-top-color: color.adjust($input-border, $lightness: -3%);
 	border-radius: $input-radius;
 	box-shadow: $input-shadow;
 	background: $input-background;
@@ -164,7 +168,7 @@ input[data-max-chars] {
 
 	@each $color, $values in $colors {
 		&.cui-swatch-color-#{$color} {
-			background: map-get($values, 'highlight-light');
+			background: map.get($values, 'highlight-light');
 		}
 	}
 }
@@ -177,8 +181,8 @@ body[data-cursor] {
 	        user-select: none;
 }
 
-@for $i from 1 to length($drag-cursors) {
-	$cursor: nth($drag-cursors, $i);
+@for $i from 1 to list.length($drag-cursors) {
+	$cursor: list.nth($drag-cursors, $i);
 
 	body[data-cursor="#{$cursor}"] * {
 		cursor: $cursor !important;
@@ -1188,14 +1192,14 @@ li > div {
 
 	&:active {
 		.cui-button-visual {
-	  	background: transparentize($button-background,.5);
+	  		background: color.adjust($button-background,$alpha: -.5);
 	  }
 	}
 
 	&.cui-layer-open,
 	&.cui-active {
 		.cui-button-visual {
-	  	box-shadow: 0 0 0 1px $button-active-border;
+	  		box-shadow: 0 0 0 1px $button-active-border;
 	  }
 	}
 
@@ -1801,7 +1805,7 @@ a[role="button"].cui-button-appearance-link {
 
 		&:active {
 			.cui-button-visual {
-				background: darken($zebra-color, 5%);
+				background: color.adjust($zebra-color, $lightness: -5%);
 				color: $button-color;
 				border-color: $border;
 			}
@@ -2638,7 +2642,7 @@ a[role="button"].cui-button-appearance-link {
 	margin: auto;
 
 	border: 1px solid $input-border;
-	border-top-color: darken($input-border, 3%);
+	border-top-color: color.adjust($input-border, $lightness: -3%);
 	border-radius: $input-radius;
 }
 
@@ -2871,16 +2875,6 @@ a[role="button"].cui-button-appearance-link {
 		}
 	}
 }
-
-$layer-sizes: (
-	"xs": 400,
-	"s": 500,
-	"m": 600,
-	"l": 700,
-	"xl": 800,
-	"xxl": 900,
-	"xxxl": 1000
-);
 
 @each $name, $width in $layer-sizes {
 	.cui-layer--size-#{$name} {
@@ -3675,7 +3669,7 @@ $layer-sizes: (
 
 	&.cui-disabled {
 		.cui-button-visual {
-			color: lighten($button-active, 32%);
+			color: color.adjust($button-active, $lightness: 32%);
 		}
 
 		&:not(:first-child) {
@@ -4607,7 +4601,7 @@ $layer-sizes: (
 	> div > .cui-form-table {
 		display: flex;
 		flex-wrap: wrap;
-		margin: $padding #{-$padding} !important; 
+		margin: $padding #{-($padding)} !important; 
 		width: 100% !important;
 
 		.cui-form-tr {
@@ -4783,8 +4777,8 @@ $layer-sizes: (
 .cui-form-tr {
 	.cui-form-options-table,
 	.cui-form-table-horizontal {
-		margin-top: -$padding;
-		margin-bottom: -$padding;
+		margin-top: -($padding);
+		margin-bottom: -($padding);
 
 		.cui-form-tr {
 			&:before {
@@ -5555,7 +5549,7 @@ label[data-label-clickable],
 	max-width: 100%;
 
 	border: 1px solid $input-border;
-	border-top-color: darken($input-border, 3%);
+	border-top-color: color.adjust($input-border, $lightness: -3%);
 	border-radius: $input-radius;
 	background: $input-background;
 
@@ -5880,7 +5874,7 @@ label[data-label-clickable],
 				.cui-block-title {
 					font-size: 28px;
 					line-height: 1.5;
-					color: darken($header-color, 6%);
+					color: color.adjust($header-color, $lightness: -6%);
 				}
 			}
 
@@ -5914,7 +5908,7 @@ label[data-label-clickable],
 
 				.cui-block-title {
 					font-size: 15px;
-					color: darken($header-color, 14%);
+					color: color.adjust($header-color, $lightness: -14%);
 					padding: $padding 0;
 				}
 			}
@@ -6063,7 +6057,7 @@ label[data-label-clickable],
 	color: $color;
 	flex-basis: 100%;
 	flex-shrink: 0;
-	border-bottom: 1px solid transparentize(darken($soft-border, 50%), 0.85);
+	border-bottom: 1px solid color.adjust(color.adjust($soft-border, $lightness: -50%), $alpha: -0.85);
 
 	.cui-label {
 		line-height: normal;

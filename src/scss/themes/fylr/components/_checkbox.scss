@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/forms' as *;
+
 // Checkbox
 .cui-checkbox {
 	min-width: 0;
@@ -8,7 +11,6 @@
 		.cui-button-checkbox {
 			.cui-button-left i {
 				// just a tiny bit bigger so the icon is not too cramped
-				// todo: test this in real life
 				width: $checkbox-size * 1.15;
 				height: $checkbox-size * 1.1;
 			}
@@ -80,7 +82,7 @@
 				// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 				.cui-active &,
 				.cui-layer-open & {
-					border-color: theme-color('light');
+					border-color: $light;
 				}
 			}
 		}
@@ -117,7 +119,7 @@
 			// invert if checkbox is within a cui-active or cui-layer-open button (see search type selector)
 			.cui-active &,
 			.cui-layer-open & {
-				color: theme-color('light');
+				color: $light;
 			}
 		}
 
@@ -154,7 +156,7 @@
 		&.cui-active {
 			> .cui-button-visual > .cui-button-left span,
 			> .cui-button-visual > .cui-button-left i {
-				background-color: theme-color('focused'); // make more prominent
+				background-color: $focused; // make more prominent
 			}
 		}
 	}
@@ -167,7 +169,7 @@
 			.cui-active &,
 			.cui-layer-open & {
 				// background-color: transparent;
-				border-color: theme-color('light');
+				border-color: $light;
 			}
 
 			&::after {
@@ -178,7 +180,7 @@
 				top: 50%;
 				margin-top: -1px;
 				height: 2px;
-				background: currentColor;
+				background: currentcolor;
 			}
 		}
 	}

@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use '../mixins/clickable' as *;
+@use '../mixins/list-view-use-css-grid-layout' as *;
+@use '../mixins/pane' as *;
+
 // * List View & List View Grid
 
 .cui-list-view {
@@ -35,7 +40,7 @@
 	flex-direction: column;
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
-	font-size: $list-view-font-size; // todo
+	font-size: $list-view-font-size;
 	line-height: $line-height-sm;
 	border: var(--list-view-border-width) solid var(--list-view-border-color);
 
@@ -95,7 +100,7 @@
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
-	&:not(.cui-lv-row-move-handle-column):not(.cui-lv-td-rotate-90) {
+	&:not(.cui-lv-row-move-handle-column, .cui-lv-td-rotate-90) {
 		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
 	}
 	
@@ -226,7 +231,7 @@
 		align-items: flex-end;
 		min-height: auto; // reset min-height, so labels appear centered, when they are in fact aligned "flex-end". Flex-end is needed in case the header contains rotate-90
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -341,7 +346,7 @@
 		position: relative;
 		overflow: visible;
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -420,7 +425,7 @@
 
 .cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
-	@include clickable;
+	@include clickable();
 
 	&:hover,
 	&:focus {
@@ -481,7 +486,7 @@
 
 	&.cui-lv-td {
 		width: $list-view-move-handle-width;
-		padding-left: 0.5*$table-padding-x;
+		padding-left: 0.5 * $table-padding-x;
 		padding-right: 0;
 		border: 0 !important; // ! column width calculation will be off otherwise
 	}
@@ -495,7 +500,6 @@
 			display: block;
 			margin: 0;
 			margin-top: 0.45em;
-			cursor: -webkit-grab;
 			cursor: grab;
 		}
 	}
