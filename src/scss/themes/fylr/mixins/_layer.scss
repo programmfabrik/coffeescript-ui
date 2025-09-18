@@ -1,3 +1,9 @@
+@use 'sass:map';
+@use '../variables' as *;
+@use 'buttonbar' as *;
+@use 'buttons' as *;
+@use 'pane' as *;
+@use 'typography' as *;
 // Mixins for all layer types (popover, modals, menu etc.)
 
 @mixin layer-title() {
@@ -7,7 +13,7 @@
 }
 
 @mixin layer-width($size: 'm') {
-	width: map-get($layer-sizes, $size);
+	width: map.get($layer-sizes, $size);
 }
 
 /* Layer pane styles for popovers and fullscreen layer
@@ -42,7 +48,7 @@
 
 		// Align buttonbar to the right because we use inverted, borderless buttons in the header
 		> .cui-horizontal-layout-right > .cui-buttonbar {
-			margin-right: -0.5*$layer-padding-x;
+			margin-right: -0.5 * $layer-padding-x;
 
 			@include buttonbar-horizontal-tight();
 		}

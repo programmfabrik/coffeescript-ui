@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/labels' as *;
+
 .cui-output {
 	.cui-output-empty {
 		@include label-secondary();

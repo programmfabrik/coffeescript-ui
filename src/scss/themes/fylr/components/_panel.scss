@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/labels' as *;
+
 // Panel
 .cui-panel {
 	border-bottom: 1px solid $panel-border-color;

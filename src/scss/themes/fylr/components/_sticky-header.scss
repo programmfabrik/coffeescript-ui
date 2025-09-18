@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../mixins/text-truncate' as *;
+
 // * StickyHeader
 
 /*
@@ -90,13 +94,13 @@
 // 2. Level
 .cui-sticky-header-level-1,
 .cui-sticky-header-level-2 {
-	color: lighten(gray('700'), 10%);
+	color: color.adjust($gray-700, $lightness: 10%);
 }
 
 // 3. Level
 .cui-sticky-header-level-2 {
 	font-weight: $font-weight-light;
-	color: gray('700');
+	color: $gray-700;
 	letter-spacing: 0.03em;
 }
 

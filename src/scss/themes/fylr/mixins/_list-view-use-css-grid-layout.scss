@@ -6,6 +6,8 @@ it can be turned on by using the CUI.ListViewGrid option "useCSSGridLayout",
 which will apply the class "use-css-grid-layout"
 */
 
+@use '../variables' as *;
+
 @mixin list-view-use-css-grid-layout() {
 	@supports (grid-template-columns: subgrid) {
 		> .cui-vertical-layout-center > .cui-list-view-grid {

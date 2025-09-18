@@ -1,29 +1,47 @@
 module.exports = {
-	'extends': 'stylelint-config-standard',
-	"ignoreFiles": [
-		"src/scss/themes/fylr/body_ng.scss",
-		"src/scss/themes/fylr/components/old/*.scss",
-		"src/scss/themes/debug/*.scss",
-		"src/scss/themes/ng/*.scss",
+	'extends': 'stylelint-config-standard-scss',
+	'ignoreFiles': [
+		'src/scss/themes/debug/*.scss',
+		'src/scss/themes/ng/*.scss',
 	],
     'rules': {
-        'indentation': 'tab',
-        'string-quotes': 'single',
+        'scss/dollar-variable-colon-space-after': null,
+        'scss/dollar-variable-empty-line-before': null,
+        'scss/double-slash-comment-empty-line-before': null,
+        'scss/at-import-no-partial-leading-underscore': null,
+        'scss/load-no-partial-leading-underscore': null,
+        'scss/at-mixin-argumentless-call-parentheses': 'always',
+        'scss/at-mixin-pattern': [
+            '^_?(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$', // This allows kebab-case with an optional starting underscore
+            {
+                message: 'Expected mixin to be kebab-case, mixins can start with an underscore',
+            },
+        ],  
+        'selector-class-pattern': [
+			'^[a-z][a-z0-9_-]*(?:--[a-z0-9_-]+)?$',
+			{
+				message: (selector) => `Expected class selector "${selector}" to be kebab-case, --modifier is allowed`,
+			},
+		],
+        'scss/comment-no-empty': null,
         'no-empty-source': null,
         'color-hex-length': null,
-        'max-empty-lines': 2,
         'declaration-block-no-redundant-longhand-properties': null,
-        'selector-list-comma-newline-after': null,
         'no-descending-specificity': null,
-        'no-eol-whitespace': null,
         'property-no-unknown': [
             true,
             {
                 'ignoreProperties': ['aspect-ratio', 'container-type', 'container-name'],
             }
-        ],        
-        "at-rule-empty-line-before": [
-            "always",
+        ],       
+        'unit-no-unknown' : [
+            true,
+            {
+                'ignoreUnits': ['cwq', 'cqh', 'cqi', 'cqb', 'cqmin', 'cqmax'],
+            }
+        ],         
+        'at-rule-empty-line-before': [
+            'always',
             {
               except: ['blockless-after-same-name-blockless', 'first-nested'],
               ignore: ['after-comment'],
@@ -54,8 +72,9 @@ module.exports = {
                     'responsive',
                     'variants',
                     'screen',
-                    'use',
                     'container',
+                    'use',
+                    'forward',
                 ],
             },
         ],

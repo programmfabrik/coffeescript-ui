@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use 'buttons' as *;
+@use 'forms' as *;
+@use 'labels' as *;
+
 @mixin buttonbar-horizontal() {
 	flex-direction: row;
 	gap: $buttonbar-gap;
@@ -5,7 +10,7 @@
 	.cui-buttonbar-group {
 		.cui-button,
 		.cui-select {
-			&:not(:last-child):not(.cui-last-visible-child) .cui-button-visual {
+			&:not(:last-child, .cui-last-visible-child) .cui-button-visual {
 				border-right: 0 !important;
 			}
 
@@ -19,7 +24,7 @@
 				border-bottom-left-radius: 0;
 			}
 
-			&:not(:first-child):not(:last-child) .cui-button-visual {
+			&:not(:first-child, :last-child) .cui-button-visual {
 				border-radius: 0;
 			}
 		}
@@ -70,7 +75,7 @@
 				border-bottom-right-radius: $btn-border-radius;
 			}
 
-			&:not(:first-child):not(:last-child) .cui-button-visual {
+			&:not(:first-child, :last-child) .cui-button-visual {
 				border-radius: 0;
 			}
 		}

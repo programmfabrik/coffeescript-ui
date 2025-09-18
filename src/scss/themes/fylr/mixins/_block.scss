@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use 'breakpoints' as *;
+@use 'forms' as *;
+@use 'typography' as *;
+
 // * Block Separator
 // adds simple section divider border
 
@@ -5,7 +10,7 @@
 	--block-separator-width: 1px;
 	--block-separator-margin: #{$block-margin};
 	
-	&:not(:last-child):not(:has(+ .cui-form-table)) {
+	&:not(:last-child, :has(+ .cui-form-table)) {
 		padding-bottom: var(--block-separator-margin);
 		border-bottom: var(--block-separator-width) solid $block-border-color;
 	}
@@ -49,7 +54,7 @@
 
 @mixin block-bracket() {
 	--block-bracket-length: 10px;
-	--block-color: #{gray('900')};
+	--block-color: #{$gray-900};
 
 	position: relative;
 	border-bottom: 0; // reset default block border
