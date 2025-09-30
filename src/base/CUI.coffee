@@ -636,7 +636,7 @@ class CUI
 		s.join("")
 
 	@decodeURIComponentNicely: (v) ->
-		decodeURIComponent(v)
+		decodeURIComponent((v or "").replace(/\+/g, " "))
 
 	@decodeUrlData: (url, replacer = null, connect = "&", connect_pair = "=", use_array=false) ->
 		params = {}
