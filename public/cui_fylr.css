@@ -6931,6 +6931,12 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-pane-header .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label, .cui-toolbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label, .cui-buttonbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label {
   margin-bottom: 0;
 }
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label .cui-label-icon {
+  margin-right: -0.25rem;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label .cui-label-icon .fa {
+  font-size: 1.125rem;
+}
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-button {
   --btn-border-color: transparent;
   --btn-border-width: 0;

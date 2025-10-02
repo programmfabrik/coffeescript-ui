@@ -22865,7 +22865,7 @@ CUI = (function() {
   };
 
   CUI.decodeURIComponentNicely = function(v) {
-    return decodeURIComponent(v);
+    return decodeURIComponent((v || "").replace(/\+/g, " "));
   };
 
   CUI.decodeUrlData = function(url, replacer, connect, connect_pair, use_array) {
