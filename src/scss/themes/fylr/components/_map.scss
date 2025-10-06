@@ -44,8 +44,9 @@
 	left: $spacer-xs;
 	right: $spacer-xs;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
-	gap: $spacer-xs;
+	gap: $spacer-sm $spacer-xs;
 	
 	> * {
 		pointer-events: all;
