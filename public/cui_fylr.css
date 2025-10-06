@@ -4984,6 +4984,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
 }
 
 .cui-sticky-header-control {
+  display: none;
   position: sticky;
   overflow: hidden;
   top: 0 !important;
@@ -4993,6 +4994,9 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   width: 100% !important;
   z-index: 1;
   flex: 0 0 auto;
+}
+.cui-sticky-header-control:has(.cui-sticky-header) {
+  display: block;
 }
 .cui-sticky-header-control .cui-sticky-header {
   position: absolute;
@@ -9441,8 +9445,9 @@ which will apply the class "use-css-grid-layout"
   left: 0.25rem;
   right: 0.25rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.25rem;
+  gap: 0.5rem 0.25rem;
 }
 .cui-map-buttons-top > *,
 .cui-map-buttons-bottom > * {
