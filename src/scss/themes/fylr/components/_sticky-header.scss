@@ -52,7 +52,7 @@
 }
 
 .cui-sticky-header-control {
-	display: none; // hide initially to prevent grid gap from taking effect (e.g. standard view overlay)
+	display: none; // hide initially to prevent grid gap from taking effect (e.g. standard view overlay, compare-view)
 	position: sticky;
 	overflow: hidden;
 	top: 0 !important;
