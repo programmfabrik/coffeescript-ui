@@ -52,6 +52,7 @@
 }
 
 .cui-sticky-header-control {
+	display: none; // hide initially to prevent grid gap from taking effect (e.g. standard view overlay)
 	position: sticky;
 	overflow: hidden;
 	top: 0 !important;
@@ -62,10 +63,9 @@
 	z-index: 1;
 	flex: 0 0 auto; // make sure header is visible when placed in flex-layout (see metadata-browser)
 
-	// todo: do we need this ?
-	// &:has(.cui-sticky-header) {
-	// 	display: block;
-	// }	
+	&:has(.cui-sticky-header) {
+		display: block;
+	}	
 
 	.cui-sticky-header {
 		position: absolute;
