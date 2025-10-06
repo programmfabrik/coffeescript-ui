@@ -6932,6 +6932,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin-bottom: 0;
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label .cui-label-icon {
+  margin-left: 0.25rem;
   margin-right: -0.25rem;
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-horizontal-layout-left > .cui-label .cui-label-icon .fa {
