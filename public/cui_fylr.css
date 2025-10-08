@@ -1667,6 +1667,16 @@ body {
   height: 19px;
 }
 
+.svg-fullscreen-compress {
+  width: 640px;
+  height: 640px;
+}
+
+.svg-fullscreen-expand {
+  width: 640px;
+  height: 640px;
+}
+
 .svg-fylr-logo {
   width: 57.8px;
   height: 34.1px;
@@ -2318,6 +2328,12 @@ input[data-max-chars="40"] {
 }
 
 .svg-ruler {
+  width: 16px;
+  height: 16px;
+}
+
+.svg-fullscreen-expand,
+.svg-fullscreen-compress {
   width: 16px;
   height: 16px;
 }
