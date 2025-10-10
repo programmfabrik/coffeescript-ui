@@ -22,7 +22,7 @@
 			// turn all labels into multiline labels
 			.cui-label:not(.cui-label-markdown) {
 				.cui-label-content {
-					word-wrap: break-word;
+					overflow-wrap: anywhere;
 					white-space: pre-wrap;
 				}
 			}
