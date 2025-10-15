@@ -2587,8 +2587,7 @@ label[data-label-clickable],
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 .cui-label-multiline.cui-label-centered,
 .cui-label-markdown.cui-label-centered {
@@ -9333,7 +9332,7 @@ which will apply the class "use-css-grid-layout"
   max-width: 500px;
 }
 .cui-confirmation-dialog .cui-layer > .cui-layer-pane > .cui-vertical-layout-center .cui-label:not(.cui-label-markdown) .cui-label-content {
-  word-wrap: break-word;
+  overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 

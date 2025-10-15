@@ -221,8 +221,7 @@ label[data-label-clickable],
 		white-space: normal;
 		overflow: visible;
 		text-overflow: clip;
-		word-wrap: break-word;
-		overflow-wrap: break-word;
+		overflow-wrap: anywhere;
 	}
 
 	&.cui-label-centered {
