@@ -48310,7 +48310,7 @@ CUI.Input = (function(superClass) {
       },
       controlElement: {
         check: function(v) {
-          return v instanceof CUI.DOMElement;
+          return v instanceof CUI.DOMElement || CUI.util.isFunction(v);
         }
       },
       leftControlElement: {
@@ -49180,12 +49180,17 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.render = function() {
-    var j, k, len1, ref;
+    var _controlElement, j, k, len1, ref;
     Input.__super__.render.call(this);
     this.replace(this.__createElement(), this.getTemplateKeyForRender());
     if (this._controlElement) {
-      CUI.dom.addClass(this._controlElement, 'cui-input-control-element');
-      this.append(this._controlElement, this.getTemplateKeyForRender());
+      if (CUI.util.isFunction(this._controlElement)) {
+        _controlElement = this._controlElement();
+      } else {
+        _controlElement = this._controlElement;
+      }
+      CUI.dom.addClass(_controlElement, 'cui-input-control-element');
+      this.append(_controlElement, this.getTemplateKeyForRender());
     }
     if (this._leftControlElement) {
       CUI.dom.addClass(this._leftControlElement, 'cui-input-control-element');
