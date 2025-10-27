@@ -952,7 +952,7 @@ class CUI.Input extends CUI.DataFieldInput
 		if @_controlElement
 			# if controlElement is a function we call it to get the element
 			if CUI.util.isFunction(@_controlElement)
-				_controlElement = @_controlElement()
+				_controlElement = @_controlElement(@)
 			else
 				_controlElement = @_controlElement
 			CUI.dom.addClass(_controlElement, 'cui-input-control-element')

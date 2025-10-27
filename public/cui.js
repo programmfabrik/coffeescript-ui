@@ -49185,7 +49185,7 @@ CUI.Input = (function(superClass) {
     this.replace(this.__createElement(), this.getTemplateKeyForRender());
     if (this._controlElement) {
       if (CUI.util.isFunction(this._controlElement)) {
-        _controlElement = this._controlElement();
+        _controlElement = this._controlElement(this);
       } else {
         _controlElement = this._controlElement;
       }
