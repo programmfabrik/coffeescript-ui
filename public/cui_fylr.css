@@ -8448,18 +8448,10 @@ which will apply the class "use-css-grid-layout"
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
-  padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
+  padding: 0.5rem;
+  border: 1px solid var(--field-group-border-color, #212121);
   --data-form-field-group-indicator-top: calc(0.25rem - 1px);
   --data-form-field-group-indicator-bottom: 1rem;
-}
-.cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center::before {
-  content: "";
-  position: absolute;
-  top: var(--data-form-field-group-indicator-top, 0);
-  left: 0;
-  bottom: var(--data-form-field-group-indicator-bottom, 0);
-  width: 2px;
-  background-color: var(--data-form-field-group-border-color, #212121);
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key label,
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center .cui-form-key .cui-label {
@@ -8469,7 +8461,6 @@ which will apply the class "use-css-grid-layout"
   margin-bottom: 1rem;
 }
 .cui-data-form.cui-data-form--add-button > .cui-vertical-layout > .cui-vertical-layout-bottom {
-  padding-left: calc(2 * 1.15rem + 0.25rem);
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
 }
@@ -8513,9 +8504,9 @@ which will apply the class "use-css-grid-layout"
   overflow: visible !important;
   width: 100%;
   display: grid;
-  grid-template-columns: var(--data-form-utilities-move-width, 0) var(--data-form-utilities-delete-width, 0) 1fr;
+  grid-template-columns: var(--data-form-utilities-move-width, 0) 1fr var(--data-form-utilities-delete-width, 0);
   grid-template-rows: auto;
-  grid-template-areas: "move delete content";
+  grid-template-areas: "move content delete";
 }
 .cui-data-form--movable-rows .cui-data-form-row, .cui-data-form--add-button .cui-data-form-row {
   --data-form-utilities-move-width: 1.15rem;
@@ -8540,7 +8531,6 @@ which will apply the class "use-css-grid-layout"
 .cui-data-form-row > .cui-horizontal-layout-center {
   min-width: 0;
   grid-area: content;
-  margin-left: 0.25rem;
 }
 .cui-data-form-row > .cui-horizontal-layout-center > * {
   width: 100%;

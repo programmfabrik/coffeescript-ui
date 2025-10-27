@@ -183,15 +183,17 @@
 
 @mixin data-form-field-group-indicator() {
 	position: relative;
-	padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
+	// padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
+	padding: $spacer-sm;
+	border: 1px solid var(--field-group-border-color, #{$body-color});
 	
-	&::before {
-		content: '';
-		position: absolute;
-		top: var(--data-form-field-group-indicator-top, 0);
-		left: 0;
-		bottom: var(--data-form-field-group-indicator-bottom, 0);
-		width: $data-form-field-group-border-width;
-		background-color: var(--data-form-field-group-border-color, #{$data-form-field-group-border-color});
-	}
+	// &::before {
+	// 	content: '';
+	// 	position: absolute;
+	// 	top: var(--data-form-field-group-indicator-top, 0);
+	// 	left: 0;
+	// 	bottom: var(--data-form-field-group-indicator-bottom, 0);
+	// 	width: $data-form-field-group-border-width;
+	// 	background-color: var(--data-form-field-group-border-color, #{$data-form-field-group-border-color});
+	// }
 }
