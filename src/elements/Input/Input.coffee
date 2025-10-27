@@ -152,7 +152,7 @@ class CUI.Input extends CUI.DataFieldInput
 			appearance:
 				check: ["code"]
 			controlElement:
-				check: (v) -> v instanceof CUI.DOMElement
+				check: (v) -> v instanceof CUI.DOMElement or CUI.util.isFunction(v)
 			leftControlElement:
 				check: (v) -> v instanceof CUI.DOMElement
 
@@ -950,8 +950,13 @@ class CUI.Input extends CUI.DataFieldInput
 		@replace(@__createElement(), @getTemplateKeyForRender())
 
 		if @_controlElement
-			CUI.dom.addClass(@_controlElement, 'cui-input-control-element')
-			@append(@_controlElement, @getTemplateKeyForRender())
+			# if controlElement is a function we call it to get the element
+			if CUI.util.isFunction(@_controlElement)
+				_controlElement = @_controlElement()
+			else
+				_controlElement = @_controlElement
+			CUI.dom.addClass(_controlElement, 'cui-input-control-element')
+			@append(_controlElement, @getTemplateKeyForRender())
 
 		if @_leftControlElement
 			CUI.dom.addClass(@_leftControlElement, 'cui-input-control-element')
