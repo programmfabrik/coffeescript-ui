@@ -121,44 +121,6 @@
 	}
 }
 
-// * Block Inline
-// - block-inline is used within base-config to lay out the block vertically in the 'inline' direction
-// - use when there is enough vertical space
-
-// .cui-block
-
-@mixin block-inline($content-indent: 200px, $content-max-width: 850px) {
-	--block-inline-content-indent: #{$content-indent};
-	--block-inline-content-max-width: #{$content-max-width};
-	--block-indent: 0;
-
-	@include media-breakpoint-up(lg) {
-		&:not(.cui-form-block--has-checkbox) {
-			> .cui-block-header {
-				margin-bottom: $block-margin;
-			}
-			
-			> .cui-block-content {
-				margin-left: var(--block-inline-content-indent);
-				max-width: var(--block-inline-content-max-width);
-			}
-		}
-	}
-
-	// nested
-	.cui-block {
-		--block-inline-content-indent: 0;
-	}
-
-	.cui-form-table {
-		@include block-separator-reset();
-	}
-
-	.cui-form {
-		@include form-key-value-stacked();
-	}
-}
-
 @mixin disable-block-bracket() {
 	&::before,
 	&::after {
