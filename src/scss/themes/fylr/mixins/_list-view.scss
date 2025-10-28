@@ -1,5 +1,6 @@
 @use '../variables' as *;
 @use 'buttons' as *;
+@use 'focused' as *;
 
 @mixin list-view-row-hover() {
 	.cui-list-view-grid-quadrant-2,
@@ -16,6 +17,14 @@
 			}
 		}
 	}
+}
+
+@mixin list-view-row-focus() {
+    --focus-outline-offset: -3px;
+	--focus-border-radius: 4px;
+	--focus-border-width: 5px;
+
+	@include focused();
 }
 
 @mixin list-view-no-border() {

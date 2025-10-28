@@ -1,0 +1,51 @@
+@use '../variables' as *;
+
+// focus style
+@mixin focused() {
+
+	position: relative;
+
+	// * 1. Version
+	// ----------------------------------
+
+	/*
+		- style ON the element will interfere with the border properties of buttons in buttonbar-groups
+		- this is hard to overcome nicely
+		- if we use ::after pesudo element instead, we are independant of those border properties
+	*/
+	// border: 1px solid black !important;
+	// border-radius: var(--focus-border-radius, 1px) !important;
+	// outline: var(--focus-outline-width, 2px) solid $focused;
+	// outline-offset: var(--focus-outline-offset, 0); // if used we need to increase border-radius
+	// box-shadow: inset 0 0 0 var(--focus-border-width, 2px) var(--focus-border-color, #{$white});
+
+	// * 2. Version
+	// ------------------------------------
+
+	/*
+		- 
+	*/
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		border-radius: var(--focus-border-radius, 2px) !important;
+		outline: var(--focus-outline-width, 3px) solid var(--focus-outline-color, #{$focused});
+		outline-offset: var(--focus-outline-offset, 0); // if used the border-radius disappears
+		box-shadow: inset 0 0 0 var(--focus-border-width, 4px) var(--focus-border-color, #{$white}); // use box-shadow, because for input elements it works just the same
+	}
+
+	/*  
+		idea:
+		+ use ::after to have even more control of the outline (scale, keep border-radius intact), see root-menu
+		- keep border-radius CONSISTENT ??
+		- must work as "inset" and "offset" for tabs, for buttons in buttonbar-groups...
+		- could this work everywhere?
+
+	*/
+}

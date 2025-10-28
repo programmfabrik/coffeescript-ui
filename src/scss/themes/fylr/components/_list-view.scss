@@ -1,5 +1,6 @@
 @use '../variables' as *;
 @use '../mixins/clickable' as *;
+@use '../mixins/list-view' as *;
 @use '../mixins/list-view-use-css-grid-layout' as *;
 @use '../mixins/pane' as *;
 
@@ -185,8 +186,7 @@
 
 	// be careful to apply a default select state, it's probably best to do this contextually in the theme
 	&.cui-selected,
-	&.cui-selected:hover,
-	&.cui-selected:focus {
+	&.cui-selected:hover {
 		> .cui-lv-tr {
 			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
 			background-color: var(--list-view-selected-row-background);
@@ -209,10 +209,16 @@
 	}
 
 	&.cui-row-invalid,
-	&.cui-row-invalid:hover,
-	&.cui-row-invalid:focus {
+	&.cui-row-invalid:hover {
 		> .cui-lv-tr {
 			background-color: var(--list-view-invalid-row-background);
+		}
+	}
+
+	&.cui-row-invalid:focus {
+		> .cui-lv-tr {
+			// todo: do wee need a different focus style here ?
+			// background-color: var(--list-view-invalid-row-background);
 		}
 	}
 }
@@ -427,10 +433,15 @@
 .cui-lv-tree-node--is-branch {
 	@include clickable();
 
-	&:hover,
-	&:focus {
+	&:hover {
 		> .cui-lv-tr {
 			background-color: var(--list-view-hover-row-background);
+		}
+	}
+
+	&:focus-visible {
+		> .cui-lv-tr {
+			@include list-view-row-focus();
 		}
 	}
 }

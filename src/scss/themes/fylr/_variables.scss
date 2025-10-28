@@ -121,7 +121,7 @@ $danger-bg-light: 	color.adjust($danger, $lightness: 39%) !default;
 $light:         	$gray-100 !default;
 $dark:          	$gray-800 !default;
 $muted:         	$gray-600 !default; // used in field-label, block description, empty label
-$focused:    		$cyan !default;
+$focused:    		#0261f8 !default;
 $disabled:      	$muted !default;
 
 $disabled-opacity: 		0.5 !default;
@@ -318,9 +318,9 @@ $hr-border-color:   	rgb($gray-400, 0.5) !default; // make sure hr is visible on
 $hr-border-color-dark:  $dark !default;
 $hr-border-width:   	1px !default;
 
-$component-focus-shadow-color: rgb($focused, 0.25) !default;
-$component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color !default;
-$component-focus-border-color: 	rgb($focused, 0.5) !default;
+$component-focus-shadow-color: $focused !default;
+$component-focus-shadow: inset 0 0 0 2px $component-focus-shadow-color, inset 0 0 0 4px $white !default;
+$component-focus-border-color: 	$focused !default;
 
 $component-selected-border-width: 1px !default;
 $component-selected-border-color: var(--brand-color, #{$primary}) !default;
