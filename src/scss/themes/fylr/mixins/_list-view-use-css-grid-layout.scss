@@ -90,7 +90,7 @@ which will apply the class "use-css-grid-layout"
 					top: 0;
 					background-color: var(--pane-background);
 					box-shadow: var(--box-shadow-vertical, none);
-					z-index: 1; // todo: make this a little higher so we have some room for other z-index styles (e.g. .cui-search-selector-input-icon)
+					z-index: 1; 
 				}
                 
 				&.is-scrolling-vertically {
