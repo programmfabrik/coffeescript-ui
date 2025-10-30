@@ -196,8 +196,7 @@
 	}
 
 	&:not(.cui-disabled) {
-		&:hover,
-		&:focus {
+		&:hover {
 			.cui-button-visual {
 				color: var(--btn-color-hover, #{$color-hover});
 				background-color: var(--btn-background-hover, #{$background-hover});
@@ -207,7 +206,7 @@
 		&:focus {
 			outline: none;
 	
-			.cui-button-visual {
+			> .cui-button-visual {
 				@include button-focus();
 			}
 		}
