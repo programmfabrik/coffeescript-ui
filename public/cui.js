@@ -40154,6 +40154,10 @@ CUI.DateTime = (function(superClass) {
           return CUI.util.isArray((ref = CUI.DateTimeFormats[v]) != null ? ref.formats : void 0);
         }
       },
+      show_calendar: {
+        "default": true,
+        check: Boolean
+      },
       calendar_locale: {
         mandatory: false,
         "default": locale,
@@ -40417,19 +40421,21 @@ CUI.DateTime = (function(superClass) {
       attr = this.__input_formats[0][display_key].replace(/[:, \.]/g, "-").replace(/-+/g, "-");
     }
     this.DOM.setAttribute("data-cui-date-time-format", attr);
-    this.addClass("cui-data-field--with-button");
-    this.__calendarButton = new CUI.defaults["class"].Button({
-      icon: "calendar",
-      tooltip: {
-        text: CUI.DateTime.defaults.button_tooltip
-      },
-      onClick: (function(_this) {
-        return function() {
-          return _this.openPopover(_this.__calendarButton);
-        };
-      })(this)
-    });
-    return this.replace(this.__calendarButton, "right");
+    if (this._show_calendar) {
+      this.addClass("cui-data-field--with-button");
+      this.__calendarButton = new CUI.defaults["class"].Button({
+        icon: "calendar",
+        tooltip: {
+          text: CUI.DateTime.defaults.button_tooltip
+        },
+        onClick: (function(_this) {
+          return function() {
+            return _this.openPopover(_this.__calendarButton);
+          };
+        })(this)
+      });
+      return this.replace(this.__calendarButton, "right");
+    }
   };
 
   DateTime.prototype.format = function(_s, _output_format, output_type, parseZone) {
@@ -40604,15 +40610,19 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.__checkInput = function(value) {
-    var mom;
-    this.__calendarButton.enable();
+    var mom, ref, ref1;
+    if ((ref = this.__calendarButton) != null) {
+      ref.enable();
+    }
     if (!CUI.util.isEmpty(value != null ? value.trim() : void 0)) {
       mom = this.parse(value);
       if (!mom.isValid()) {
         return false;
       }
       if (mom.bc || value.startsWith("-") || mom.year() < 0) {
-        this.__calendarButton.disable();
+        if ((ref1 = this.__calendarButton) != null) {
+          ref1.disable();
+        }
       }
     } else {
       this.__input_format = this.initFormat(this.__default_format);
