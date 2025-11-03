@@ -3587,7 +3587,6 @@ input:focus,
 textarea:focus {
   box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
   border-color: #0261f8 !important;
-  z-index: 1;
 }
 .cui-data-field-disabled input,
 .cui-data-field-disabled textarea {
@@ -4163,7 +4162,6 @@ textarea {
 .cui-button-checkbox:focus > .cui-button-visual > .cui-button-left i {
   box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
   border-color: #0261f8 !important;
-  z-index: 1;
 }
 .cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left span,
 .cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left i {
@@ -4471,7 +4469,6 @@ textarea {
   border-radius: 2px;
   box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
   border-color: #0261f8 !important;
-  z-index: 1;
 }
 
 .cui-data-field-center {
