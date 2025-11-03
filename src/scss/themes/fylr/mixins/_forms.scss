@@ -50,7 +50,6 @@
 	// should always win !
 	box-shadow: $input-focus-shadow !important; // see mixins/_buttons
 	border-color: $input-focus-border-color !important;
-	z-index: 1;
 }
 
 @mixin form-key-value-inline() {
