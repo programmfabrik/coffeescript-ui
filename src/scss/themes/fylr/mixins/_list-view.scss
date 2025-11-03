@@ -32,6 +32,7 @@
 		pointer-events: none;
 		
 		@include button-focus();
+
 		border-radius: $btn-border-radius;
 		border-width: 1px;
 		border-style: solid; 
