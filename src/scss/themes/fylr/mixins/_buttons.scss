@@ -328,6 +328,10 @@
 		&:hover {
 			--btn-border-color: #{$btn-inverted-hover-border-color};
 		}
+
+		&:focus {
+			--focus-shadow-inner-color: transparent;
+		}
 	}
 }
 
@@ -441,6 +445,12 @@
 			.cui-button-visual {
 				text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
 				box-shadow: none; // reset from button-color()
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				--btn-border-width: 1px;
 			}
 		}
 	}
