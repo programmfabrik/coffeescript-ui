@@ -3579,7 +3579,6 @@ input:focus,
 textarea:focus {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
-  z-index: 1;
 }
 .cui-data-field-disabled input,
 .cui-data-field-disabled textarea {
@@ -4146,7 +4145,6 @@ textarea {
 .cui-button-checkbox:focus > .cui-button-visual > .cui-button-left i {
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
-  z-index: 1;
 }
 .cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left span,
 .cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left i {
@@ -4453,7 +4451,6 @@ textarea {
   border-radius: 2px;
   box-shadow: inset 0 0 0 2px rgba(23, 162, 184, 0.25) !important;
   border-color: rgba(23, 162, 184, 0.5) !important;
-  z-index: 1;
 }
 
 .cui-data-field-center {
