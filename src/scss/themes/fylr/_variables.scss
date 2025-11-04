@@ -571,8 +571,8 @@ $form-hint-margin-bottom: 	$spacer-sm !default;
 
 // * Data-Form
 // * ==========================================
-$data-form-utilities-column-width: 			1.15 * $spacer !default;
-$data-form-utilities-count: 				2 !default;
+$data-form-utilities-move-width: 				1.2 * $spacer !default;
+$data-form-utilities-delete-width: 			1.5 * $spacer !default;
 $data-form-border-offset: 					0px; // $spacer-xs !default;
 $data-form-content-offset: 					3 * $spacer-xs !default;
 $data-form-field-group-border-color: 		$body-color !default;

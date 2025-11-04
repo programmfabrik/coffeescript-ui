@@ -90,7 +90,7 @@
 
 	&.cui-data-form--add-button {
 		> .cui-vertical-layout > .cui-vertical-layout-bottom {
-			// padding-left: calc(#{$data-form-utilities-count} * #{$data-form-utilities-column-width} + #{$data-form-border-offset});
+			// padding-left: calc(#{$data-form-utilities-move-width} + #{$data-form-utilities-delete-width} + #{$data-form-border-offset});
 			margin-top: $spacer-xs;
 			margin-bottom: $spacer-sm;
 
@@ -116,10 +116,12 @@
 	grid-template-areas: 'move content delete';
 
 	// only add space in the columns if we show move handle and/or trash
-	.cui-data-form--movable-rows &,
+	.cui-data-form--movable-rows & {
+		--data-form-utilities-move-width: #{$data-form-utilities-move-width};
+	}
+	
 	.cui-data-form--add-button & {
-		--data-form-utilities-move-width: #{$data-form-utilities-column-width};
-		--data-form-utilities-delete-width: #{$data-form-utilities-column-width};
+		--data-form-utilities-delete-width: #{$data-form-utilities-delete-width};
 	}
 
 	&:not(:last-child) {
