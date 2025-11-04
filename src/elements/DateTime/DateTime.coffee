@@ -31,6 +31,9 @@ class CUI.DateTime extends CUI.Input
 				default: locale
 				check: (v) ->
 					CUI.util.isArray(CUI.DateTimeFormats[v]?.formats)
+			show_calendar:
+				default: true
+				check: Boolean
 			calendar_locale:
 				mandatory: false
 				default: locale
@@ -279,15 +282,16 @@ class CUI.DateTime extends CUI.Input
 
 		@DOM.setAttribute("data-cui-date-time-format", attr)
 
-		@addClass("cui-data-field--with-button")
+		if @_show_calendar
+			@addClass("cui-data-field--with-button")
 
-		@__calendarButton = new CUI.defaults.class.Button
-			icon: "calendar"
-			tooltip: text: CUI.DateTime.defaults.button_tooltip
-			onClick: =>
-				@openPopover(@__calendarButton)
+			@__calendarButton = new CUI.defaults.class.Button
+				icon: "calendar"
+				tooltip: text: CUI.DateTime.defaults.button_tooltip
+				onClick: =>
+					@openPopover(@__calendarButton)
 
-		@replace(@__calendarButton, "right")
+			@replace(@__calendarButton, "right")
 
 
 	format: (_s, _output_format="display", output_type=null, parseZone = false) ->
@@ -417,7 +421,7 @@ class CUI.DateTime extends CUI.Input
 		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input,false, @_avoid_bc_conversion)
 
 	__checkInput: (value) ->
-		@__calendarButton.enable()
+		@__calendarButton?.enable()
 
 		if not CUI.util.isEmpty(value?.trim())
 			mom = @parse(value)
@@ -425,7 +429,7 @@ class CUI.DateTime extends CUI.Input
 				return false
 
 			if mom.bc or value.startsWith("-") or mom.year() < 0
-				@__calendarButton.disable()
+				@__calendarButton?.disable()
 
 		else
 			@__input_format = @initFormat(@__default_format)
