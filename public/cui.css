@@ -2183,6 +2183,17 @@ li > div {
   margin-left: 1px;
 }
 
+.svg-ruler {
+  width: 16px;
+  height: 16px;
+}
+
+.svg-fullscreen-expand,
+.svg-fullscreen-compress {
+  width: 16px;
+  height: 16px;
+}
+
 .cui-button,
 .cui-button-href {
   cursor: pointer;
