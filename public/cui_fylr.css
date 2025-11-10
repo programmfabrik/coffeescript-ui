@@ -4164,7 +4164,8 @@ textarea {
   border-color: #0261f8 !important;
 }
 .cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left span,
-.cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left i {
+.cui-button-checkbox:focus.cui-active > .cui-button-visual > .cui-button-left i, .cui-button-checkbox:focus.cui-indeterminate > .cui-button-visual > .cui-button-left span,
+.cui-button-checkbox:focus.cui-indeterminate > .cui-button-visual > .cui-button-left i {
   background-color: #0261f8;
   box-shadow: none !important;
 }
