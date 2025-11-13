@@ -96,19 +96,51 @@
 }
 
 .cui-result-navigation-toolbar {
+	// --toolbar-gap: 0;
+
+	flex: 0 1 auto;
+
+	> * {
+		width: 33%;
+	}
+
+	&:has(> .cui-horizontal-layout-center:empty) > * {
+		width: 50%;
+	}
+
 	// left column has the status information label, it can truncate with ...
 	> .cui-horizontal-layout-left {
-		flex: 0 1 auto;
+		// flex: 0 1 auto;
+		&:has(.cui-buttonbar-group-add_records) {
+			min-width: $btn-visually-square-factor * $btn-height;
+		}
 
 		// lets the status info label truncate correctly in the case there is an optional sibling buttonbar present, usually a [+] button
 		> .cui-label {
 			flex: 1 1 auto;
 			overflow: hidden;
 		}
+
+		.cui-buttonbar + .cui-label {
+			margin-left: $spacer-sm;
+		}		
 	}
 
-	.cui-buttonbar + .cui-label {
-		margin-left: $spacer-sm;
+	> .cui-horizontal-layout-center {
+		overflow: hidden !important;
+
+		.ez5-navigation-selected-objects-count {
+			max-width: 100%;
+    		flex: 0 1 auto;
+
+			> .cui-label {
+				width: calc(100% - ($btn-height-xs * $btn-visually-square-factor));
+			}
+		}
+	}
+
+	> .cui-horizontal-layout-right {
+		justify-content: end;
 	}
 }
 
