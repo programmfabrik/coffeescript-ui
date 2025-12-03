@@ -801,7 +801,8 @@ MODIFIER concerns either a state or a sizing or both, XXX-hover, XXX-sm
 	- passing the variables every time the function is called is not an option
 */
 :root {
-  --blue: #6bb2bb;
+  --blue: #0261f8;
+  --blue-light: #8bceec;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #b64b7c;
@@ -5121,7 +5122,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   background-color: var(--custom-tag-background);
 }
 .css-swatch.cui-swatch-color-blue {
-  background-color: #6bb2bb;
+  background-color: #0261f8;
+}
+.css-swatch.cui-swatch-color-blue-light {
+  background-color: #8bceec;
 }
 .css-swatch.cui-swatch-color-indigo {
   background-color: #6610f2;
