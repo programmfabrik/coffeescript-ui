@@ -57775,8 +57775,15 @@ CUI.Modal = (function(superClass) {
   };
 
   function Modal(opts) {
-    var bd, do_cancel, htbn, toggleFillScreenButton;
+    var bd, btnOpts, do_cancel, htbn, i, len, ref, toggleFillScreenButton;
     Modal.__super__.constructor.call(this, opts);
+    if (this._header_buttons) {
+      ref = this._header_buttons;
+      for (i = 0, len = ref.length; i < len; i++) {
+        btnOpts = ref[i];
+        this.__addCustomHeaderButton(btnOpts);
+      }
+    }
     toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton({
       tooltip: this._fill_screen_button_tooltip
     });
@@ -57863,6 +57870,9 @@ CUI.Modal = (function(superClass) {
       },
       onToggleFillScreen: {
         check: Function
+      },
+      header_buttons: {
+        check: Array
       }
     });
     return this.mergeOpt("placement", {
@@ -57891,6 +57901,24 @@ CUI.Modal = (function(superClass) {
       btn: btn
     });
     CUI.util.assert(this.__pane instanceof CUI.SimplePane, "new " + this.__cls, "opts." + pname + " can only be used if opts.pane is instance of SimplePane.", {
+      pane: this.__pane,
+      opts: this.opts
+    });
+    this.append(btn, "header_right");
+    return btn;
+  };
+
+  Modal.prototype.__addCustomHeaderButton = function(_btn) {
+    var btn;
+    if (CUI.util.isPlainObject(_btn)) {
+      btn = new CUI.defaults["class"].Button(_btn);
+    } else {
+      btn = _btn;
+    }
+    CUI.util.assert(btn instanceof CUI.Button, "Modal.__addCustomHeaderButton", "Button needs to be instance of Button", {
+      btn: btn
+    });
+    CUI.util.assert(this.__pane instanceof CUI.SimplePane, "new " + this.__cls, "opts.header_buttons can only be used if opts.pane is instance of SimplePane.", {
       pane: this.__pane,
       opts: this.opts
     });
