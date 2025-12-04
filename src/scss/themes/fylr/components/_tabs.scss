@@ -175,15 +175,6 @@
 				color: var(--btn-color-active, #{$tabs-active-color});
 			}
 		}
-
-		&:focus {
-			.cui-button-visual {
-				// add custom focus style
-				background-color: rgb($focused, 0.05);
-				color: var(--btn-color-active, #{$tabs-active-color});
-				box-shadow: $btn-focus-shadow !important;
-			}
-		}
 	}
 
 	// * Overflow Button
@@ -209,8 +200,7 @@
 			}
 		}
 
-		&:hover,
-		&:focus {
+		&:hover {
 			.cui-button-visual {
 				background-color: $tabs-overflow-button-background-hover;
 				color: $tabs-overflow-button-color-hover;
@@ -272,6 +262,16 @@
 						width: 100%;
 						height: 100%;
 						border-bottom: 1px solid var(--tabs-active-border-color, $tabs-active-border-color);
+					}
+				}
+
+				&:focus {
+					.cui-button-visual {
+						--tabs-active-border-color: #{$component-focus-shadow-color};
+						--focus-shadow-outer-width: 3px;
+						--focus-shadow-inner-width: 5px;
+
+						border-radius: $btn-border-radius;
 					}
 				}
 				
