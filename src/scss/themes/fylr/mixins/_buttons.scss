@@ -196,8 +196,7 @@
 	}
 
 	&:not(.cui-disabled) {
-		&:hover,
-		&:focus {
+		&:hover {
 			.cui-button-visual {
 				color: var(--btn-color-hover, #{$color-hover});
 				background-color: var(--btn-background-hover, #{$background-hover});
@@ -207,7 +206,7 @@
 		&:focus {
 			outline: none;
 	
-			.cui-button-visual {
+			> .cui-button-visual {
 				@include button-focus();
 			}
 		}
@@ -329,6 +328,10 @@
 		&:hover {
 			--btn-border-color: #{$btn-inverted-hover-border-color};
 		}
+
+		&:focus {
+			--focus-shadow-inner-color: transparent;
+		}
 	}
 }
 
@@ -442,6 +445,12 @@
 			.cui-button-visual {
 				text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
 				box-shadow: none; // reset from button-color()
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				--btn-border-width: 1px;
 			}
 		}
 	}

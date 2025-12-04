@@ -153,10 +153,12 @@
 			@include input-focus();
 		}
 
-		&.cui-active {
+		&.cui-active,
+		&.cui-indeterminate {
 			> .cui-button-visual > .cui-button-left span,
 			> .cui-button-visual > .cui-button-left i {
 				background-color: $focused; // make more prominent
+				box-shadow: none !important;
 			}
 		}
 	}
