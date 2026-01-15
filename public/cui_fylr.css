@@ -2812,11 +2812,15 @@ label[data-label-clickable],
   word-break: keep-all;
 }
 .cui-label-markdown .cui-label-content table tbody tr:nth-child(odd) {
-  background-color: #f5f5f5;
+  background-color: var(--markdown-darker-100, #f5f5f5);
+}
+.cui-label-markdown .cui-label-content table tbody tr:nth-child(odd) code {
+  --markdown-darker-100: var(--gray-300);
+  --markdown-code-border-color: var(--gray-400);
 }
 .cui-label-markdown .cui-label-content table td, .cui-label-markdown .cui-label-content table th {
-  padding: 0.25rem 0.5rem;
-  border: 1px solid #e6e9ec;
+  padding: 0.5rem;
+  border: 1px solid var(--markdown-darker-300, #e6e9ec);
 }
 .cui-label-markdown .cui-label-content table th {
   font-weight: 700;
@@ -2827,31 +2831,32 @@ label[data-label-clickable],
 }
 .cui-label-markdown .cui-label-content blockquote {
   padding: 0.25rem 0.5rem;
-  border-left: 5px solid #dee2e6;
+  border-left: 5px solid var(--markdown-darker-300, #dee2e6);
 }
 .cui-label-markdown .cui-label-content code {
-  border: none;
-  background: #f5f5f5;
+  border: 1px solid var(--markdown-code-border-color, transparent);
+  background: var(--markdown-darker-100, #f5f5f5);
   white-space: pre-wrap;
   padding: 0 0.25rem;
   border-radius: 2px;
+  font-size: var(--font-size-sm);
 }
 .cui-label-markdown .cui-label-content pre {
-  padding: 1rem;
-  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  background: var(--markdown-darker-100, #f5f5f5);
   white-space: pre-wrap;
-  border-radius: 3px;
-  border: none;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 .cui-label-markdown .cui-label-content pre code {
   padding: 0;
   border-radius: 0;
+  border: none;
+  background: none;
 }
 .cui-label-markdown .cui-label-content hr {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   border: 0;
   border-top: 1px solid #212121;
 }
