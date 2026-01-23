@@ -904,7 +904,7 @@ class CUI
 	@browser: (->
 		map =
 			opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
-			firefox: `typeof InstallTrigger !== 'undefined'`
+			firefox: `typeof InstallTrigger !== 'undefined'` # TODO: InstallTrigger is deprecated, remove
 			safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
 			ie: `/*@cc_on!@*/false || !!document.documentMode`
 			chrome: !!window.chrome and !!window.chrome.webstore
