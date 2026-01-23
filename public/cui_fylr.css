@@ -6968,6 +6968,94 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-pane-header .cui-pane-close-button {
   transform: translateX(0.5rem);
 }
+.cui-pane-header:has(.cui-pane-close-button-with-title) > .cui-horizontal-layout-left {
+  width: 100%;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) > .cui-horizontal-layout-left > .cui-buttonbar {
+  width: 100%;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title {
+  width: 100%;
+  max-width: 100%;
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):hover .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus > .cui-button-visual {
+  outline: none;
+  border-color: #0261f8;
+  box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentcolor;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):hover, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+  justify-content: space-between;
+}
+.cui-pane-header .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual, .cui-toolbar .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual, .cui-buttonbar .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
+  margin-bottom: 0;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual .cui-button-center {
+  padding-left: 0;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual .cui-button-right {
+  padding-right: 0.25rem;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled) {
+  transform: translateX(3px);
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual {
+  --focus-shadow-outer-width: 0px;
+  box-shadow: none !important;
+  border: 0;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: -2px;
+  width: calc(100% - 3px);
+  height: calc(100% - 5px);
+  outline: 3px solid #0261f8;
+  outline-offset: -2px;
+  border-radius: 1px;
+}
+.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual .cui-button-right {
+  padding-right: 0.5rem;
+}
 
 .cui-pane-footer .cui-horizontal-layout-left,
 .cui-pane-footer .cui-horizontal-layout-right {
@@ -8590,9 +8678,11 @@ which will apply the class "use-css-grid-layout"
   grid-template-rows: auto;
   grid-template-areas: "move content delete";
 }
-.cui-data-form--movable-rows .cui-data-form-row, .cui-data-form--add-button .cui-data-form-row {
-  --data-form-utilities-move-width: 1.15rem;
-  --data-form-utilities-delete-width: 1.15rem;
+.cui-data-form--movable-rows .cui-data-form-row {
+  --data-form-utilities-move-width: 1.2rem;
+}
+.cui-data-form--add-button .cui-data-form-row {
+  --data-form-utilities-delete-width: 1.5rem;
 }
 .cui-data-form-row:not(:last-child) {
   margin-bottom: 0.5rem;
