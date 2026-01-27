@@ -43079,7 +43079,7 @@ CUI.DateTimeRangeGrammar = (function() {
   };
 
   DateTimeRangeGrammar.stringToDateRange = function(input, locale) {
-    var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
+    var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, monthIndex, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
     if (locale == null) {
       locale = CUI.DateTime.getLocale();
     }
@@ -43108,10 +43108,10 @@ CUI.DateTimeRangeGrammar = (function() {
         value = s.split(".")[0];
       } else if (CUI.DateTimeRangeGrammar.REGEXP_CENTURY.test(s)) {
         type = CUI.DateTimeRangeGrammar.TYPE_CENTURY;
-        value = s.split("th")[0];
-      } else if (indexOf.call(CUI.DateTimeRangeGrammar.MONTHS[locale], value) >= 0) {
+        value = s.split(/th/i)[0];
+      } else if ((monthIndex = CUI.DateTimeRangeGrammar.__findMonthIndex(s, locale)) >= 0) {
         type = CUI.DateTimeRangeGrammar.TYPE_MONTH;
-        value = CUI.DateTimeRangeGrammar.MONTHS[locale].indexOf(value);
+        value = monthIndex;
       } else {
         type = s;
       }
@@ -43430,6 +43430,22 @@ CUI.DateTimeRangeGrammar = (function() {
       inputString = parseInt(inputString) - 1;
     }
     return "-" + inputString;
+  };
+
+  DateTimeRangeGrammar.__findMonthIndex = function(value, locale) {
+    var i, index, len, lowerValue, month, months;
+    lowerValue = value.toLowerCase();
+    months = CUI.DateTimeRangeGrammar.MONTHS[locale];
+    if (!months) {
+      return -1;
+    }
+    for (index = i = 0, len = months.length; i < len; index = ++i) {
+      month = months[index];
+      if (month.toLowerCase() === lowerValue) {
+        return index;
+      }
+    }
+    return -1;
   };
 
   return DateTimeRangeGrammar;
