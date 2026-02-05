@@ -9078,7 +9078,7 @@ which will apply the class "use-css-grid-layout"
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 .cui-layer-root[cui-layer-fixed] {
@@ -9109,7 +9109,6 @@ which will apply the class "use-css-grid-layout"
   right: 0;
   bottom: 0;
   display: flex;
-  z-index: -1;
 }
 .cui-layer-backdrop--visible {
   background: radial-gradient(hsla(205, 30%, 20%, 0.4), hsla(205, 30%, 20%, 0.6));
