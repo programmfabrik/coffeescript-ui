@@ -42666,6 +42666,86 @@ CUI.DateTimeFormats["fr-FR"] = {
   ]
 };
 
+CUI.DateTimeFormats["tvl-TV"] = {
+  timezone: "Europe/Berlin",
+  moment_locale: "en-US",
+  tab_date: "Date",
+  tab_time: "Time",
+  tab_week: "Wk",
+  formats: [
+    {
+      text: "Date+Time",
+      support_bc: false,
+      invalid: "Invalid Date",
+      type: "date_time",
+      clock: true,
+      store: "YYYY-MM-DDTHH:mm:00Z",
+      clock_am_pm: true,
+      clock_seconds: false,
+      input: "YYYY-MM-DD hh:mm A",
+      display: "dd, YYYY-MM-DD hh:mm A",
+      display_short: "YYYY-MM-DD hh:mm A",
+      display_attribute: "date-time",
+      display_short_attribute: "date-time-short",
+      parse: ["YYYY-MM-DDTHH:mm:ss", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+    }, {
+      text: "Date+Time+Seconds",
+      support_bc: false,
+      invalid: "Invalid Date",
+      type: "date_time_seconds",
+      store: "YYYY-MM-DDTHH:mm:ssZ",
+      input: "YYYY-MM-DD HH:mm:ss",
+      display: "dd, YYYY-MM-DD HH:mm:ss",
+      display_short: "YYYY-MM-DD HH:mm:ss",
+      display_attribute: "date-time-seconds",
+      display_short_attribute: "date-time-seconds-short",
+      clock: true,
+      clock_am_pm: true,
+      clock_seconds: true,
+      parse: ["MM/DD/YYYY HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss"]
+    }, {
+      text: "Date",
+      support_bc: false,
+      input: "YYYY-MM-DD",
+      invalid: "Invalid date",
+      display: "dd, YYYY-MM-DD",
+      display_short: "YYYY-MM-DD",
+      display_attribute: "date",
+      display_short_attribute: "date-short",
+      store: "YYYY-MM-DD",
+      type: "date",
+      clock: false,
+      parse: ["MM/DD/YYYY", "D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/Y", "MM/DD/Y"]
+    }, {
+      text: "Jahr-Monat",
+      support_bc: false,
+      input: "YYYY-MM",
+      invalid: "Invalid date",
+      store: "YYYY-MM",
+      display: "MMMM YYYY",
+      display_short: "YYYY-MM",
+      display_attribute: "year-month",
+      display_short_attribute: "year-month-short",
+      type: "year_month",
+      clock: false,
+      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM", "MM-YYYY", "M-YYYY", "YYYY-M", "YYYY.M", "YYYY/M"]
+    }, {
+      text: "Jahr",
+      support_bc: true,
+      input: "Y",
+      invalid: "Invalid date",
+      display: "Y",
+      display_short: "Y",
+      display_attribute: "year",
+      display_short_attribute: "year",
+      store: "YYYY",
+      type: "year",
+      clock: false,
+      parse: ["Y"]
+    }
+  ]
+};
+
 
 /***/ }),
 
