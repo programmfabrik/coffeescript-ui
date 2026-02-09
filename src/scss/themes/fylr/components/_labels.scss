@@ -1,6 +1,12 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/clickable' as *;
+@use '../mixins/labels' as *;
+@use '../mixins/text-truncate' as *;
+
 label[data-label-clickable],
 .cui-label[data-label-clickable] {
-	@include clickable;
+	@include clickable();
 }
 
 .cui-label {
@@ -22,7 +28,7 @@ label[data-label-clickable],
 
 		&:not(:empty) + .cui-label-content:not(:empty) {
 			padding-left: 0.5em; // be aware that using :not(XYZ) will add class specificity
-			flex-shrink: 1; // todo: ? the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
+			flex-shrink: 1; // the icon removes the max-width: 100% effect on the content so we have to allow it to flex-shrink
 		}
 	}
 
@@ -46,7 +52,7 @@ label[data-label-clickable],
 
 		// highlight
 		em {
-			background: hsl(55, 100%, 60%); // todo
+			background: hsl(55deg 100% 60%);
 			font-style: normal;
 			padding: 0.05em 0.2em;
 		}
@@ -71,9 +77,9 @@ label[data-label-clickable],
 	}
 
 	&.cui-label-description {
-		@include label-secondary();
-
 		margin-bottom: $spacer;
+
+		@include label-secondary();
 	}
 
 	&.cui-label-danger {
@@ -215,8 +221,7 @@ label[data-label-clickable],
 		white-space: normal;
 		overflow: visible;
 		text-overflow: clip;
-		word-wrap: break-word;
-		word-break: break-word;
+		overflow-wrap: anywhere;
 	}
 
 	&.cui-label-centered {
@@ -251,13 +256,6 @@ label[data-label-clickable],
 			white-space: pre-wrap;
 		}
 	}
-
-	// todo ??
-	.cui-label-content span {
-		// white-space: normal;
-		// white-space has to pre-wrap - otherwise it breaks the whole concept of a multiline label
-		// example: collection description
-	}
 }
 
 // Manage Overflow
@@ -270,7 +268,7 @@ label[data-label-clickable],
 
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
-			margin-bottom: 2*$spacer;
+			margin-bottom: 2 * $spacer;
 		}
 		
 		&:not(.cui-label--show-overflow) > .cui-label-content {
@@ -312,7 +310,7 @@ label[data-label-clickable],
 
 			.cui-button-left {
 				padding-left: 0;
-				margin-right: -$spacer-sm;
+				margin-right: -($spacer-sm);
 				transform: translateY(2px);
 			}
 		}
@@ -335,7 +333,6 @@ label[data-label-clickable],
 		margin: 0 0 $spacer-xs;
 	}
 
-	// todo: set font sizes
 	h1 {
 		font-size: $h4-font-size;
 	}
@@ -411,12 +408,17 @@ label[data-label-clickable],
 		word-break: keep-all;
 
 		tbody tr:nth-child(odd) {
-			background-color: $gray-100;
+			background-color: var(--markdown-darker-100, #{$gray-100});
+
+			code {
+				--markdown-darker-100: var(--gray-300);
+				--markdown-code-border-color: var(--gray-400);
+			}
 		}
 
 		td, th {
-			padding: $spacer-xs $spacer-sm;
-			border: 1px solid $gray-200;
+			padding: $spacer-sm;
+			border: 1px solid var(--markdown-darker-300, #{$gray-200});
 		}
 
 		th {
@@ -431,35 +433,36 @@ label[data-label-clickable],
 
 	blockquote {
 		padding: $spacer-xs $spacer-sm;
-		border-left: 5px solid gray('300');
+		border-left: 5px solid var(--markdown-darker-300, #{$gray-300});
 	}
 
 	code {
-		border: none;
-		background: theme-color('light');
+		border: 1px solid var(--markdown-code-border-color, transparent);
+		background: var(--markdown-darker-100, #{$gray-100});
 		white-space: pre-wrap;
 		padding: 0 $spacer-xs;
 		border-radius: $border-radius-sm;
+		font-size: var(--font-size-sm); // matches font-size-base on this font
 	}
 
 	pre {
-		padding: $spacer;
-		background: theme-color('light');
+		padding: $spacer-sm $spacer;
+		background: var(--markdown-darker-100, #{$gray-100});
 		white-space: pre-wrap;
-		border-radius: $border-radius;
-		border: none;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
-
+		
 		code {
 			padding: 0;
 			border-radius: 0;
+			border: none;
+			background: none;
 		}
 	}
 
 	hr {
-		margin-top: $spacer-sm;
-		margin-bottom: $spacer-sm;
+		margin-top: $spacer;
+		margin-bottom: $spacer;
 		border: 0;
 		border-top: $hr-border-width solid $body-color;
 	}

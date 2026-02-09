@@ -1,6 +1,6 @@
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/src/index.js??ruleSet[1].rules[1].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[4]!./scss/themes/debug/main.scss ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!../node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].use[3]!../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[4]!./scss/themes/debug/main.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 /*!
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -30,8 +30,8 @@ body {
 }
 
 .svg-asset-failed {
-  width: 38.38704px;
-  height: 38.38704px;
+  width: 38.387px;
+  height: 38.387px;
 }
 
 .svg-close {
@@ -77,6 +77,16 @@ body {
 .svg-folder {
   width: 15px;
   height: 19px;
+}
+
+.svg-fullscreen-compress {
+  width: 640px;
+  height: 640px;
+}
+
+.svg-fullscreen-expand {
+  width: 640px;
+  height: 640px;
 }
 
 .svg-fylr-logo {
@@ -545,10 +555,6 @@ i.fa-spinner {
 }
 
 i.cui-spin-stepped {
-  -webkit-animation: fa-spin 1s steps(8) infinite;
-  -moz-animation: fa-spin 1s steps(8) infinite;
-  -ms-animation: fa-spin 1s steps(8) infinite;
-  -o-animation: fa-spin 1s steps(8) infinite;
   animation: fa-spin 1s steps(8) infinite;
 }
 
@@ -905,7 +911,6 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 }
 
 .cui-layer-root.cui-layer-root-backdrop-blur > .cui-layer-backdrop {
-  -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);

@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 // ProgressMeter
 .cui-progress-meter {
 	.cui-progress-meter-bar {
@@ -6,7 +8,7 @@
 
 		.cui-progress-meter-fill {
 			display: none;
-			background: var(--brand-color, #{theme-color('primary')});
+			background: var(--brand-color, #{$primary});
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -52,11 +54,11 @@
 			max-width: 200px;
 			min-width: 30px;
 			overflow: hidden;
-			height: $btn-height; // todo: do we need other height (sm | lg), see button sizes
+			height: $btn-height; // if we need other height (sm | lg), see button sizes
 			line-height: $btn-height;
 			border-radius: $btn-border-radius;
-			background: gray('500');
-			color: white;
+			background: $gray-500;
+			color: $white;
 		}
 
 		.cui-progress-meter-icon {

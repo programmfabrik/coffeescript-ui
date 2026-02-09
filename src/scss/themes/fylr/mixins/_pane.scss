@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use 'buttons' as *;
+@use 'typography' as *;
+
 @mixin pane-padding() {
 	padding: $pane-padding;
 }
@@ -25,6 +29,15 @@
 	
 	.cui-horizontal-layout-left > .cui-label {
 		@include h3(0);
+
+		.cui-label-icon {
+			margin-left: $spacer-xs;
+			margin-right: -$spacer-xs;
+
+			.fa {
+				font-size: $font-size-xl;
+			}
+		}
 	}
 	
 	// Default: all buttons within a direct cui-pane-header should be plain buttons

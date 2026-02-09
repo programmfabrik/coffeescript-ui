@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/list-view' as *;
+
 // Data Table
 .cui-data-table {
 	flex-shrink: 1;

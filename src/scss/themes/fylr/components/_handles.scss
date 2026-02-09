@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/handles' as *;
+
 // * Drag row handlle
 
 .cui-drag-handle-row {
@@ -113,11 +116,6 @@
 	&.cui-flex-handle-closed {
 		cursor: pointer;
 		overflow: hidden;
-	}
-
-	// todo: obsolete class?
-	&.cui-flex-handle-manual-size {
-		// background-color: #64fdd8;
 	}
 
 	&.cui-flex-handle-has-label.cui-flex-handle-closed {

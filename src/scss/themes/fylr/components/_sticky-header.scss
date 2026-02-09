@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../mixins/text-truncate' as *;
+
 // * StickyHeader
 
 /*
@@ -48,24 +52,37 @@
 }
 
 .cui-sticky-header-control {
-	display: none; // hide initially to prevent grid gap from taking effect (e.g. standard view overlay)
-	position: sticky !important;
+	display: none; // hide initially to prevent grid gap from taking effect (e.g. standard view overlay, compare-view)
+	position: sticky;
+	overflow: hidden;
 	top: 0 !important;
 	left: 0 !important;
+	right: 0 !important;
+	height: 0;
 	width: 100% !important;
 	z-index: 1;
-	overflow: hidden;
 	flex: 0 0 auto; // make sure header is visible when placed in flex-layout (see metadata-browser)
 
 	&:has(.cui-sticky-header) {
 		display: block;
-	}
+	}	
 
 	.cui-sticky-header {
 		position: absolute;
 		left: 0;
 		right: 0;
-		background: var(--sticky-header-background, #{$sticky-header-background});
+		font-weight: bold;
+		background:
+			linear-gradient(
+				to top,
+				var(--sticky-header-background-from, #{$sticky-header-background-body}) 30%,
+				var(--sticky-header-background-to, #{$body-bg}) 50%
+			);
+
+		.cui-pane & {
+			--sticky-header-background-from: #{$sticky-header-background-pane};
+			--sticky-header-background-to: #{$pane-background};
+		}
 	}
 }
 
@@ -77,13 +94,13 @@
 // 2. Level
 .cui-sticky-header-level-1,
 .cui-sticky-header-level-2 {
-	color: lighten(gray('700'), 10%);
+	color: color.adjust($gray-700, $lightness: 10%);
 }
 
 // 3. Level
 .cui-sticky-header-level-2 {
 	font-weight: $font-weight-light;
-	color: gray('700');
+	color: $gray-700;
 	letter-spacing: 0.03em;
 }
 

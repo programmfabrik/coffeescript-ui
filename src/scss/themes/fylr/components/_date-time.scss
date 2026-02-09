@@ -1,3 +1,10 @@
+@use 'sass:math';
+@use '../variables' as *;
+@use '../mixins/buttonbar' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/layer' as *;
+@use '../mixins/pane' as *;
+
 // Calendar Popup
 .cui-layer-root-cui-date-time-popover .cui-layer > .cui-pane > .cui-vertical-layout-center {
 	overflow: hidden; // override default, see: .cui-layer > .cui-pane > .cui-vertical-layout-center
@@ -129,12 +136,12 @@
 	}
 
 	.cui-buttonbar-group-time {
-		.cui-select:not(.cui-date-time-am-pm-select):not(:first-child)::before {
+		.cui-select:not(.cui-date-time-am-pm-select, :first-child)::before {
 			content: ':';
 			position: relative;
 			top: 4px;
 			left: 2px;
-			color: theme-color('muted');
+			color: $muted;
 		}
 	}
 
@@ -300,7 +307,7 @@
 
 		&:hover {
 			span {
-				--calendar-date-hover-background: rgb(var(--brand-color-RGB));
+				--calendar-date-hover-background: rgb(var(--brand-color-rgb));
 
 				color: var(--brand-foreground-text-color, #{$body-color});
 				background-color: var(--calendar-date-hover-background, #{rgba($calendar-date-active-background, $calendar-date-hover-background-opacity)});
@@ -315,7 +322,7 @@
 
 	.cui-date-time-now {
 		span {
-			border: 1px solid currentColor;
+			border: 1px solid currentcolor;
 		}
 	}
 
@@ -329,7 +336,6 @@
 }
 
 // DateTime Popover
-// todo: is this obsolete ??
 .cui-menu.cui-date-time-60-select {
 	.cui-item-list-body {
 		box-sizing: content-box;

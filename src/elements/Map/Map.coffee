@@ -8,10 +8,9 @@ class CUI.Map extends CUI.Pane
 		buttons:
 			fullscreen:
 				open:
-					icon: "fa-arrows-alt"
+					icon: "fa-expand"
 				close:
 					icon: "fa-compress"
-				tooltip: "Open/Close fullscreen"
 			zoom:
 				plus:
 					icon: "zoom_in"
@@ -314,13 +313,15 @@ class CUI.Map extends CUI.Pane
 		icon_inactive:
 			new CUI.Icon
 				icon: CUI.Map.defaults.buttons.fullscreen.open.icon
+				tooltip: text: CUI.Map.defaults.buttons.fullscreen.open.tooltip
 		,
 		icon_active:
 			new CUI.Icon
 				icon: CUI.Map.defaults.buttons.fullscreen.close.icon
+				tooltip: text: CUI.Map.defaults.buttons.fullscreen.close.tooltip
 		,
 		group: "upper-right"
-		tooltip: text: CUI.Map.defaults.buttons.fullscreen.tooltip
+		tooltip: text: ""
 
 	destroy: ->
 		@__viewportResizeListener?.destroy()

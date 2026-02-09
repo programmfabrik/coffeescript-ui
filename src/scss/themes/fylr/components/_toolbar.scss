@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/toolbar' as *;
+
 // Toolbar
 .cui-toolbar {
 	display: flex;

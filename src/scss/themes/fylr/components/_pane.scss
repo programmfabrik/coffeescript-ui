@@ -1,3 +1,9 @@
+@use '../variables' as *;
+@use '../mixins/layer' as *;
+@use '../mixins/pane' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/typography' as *;
+
 // * Pane
 
 // This is set by Pane.coffee to compensate an active sidebar in the fillScreen calculations
@@ -38,16 +44,72 @@
 	.cui-pane-close-button {
 		transform: translateX($spacer-sm);
 	}
+
+	// Pane Header title is clickable and works as a pane-close-button
+	&:has(.cui-pane-close-button-with-title) {
+		> .cui-horizontal-layout-left {
+			width: 100%;
+
+			> .cui-buttonbar {
+				width: 100%;
+			}
+		}
+		
+		.cui-pane-close-button-with-title {
+			width: 100%;
+			max-width: 100%;
+
+			@include button-color-reset();
+
+			.cui-button-visual {
+				@include h3(0);
+
+				justify-content: space-between;
+
+				.cui-button-center {
+					padding-left: 0;
+				}
+
+				.cui-button-right {
+					padding-right: $spacer-xs;
+				}
+			}
+
+			&:not(.cui-disabled) {				
+				transform: translateX(3px);
+
+				&:focus .cui-button-visual.cui-button-visual {
+					--focus-shadow-outer-width: 0px;
+					
+					box-shadow: none !important;
+					border: 0;
+
+					&::after {
+						content: '';
+						display: block;
+						position: absolute;
+						top: 3px;
+						left: -2px;
+						width: calc(100% - 3px);
+						height: calc(100% - 5px);
+						outline: 3px solid $focused;
+						outline-offset: -2px;
+						border-radius: 1px;
+					}
+
+					.cui-button-right {
+						padding-right: $spacer-sm;
+					}
+				}
+			}
+		}	
+	}
 }
 
 .cui-pane-footer {
 	.cui-horizontal-layout-left,
 	.cui-horizontal-layout-right {
 		min-width: auto;
-	}
-
-	.cui-label {
-		// todo: footer label sizes and color?
 	}
 }
 

@@ -1,3 +1,8 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/forms' as *;
+
 input,
 textarea {
 	appearance: none;
@@ -79,14 +84,14 @@ textarea {
 		&.cui-input-invalid {
 			input,
 			.cui-data-field-right .cui-button .cui-button-visual {
-				border-color: color.scale(theme-color('danger'), $saturation: 50%, $alpha: -95%);
-				background: transparentize(theme-color('danger'), 0.85);
+				border-color: color.scale($danger, $saturation: 50%, $alpha: -95%);
+				background: color.adjust($danger, $alpha: -0.85);
 
 
 				.cui-list-view-row-selectable:hover &, 
 				.cui-list-view-row-selectable.cui-selected & {
 					border-color: transparent;
-					background: color.scale(theme-color('danger'), $lightness: 50%);
+					background: color.scale($danger, $lightness: 50%);
 				}
 			}
 		}
@@ -102,16 +107,16 @@ textarea {
 	// 	@include label-form-hint();
 	// }
 
-	&-appearance-code {
+	&.cui-input-appearance-code {
 		input,
 		textarea {
 			font-family: $font-family-monospace;
 			color: $teal; // todo
-			background: gray('900');
-			border-color: gray('900');
+			background: $gray-900;
+			border-color: $gray-900;
 
 			&:focus {
-				border-color: gray('900');
+				border-color: $gray-900;
 			}
 		}
 	}
@@ -127,7 +132,8 @@ textarea {
 	margin: auto;
 	border: 1px solid $input-border-color;
 	border-radius: $input-border-radius;
-
+	
+	// stylelint-disable-next-line selector-class-pattern
 	&.ace_editor {
 		border: 0;
 	}
@@ -135,8 +141,6 @@ textarea {
 
 .cui-input-content-size {
 	textarea {
-		// min-height: 40px; // todo
-		// height: 40px; // todo
 		resize: none;
 	}
 }
@@ -191,7 +195,6 @@ textarea {
 	}
 }
 
-// todo: test
 .cui-browser-ie:not(.cui-browser-edge) {
 	.cui-input {
 		input,
@@ -219,7 +222,7 @@ textarea {
 	}
 
 	.cui-input {
-		min-width: 90px; // date-short
+		min-width: 85px; // date-short
 	}
 
 	/*
@@ -234,20 +237,20 @@ textarea {
 	*/
 
 	&[data-cui-date-time-format='date'] .cui-input {
-		min-width: 112px;
+		min-width: var(--input-date-min-width-1);
 	}
 
 	&[data-cui-date-time-format='date-time-short'] .cui-input {
-		min-width: 129px;
+		min-width: var(--input-date-min-width-2);
 	}
 
 	&[data-cui-date-time-format='date-time'] .cui-input,
 	&[data-cui-date-time-format='date-time-seconds-short'] .cui-input {
-		min-width: 150px;
+		min-width: var(--input-date-min-width-3);
 	}
 
 	&[data-cui-date-time-format='date-time-seconds'] .cui-input {
-		min-width: 175px;
+		min-width: var(--input-date-min-width-4);
 	}
 }
 

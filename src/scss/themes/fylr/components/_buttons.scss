@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+
 .cui-button,
 .cui-button-href {
 	cursor: pointer;
@@ -79,7 +82,7 @@
 // .cui-button-download {}
 
 .cui-button-href {
-	&:not(.cui-button--primary):not(.cui-button--secondary):not(.cui-button-download) {
+	&:not(.cui-button--primary, .cui-button--secondary, .cui-button-download) {
 		@include button-link();
 	}
 }
@@ -87,7 +90,7 @@
 // Reduce space between button text and caret
 .cui-button-select,
 .cui-button-button.cui-button--has-caret {
-	&:not([role='menu-item']):not([button-group='date']):not([button-group='time']) {
+	&:not([role='menu-item'], [button-group='date'], [button-group='time']) {
 		.cui-button-visual {
 			.cui-button-center {
 				padding-right: 0.5 * $btn-padding-x;
@@ -97,7 +100,7 @@
 }
 
 .cui-button-select {
-	// todo: add white background in forms? , adding it by default makes them idfferent from the normal buttons
+	// todo: add white background in forms? , adding it by default makes them different from the normal buttons
 	// @include button-color($input-background, $body-color, $input-background, $btn-hover-color, $btn-active-background, $btn-active-color);
 
 	.cui-button-visual {
@@ -115,7 +118,7 @@
 	}
 }
 
-// todo: remove appearance-link class
+// deprecated, use cui-button-href
 a[role='button'].cui-button-appearance-link {
 	height: initial;
 

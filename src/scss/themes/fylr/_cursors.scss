@@ -1,11 +1,13 @@
+@use 'sass:list';
+
 $drag-cursors: default, move, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize;
 
 body[data-cursor] {
 	user-select: none;
 }
 
-@for $i from 1 to length($drag-cursors) {
-	$cursor: nth($drag-cursors, $i);
+@for $i from 1 to list.length($drag-cursors) {
+	$cursor: list.nth($drag-cursors, $i);
 
 	body[data-cursor="#{$cursor}"] * {
 		cursor: $cursor !important;
@@ -14,6 +16,5 @@ body[data-cursor] {
 
 // special case with prefix
 body[data-cursor='grabbing'] * {
-	cursor: -webkit-grabbing !important;
 	cursor: grabbing !important;
 }

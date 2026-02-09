@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/labels' as *;
+
 // Panel
 .cui-panel {
 	border-bottom: 1px solid $panel-border-color;
@@ -66,6 +70,13 @@
 			.cui-button-visual {
 				color: var(--btn-color-hover, #{$body-color});
 				background: none;
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+			    --focus-shadow-outer-width: 3px;
+			    --focus-shadow-inner-width: 5px;
 			}
 		}
 

@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/buttonbar' as *;
+
 .cui-buttonbar {
 	display: flex;
 	align-items: center;
