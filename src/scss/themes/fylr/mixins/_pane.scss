@@ -55,4 +55,47 @@
 			}
 		}
 	}
+
+	.cui-pane-close-button:not(.cui-disabled) {
+		$pane-close-button-offset: 4px;
+		
+		transform: translateX($pane-close-button-offset);
+
+		.cui-button-visual {
+			min-width: 20px; // make explicetely narrower to move to the very right
+		}
+
+		&:focus .cui-button-visual.cui-button-visual {
+			box-shadow: none !important;
+			border: 0;
+
+			&::after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 5px;
+				left: 0.5 * $pane-close-button-offset;
+				width: calc(100% - (2 * $pane-close-button-offset));
+				height: calc(100% - 10px);
+				outline: 2px solid $focused;
+				border-radius: 0.5px;
+			}
+		}
+	}
+
+	// Pane Header title is clickable and works as a pane-close-button
+	.cui-pane-title-button {
+		@include button-color-reset();
+
+		.cui-button-visual {
+			@include h3(0);
+
+			justify-content: space-between;
+
+			.cui-button-center {
+				padding-left: 2px;
+				padding-right: 2px;
+			}
+		}
+	}		
 }
