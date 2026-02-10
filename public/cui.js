@@ -50533,6 +50533,9 @@ CUI.ItemList = (function(superClass) {
             if (item.hasLeft()) {
               list_has_button_left = true;
             }
+            if (item.__tooltipOpts && (!item.__tooltipOpts.placement || !item.__tooltipOpts.placements)) {
+              item.__tooltipOpts.placements = ["w", "e"];
+            }
           }
           if (item instanceof CUI.Button || item instanceof CUI.DataField || item instanceof CUI.Label) {
             _this.__body.append(item);
@@ -50574,6 +50577,12 @@ CUI.ItemList = (function(superClass) {
           }
           if (menu) {
             opts.menu_parent = menu;
+          }
+          if (!opts.tooltip) {
+            opts.tooltip = {};
+          }
+          if (!opts.tooltip.placement || !opts.tooltip.placements) {
+            opts.tooltip.placements = ["w", "e"];
           }
           btn = new CUI.defaults["class"].Button(opts);
           listenButtonClick(btn);
