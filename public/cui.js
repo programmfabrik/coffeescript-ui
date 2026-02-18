@@ -22981,8 +22981,12 @@ CUI = (function() {
   };
 
   CUI.isPlainObject = function(v) {
-    var ref;
-    return v && typeof v === "object" && ((ref = v.constructor) != null ? ref.prototype.hasOwnProperty("isPrototypeOf") : void 0);
+    var proto;
+    if (!((v != null) && typeof v === "object")) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(v);
+    return proto === Object.prototype || proto === null;
   };
 
   CUI.isEmptyObject = function(v) {
@@ -35792,8 +35796,12 @@ CUI.util = (function() {
   };
 
   util.isPlainObject = function(v) {
-    var ref;
-    return v && typeof v === "object" && ((ref = v.constructor) != null ? ref.prototype.hasOwnProperty("isPrototypeOf") : void 0);
+    var proto;
+    if (!((v != null) && typeof v === "object")) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(v);
+    return proto === Object.prototype || proto === null;
   };
 
   util.isEmptyObject = function(v) {
