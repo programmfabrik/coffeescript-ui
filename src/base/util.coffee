@@ -608,7 +608,9 @@ class CUI.util
 		v and typeof(v) == "function"
 
 	@isPlainObject: (v) ->
-		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
+		return false unless v? and typeof v is "object"
+		proto = Object.getPrototypeOf(v)
+		proto is Object.prototype or proto is null
 
 	@isEmptyObject: (v) ->
 		for k of v
