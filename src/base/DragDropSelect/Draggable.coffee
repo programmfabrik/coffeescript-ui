@@ -629,8 +629,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 
 			# console.error "measureing clone", set_dim.marginBoxWidth, CUI.globalDrag.$source, dim
 
-			# TODO: if the element has a negative margin we need to add that (as a positive) to the marginBoxWidth
-			# maybe restrict this to cui-data-form-row ?
+			# if element has a negative margin we need to add that (as a positive) to the marginBoxWidth, so the width is correct
 			cloneMarginBoxWidth = set_dim.marginBoxWidth
 			if set_dim.marginLeft < 0
 				cloneMarginBoxWidth = set_dim.marginBoxWidth + (-1 * set_dim.marginLeft)
