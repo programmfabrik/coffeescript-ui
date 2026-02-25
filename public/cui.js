@@ -25780,6 +25780,9 @@ CUI.Draggable = (function(superClass) {
     if (helper === "clone") {
       set_dim = CUI.dom.getDimensions(clone_source);
       cloneMarginBoxWidth = set_dim.marginBoxWidth;
+      if (set_dim.marginLeft < 0) {
+        cloneMarginBoxWidth = set_dim.marginBoxWidth + (-1 * set_dim.marginLeft);
+      }
       CUI.dom.setDimensions(hn, {
         marginBoxWidth: cloneMarginBoxWidth,
         marginBoxHeight: set_dim.marginBoxHeight
