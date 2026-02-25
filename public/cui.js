@@ -25750,7 +25750,7 @@ CUI.Draggable = (function(superClass) {
   };
 
   Draggable.prototype.init_helper = function(ev, $target, diff) {
-    var clone_source, dim, helper, hn, offset, set_dim, start;
+    var cloneMarginBoxWidth, clone_source, dim, helper, hn, offset, set_dim, start;
     helper = this.get_helper(ev, CUI.globalDrag, diff);
     if (!helper) {
       return;
@@ -25779,8 +25779,9 @@ CUI.Draggable = (function(superClass) {
     CUI.dom.setStyle(hn, start);
     if (helper === "clone") {
       set_dim = CUI.dom.getDimensions(clone_source);
+      cloneMarginBoxWidth = set_dim.marginBoxWidth;
       CUI.dom.setDimensions(hn, {
-        marginBoxWidth: set_dim.marginBoxWidth,
+        marginBoxWidth: cloneMarginBoxWidth,
         marginBoxHeight: set_dim.marginBoxHeight
       });
     }
