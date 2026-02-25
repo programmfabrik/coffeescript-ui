@@ -1,6 +1,7 @@
 @use '../variables' as *;
 @use 'disabled' as *;
 @use 'text-truncate' as *;
+@use 'icons' as *;
 
 // * Buttons
 
@@ -162,10 +163,7 @@
 
 	.cui-button-visual {
 		.cui-button-left {
-			.svg-close {
-				width: 9px;
-				height: 9px;
-			}
+			@include icon-close-xs();
 		}
 	}
 }
