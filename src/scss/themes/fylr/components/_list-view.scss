@@ -155,6 +155,11 @@
 	.cui-button {
 		max-width: 100%; // allow button text-overflow ellipsis
 	}
+
+	.cui-icon-input,
+	.cui-color-input {
+		width: 100%;
+	}
 }
 
 .cui-lv-th,
