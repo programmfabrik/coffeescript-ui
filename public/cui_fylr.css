@@ -7517,6 +7517,10 @@ which will apply the class "use-css-grid-layout"
 .cui-lv-td .cui-button {
   max-width: 100%;
 }
+.cui-lv-td .cui-icon-input,
+.cui-lv-td .cui-color-input {
+  width: 100%;
+}
 
 .cui-lv-th,
 .list-view-header-row .cui-lv-td {
