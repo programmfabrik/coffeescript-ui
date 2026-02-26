@@ -48050,11 +48050,49 @@ CUI.ColorInput = (function(superClass) {
       tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
-          return _this.__input.focus();
+          var ref;
+          if (_this.isDisabled()) {
+            return;
+          }
+          return (ref = _this.__colorPicker) != null ? ref.click() : void 0;
         };
       })(this)
     });
     return ColorInput.__super__.readOpts.call(this);
+  };
+
+  ColorInput.prototype.render = function() {
+    ColorInput.__super__.render.call(this);
+    this.__colorPicker = CUI.dom.$element("input", "cui-color-picker-native", {
+      type: "color",
+      tabindex: "-1"
+    });
+    CUI.Events.listen({
+      node: this.__colorPicker,
+      type: "input",
+      call: (function(_this) {
+        return function() {
+          _this.__input.value = _this.__colorPicker.value;
+          return _this.__toggleColor();
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      node: this.__colorPicker,
+      type: "change",
+      call: (function(_this) {
+        return function() {
+          _this.__input.value = _this.__colorPicker.value;
+          _this.__toggleColor();
+          return new CUI.Event({
+            type: "input",
+            node: _this.__input
+          }).dispatch();
+        };
+      })(this)
+    });
+    CUI.dom.append(this.DOM, this.__colorPicker);
+    return this;
   };
 
   ColorInput.prototype.onDataChanged = function(ev, info) {
@@ -48068,14 +48106,25 @@ CUI.ColorInput = (function(superClass) {
       return this._leftControlElement.addClass('is-empty');
     } else {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
-      return this._leftControlElement.removeClass('is-empty');
+      this._leftControlElement.removeClass('is-empty');
+      return this.__syncColorPicker(this.__data[this._name]);
+    }
+  };
+
+  ColorInput.prototype.__syncColorPicker = function(value) {
+    if (!this.__colorPicker) {
+      return;
+    }
+    if (value && /^#[0-9a-fA-F]{6}$/.test(value)) {
+      return this.__colorPicker.value = value;
     }
   };
 
   ColorInput.prototype.__toggleColor = function() {
     if (this.__input.value.length > 0 && this.__checkInputInternal()) {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
-      return this._leftControlElement.removeClass('is-empty');
+      this._leftControlElement.removeClass('is-empty');
+      return this.__syncColorPicker(this.__input.value);
     } else {
       this._leftControlElement.DOM.style.removeProperty("--btn-background");
       return this._leftControlElement.addClass('is-empty');

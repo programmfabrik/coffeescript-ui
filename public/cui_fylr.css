@@ -3862,10 +3862,6 @@ textarea {
   box-shadow: none !important;
 }
 
-.cui-color-input > .cui-button,
-.cui-icon-input > .cui-button {
-  cursor: default;
-}
 .cui-color-input > .cui-button > .cui-button-visual,
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-border-width: 0;
@@ -3874,11 +3870,30 @@ textarea {
   border-bottom-right-radius: 0;
 }
 
+.cui-color-input {
+  position: relative;
+}
+.cui-color-input > .cui-button {
+  cursor: pointer;
+}
 .cui-color-input > .cui-button.is-empty > .cui-button-visual {
   --btn-background: transparent;
   background: linear-gradient(135deg, #e6e9ec 0, #e6e9ec 50%, #dee2e6 50.01%, #dee2e6);
 }
+.cui-color-input > .cui-color-picker-native {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 
+.cui-icon-input > .cui-button {
+  cursor: default;
+}
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-background: #ffffff;
   border-right: 1px solid rgba(206, 212, 218, 0.5);
