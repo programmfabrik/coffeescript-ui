@@ -48612,7 +48612,7 @@ CUI.Input = (function(superClass) {
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
-          var measureValue, neededRows, originalHeight, originalOverflow, originalValue;
+          var contentHeight, measureValue, neededRows, originalHeight, originalOverflow, originalValue;
           if (!_this.__lineHeight) {
             return;
           }
@@ -48628,7 +48628,8 @@ CUI.Input = (function(superClass) {
             _this.__input.style.overflow = "hidden";
             _this.__input.rows = 1;
             _this.__input.value = measureValue;
-            neededRows = Math.max(_this._min_rows, Math.ceil(_this.__input.scrollHeight / _this.__lineHeight));
+            contentHeight = _this.__input.scrollHeight - (_this.__verticalPadding || 0);
+            neededRows = Math.max(_this._min_rows, Math.ceil(contentHeight / _this.__lineHeight));
             _this.__input.rows = neededRows;
             _this.__input.value = originalValue;
             _this.__input.style.height = originalHeight;
@@ -48648,10 +48649,13 @@ CUI.Input = (function(superClass) {
         node: this.__input
       }).done((function(_this) {
         return function() {
+          var style;
           if (_this.isDestroyed()) {
             return;
           }
-          _this.__lineHeight = parseInt(CUI.dom.getComputedStyle(_this.__input).lineHeight, 10);
+          style = CUI.dom.getComputedStyle(_this.__input);
+          _this.__lineHeight = parseInt(style.lineHeight, 10);
+          _this.__verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
           return resize();
         };
       })(this));

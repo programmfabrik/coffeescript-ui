@@ -274,7 +274,8 @@ class CUI.Input extends CUI.DataFieldInput
 					@__input.style.overflow = "hidden"
 					@__input.rows = 1
 					@__input.value = measureValue
-					neededRows = Math.max(@_min_rows, Math.ceil(@__input.scrollHeight / @__lineHeight))
+					contentHeight = @__input.scrollHeight - (@__verticalPadding or 0)
+					neededRows = Math.max(@_min_rows, Math.ceil(contentHeight / @__lineHeight))
 					@__input.rows = neededRows
 					@__input.value = originalValue
 					@__input.style.height = originalHeight
@@ -292,7 +293,9 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.waitForDOMInsert(node: @__input).done(=>
 				if @isDestroyed()
 					return
-				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
+				style = CUI.dom.getComputedStyle(@__input)
+				@__lineHeight = parseInt(style.lineHeight, 10)
+				@__verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
 				resize()
 			)
 		else
