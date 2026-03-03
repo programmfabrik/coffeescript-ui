@@ -48568,10 +48568,18 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.setPlaceholder = function(placeholder) {
-    return CUI.dom.setAttribute(this.__input, "placeholder", placeholder);
+    this.__dynamicPlaceholder = placeholder;
+    CUI.dom.setAttribute(this.__input, "placeholder", placeholder);
+    if (typeof this.__resizeForPlaceholder === "function") {
+      this.__resizeForPlaceholder();
+    }
+    return this.setContentSize();
   };
 
   Input.prototype.getPlaceholder = function() {
+    if (this.__dynamicPlaceholder) {
+      return this.__dynamicPlaceholder;
+    }
     if (!this._placeholder) {
       return void 0;
     }
@@ -48583,7 +48591,7 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var calculateBaseHeight, oldSizes, resize, textarea_opts;
+    var oldSizes, resize, textarea_opts;
     if (input_type == null) {
       input_type = "text";
     }
@@ -48604,22 +48612,33 @@ CUI.Input = (function(superClass) {
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
-          var rows;
-          _this.__input.rows = _this._min_rows;
-          rows = Math.ceil((_this.__input.scrollHeight - _this.__baseScrollHeight) / _this.__lineHeight);
-          return _this.__input.rows = _this._min_rows + rows;
+          var measureValue, neededRows, originalHeight, originalOverflow, originalValue;
+          if (!_this.__lineHeight) {
+            return;
+          }
+          measureValue = _this.__input.value;
+          if (measureValue.length === 0) {
+            measureValue = _this.getPlaceholder() || "";
+          }
+          if (measureValue.length > 0) {
+            originalValue = _this.__input.value;
+            originalHeight = _this.__input.style.height;
+            originalOverflow = _this.__input.style.overflow;
+            _this.__input.style.height = "auto";
+            _this.__input.style.overflow = "hidden";
+            _this.__input.rows = 1;
+            _this.__input.value = measureValue;
+            neededRows = Math.max(_this._min_rows, Math.ceil(_this.__input.scrollHeight / _this.__lineHeight));
+            _this.__input.rows = neededRows;
+            _this.__input.value = originalValue;
+            _this.__input.style.height = originalHeight;
+            return _this.__input.style.overflow = originalOverflow;
+          } else {
+            return _this.__input.rows = _this._min_rows;
+          }
         };
       })(this);
-      calculateBaseHeight = (function(_this) {
-        return function() {
-          var value;
-          value = _this.__input.value;
-          _this.__input.value = "";
-          _this.__baseScrollHeight = _this.__input.scrollHeight;
-          _this.__input.value = value;
-          return _this.__lineHeight = parseInt(CUI.dom.getComputedStyle(_this.__input).lineHeight, 10);
-        };
-      })(this);
+      this.__resizeForPlaceholder = resize;
       CUI.Events.listen({
         node: this.__input,
         type: "input",
@@ -48632,7 +48651,7 @@ CUI.Input = (function(superClass) {
           if (_this.isDestroyed()) {
             return;
           }
-          calculateBaseHeight();
+          _this.__lineHeight = parseInt(CUI.dom.getComputedStyle(_this.__input).lineHeight, 10);
           return resize();
         };
       })(this));
@@ -48984,13 +49003,17 @@ CUI.Input = (function(superClass) {
     if (!this.__contentSize) {
       return;
     }
-    this.__contentSize.value = this.__input.value;
+    if (this.__input.value.length > 0) {
+      this.__contentSize.value = this.__input.value;
+    } else {
+      this.__contentSize.value = this.getPlaceholder() || "";
+    }
     if (this.hasShadowFocus()) {
       this.__contentSize.focus();
     }
     changed = false;
     if (this._textarea) {
-      if (this.__input.value.length === 0) {
+      if (this.__contentSize.value.length === 0) {
         this.__contentSize.value = "A";
       }
       if (CUI.dom.width(this.__input) !== CUI.dom.width(this.__contentSize)) {
