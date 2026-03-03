@@ -221,9 +221,15 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
+		@__dynamicPlaceholder = placeholder
 		CUI.dom.setAttribute(@__input, "placeholder", placeholder)
+		@__resizeForPlaceholder?()
+		@setContentSize()
 
 	getPlaceholder: ->
+		if @__dynamicPlaceholder
+			return @__dynamicPlaceholder
+
 		if not @_placeholder
 			return undefined
 
@@ -253,16 +259,30 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
 			resize = =>
-				@__input.rows = @_min_rows
-				rows = Math.ceil((@__input.scrollHeight - @__baseScrollHeight) / @__lineHeight);
-				@__input.rows = @_min_rows + rows;
+				if not @__lineHeight
+					return
 
-			calculateBaseHeight = =>
-				value = @__input.value
-				@__input.value = ""
-				@__baseScrollHeight = @__input.scrollHeight
-				@__input.value = value
-				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
+				measureValue = @__input.value
+				if measureValue.length == 0
+					measureValue = @getPlaceholder() or ""
+
+				if measureValue.length > 0
+					originalValue = @__input.value
+					originalHeight = @__input.style.height
+					originalOverflow = @__input.style.overflow
+					@__input.style.height = "auto"
+					@__input.style.overflow = "hidden"
+					@__input.rows = 1
+					@__input.value = measureValue
+					neededRows = Math.max(@_min_rows, Math.ceil(@__input.scrollHeight / @__lineHeight))
+					@__input.rows = neededRows
+					@__input.value = originalValue
+					@__input.style.height = originalHeight
+					@__input.style.overflow = originalOverflow
+				else
+					@__input.rows = @_min_rows
+
+			@__resizeForPlaceholder = resize
 
 			CUI.Events.listen
 				node: @__input
@@ -272,7 +292,7 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.waitForDOMInsert(node: @__input).done(=>
 				if @isDestroyed()
 					return
-				calculateBaseHeight()
+				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
 				resize()
 			)
 		else
@@ -610,7 +630,11 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @__contentSize
 			return
 
-		@__contentSize.value = @__input.value
+		# Use placeholder text for sizing when value is empty
+		if @__input.value.length > 0
+			@__contentSize.value = @__input.value
+		else
+			@__contentSize.value = @getPlaceholder() or ""
 
 		if @hasShadowFocus()
 			# we can only do this when shadow is focused,
@@ -621,8 +645,8 @@ class CUI.Input extends CUI.DataFieldInput
 		changed = false
 
 		if @_textarea
-			if @__input.value.length == 0
-				@__contentSize.value = "A" # help IE out, so we get a height
+			if @__contentSize.value.length == 0
+				@__contentSize.value = "A"
 
 			if CUI.dom.width(@__input) != CUI.dom.width(@__contentSize)
 				CUI.dom.width(@__contentSize, CUI.dom.width(@__input))
