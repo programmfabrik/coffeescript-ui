@@ -3846,6 +3846,38 @@ textarea {
   min-width: var(--input-date-min-width-4);
 }
 
+.cui-input:has(.cui-input-copy-placeholder-button) {
+  position: relative;
+}
+
+.cui-input-copy-placeholder-button.cui-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+.cui-input-copy-placeholder-button.cui-button .cui-button-visual {
+  --btn-border-width: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #8b949c;
+}
+.cui-input-copy-placeholder-button.cui-button .cui-button-visual:hover {
+  color: #212121;
+}
+.cui-input:hover .cui-input-copy-placeholder-button.cui-button, .cui-input:focus-within .cui-input-copy-placeholder-button.cui-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cui-multi-input-input:has(.cui-input-copy-placeholder-button) .cui-data-field-multi-input-center {
+  position: relative;
+}
+
 .cui-input.cui-password:has(> .cui-input-control-element) {
   position: relative;
 }

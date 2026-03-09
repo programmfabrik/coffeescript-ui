@@ -48485,6 +48485,10 @@ CUI.Input = (function(superClass) {
         check: function(v) {
           return v instanceof CUI.DOMElement;
         }
+      },
+      copyPlaceholder: {
+        "default": false,
+        check: Boolean
       }
     });
   };
@@ -48573,7 +48577,8 @@ CUI.Input = (function(superClass) {
     if (typeof this.__resizeForPlaceholder === "function") {
       this.__resizeForPlaceholder();
     }
-    return this.setContentSize();
+    this.setContentSize();
+    return this.__updateCopyPlaceholderButton();
   };
 
   Input.prototype.getPlaceholder = function() {
@@ -49391,6 +49396,9 @@ CUI.Input = (function(superClass) {
       CUI.dom.addClass(this._leftControlElement, 'cui-input-control-element');
       this.prepend(this._leftControlElement, this.getTemplateKeyForRender());
     }
+    if (this._copyPlaceholder) {
+      this.__initCopyPlaceholderButton();
+    }
     ref = ["empty", "invalid", "valid"];
     for (j = 0, len1 = ref.length; j < len1; j++) {
       k = ref[j];
@@ -49512,6 +49520,7 @@ CUI.Input = (function(superClass) {
       this.__input.value = value;
     }
     this.checkInput();
+    this.__updateCopyPlaceholderButton();
     return this;
   };
 
@@ -49783,6 +49792,56 @@ CUI.Input = (function(superClass) {
       }
     }
     return this;
+  };
+
+  Input.prototype.__initCopyPlaceholderButton = function() {
+    this.__copyPlaceholderBtn = new CUI.Button({
+      icon: "fa-level-down",
+      "class": "cui-input-copy-placeholder-button",
+      tooltip: {
+        text: "Apply"
+      },
+      onClick: (function(_this) {
+        return function() {
+          var placeholder;
+          placeholder = _this.getPlaceholder();
+          if (CUI.util.isEmpty(placeholder)) {
+            return;
+          }
+          _this.__input.value = placeholder;
+          _this.storeValue(placeholder);
+          _this.checkInput();
+          _this.__updateCopyPlaceholderButton();
+        };
+      })(this)
+    });
+    this.append(this.__copyPlaceholderBtn, this.getTemplateKeyForRender());
+    this.__updateCopyPlaceholderButton();
+    CUI.Events.listen({
+      node: this.__input,
+      type: "input",
+      instance: this,
+      call: (function(_this) {
+        return function() {
+          return _this.__updateCopyPlaceholderButton();
+        };
+      })(this)
+    });
+  };
+
+  Input.prototype.__updateCopyPlaceholderButton = function() {
+    var hasPlaceholder, hasValue, placeholder;
+    if (!this.__copyPlaceholderBtn) {
+      return;
+    }
+    placeholder = this.getPlaceholder();
+    hasPlaceholder = !CUI.util.isEmpty(placeholder);
+    hasValue = this.hasUserInput();
+    if (hasPlaceholder && !hasValue) {
+      CUI.dom.showElement(this.__copyPlaceholderBtn);
+    } else {
+      CUI.dom.hideElement(this.__copyPlaceholderBtn);
+    }
   };
 
   Input.prototype.destroy = function() {
@@ -58307,6 +58366,10 @@ CUI.MultiInput = (function(superClass) {
       user_selectable: {
         "default": false,
         check: Boolean
+      },
+      copyPlaceholder: {
+        "default": false,
+        check: Boolean
       }
     });
   };
@@ -58518,7 +58581,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2, ref3;
     if (this.__inputs) {
       return;
     }
@@ -58628,6 +58691,7 @@ CUI.MultiInput = (function(superClass) {
         undo_support: false,
         content_size: this._content_size,
         placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
+        copyPlaceholder: this._copyPlaceholder && !CUI.util.isEmpty((ref3 = this._placeholder) != null ? ref3[key.name] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
