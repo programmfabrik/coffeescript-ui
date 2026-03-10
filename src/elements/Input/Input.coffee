@@ -155,6 +155,9 @@ class CUI.Input extends CUI.DataFieldInput
 				check: (v) -> v instanceof CUI.DOMElement or CUI.util.isFunction(v)
 			leftControlElement:
 				check: (v) -> v instanceof CUI.DOMElement
+			copyPlaceholder:
+				default: false
+				check: Boolean
 
 	readOpts: ->
 
@@ -225,6 +228,7 @@ class CUI.Input extends CUI.DataFieldInput
 		CUI.dom.setAttribute(@__input, "placeholder", placeholder)
 		@__resizeForPlaceholder?()
 		@setContentSize()
+		@__updateCopyPlaceholderButton()
 
 	getPlaceholder: ->
 		if @__dynamicPlaceholder
@@ -989,6 +993,9 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.addClass(@_leftControlElement, 'cui-input-control-element')
 			@prepend(@_leftControlElement, @getTemplateKeyForRender())
 
+		if @_copyPlaceholder
+			@__initCopyPlaceholderButton()
+
 		# @append(@getChangedMarker(), @getTemplateKeyForRender())
 
 		for k in ["empty", "invalid", "valid"]
@@ -1080,6 +1087,7 @@ class CUI.Input extends CUI.DataFieldInput
 			# prevent focus loss if value is the same
 			@__input.value = value
 		@checkInput()
+		@__updateCopyPlaceholderButton()
 		@
 
 	getValueForDisplay: ->
@@ -1330,6 +1338,47 @@ class CUI.Input extends CUI.DataFieldInput
 
 		#console.debug "moveCursor new range", @getRangeFromCursor()
 		@
+
+	__initCopyPlaceholderButton: ->
+		@__copyPlaceholderBtn = new CUI.Button
+			icon: "fa-level-down"
+			class: "cui-input-copy-placeholder-button"
+			tooltip: text: "Apply"
+			onClick: =>
+				placeholder = @getPlaceholder()
+				if CUI.util.isEmpty(placeholder)
+					return
+				@__input.value = placeholder
+				@storeValue(placeholder)
+				@checkInput()
+				@__updateCopyPlaceholderButton()
+				return
+
+		@append(@__copyPlaceholderBtn, @getTemplateKeyForRender())
+		@__updateCopyPlaceholderButton()
+
+		CUI.Events.listen
+			node: @__input
+			type: "input"
+			instance: @
+			call: =>
+				@__updateCopyPlaceholderButton()
+
+		return
+
+	__updateCopyPlaceholderButton: ->
+		if not @__copyPlaceholderBtn
+			return
+
+		placeholder = @getPlaceholder()
+		hasPlaceholder = not CUI.util.isEmpty(placeholder)
+		hasValue = @hasUserInput()
+
+		if hasPlaceholder and not hasValue
+			CUI.dom.showElement(@__copyPlaceholderBtn)
+		else
+			CUI.dom.hideElement(@__copyPlaceholderBtn)
+		return
 
 	destroy: ->
 		@__removeShadowInput()

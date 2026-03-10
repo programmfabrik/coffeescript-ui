@@ -254,6 +254,72 @@ textarea {
 	}
 }
 
+// Copy Placeholder Button
+.cui-input:has(.cui-input-copy-placeholder-button) {
+	position: relative;
+
+	// Darken placeholder when hovering the button
+	&:has(.cui-input-copy-placeholder-button:hover) {
+		input,
+		textarea {
+			&::placeholder {
+				color: $body-color;
+				transition: color 0.15s ease;
+			}
+		}
+	}
+}
+
+.cui-input-copy-placeholder-button.cui-button {
+	@include button-plain();
+
+	--btn-background: #{$body-color};
+	--btn-background-hover: #{$gray-800};
+	--btn-color: #{$body-bg};
+	--btn-color-hover: #{$body-bg};
+
+	position: absolute;
+	top: 50%;
+	right: $spacer-xs;
+	transform: translateY(-50%);
+	z-index: 1;
+	opacity: 0;
+	transition: opacity 0.15s ease;
+	pointer-events: none;
+
+	.cui-button-visual {
+		border-radius: 45px;
+		min-width: 22px;
+		width: 22px;
+		height: 22px;
+		padding: 0;
+
+		.cui-button-left {
+			font-size: $font-size-sm;
+		}
+	}
+
+	// In textareas, align to top-right with margin
+	.cui-data-field--textarea &,
+	.cui-multi-input--textarea & {
+		top: 0;
+		transform: none;
+		margin: $spacer-sm $spacer-sm 0 0;
+	}
+
+	.cui-input:hover & {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+// In multi-input, position relative to the input container
+.cui-multi-input-input:has(.cui-input-copy-placeholder-button) {
+	.cui-data-field-multi-input-center {
+		position: relative;
+	}
+}
+
 // Password Inputs
 .cui-input.cui-password {
 	&:has(> .cui-input-control-element) {
