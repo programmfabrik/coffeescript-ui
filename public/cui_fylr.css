@@ -3849,25 +3849,28 @@ textarea {
 .cui-input:has(.cui-input-copy-placeholder-button) {
   position: relative;
 }
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) input::-moz-placeholder, .cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) textarea::-moz-placeholder {
+  color: #212121;
+  -moz-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) input::placeholder,
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) textarea::placeholder {
+  color: #212121;
+  transition: color 0.15s ease;
+}
 
 .cui-input-copy-placeholder-button.cui-button {
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
   z-index: 1;
   opacity: 0;
   transition: opacity 0.15s ease;
   pointer-events: none;
 }
 .cui-input-copy-placeholder-button.cui-button .cui-button-visual {
-  --btn-border-width: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #8b949c;
-}
-.cui-input-copy-placeholder-button.cui-button .cui-button-visual:hover {
-  color: #212121;
+  height: 30px;
 }
 .cui-input:hover .cui-input-copy-placeholder-button.cui-button, .cui-input:focus-within .cui-input-copy-placeholder-button.cui-button {
   opacity: 1;
