@@ -152,6 +152,7 @@ $error-color: hsl(10,90%,52%);
 $error-color-background: color.adjust($error-color, $alpha: -0.85);
 $on-error-color: white;
 $neutral-color: hsl(48,100%,58%);
+$neutral-color-blue: hsl(205,67%,50%);
 $positive-color: hsl(100,69%,50%);
 $negative-color: hsl(0,69%,50%);
 
@@ -272,7 +273,7 @@ $popover-hint-background: hsl(205,20%,30%);
 	-moz-osx-font-smoothing: grayscale;
 }
 
-@mixin icon($code){
+@mixin icon($code) {
 	@extend %icon;
 	content: $code;
 }
