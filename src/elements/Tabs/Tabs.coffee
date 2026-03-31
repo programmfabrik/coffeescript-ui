@@ -144,7 +144,9 @@ class CUI.Tabs extends CUI.SimplePane
 			if @_appearance == "mini"
 				_tab.getButton().setSize("mini")
 
-		@__tabs[@_active_idx or 0].activate()
+		if not @_active_idx or @_active_idx < 0 or @_active_idx >= @__tabs.length
+			@_active_idx = 0
+		@__tabs[@_active_idx].activate()
 
 		CUI.dom.waitForDOMInsert(node: @getLayout())
 		.done =>
