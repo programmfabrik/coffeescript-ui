@@ -63278,7 +63278,10 @@ CUI.Tabs = (function(superClass) {
         _tab.getButton().setSize("mini");
       }
     }
-    this.__tabs[this._active_idx || 0].activate();
+    if (!this._active_idx || this._active_idx < 0 || this._active_idx >= this.__tabs.length) {
+      this._active_idx = 0;
+    }
+    this.__tabs[this._active_idx].activate();
     CUI.dom.waitForDOMInsert({
       node: this.getLayout()
     }).done((function(_this) {
