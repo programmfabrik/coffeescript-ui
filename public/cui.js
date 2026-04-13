@@ -55018,10 +55018,12 @@ CUI.ListViewTreeNode = (function(superClass) {
   };
 
   ListViewTreeNode.prototype.deselect = function(ev, new_node) {
+    var result;
     if (!this.getTree().isSelectable()) {
       return CUI.resolvedPromise();
     }
-    return this.check_deselect(ev, new_node).done((function(_this) {
+    result = ev ? this.check_deselect(ev, new_node) : CUI.resolvedPromise();
+    return result.done((function(_this) {
       return function() {
         _this.setSelectedNode();
         _this.removeSelectedClass();
