@@ -48241,6 +48241,13 @@ CUI.IconInput = (function(superClass) {
     return IconInput.__super__.readOpts.call(this);
   };
 
+  IconInput.prototype.getValueForStore = function(value) {
+    if (CUI.util.isString(value)) {
+      return value.trim();
+    }
+    return value;
+  };
+
   IconInput.prototype.onDataChanged = function(ev, info) {
     IconInput.__super__.onDataChanged.call(this, ev, info);
     return this.__toggleIcon();
@@ -48257,8 +48264,10 @@ CUI.IconInput = (function(superClass) {
   };
 
   IconInput.prototype.__toggleIcon = function() {
-    if (this.__input.value.length > 0) {
-      this._leftControlElement.setIcon(this.__input.value);
+    var value;
+    value = this.__input.value.trim();
+    if (value.length > 0) {
+      this._leftControlElement.setIcon(value);
       return this._leftControlElement.removeClass('is-empty');
     } else {
       this._leftControlElement.setIcon("");
