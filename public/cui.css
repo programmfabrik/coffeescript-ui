@@ -5770,6 +5770,12 @@ label[data-label-clickable],
 .cui-multi-input-input .cui-textarea:focus {
   box-shadow: none !important;
 }
+.cui-multi-input-input > .cui-checkbox:first-child {
+  flex-grow: 0;
+  margin-left: 10px;
+  padding-right: 5px;
+  border-right: 1px solid hsl(205, 20%, 83%);
+}
 
 .cui-browser-ie:not(.cui-browser-edge) .cui-multi-input-input input,
 .cui-browser-ie:not(.cui-browser-edge) .cui-multi-input-input textarea {
