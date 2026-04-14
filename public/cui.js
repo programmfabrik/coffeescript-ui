@@ -45171,7 +45171,8 @@ CUI.FileReaderFile = (function(superClass) {
  */
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
-  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
+  slice = [].slice;
 
 CUI.FileUpload = (function(superClass) {
   extend(FileUpload, superClass);
@@ -45263,14 +45264,14 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.getFiles = function(filter) {
-    var file, files, i, len, ref, ref1;
+    var file, files, j, len, ref, ref1;
     if (CUI.util.isString(filter)) {
       filter = [filter];
     }
     files = [];
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      file = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      file = ref[j];
       if (!filter || (ref1 = file.getStatus(), indexOf.call(filter, ref1) >= 0)) {
         files.push(file);
       }
@@ -45279,7 +45280,7 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.getInfo = function() {
-    var _fuf, _p, all_done, count, done, i, info, len, loaded, ref, s, status, total;
+    var _fuf, _p, all_done, count, done, info, j, len, loaded, ref, s, status, total;
     status = {};
     total = 0;
     loaded = 0;
@@ -45287,8 +45288,8 @@ CUI.FileUpload = (function(superClass) {
     done = 0;
     all_done = true;
     ref = this.getFiles();
-    for (i = 0, len = ref.length; i < len; i++) {
-      _fuf = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      _fuf = ref[j];
       _p = _fuf.getProgress();
       s = _p.status;
       if (!status[s]) {
@@ -45474,12 +45475,12 @@ CUI.FileUpload = (function(superClass) {
   FileUpload.prototype.clear = function() {
     return this.stopQueuing(true).done((function(_this) {
       return function() {
-        var file, results;
-        results = [];
+        var file, results1;
+        results1 = [];
         while (file = _this.__files[0]) {
-          results.push(file.remove());
+          results1.push(file.remove());
         }
-        return results;
+        return results1;
       };
     })(this));
   };
@@ -45489,13 +45490,13 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.isDone = function() {
-    var f, i, len, ref;
+    var f, j, len, ref;
     if (this.__isQueueing) {
       return false;
     }
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (!f.isDone()) {
         return false;
       }
@@ -45504,10 +45505,10 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.isUploading = function() {
-    var f, i, len, ref;
+    var f, j, len, ref;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.isUploading()) {
         return true;
       }
@@ -45516,12 +45517,12 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.uploadNextFiles = function() {
-    var f, file, files, i, j, len, len1, ref, slots;
+    var f, file, files, j, l, len, len1, ref, slots;
     files = [];
     slots = this._parallel;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.getStatus() === "QUEUED") {
         files.push(f);
         slots--;
@@ -45533,8 +45534,8 @@ CUI.FileUpload = (function(superClass) {
         break;
       }
     }
-    for (j = 0, len1 = files.length; j < len1; j++) {
-      file = files[j];
+    for (l = 0, len1 = files.length; l < len1; l++) {
+      file = files[l];
       this.uploadFile(file);
     }
     return this;
@@ -45554,11 +45555,11 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.checkBatchDone = function(file) {
-    var alarm, f, i, len, ref;
+    var alarm, f, j, len, ref;
     alarm = false;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.getBatch() !== file.getBatch()) {
         continue;
       }
@@ -45575,7 +45576,7 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.initDropZone = function(_opts) {
-    var dropZone, dz, i, len, multiple, opts, ref, selector;
+    var dropZone, dz, j, len, multiple, opts, ref, selector;
     if (_opts == null) {
       _opts = {};
     }
@@ -45636,18 +45637,17 @@ CUI.FileUpload = (function(superClass) {
       selector: selector,
       call: (function(_this) {
         return function(ev) {
-          var dt, file, files, i, len, ref, ref1, warn;
+          var dt;
           if (opts.allow_drop && !opts.allow_drop(ev)) {
             return ev.stop();
           }
           CUI.FileUpload.setDropClassByEvent(ev);
           dt = ev.getNativeEvent().dataTransfer;
-          if (((ref = dt.files) != null ? ref.length : void 0) > 0) {
-            warn = [];
+          CUI.FileUpload.getFilesFromDrop(dt).done(function(allFiles) {
+            var file, files, j, len;
             files = [];
-            ref1 = dt.files;
-            for (i = 0, len = ref1.length; i < len; i++) {
-              file = ref1[i];
+            for (j = 0, len = allFiles.length; j < len; j++) {
+              file = allFiles[j];
               files.push(file);
               if (multiple === false) {
                 break;
@@ -45656,13 +45656,10 @@ CUI.FileUpload = (function(superClass) {
                 break;
               }
             }
-            if (warn.length > 0) {
-              console.warn("Files empty or directories, not uploaded...", warn);
-            }
             if (files.length > 0) {
-              _this.queueFiles(files);
+              return _this.queueFiles(files);
             }
-          }
+          });
           ev.stopPropagation();
           ev.preventDefault();
           return false;
@@ -45670,8 +45667,8 @@ CUI.FileUpload = (function(superClass) {
       })(this)
     });
     ref = this.__dropZones;
-    for (i = 0, len = ref.length; i < len; i++) {
-      dz = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      dz = ref[j];
       if (dz === dropZone) {
         return this;
       }
@@ -45737,15 +45734,15 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.initFilePicker = function(opts) {
-    var dfr, i, inp, k, len, ref;
+    var dfr, inp, j, k, len, ref;
     if (!opts.fileUpload) {
       opts.fileUpload = document.getElementById("cui-file-upload-button");
     }
     opts.fileUpload.form.reset();
     inp = opts.fileUpload;
     ref = ["webkitdirectory", "mozdirectory", "directory"];
-    for (i = 0, len = ref.length; i < len; i++) {
-      k = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      k = ref[j];
       if (opts.directory) {
         CUI.dom.setAttribute(inp, k, true);
       } else {
@@ -45773,14 +45770,14 @@ CUI.FileUpload = (function(superClass) {
         return function() {
           var file, files;
           files = (function() {
-            var j, len1, ref1, results;
+            var l, len1, ref1, results1;
             ref1 = inp.files;
-            results = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              file = ref1[j];
-              results.push(file);
+            results1 = [];
+            for (l = 0, len1 = ref1.length; l < len1; l++) {
+              file = ref1[l];
+              results1.push(file);
             }
-            return results;
+            return results1;
           })();
           _this.queueFiles(files);
           inp.form.reset();
@@ -45792,13 +45789,13 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.resetDropZones = function() {
-    var dz, i, len, ref;
+    var dz, j, len, ref;
     CUI.Events.ignore({
       instance: this
     });
     ref = this.__dropZones;
-    for (i = 0, len = ref.length; i < len; i++) {
-      dz = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      dz = ref[j];
       CUI.dom.removeClass(dz, "cui-file-upload-drop-zone");
     }
     this.__dropZones = [];
@@ -45809,6 +45806,142 @@ CUI.FileUpload = (function(superClass) {
     this.resetDropZones();
     FileUpload.__super__.destroy.call(this);
     return this;
+  };
+
+  FileUpload.__readFileEntry = function(entry, basePath) {
+    var dfr;
+    dfr = new CUI.Deferred();
+    entry.file(function(file) {
+      if (file.name.charAt(0) === ".") {
+        return dfr.resolve(null);
+      }
+      if (basePath) {
+        file._relativePath = basePath + file.name;
+      }
+      return dfr.resolve(file);
+    }, function() {
+      return dfr.resolve(null);
+    });
+    return dfr.promise();
+  };
+
+  FileUpload.__readAllDirectoryEntries = function(reader) {
+    var allEntries, dfr, readBatch;
+    dfr = new CUI.Deferred();
+    allEntries = [];
+    readBatch = function() {
+      return reader.readEntries(function(entries) {
+        if (entries.length === 0) {
+          return dfr.resolve(allEntries);
+        } else {
+          allEntries = allEntries.concat(Array.from(entries));
+          return readBatch();
+        }
+      }, function() {
+        return dfr.resolve(allEntries);
+      });
+    };
+    readBatch();
+    return dfr.promise();
+  };
+
+  FileUpload.__traverseEntry = function(entry, basePath) {
+    var dfr, dirPath, reader;
+    if (basePath == null) {
+      basePath = "";
+    }
+    if (entry.isFile) {
+      dfr = new CUI.Deferred();
+      this.__readFileEntry(entry, basePath).done(function(file) {
+        if (file) {
+          return dfr.resolve([file]);
+        } else {
+          return dfr.resolve([]);
+        }
+      });
+      return dfr.promise();
+    }
+    if (entry.isDirectory) {
+      dirPath = basePath ? basePath + entry.name + "/" : entry.name + "/";
+      reader = entry.createReader();
+      dfr = new CUI.Deferred();
+      this.__readAllDirectoryEntries(reader).done((function(_this) {
+        return function(entries) {
+          var e, promises;
+          promises = (function() {
+            var j, len, results1;
+            results1 = [];
+            for (j = 0, len = entries.length; j < len; j++) {
+              e = entries[j];
+              results1.push(this.__traverseEntry(e, dirPath));
+            }
+            return results1;
+          }).call(_this);
+          return CUI.when(promises).done(function() {
+            var files, j, len, result, results;
+            results = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+            files = [];
+            for (j = 0, len = results.length; j < len; j++) {
+              result = results[j];
+              if (result) {
+                files = files.concat(result);
+              }
+            }
+            return dfr.resolve(files);
+          });
+        };
+      })(this));
+      return dfr.promise();
+    }
+    return CUI.resolvedPromise([]);
+  };
+
+  FileUpload.getFilesFromDrop = function(dataTransfer) {
+    var dfr, entries, entry, hasDirectory, i, item, items, j, promises, ref;
+    items = dataTransfer.items;
+    if (!items) {
+      return CUI.resolvedPromise(Array.from(dataTransfer.files || []));
+    }
+    entries = [];
+    hasDirectory = false;
+    for (i = j = 0, ref = items.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+      item = items[i];
+      if (item.webkitGetAsEntry) {
+        entry = item.webkitGetAsEntry();
+        if (entry) {
+          entries.push(entry);
+          if (entry.isDirectory) {
+            hasDirectory = true;
+          }
+        }
+      }
+    }
+    if (!hasDirectory || entries.length === 0) {
+      return CUI.resolvedPromise(Array.from(dataTransfer.files || []));
+    }
+    dfr = new CUI.Deferred();
+    promises = (function() {
+      var l, len, results1;
+      results1 = [];
+      for (l = 0, len = entries.length; l < len; l++) {
+        entry = entries[l];
+        results1.push(this.__traverseEntry(entry, ""));
+      }
+      return results1;
+    }).call(this);
+    CUI.when(promises).done(function() {
+      var files, l, len, result, results;
+      results = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      files = [];
+      for (l = 0, len = results.length; l < len; l++) {
+        result = results[l];
+        if (result) {
+          files = files.concat(result);
+        }
+      }
+      return dfr.resolve(files);
+    });
+    return dfr.promise();
   };
 
   return FileUpload;
@@ -46041,7 +46174,7 @@ CUI.FileUploadFile = (function(superClass) {
   };
 
   FileUploadFile.prototype.getName = function() {
-    return this._file.webkitRelativePath || this._file.name;
+    return this._file._relativePath || this._file.webkitRelativePath || this._file.name;
   };
 
   FileUploadFile.prototype.getStatus = function() {
