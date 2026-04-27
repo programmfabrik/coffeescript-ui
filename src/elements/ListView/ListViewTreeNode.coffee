@@ -627,8 +627,9 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if not @getTree().isSelectable()
 			return CUI.resolvedPromise()
 
-		@check_deselect(ev, new_node)
-		.done =>
+		result = if ev then @check_deselect(ev, new_node) else CUI.resolvedPromise()
+
+		result.done =>
 			@setSelectedNode()
 			@removeSelectedClass()
 			@selected = false
@@ -694,7 +695,6 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 		if selectedNode and @getTree()?.__selectableRows == true
 			selectedNode.check_deselect(event, @).done( =>
 				# don't pass event, so no check is performed
-				#console.debug "selected node:", sel_node
 				selectedNode.deselect(null, @).done( =>
 					do_select()
 				).fail(deferred.reject)

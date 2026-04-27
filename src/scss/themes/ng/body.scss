@@ -5587,6 +5587,14 @@ label[data-label-clickable],
 		min-width: 0; // so that the [DE | EN] doesn't move outside the input area
 		@include disable-focus;
 	}
+
+	// in group editor the multi input gets a checkbox as first child
+	> .cui-checkbox:first-child {
+		flex-grow: 0;
+    	margin-left: $padding;
+    	padding-right: 0.5* $padding;
+    	border-right: 1px solid $border;
+	}
 }
 
 .cui-browser-ie:not(.cui-browser-edge) {

@@ -707,7 +707,9 @@ class CUI
 
 	# Deprecated -> Use CUI.util
 	@isPlainObject: (v) ->
-		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
+		return false unless v? and typeof v is "object"
+		proto = Object.getPrototypeOf(v)
+		proto is Object.prototype or proto is null
 
 	# Deprecated -> Use CUI.util
 	@isEmptyObject: (v) ->

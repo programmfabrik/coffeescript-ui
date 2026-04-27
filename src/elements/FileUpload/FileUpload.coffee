@@ -363,25 +363,18 @@ class CUI.FileUpload extends CUI.Element
 				CUI.FileUpload.setDropClassByEvent(ev)
 				dt = ev.getNativeEvent().dataTransfer
 
-				if dt.files?.length > 0
-					warn = []
+				CUI.FileUpload.getFilesFromDrop(dt).done((allFiles) =>
 					files = []
-
-					for file in dt.files
-						# if file.size == 0
-						# 	warn.push(file)
-						# else
+					for file in allFiles
 						files.push(file)
 						if multiple == false
 							break
 						if multiple instanceof Function and multiple() == false
 							break
 
-					if warn.length > 0
-						console.warn("Files empty or directories, not uploaded...", warn)
-
 					if files.length > 0
 						@queueFiles(files)
+				)
 
 				ev.stopPropagation()
 				ev.preventDefault()
@@ -496,3 +489,95 @@ class CUI.FileUpload extends CUI.Element
 		@resetDropZones()
 		super()
 		@
+
+	# Reads a FileSystemFileEntry and returns a CUI.Promise resolving to the File object.
+	# Sets _relativePath on the file if basePath is provided (file comes from a directory).
+	# Skips files whose name starts with "." (hidden files like .DS_Store).
+	@__readFileEntry: (entry, basePath) ->
+		dfr = new CUI.Deferred()
+		entry.file((file) ->
+			if file.name.charAt(0) == "."
+				return dfr.resolve(null)
+			if basePath
+				file._relativePath = basePath + file.name
+			dfr.resolve(file)
+		, -> dfr.resolve(null))
+		dfr.promise()
+
+	# Reads all entries from a FileSystemDirectoryReader, handling the batch-read API.
+	# readEntries() may return results in batches, so we call it until it returns empty.
+	@__readAllDirectoryEntries: (reader) ->
+		dfr = new CUI.Deferred()
+		allEntries = []
+		readBatch = ->
+			reader.readEntries((entries) ->
+				if entries.length == 0
+					dfr.resolve(allEntries)
+				else
+					allEntries = allEntries.concat(Array.from(entries))
+					readBatch()
+			, -> dfr.resolve(allEntries))
+		readBatch()
+		dfr.promise()
+
+	# Recursively traverses a FileSystemEntry (file or directory).
+	# Returns a CUI.Promise resolving to an array of File objects.
+	# Files inside directories have _relativePath set to their relative path (e.g. "Europe/Spain/photo.jpg").
+	@__traverseEntry: (entry, basePath = "") ->
+		if entry.isFile
+			dfr = new CUI.Deferred()
+			@__readFileEntry(entry, basePath).done((file) ->
+				if file then dfr.resolve([file]) else dfr.resolve([])
+			)
+			return dfr.promise()
+
+		if entry.isDirectory
+			dirPath = if basePath then basePath + entry.name + "/" else entry.name + "/"
+			reader = entry.createReader()
+			dfr = new CUI.Deferred()
+			@__readAllDirectoryEntries(reader).done((entries) =>
+				promises = (@__traverseEntry(e, dirPath) for e in entries)
+				CUI.when(promises).done((results...) ->
+					files = []
+					for result in results
+						if result
+							files = files.concat(result)
+					dfr.resolve(files)
+				)
+			)
+			return dfr.promise()
+
+		CUI.resolvedPromise([])
+
+	# Extracts files from a DataTransfer object, supporting directory drops.
+	# Uses webkitGetAsEntry() to detect directories and recursively traverse them.
+	# Returns a CUI.Promise resolving to an array of File objects.
+	@getFilesFromDrop: (dataTransfer) ->
+		items = dataTransfer.items
+		if not items
+			return CUI.resolvedPromise(Array.from(dataTransfer.files or []))
+
+		entries = []
+		hasDirectory = false
+		for i in [0...items.length]
+			item = items[i]
+			if item.webkitGetAsEntry
+				entry = item.webkitGetAsEntry()
+				if entry
+					entries.push(entry)
+					if entry.isDirectory
+						hasDirectory = true
+
+		if not hasDirectory or entries.length == 0
+			return CUI.resolvedPromise(Array.from(dataTransfer.files or []))
+
+		dfr = new CUI.Deferred()
+		promises = (@__traverseEntry(entry, "") for entry in entries)
+		CUI.when(promises).done((results...) ->
+			files = []
+			for result in results
+				if result
+					files = files.concat(result)
+			dfr.resolve(files)
+		)
+		dfr.promise()

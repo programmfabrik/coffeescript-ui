@@ -12,7 +12,7 @@
 
 @mixin icon-close-xs() {
 	.svg-close {
-		width: 9px;
-		height: 9px;
+		width: $icon-font-size-xs;
+		height: $icon-font-size-xs;
 	}
 }

@@ -496,10 +496,10 @@ class CUI.DateTimeRangeGrammar
 				value = s.split(".")[0]
 			else if CUI.DateTimeRangeGrammar.REGEXP_CENTURY.test(s)
 				type = CUI.DateTimeRangeGrammar.TYPE_CENTURY
-				value = s.split("th")[0]
-			else if value in CUI.DateTimeRangeGrammar.MONTHS[locale]
+				value = s.split(/th/i)[0]
+			else if (monthIndex = CUI.DateTimeRangeGrammar.__findMonthIndex(s, locale)) >= 0
 				type = CUI.DateTimeRangeGrammar.TYPE_MONTH
-				value = CUI.DateTimeRangeGrammar.MONTHS[locale].indexOf(value)
+				value = monthIndex
 			else
 				type = s # The type for everything else is the value.
 
@@ -729,3 +729,13 @@ class CUI.DateTimeRangeGrammar
 		if inputString.match(CUI.DateTimeRangeGrammar.REGEXP_YEAR)
 			inputString = parseInt(inputString) - 1
 		return "-#{inputString}"
+
+	@__findMonthIndex: (value, locale) ->
+		lowerValue = value.toLowerCase()
+		months = CUI.DateTimeRangeGrammar.MONTHS[locale]
+		if not months
+			return -1
+		for month, index in months
+			if month.toLowerCase() == lowerValue
+				return index
+		return -1

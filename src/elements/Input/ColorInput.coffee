@@ -14,8 +14,35 @@ class CUI.ColorInput extends CUI.Input
         @opts.leftControlElement = new CUI.Button
             tabindex: -1
             onClick: (ev, btn) =>
-                @__input.focus()
+                if @isDisabled()
+                    return
+                @__colorPicker?.click()
         super()
+
+    render: ->
+        super()
+        @__colorPicker = CUI.dom.$element("input", "cui-color-picker-native",
+            type: "color"
+            tabindex: "-1"
+        )
+
+        CUI.Events.listen
+            node: @__colorPicker
+            type: "input"
+            call: =>
+                @__input.value = @__colorPicker.value
+                @__toggleColor()
+
+        CUI.Events.listen
+            node: @__colorPicker
+            type: "change"
+            call: =>
+                @__input.value = @__colorPicker.value
+                @__toggleColor()
+                new CUI.Event(type: "input", node: @__input).dispatch()
+
+        CUI.dom.append(@DOM, @__colorPicker)
+        @
 
     onDataChanged: (ev, info) ->
         super(ev, info)
@@ -28,12 +55,19 @@ class CUI.ColorInput extends CUI.Input
         else
             @_leftControlElement.DOM.style.setProperty("--btn-background", @__data[@_name])
             @_leftControlElement.removeClass('is-empty')
+            @__syncColorPicker(@__data[@_name])
+
+    __syncColorPicker: (value) ->
+        if not @__colorPicker
+            return
+        if value and /^#[0-9a-fA-F]{6}$/.test(value)
+            @__colorPicker.value = value
 
     __toggleColor: ->
         if @__input.value.length > 0 and @__checkInputInternal()
-            # Set the background color of the @_leftControlElement to the value of the input
             @_leftControlElement.DOM.style.setProperty("--btn-background", @__input.value)
             @_leftControlElement.removeClass('is-empty')
+            @__syncColorPicker(@__input.value)
         else
-            @_leftControlElement.DOM.style.removeProperty("--btn-background");
+            @_leftControlElement.DOM.style.removeProperty("--btn-background")
             @_leftControlElement.addClass('is-empty')

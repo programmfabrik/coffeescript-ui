@@ -155,6 +155,9 @@ class CUI.Input extends CUI.DataFieldInput
 				check: (v) -> v instanceof CUI.DOMElement or CUI.util.isFunction(v)
 			leftControlElement:
 				check: (v) -> v instanceof CUI.DOMElement
+			copyPlaceholder:
+				default: false
+				check: Boolean
 
 	readOpts: ->
 
@@ -221,9 +224,16 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.setAttribute(@__input, "spellcheck", "false")
 
 	setPlaceholder: (placeholder) ->
+		@__dynamicPlaceholder = placeholder
 		CUI.dom.setAttribute(@__input, "placeholder", placeholder)
+		@__resizeForPlaceholder?()
+		@setContentSize()
+		@__updateCopyPlaceholderButton()
 
 	getPlaceholder: ->
+		if @__dynamicPlaceholder
+			return @__dynamicPlaceholder
+
 		if not @_placeholder
 			return undefined
 
@@ -253,16 +263,31 @@ class CUI.Input extends CUI.DataFieldInput
 			@__input.style.setProperty("--textarea-min-rows", @_min_rows)
 
 			resize = =>
-				@__input.rows = @_min_rows
-				rows = Math.ceil((@__input.scrollHeight - @__baseScrollHeight) / @__lineHeight);
-				@__input.rows = @_min_rows + rows;
+				if not @__lineHeight
+					return
 
-			calculateBaseHeight = =>
-				value = @__input.value
-				@__input.value = ""
-				@__baseScrollHeight = @__input.scrollHeight
-				@__input.value = value
-				@__lineHeight = parseInt(CUI.dom.getComputedStyle(@__input).lineHeight, 10)
+				measureValue = @__input.value
+				if measureValue.length == 0
+					measureValue = @getPlaceholder() or ""
+
+				if measureValue.length > 0
+					originalValue = @__input.value
+					originalHeight = @__input.style.height
+					originalOverflow = @__input.style.overflow
+					@__input.style.height = "auto"
+					@__input.style.overflow = "hidden"
+					@__input.rows = 1
+					@__input.value = measureValue
+					contentHeight = @__input.scrollHeight - (@__verticalPadding or 0)
+					neededRows = Math.max(@_min_rows, Math.ceil(contentHeight / @__lineHeight))
+					@__input.rows = neededRows
+					@__input.value = originalValue
+					@__input.style.height = originalHeight
+					@__input.style.overflow = originalOverflow
+				else
+					@__input.rows = @_min_rows
+
+			@__resizeForPlaceholder = resize
 
 			CUI.Events.listen
 				node: @__input
@@ -272,7 +297,9 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.waitForDOMInsert(node: @__input).done(=>
 				if @isDestroyed()
 					return
-				calculateBaseHeight()
+				style = CUI.dom.getComputedStyle(@__input)
+				@__lineHeight = parseInt(style.lineHeight, 10)
+				@__verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
 				resize()
 			)
 		else
@@ -610,7 +637,11 @@ class CUI.Input extends CUI.DataFieldInput
 		if not @__contentSize
 			return
 
-		@__contentSize.value = @__input.value
+		# Use placeholder text for sizing when value is empty
+		if @__input.value.length > 0
+			@__contentSize.value = @__input.value
+		else
+			@__contentSize.value = @getPlaceholder() or ""
 
 		if @hasShadowFocus()
 			# we can only do this when shadow is focused,
@@ -621,8 +652,8 @@ class CUI.Input extends CUI.DataFieldInput
 		changed = false
 
 		if @_textarea
-			if @__input.value.length == 0
-				@__contentSize.value = "A" # help IE out, so we get a height
+			if @__contentSize.value.length == 0
+				@__contentSize.value = "A"
 
 			if CUI.dom.width(@__input) != CUI.dom.width(@__contentSize)
 				CUI.dom.width(@__contentSize, CUI.dom.width(@__input))
@@ -962,6 +993,9 @@ class CUI.Input extends CUI.DataFieldInput
 			CUI.dom.addClass(@_leftControlElement, 'cui-input-control-element')
 			@prepend(@_leftControlElement, @getTemplateKeyForRender())
 
+		if @_copyPlaceholder
+			@__initCopyPlaceholderButton()
+
 		# @append(@getChangedMarker(), @getTemplateKeyForRender())
 
 		for k in ["empty", "invalid", "valid"]
@@ -1053,6 +1087,7 @@ class CUI.Input extends CUI.DataFieldInput
 			# prevent focus loss if value is the same
 			@__input.value = value
 		@checkInput()
+		@__updateCopyPlaceholderButton()
 		@
 
 	getValueForDisplay: ->
@@ -1303,6 +1338,47 @@ class CUI.Input extends CUI.DataFieldInput
 
 		#console.debug "moveCursor new range", @getRangeFromCursor()
 		@
+
+	__initCopyPlaceholderButton: ->
+		@__copyPlaceholderBtn = new CUI.Button
+			icon: "fa-level-down"
+			class: "cui-input-copy-placeholder-button"
+			tooltip: text: "Apply"
+			onClick: =>
+				placeholder = @getPlaceholder()
+				if CUI.util.isEmpty(placeholder)
+					return
+				@__input.value = placeholder
+				@storeValue(placeholder)
+				@checkInput()
+				@__updateCopyPlaceholderButton()
+				return
+
+		@append(@__copyPlaceholderBtn, @getTemplateKeyForRender())
+		@__updateCopyPlaceholderButton()
+
+		CUI.Events.listen
+			node: @__input
+			type: "input"
+			instance: @
+			call: =>
+				@__updateCopyPlaceholderButton()
+
+		return
+
+	__updateCopyPlaceholderButton: ->
+		if not @__copyPlaceholderBtn
+			return
+
+		placeholder = @getPlaceholder()
+		hasPlaceholder = not CUI.util.isEmpty(placeholder)
+		hasValue = @hasUserInput()
+
+		if hasPlaceholder and not hasValue
+			CUI.dom.showElement(@__copyPlaceholderBtn)
+		else
+			CUI.dom.hideElement(@__copyPlaceholderBtn)
+		return
 
 	destroy: ->
 		@__removeShadowInput()
