@@ -44,6 +44,11 @@
 
 	.cui-table-td {
 		vertical-align: middle;
+
+		&:has(~ .cui-table-td .cui-label-multiline),
+		&:has(.cui-label-multiline) {
+			vertical-align: top;
+		} 
 	}
 
 	.cui-td--key {
