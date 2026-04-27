@@ -22981,8 +22981,12 @@ CUI = (function() {
   };
 
   CUI.isPlainObject = function(v) {
-    var ref;
-    return v && typeof v === "object" && ((ref = v.constructor) != null ? ref.prototype.hasOwnProperty("isPrototypeOf") : void 0);
+    var proto;
+    if (!((v != null) && typeof v === "object")) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(v);
+    return proto === Object.prototype || proto === null;
   };
 
   CUI.isEmptyObject = function(v) {
@@ -25746,7 +25750,7 @@ CUI.Draggable = (function(superClass) {
   };
 
   Draggable.prototype.init_helper = function(ev, $target, diff) {
-    var clone_source, dim, helper, hn, offset, set_dim, start;
+    var cloneMarginBoxWidth, clone_source, dim, helper, hn, offset, set_dim, start;
     helper = this.get_helper(ev, CUI.globalDrag, diff);
     if (!helper) {
       return;
@@ -25775,8 +25779,12 @@ CUI.Draggable = (function(superClass) {
     CUI.dom.setStyle(hn, start);
     if (helper === "clone") {
       set_dim = CUI.dom.getDimensions(clone_source);
+      cloneMarginBoxWidth = set_dim.marginBoxWidth;
+      if (set_dim.marginLeft < 0) {
+        cloneMarginBoxWidth = set_dim.marginBoxWidth + (-1 * set_dim.marginLeft);
+      }
       CUI.dom.setDimensions(hn, {
-        marginBoxWidth: set_dim.marginBoxWidth,
+        marginBoxWidth: cloneMarginBoxWidth,
         marginBoxHeight: set_dim.marginBoxHeight
       });
     }
@@ -35792,8 +35800,12 @@ CUI.util = (function() {
   };
 
   util.isPlainObject = function(v) {
-    var ref;
-    return v && typeof v === "object" && ((ref = v.constructor) != null ? ref.prototype.hasOwnProperty("isPrototypeOf") : void 0);
+    var proto;
+    if (!((v != null) && typeof v === "object")) {
+      return false;
+    }
+    proto = Object.getPrototypeOf(v);
+    return proto === Object.prototype || proto === null;
   };
 
   util.isEmptyObject = function(v) {
@@ -42666,6 +42678,86 @@ CUI.DateTimeFormats["fr-FR"] = {
   ]
 };
 
+CUI.DateTimeFormats["tvl-TV"] = {
+  timezone: "Europe/Berlin",
+  moment_locale: "en-US",
+  tab_date: "Date",
+  tab_time: "Time",
+  tab_week: "Wk",
+  formats: [
+    {
+      text: "Date+Time",
+      support_bc: false,
+      invalid: "Invalid Date",
+      type: "date_time",
+      clock: true,
+      store: "YYYY-MM-DDTHH:mm:00Z",
+      clock_am_pm: true,
+      clock_seconds: false,
+      input: "YYYY-MM-DD hh:mm A",
+      display: "dd, YYYY-MM-DD hh:mm A",
+      display_short: "YYYY-MM-DD hh:mm A",
+      display_attribute: "date-time",
+      display_short_attribute: "date-time-short",
+      parse: ["YYYY-MM-DDTHH:mm:ss", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+    }, {
+      text: "Date+Time+Seconds",
+      support_bc: false,
+      invalid: "Invalid Date",
+      type: "date_time_seconds",
+      store: "YYYY-MM-DDTHH:mm:ssZ",
+      input: "YYYY-MM-DD HH:mm:ss",
+      display: "dd, YYYY-MM-DD HH:mm:ss",
+      display_short: "YYYY-MM-DD HH:mm:ss",
+      display_attribute: "date-time-seconds",
+      display_short_attribute: "date-time-seconds-short",
+      clock: true,
+      clock_am_pm: true,
+      clock_seconds: true,
+      parse: ["MM/DD/YYYY HH:mm:ss", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss"]
+    }, {
+      text: "Date",
+      support_bc: false,
+      input: "YYYY-MM-DD",
+      invalid: "Invalid date",
+      display: "dd, YYYY-MM-DD",
+      display_short: "YYYY-MM-DD",
+      display_attribute: "date",
+      display_short_attribute: "date-short",
+      store: "YYYY-MM-DD",
+      type: "date",
+      clock: false,
+      parse: ["MM/DD/YYYY", "D.M.YYYY", "D.MM.YYYY", "DD.M.YYYY", "YYYYMMDD", "YYYY-M-D", "Y-M-D", "M/D/Y", "MM/DD/Y"]
+    }, {
+      text: "Jahr-Monat",
+      support_bc: false,
+      input: "YYYY-MM",
+      invalid: "Invalid date",
+      store: "YYYY-MM",
+      display: "MMMM YYYY",
+      display_short: "YYYY-MM",
+      display_attribute: "year-month",
+      display_short_attribute: "year-month-short",
+      type: "year_month",
+      clock: false,
+      parse: ["MM YYYY", "MM/YYYY", "MM.YYYY", "M.YYYY", "YYYY-M", "YYYY-MM", "MM-YYYY", "M-YYYY", "YYYY-M", "YYYY.M", "YYYY/M"]
+    }, {
+      text: "Jahr",
+      support_bc: true,
+      input: "Y",
+      invalid: "Invalid date",
+      display: "Y",
+      display_short: "Y",
+      display_attribute: "year",
+      display_short_attribute: "year",
+      store: "YYYY",
+      type: "year",
+      clock: false,
+      parse: ["Y"]
+    }
+  ]
+};
+
 
 /***/ }),
 
@@ -43079,7 +43171,7 @@ CUI.DateTimeRangeGrammar = (function() {
   };
 
   DateTimeRangeGrammar.stringToDateRange = function(input, locale) {
-    var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
+    var _, extraArguments, from, grammar, grammars, i, j, len, len1, method, methodArguments, monthIndex, output, ref, ref1, ref2, s, stringToParse, to, tokenPositions, tokens, type, value;
     if (locale == null) {
       locale = CUI.DateTime.getLocale();
     }
@@ -43108,10 +43200,10 @@ CUI.DateTimeRangeGrammar = (function() {
         value = s.split(".")[0];
       } else if (CUI.DateTimeRangeGrammar.REGEXP_CENTURY.test(s)) {
         type = CUI.DateTimeRangeGrammar.TYPE_CENTURY;
-        value = s.split("th")[0];
-      } else if (indexOf.call(CUI.DateTimeRangeGrammar.MONTHS[locale], value) >= 0) {
+        value = s.split(/th/i)[0];
+      } else if ((monthIndex = CUI.DateTimeRangeGrammar.__findMonthIndex(s, locale)) >= 0) {
         type = CUI.DateTimeRangeGrammar.TYPE_MONTH;
-        value = CUI.DateTimeRangeGrammar.MONTHS[locale].indexOf(value);
+        value = monthIndex;
       } else {
         type = s;
       }
@@ -43430,6 +43522,22 @@ CUI.DateTimeRangeGrammar = (function() {
       inputString = parseInt(inputString) - 1;
     }
     return "-" + inputString;
+  };
+
+  DateTimeRangeGrammar.__findMonthIndex = function(value, locale) {
+    var i, index, len, lowerValue, month, months;
+    lowerValue = value.toLowerCase();
+    months = CUI.DateTimeRangeGrammar.MONTHS[locale];
+    if (!months) {
+      return -1;
+    }
+    for (index = i = 0, len = months.length; i < len; index = ++i) {
+      month = months[index];
+      if (month.toLowerCase() === lowerValue) {
+        return index;
+      }
+    }
+    return -1;
   };
 
   return DateTimeRangeGrammar;
@@ -45063,7 +45171,8 @@ CUI.FileReaderFile = (function(superClass) {
  */
 var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty,
-  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
+  slice = [].slice;
 
 CUI.FileUpload = (function(superClass) {
   extend(FileUpload, superClass);
@@ -45155,14 +45264,14 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.getFiles = function(filter) {
-    var file, files, i, len, ref, ref1;
+    var file, files, j, len, ref, ref1;
     if (CUI.util.isString(filter)) {
       filter = [filter];
     }
     files = [];
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      file = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      file = ref[j];
       if (!filter || (ref1 = file.getStatus(), indexOf.call(filter, ref1) >= 0)) {
         files.push(file);
       }
@@ -45171,7 +45280,7 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.getInfo = function() {
-    var _fuf, _p, all_done, count, done, i, info, len, loaded, ref, s, status, total;
+    var _fuf, _p, all_done, count, done, info, j, len, loaded, ref, s, status, total;
     status = {};
     total = 0;
     loaded = 0;
@@ -45179,8 +45288,8 @@ CUI.FileUpload = (function(superClass) {
     done = 0;
     all_done = true;
     ref = this.getFiles();
-    for (i = 0, len = ref.length; i < len; i++) {
-      _fuf = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      _fuf = ref[j];
       _p = _fuf.getProgress();
       s = _p.status;
       if (!status[s]) {
@@ -45366,12 +45475,12 @@ CUI.FileUpload = (function(superClass) {
   FileUpload.prototype.clear = function() {
     return this.stopQueuing(true).done((function(_this) {
       return function() {
-        var file, results;
-        results = [];
+        var file, results1;
+        results1 = [];
         while (file = _this.__files[0]) {
-          results.push(file.remove());
+          results1.push(file.remove());
         }
-        return results;
+        return results1;
       };
     })(this));
   };
@@ -45381,13 +45490,13 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.isDone = function() {
-    var f, i, len, ref;
+    var f, j, len, ref;
     if (this.__isQueueing) {
       return false;
     }
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (!f.isDone()) {
         return false;
       }
@@ -45396,10 +45505,10 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.isUploading = function() {
-    var f, i, len, ref;
+    var f, j, len, ref;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.isUploading()) {
         return true;
       }
@@ -45408,12 +45517,12 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.uploadNextFiles = function() {
-    var f, file, files, i, j, len, len1, ref, slots;
+    var f, file, files, j, l, len, len1, ref, slots;
     files = [];
     slots = this._parallel;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.getStatus() === "QUEUED") {
         files.push(f);
         slots--;
@@ -45425,8 +45534,8 @@ CUI.FileUpload = (function(superClass) {
         break;
       }
     }
-    for (j = 0, len1 = files.length; j < len1; j++) {
-      file = files[j];
+    for (l = 0, len1 = files.length; l < len1; l++) {
+      file = files[l];
       this.uploadFile(file);
     }
     return this;
@@ -45446,11 +45555,11 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.checkBatchDone = function(file) {
-    var alarm, f, i, len, ref;
+    var alarm, f, j, len, ref;
     alarm = false;
     ref = this.__files;
-    for (i = 0, len = ref.length; i < len; i++) {
-      f = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      f = ref[j];
       if (f.getBatch() !== file.getBatch()) {
         continue;
       }
@@ -45467,7 +45576,7 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.initDropZone = function(_opts) {
-    var dropZone, dz, i, len, multiple, opts, ref, selector;
+    var dropZone, dz, j, len, multiple, opts, ref, selector;
     if (_opts == null) {
       _opts = {};
     }
@@ -45528,18 +45637,17 @@ CUI.FileUpload = (function(superClass) {
       selector: selector,
       call: (function(_this) {
         return function(ev) {
-          var dt, file, files, i, len, ref, ref1, warn;
+          var dt;
           if (opts.allow_drop && !opts.allow_drop(ev)) {
             return ev.stop();
           }
           CUI.FileUpload.setDropClassByEvent(ev);
           dt = ev.getNativeEvent().dataTransfer;
-          if (((ref = dt.files) != null ? ref.length : void 0) > 0) {
-            warn = [];
+          CUI.FileUpload.getFilesFromDrop(dt).done(function(allFiles) {
+            var file, files, j, len;
             files = [];
-            ref1 = dt.files;
-            for (i = 0, len = ref1.length; i < len; i++) {
-              file = ref1[i];
+            for (j = 0, len = allFiles.length; j < len; j++) {
+              file = allFiles[j];
               files.push(file);
               if (multiple === false) {
                 break;
@@ -45548,13 +45656,10 @@ CUI.FileUpload = (function(superClass) {
                 break;
               }
             }
-            if (warn.length > 0) {
-              console.warn("Files empty or directories, not uploaded...", warn);
-            }
             if (files.length > 0) {
-              _this.queueFiles(files);
+              return _this.queueFiles(files);
             }
-          }
+          });
           ev.stopPropagation();
           ev.preventDefault();
           return false;
@@ -45562,8 +45667,8 @@ CUI.FileUpload = (function(superClass) {
       })(this)
     });
     ref = this.__dropZones;
-    for (i = 0, len = ref.length; i < len; i++) {
-      dz = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      dz = ref[j];
       if (dz === dropZone) {
         return this;
       }
@@ -45629,15 +45734,15 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.initFilePicker = function(opts) {
-    var dfr, i, inp, k, len, ref;
+    var dfr, inp, j, k, len, ref;
     if (!opts.fileUpload) {
       opts.fileUpload = document.getElementById("cui-file-upload-button");
     }
     opts.fileUpload.form.reset();
     inp = opts.fileUpload;
     ref = ["webkitdirectory", "mozdirectory", "directory"];
-    for (i = 0, len = ref.length; i < len; i++) {
-      k = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      k = ref[j];
       if (opts.directory) {
         CUI.dom.setAttribute(inp, k, true);
       } else {
@@ -45665,14 +45770,14 @@ CUI.FileUpload = (function(superClass) {
         return function() {
           var file, files;
           files = (function() {
-            var j, len1, ref1, results;
+            var l, len1, ref1, results1;
             ref1 = inp.files;
-            results = [];
-            for (j = 0, len1 = ref1.length; j < len1; j++) {
-              file = ref1[j];
-              results.push(file);
+            results1 = [];
+            for (l = 0, len1 = ref1.length; l < len1; l++) {
+              file = ref1[l];
+              results1.push(file);
             }
-            return results;
+            return results1;
           })();
           _this.queueFiles(files);
           inp.form.reset();
@@ -45684,13 +45789,13 @@ CUI.FileUpload = (function(superClass) {
   };
 
   FileUpload.prototype.resetDropZones = function() {
-    var dz, i, len, ref;
+    var dz, j, len, ref;
     CUI.Events.ignore({
       instance: this
     });
     ref = this.__dropZones;
-    for (i = 0, len = ref.length; i < len; i++) {
-      dz = ref[i];
+    for (j = 0, len = ref.length; j < len; j++) {
+      dz = ref[j];
       CUI.dom.removeClass(dz, "cui-file-upload-drop-zone");
     }
     this.__dropZones = [];
@@ -45701,6 +45806,142 @@ CUI.FileUpload = (function(superClass) {
     this.resetDropZones();
     FileUpload.__super__.destroy.call(this);
     return this;
+  };
+
+  FileUpload.__readFileEntry = function(entry, basePath) {
+    var dfr;
+    dfr = new CUI.Deferred();
+    entry.file(function(file) {
+      if (file.name.charAt(0) === ".") {
+        return dfr.resolve(null);
+      }
+      if (basePath) {
+        file._relativePath = basePath + file.name;
+      }
+      return dfr.resolve(file);
+    }, function() {
+      return dfr.resolve(null);
+    });
+    return dfr.promise();
+  };
+
+  FileUpload.__readAllDirectoryEntries = function(reader) {
+    var allEntries, dfr, readBatch;
+    dfr = new CUI.Deferred();
+    allEntries = [];
+    readBatch = function() {
+      return reader.readEntries(function(entries) {
+        if (entries.length === 0) {
+          return dfr.resolve(allEntries);
+        } else {
+          allEntries = allEntries.concat(Array.from(entries));
+          return readBatch();
+        }
+      }, function() {
+        return dfr.resolve(allEntries);
+      });
+    };
+    readBatch();
+    return dfr.promise();
+  };
+
+  FileUpload.__traverseEntry = function(entry, basePath) {
+    var dfr, dirPath, reader;
+    if (basePath == null) {
+      basePath = "";
+    }
+    if (entry.isFile) {
+      dfr = new CUI.Deferred();
+      this.__readFileEntry(entry, basePath).done(function(file) {
+        if (file) {
+          return dfr.resolve([file]);
+        } else {
+          return dfr.resolve([]);
+        }
+      });
+      return dfr.promise();
+    }
+    if (entry.isDirectory) {
+      dirPath = basePath ? basePath + entry.name + "/" : entry.name + "/";
+      reader = entry.createReader();
+      dfr = new CUI.Deferred();
+      this.__readAllDirectoryEntries(reader).done((function(_this) {
+        return function(entries) {
+          var e, promises;
+          promises = (function() {
+            var j, len, results1;
+            results1 = [];
+            for (j = 0, len = entries.length; j < len; j++) {
+              e = entries[j];
+              results1.push(this.__traverseEntry(e, dirPath));
+            }
+            return results1;
+          }).call(_this);
+          return CUI.when(promises).done(function() {
+            var files, j, len, result, results;
+            results = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+            files = [];
+            for (j = 0, len = results.length; j < len; j++) {
+              result = results[j];
+              if (result) {
+                files = files.concat(result);
+              }
+            }
+            return dfr.resolve(files);
+          });
+        };
+      })(this));
+      return dfr.promise();
+    }
+    return CUI.resolvedPromise([]);
+  };
+
+  FileUpload.getFilesFromDrop = function(dataTransfer) {
+    var dfr, entries, entry, hasDirectory, i, item, items, j, promises, ref;
+    items = dataTransfer.items;
+    if (!items) {
+      return CUI.resolvedPromise(Array.from(dataTransfer.files || []));
+    }
+    entries = [];
+    hasDirectory = false;
+    for (i = j = 0, ref = items.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+      item = items[i];
+      if (item.webkitGetAsEntry) {
+        entry = item.webkitGetAsEntry();
+        if (entry) {
+          entries.push(entry);
+          if (entry.isDirectory) {
+            hasDirectory = true;
+          }
+        }
+      }
+    }
+    if (!hasDirectory || entries.length === 0) {
+      return CUI.resolvedPromise(Array.from(dataTransfer.files || []));
+    }
+    dfr = new CUI.Deferred();
+    promises = (function() {
+      var l, len, results1;
+      results1 = [];
+      for (l = 0, len = entries.length; l < len; l++) {
+        entry = entries[l];
+        results1.push(this.__traverseEntry(entry, ""));
+      }
+      return results1;
+    }).call(this);
+    CUI.when(promises).done(function() {
+      var files, l, len, result, results;
+      results = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      files = [];
+      for (l = 0, len = results.length; l < len; l++) {
+        result = results[l];
+        if (result) {
+          files = files.concat(result);
+        }
+      }
+      return dfr.resolve(files);
+    });
+    return dfr.promise();
   };
 
   return FileUpload;
@@ -45933,7 +46174,7 @@ CUI.FileUploadFile = (function(superClass) {
   };
 
   FileUploadFile.prototype.getName = function() {
-    return this._file.webkitRelativePath || this._file.name;
+    return this._file._relativePath || this._file.webkitRelativePath || this._file.name;
   };
 
   FileUploadFile.prototype.getStatus = function() {
@@ -47942,11 +48183,49 @@ CUI.ColorInput = (function(superClass) {
       tabindex: -1,
       onClick: (function(_this) {
         return function(ev, btn) {
-          return _this.__input.focus();
+          var ref;
+          if (_this.isDisabled()) {
+            return;
+          }
+          return (ref = _this.__colorPicker) != null ? ref.click() : void 0;
         };
       })(this)
     });
     return ColorInput.__super__.readOpts.call(this);
+  };
+
+  ColorInput.prototype.render = function() {
+    ColorInput.__super__.render.call(this);
+    this.__colorPicker = CUI.dom.$element("input", "cui-color-picker-native", {
+      type: "color",
+      tabindex: "-1"
+    });
+    CUI.Events.listen({
+      node: this.__colorPicker,
+      type: "input",
+      call: (function(_this) {
+        return function() {
+          _this.__input.value = _this.__colorPicker.value;
+          return _this.__toggleColor();
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      node: this.__colorPicker,
+      type: "change",
+      call: (function(_this) {
+        return function() {
+          _this.__input.value = _this.__colorPicker.value;
+          _this.__toggleColor();
+          return new CUI.Event({
+            type: "input",
+            node: _this.__input
+          }).dispatch();
+        };
+      })(this)
+    });
+    CUI.dom.append(this.DOM, this.__colorPicker);
+    return this;
   };
 
   ColorInput.prototype.onDataChanged = function(ev, info) {
@@ -47960,14 +48239,25 @@ CUI.ColorInput = (function(superClass) {
       return this._leftControlElement.addClass('is-empty');
     } else {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__data[this._name]);
-      return this._leftControlElement.removeClass('is-empty');
+      this._leftControlElement.removeClass('is-empty');
+      return this.__syncColorPicker(this.__data[this._name]);
+    }
+  };
+
+  ColorInput.prototype.__syncColorPicker = function(value) {
+    if (!this.__colorPicker) {
+      return;
+    }
+    if (value && /^#[0-9a-fA-F]{6}$/.test(value)) {
+      return this.__colorPicker.value = value;
     }
   };
 
   ColorInput.prototype.__toggleColor = function() {
     if (this.__input.value.length > 0 && this.__checkInputInternal()) {
       this._leftControlElement.DOM.style.setProperty("--btn-background", this.__input.value);
-      return this._leftControlElement.removeClass('is-empty');
+      this._leftControlElement.removeClass('is-empty');
+      return this.__syncColorPicker(this.__input.value);
     } else {
       this._leftControlElement.DOM.style.removeProperty("--btn-background");
       return this._leftControlElement.addClass('is-empty');
@@ -48084,6 +48374,13 @@ CUI.IconInput = (function(superClass) {
     return IconInput.__super__.readOpts.call(this);
   };
 
+  IconInput.prototype.getValueForStore = function(value) {
+    if (CUI.util.isString(value)) {
+      return value.trim();
+    }
+    return value;
+  };
+
   IconInput.prototype.onDataChanged = function(ev, info) {
     IconInput.__super__.onDataChanged.call(this, ev, info);
     return this.__toggleIcon();
@@ -48100,8 +48397,10 @@ CUI.IconInput = (function(superClass) {
   };
 
   IconInput.prototype.__toggleIcon = function() {
-    if (this.__input.value.length > 0) {
-      this._leftControlElement.setIcon(this.__input.value);
+    var value;
+    value = this.__input.value.trim();
+    if (value.length > 0) {
+      this._leftControlElement.setIcon(value);
       return this._leftControlElement.removeClass('is-empty');
     } else {
       this._leftControlElement.setIcon("");
@@ -48328,6 +48627,10 @@ CUI.Input = (function(superClass) {
         check: function(v) {
           return v instanceof CUI.DOMElement;
         }
+      },
+      copyPlaceholder: {
+        "default": false,
+        check: Boolean
       }
     });
   };
@@ -48411,10 +48714,19 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.setPlaceholder = function(placeholder) {
-    return CUI.dom.setAttribute(this.__input, "placeholder", placeholder);
+    this.__dynamicPlaceholder = placeholder;
+    CUI.dom.setAttribute(this.__input, "placeholder", placeholder);
+    if (typeof this.__resizeForPlaceholder === "function") {
+      this.__resizeForPlaceholder();
+    }
+    this.setContentSize();
+    return this.__updateCopyPlaceholderButton();
   };
 
   Input.prototype.getPlaceholder = function() {
+    if (this.__dynamicPlaceholder) {
+      return this.__dynamicPlaceholder;
+    }
     if (!this._placeholder) {
       return void 0;
     }
@@ -48426,7 +48738,7 @@ CUI.Input = (function(superClass) {
   };
 
   Input.prototype.__createElement = function(input_type) {
-    var calculateBaseHeight, oldSizes, resize, textarea_opts;
+    var oldSizes, resize, textarea_opts;
     if (input_type == null) {
       input_type = "text";
     }
@@ -48447,22 +48759,34 @@ CUI.Input = (function(superClass) {
       this.__input.style.setProperty("--textarea-min-rows", this._min_rows);
       resize = (function(_this) {
         return function() {
-          var rows;
-          _this.__input.rows = _this._min_rows;
-          rows = Math.ceil((_this.__input.scrollHeight - _this.__baseScrollHeight) / _this.__lineHeight);
-          return _this.__input.rows = _this._min_rows + rows;
+          var contentHeight, measureValue, neededRows, originalHeight, originalOverflow, originalValue;
+          if (!_this.__lineHeight) {
+            return;
+          }
+          measureValue = _this.__input.value;
+          if (measureValue.length === 0) {
+            measureValue = _this.getPlaceholder() || "";
+          }
+          if (measureValue.length > 0) {
+            originalValue = _this.__input.value;
+            originalHeight = _this.__input.style.height;
+            originalOverflow = _this.__input.style.overflow;
+            _this.__input.style.height = "auto";
+            _this.__input.style.overflow = "hidden";
+            _this.__input.rows = 1;
+            _this.__input.value = measureValue;
+            contentHeight = _this.__input.scrollHeight - (_this.__verticalPadding || 0);
+            neededRows = Math.max(_this._min_rows, Math.ceil(contentHeight / _this.__lineHeight));
+            _this.__input.rows = neededRows;
+            _this.__input.value = originalValue;
+            _this.__input.style.height = originalHeight;
+            return _this.__input.style.overflow = originalOverflow;
+          } else {
+            return _this.__input.rows = _this._min_rows;
+          }
         };
       })(this);
-      calculateBaseHeight = (function(_this) {
-        return function() {
-          var value;
-          value = _this.__input.value;
-          _this.__input.value = "";
-          _this.__baseScrollHeight = _this.__input.scrollHeight;
-          _this.__input.value = value;
-          return _this.__lineHeight = parseInt(CUI.dom.getComputedStyle(_this.__input).lineHeight, 10);
-        };
-      })(this);
+      this.__resizeForPlaceholder = resize;
       CUI.Events.listen({
         node: this.__input,
         type: "input",
@@ -48472,10 +48796,13 @@ CUI.Input = (function(superClass) {
         node: this.__input
       }).done((function(_this) {
         return function() {
+          var style;
           if (_this.isDestroyed()) {
             return;
           }
-          calculateBaseHeight();
+          style = CUI.dom.getComputedStyle(_this.__input);
+          _this.__lineHeight = parseInt(style.lineHeight, 10);
+          _this.__verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
           return resize();
         };
       })(this));
@@ -48827,13 +49154,17 @@ CUI.Input = (function(superClass) {
     if (!this.__contentSize) {
       return;
     }
-    this.__contentSize.value = this.__input.value;
+    if (this.__input.value.length > 0) {
+      this.__contentSize.value = this.__input.value;
+    } else {
+      this.__contentSize.value = this.getPlaceholder() || "";
+    }
     if (this.hasShadowFocus()) {
       this.__contentSize.focus();
     }
     changed = false;
     if (this._textarea) {
-      if (this.__input.value.length === 0) {
+      if (this.__contentSize.value.length === 0) {
         this.__contentSize.value = "A";
       }
       if (CUI.dom.width(this.__input) !== CUI.dom.width(this.__contentSize)) {
@@ -49207,6 +49538,9 @@ CUI.Input = (function(superClass) {
       CUI.dom.addClass(this._leftControlElement, 'cui-input-control-element');
       this.prepend(this._leftControlElement, this.getTemplateKeyForRender());
     }
+    if (this._copyPlaceholder) {
+      this.__initCopyPlaceholderButton();
+    }
     ref = ["empty", "invalid", "valid"];
     for (j = 0, len1 = ref.length; j < len1; j++) {
       k = ref[j];
@@ -49328,6 +49662,7 @@ CUI.Input = (function(superClass) {
       this.__input.value = value;
     }
     this.checkInput();
+    this.__updateCopyPlaceholderButton();
     return this;
   };
 
@@ -49599,6 +49934,56 @@ CUI.Input = (function(superClass) {
       }
     }
     return this;
+  };
+
+  Input.prototype.__initCopyPlaceholderButton = function() {
+    this.__copyPlaceholderBtn = new CUI.Button({
+      icon: "fa-level-down",
+      "class": "cui-input-copy-placeholder-button",
+      tooltip: {
+        text: "Apply"
+      },
+      onClick: (function(_this) {
+        return function() {
+          var placeholder;
+          placeholder = _this.getPlaceholder();
+          if (CUI.util.isEmpty(placeholder)) {
+            return;
+          }
+          _this.__input.value = placeholder;
+          _this.storeValue(placeholder);
+          _this.checkInput();
+          _this.__updateCopyPlaceholderButton();
+        };
+      })(this)
+    });
+    this.append(this.__copyPlaceholderBtn, this.getTemplateKeyForRender());
+    this.__updateCopyPlaceholderButton();
+    CUI.Events.listen({
+      node: this.__input,
+      type: "input",
+      instance: this,
+      call: (function(_this) {
+        return function() {
+          return _this.__updateCopyPlaceholderButton();
+        };
+      })(this)
+    });
+  };
+
+  Input.prototype.__updateCopyPlaceholderButton = function() {
+    var hasPlaceholder, hasValue, placeholder;
+    if (!this.__copyPlaceholderBtn) {
+      return;
+    }
+    placeholder = this.getPlaceholder();
+    hasPlaceholder = !CUI.util.isEmpty(placeholder);
+    hasValue = this.hasUserInput();
+    if (hasPlaceholder && !hasValue) {
+      CUI.dom.showElement(this.__copyPlaceholderBtn);
+    } else {
+      CUI.dom.hideElement(this.__copyPlaceholderBtn);
+    }
   };
 
   Input.prototype.destroy = function() {
@@ -50437,6 +50822,9 @@ CUI.ItemList = (function(superClass) {
             if (item.hasLeft()) {
               list_has_button_left = true;
             }
+            if (item.__tooltipOpts && (!item.__tooltipOpts.placement || !item.__tooltipOpts.placements)) {
+              item.__tooltipOpts.placements = ["w", "e"];
+            }
           }
           if (item instanceof CUI.Button || item instanceof CUI.DataField || item instanceof CUI.Label) {
             _this.__body.append(item);
@@ -50478,6 +50866,12 @@ CUI.ItemList = (function(superClass) {
           }
           if (menu) {
             opts.menu_parent = menu;
+          }
+          if (!opts.tooltip) {
+            opts.tooltip = {};
+          }
+          if (!opts.tooltip.placement || !opts.tooltip.placements) {
+            opts.tooltip.placements = ["w", "e"];
           }
           btn = new CUI.defaults["class"].Button(opts);
           listenButtonClick(btn);
@@ -54766,10 +55160,12 @@ CUI.ListViewTreeNode = (function(superClass) {
   };
 
   ListViewTreeNode.prototype.deselect = function(ev, new_node) {
+    var result;
     if (!this.getTree().isSelectable()) {
       return CUI.resolvedPromise();
     }
-    return this.check_deselect(ev, new_node).done((function(_this) {
+    result = ev ? this.check_deselect(ev, new_node) : CUI.resolvedPromise();
+    return result.done((function(_this) {
       return function() {
         _this.setSelectedNode();
         _this.removeSelectedClass();
@@ -58114,6 +58510,10 @@ CUI.MultiInput = (function(superClass) {
       user_selectable: {
         "default": false,
         check: Boolean
+      },
+      copyPlaceholder: {
+        "default": false,
+        check: Boolean
       }
     });
   };
@@ -58325,7 +58725,7 @@ CUI.MultiInput = (function(superClass) {
   };
 
   MultiInput.prototype.__initInputs = function() {
-    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2;
+    var fn, i, idx, input, input_opts, key, len, ref, ref1, ref2, ref3;
     if (this.__inputs) {
       return;
     }
@@ -58435,6 +58835,7 @@ CUI.MultiInput = (function(superClass) {
         undo_support: false,
         content_size: this._content_size,
         placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),
+        copyPlaceholder: this._copyPlaceholder && !CUI.util.isEmpty((ref3 = this._placeholder) != null ? ref3[key.name] : void 0),
         onDataInit: (function(_this) {
           return function(field, data) {
             if (_this.__user_selectable && CUI.util.isEmpty(data[field.getName()])) {
@@ -63021,7 +63422,10 @@ CUI.Tabs = (function(superClass) {
         _tab.getButton().setSize("mini");
       }
     }
-    this.__tabs[this._active_idx || 0].activate();
+    if (!this._active_idx || this._active_idx < 0 || this._active_idx >= this.__tabs.length) {
+      this._active_idx = 0;
+    }
+    this.__tabs[this._active_idx].activate();
     CUI.dom.waitForDOMInsert({
       node: this.getLayout()
     }).done((function(_this) {

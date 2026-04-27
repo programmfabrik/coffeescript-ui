@@ -3846,6 +3846,103 @@ textarea {
   min-width: var(--input-date-min-width-4);
 }
 
+.cui-input:has(.cui-input-copy-placeholder-button) {
+  position: relative;
+}
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) input::-moz-placeholder, .cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) textarea::-moz-placeholder {
+  color: #212121;
+  -moz-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) input::placeholder,
+.cui-input:has(.cui-input-copy-placeholder-button):has(.cui-input-copy-placeholder-button:hover) textarea::placeholder {
+  color: #212121;
+  transition: color 0.15s ease;
+}
+
+.cui-input-copy-placeholder-button.cui-button {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  --btn-background: #212121;
+  --btn-background-hover: #393c3f;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):hover, .cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-input-copy-placeholder-button.cui-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):hover .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):focus > .cui-button-visual {
+  outline: none;
+  border-color: #0261f8;
+  box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, rgba(33, 33, 33, 0.65));
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-input-copy-placeholder-button.cui-button.cui-active .cui-button-visual, .cui-input-copy-placeholder-button.cui-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-input-copy-placeholder-button.cui-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-input-copy-placeholder-button.cui-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-input-copy-placeholder-button.cui-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-input-copy-placeholder-button.cui-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #ffffff);
+  background-color: var(--btn-background-active, #212121);
+}
+.cui-input-copy-placeholder-button.cui-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentcolor;
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):active .cui-button-visual {
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+.cui-input-copy-placeholder-button.cui-button:not(.cui-disabled):focus .cui-button-visual {
+  --btn-border-width: 1px;
+}
+.cui-input-copy-placeholder-button.cui-button .cui-button-visual {
+  border-radius: 45px;
+  min-width: 22px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+}
+.cui-input-copy-placeholder-button.cui-button .cui-button-visual .cui-button-left {
+  font-size: 0.75rem;
+}
+.cui-data-field--textarea .cui-input-copy-placeholder-button.cui-button, .cui-multi-input--textarea .cui-input-copy-placeholder-button.cui-button {
+  top: 0;
+  transform: none;
+  margin: 0.5rem 0.5rem 0 0;
+}
+.cui-input:hover .cui-input-copy-placeholder-button.cui-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cui-multi-input-input:has(.cui-input-copy-placeholder-button) .cui-data-field-multi-input-center {
+  position: relative;
+}
+
 .cui-input.cui-password:has(> .cui-input-control-element) {
   position: relative;
 }
@@ -3862,10 +3959,6 @@ textarea {
   box-shadow: none !important;
 }
 
-.cui-color-input > .cui-button,
-.cui-icon-input > .cui-button {
-  cursor: default;
-}
 .cui-color-input > .cui-button > .cui-button-visual,
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-border-width: 0;
@@ -3874,11 +3967,30 @@ textarea {
   border-bottom-right-radius: 0;
 }
 
+.cui-color-input {
+  position: relative;
+}
+.cui-color-input > .cui-button {
+  cursor: pointer;
+}
 .cui-color-input > .cui-button.is-empty > .cui-button-visual {
   --btn-background: transparent;
   background: linear-gradient(135deg, #e6e9ec 0, #e6e9ec 50%, #dee2e6 50.01%, #dee2e6);
 }
+.cui-color-input > .cui-color-picker-native {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 
+.cui-icon-input > .cui-button {
+  cursor: default;
+}
 .cui-icon-input > .cui-button > .cui-button-visual {
   --btn-background: #ffffff;
   border-right: 1px solid rgba(206, 212, 218, 0.5);
@@ -6965,97 +7077,6 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-pane-header .cui-select {
   margin-right: 0.25rem;
 }
-.cui-pane-header .cui-pane-close-button {
-  transform: translateX(0.5rem);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) > .cui-horizontal-layout-left {
-  width: 100%;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) > .cui-horizontal-layout-left > .cui-buttonbar {
-  width: 100%;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title {
-  width: 100%;
-  max-width: 100%;
-  --btn-border-color: transparent;
-  --btn-border-width: 0;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
-  background-color: var(--btn-background, transparent);
-  color: var(--btn-color, #212121);
-  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):hover .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
-  background-color: var(--btn-background-hover, transparent);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus {
-  outline: none;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus > .cui-button-visual {
-  outline: none;
-  border-color: #0261f8;
-  box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):active .cui-button-visual {
-  color: var(--btn-color-hover, #212121);
-  background-color: var(--btn-background-hover, transparent);
-  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open .cui-button-visual {
-  color: var(--btn-color-active, #212121);
-  background-color: var(--btn-background-active, transparent);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
-  color: var(--btn-color-active, #212121);
-  background-color: var(--btn-background-active, transparent);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title.cui-active + .cui-active.cui-layer-open .cui-button-visual {
-  border-left-color: currentcolor;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):hover, .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus {
-  --btn-border-color: transparent;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0;
-  justify-content: space-between;
-}
-.cui-pane-header .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual, .cui-toolbar .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual, .cui-buttonbar .cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual {
-  margin-bottom: 0;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual .cui-button-center {
-  padding-left: 0;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title .cui-button-visual .cui-button-right {
-  padding-right: 0.25rem;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled) {
-  transform: translateX(3px);
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual {
-  --focus-shadow-outer-width: 0px;
-  box-shadow: none !important;
-  border: 0;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: -2px;
-  width: calc(100% - 3px);
-  height: calc(100% - 5px);
-  outline: 3px solid #0261f8;
-  outline-offset: -2px;
-  border-radius: 1px;
-}
-.cui-pane-header:has(.cui-pane-close-button-with-title) .cui-pane-close-button-with-title:not(.cui-disabled):focus .cui-button-visual.cui-button-visual .cui-button-right {
-  padding-right: 0.5rem;
-}
 
 .cui-pane-footer .cui-horizontal-layout-left,
 .cui-pane-footer .cui-horizontal-layout-right {
@@ -7139,6 +7160,82 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-buttonbar:has(.cui-button:nth-child(2)) .cui-button-visual {
   min-width: 28px;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-close-button:not(.cui-disabled) {
+  transform: translateX(4px);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-close-button:not(.cui-disabled) .cui-button-visual {
+  min-width: 20px;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-close-button:not(.cui-disabled):focus .cui-button-visual.cui-button-visual {
+  box-shadow: none !important;
+  border: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-close-button:not(.cui-disabled):focus .cui-button-visual.cui-button-visual::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: calc(100% - 8px);
+  height: calc(100% - 10px);
+  outline: 2px solid #0261f8;
+  border-radius: 0.5px;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):hover .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):focus > .cui-button-visual {
+  outline: none;
+  border-color: #0261f8;
+  box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.08);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-active .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentcolor;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):hover, .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0;
+  justify-content: space-between;
+}
+.cui-pane-header .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual, .cui-toolbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual, .cui-buttonbar .cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual {
+  margin-bottom: 0;
+}
+.cui-pane--window:not(.cui-layer-pane) > .cui-vertical-layout-top > .cui-pane-header .cui-pane-title-button .cui-button-visual .cui-button-center {
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .cui-simple-pane > .cui-vertical-layout-center {
@@ -7531,6 +7628,10 @@ which will apply the class "use-css-grid-layout"
 }
 .cui-lv-td .cui-button {
   max-width: 100%;
+}
+.cui-lv-td .cui-icon-input,
+.cui-lv-td .cui-color-input {
+  width: 100%;
 }
 
 .cui-lv-th,
