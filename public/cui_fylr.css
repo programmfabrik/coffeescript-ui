@@ -2639,6 +2639,7 @@ label[data-label-clickable],
   --lh: calc(var(--lh-base) * 1em);
   line-height: var(--lh);
   position: relative;
+  top: -2px;
 }
 .cui-label-manage-overflow.cui-label--has-overflow-button > .cui-label-content {
   margin-bottom: 2rem;
@@ -5761,6 +5762,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 }
 .cui-table .cui-table-td {
   vertical-align: middle;
+}
+.cui-table .cui-table-td:has(~ .cui-table-td > .cui-label-multiline), .cui-table .cui-table-td:has(> .cui-label-multiline) {
+  vertical-align: top;
 }
 .cui-table .cui-td--key {
   word-wrap: break-word;
