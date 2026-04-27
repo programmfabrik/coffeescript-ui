@@ -45,9 +45,14 @@
 	.cui-table-td {
 		vertical-align: middle;
 
-		&:has(~ .cui-table-td .cui-label-multiline),
-		&:has(.cui-label-multiline) {
+		&:has(~ .cui-table-td > .cui-label-multiline),
+		&:has(> .cui-label-multiline) {
 			vertical-align: top;
+
+			.cui-label-manage-overflow {
+				--lh-base: #{$line-height-sm};
+				top: -1px; // even out line-height
+			}
 		} 
 	}
 

@@ -265,7 +265,6 @@ label[data-label-clickable],
 
 	line-height: var(--lh);
 	position: relative;
-	top: -2px; // even out line-height
 
 	&.cui-label--has-overflow-button {
 		> .cui-label-content {
