@@ -120,6 +120,11 @@
 	&.cui-navigation-toolbar--mini {
 		padding: 0;
     	min-height: 0;
+
+		input {
+			height: 26px;
+			line-height: 26px;
+		}
 	}	
 
 	> .cui-horizontal-layout-left {
