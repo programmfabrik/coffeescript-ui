@@ -7063,6 +7063,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   padding: 0;
   min-height: 0;
 }
+.cui-navigation-toolbar.cui-navigation-toolbar--mini input {
+  height: 26px;
+  line-height: 26px;
+}
 .cui-navigation-toolbar > .cui-horizontal-layout-left > .cui-label:last-child {
   margin-right: 1rem;
 }
