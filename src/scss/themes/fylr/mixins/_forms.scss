@@ -183,8 +183,8 @@
 @mixin data-form-field-group-indicator() {
 	position: relative;
 	// padding: 0 0 0 var(--data-form-field-group-border-spacing, 0.75rem);
-	padding: $spacer-sm;
-	border: 1px solid var(--field-group-border-color, #{$body-color});
+	padding: $spacer-xs $spacer-sm;
+	border: 1px solid var(--field-group-border-color, #{$gray-600});
 	
 	// &::before {
 	// 	content: '';
