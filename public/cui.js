@@ -45181,6 +45181,7 @@ CUI.FileUpload = (function(superClass) {
     FileUpload.__super__.constructor.call(this, opts);
     this.__files = [];
     this.__dropZones = [];
+    this.__pasteZones = [];
     this.__batch_id = 0;
     this.__batches_done = 0;
   }
@@ -45802,8 +45803,178 @@ CUI.FileUpload = (function(superClass) {
     return this;
   };
 
+  FileUpload.prototype.initPasteZone = function(_opts) {
+    var j, len, multiple, opts, pasteZone, pz, ref, ref1;
+    if (_opts == null) {
+      _opts = {};
+    }
+    opts = CUI.Element.readOpts(_opts, "FileUpload.initPasteZone", {
+      pasteZone: {
+        check: function(v) {
+          return CUI.util.isElement(v) || CUI.util.isElement(v.DOM);
+        }
+      },
+      multiple: {
+        mandatory: true,
+        "default": true,
+        check: function(v) {
+          return v === true || v === false || v instanceof Function;
+        }
+      },
+      allow_paste: {
+        check: Function
+      }
+    });
+    pasteZone = ((ref = opts.pasteZone) != null ? ref.DOM : void 0) || opts.pasteZone || document;
+    ref1 = this.__pasteZones;
+    for (j = 0, len = ref1.length; j < len; j++) {
+      pz = ref1[j];
+      if (pz === pasteZone) {
+        return this;
+      }
+    }
+    multiple = opts.multiple;
+    CUI.Events.listen({
+      node: pasteZone,
+      type: "paste",
+      instance: this,
+      call: (function(_this) {
+        return function(ev) {
+          var cd, target;
+          target = ev.getNativeEvent().target;
+          if (CUI.FileUpload.isTypeableTarget(target)) {
+            return;
+          }
+          if (opts.allow_paste && !opts.allow_paste(ev)) {
+            return;
+          }
+          cd = ev.getNativeEvent().clipboardData;
+          if (!cd || !CUI.FileUpload.clipboardHasFiles(cd)) {
+            return;
+          }
+          ev.stopPropagation();
+          ev.preventDefault();
+          CUI.FileUpload.getFilesFromClipboard(cd).done(function(allFiles) {
+            var file, l, len1, queued;
+            queued = [];
+            for (l = 0, len1 = allFiles.length; l < len1; l++) {
+              file = allFiles[l];
+              queued.push(file);
+              if (multiple === false) {
+                break;
+              }
+              if (multiple instanceof Function && multiple() === false) {
+                break;
+              }
+            }
+            if (queued.length > 0) {
+              return _this.queueFiles(queued);
+            }
+          });
+        };
+      })(this)
+    });
+    this.__pasteZones.push(pasteZone);
+    return this;
+  };
+
+  FileUpload.isTypeableTarget = function(target) {
+    var tag, type;
+    if (!target || !target.tagName) {
+      return false;
+    }
+    tag = target.tagName;
+    if (tag === "INPUT") {
+      type = (target.type || "").toLowerCase();
+      return type === "text" || type === "search" || type === "url" || type === "tel" || type === "email" || type === "password" || type === "number" || type === "";
+    }
+    if (tag === "TEXTAREA") {
+      return true;
+    }
+    if (target.isContentEditable) {
+      return true;
+    }
+    return false;
+  };
+
+  FileUpload.prototype.resetPasteZones = function() {
+    CUI.Events.ignore({
+      instance: this
+    });
+    this.__pasteZones = [];
+    return this;
+  };
+
+  FileUpload.clipboardHasFiles = function(clipboardData) {
+    var i, items, j, ref;
+    items = clipboardData.items;
+    if (items) {
+      for (i = j = 0, ref = items.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+        if (items[i].kind === "file") {
+          return true;
+        }
+      }
+    }
+    return !!(clipboardData.files && clipboardData.files.length > 0);
+  };
+
+  FileUpload.getFilesFromClipboard = function(clipboardData) {
+    var dfr, entries, entry, file, filesFromItems, i, item, items, j, promises, ref;
+    items = clipboardData.items;
+    if (!items) {
+      return CUI.resolvedPromise(Array.from(clipboardData.files || []));
+    }
+    entries = [];
+    filesFromItems = [];
+    for (i = j = 0, ref = items.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
+      item = items[i];
+      if (item.kind !== "file") {
+        continue;
+      }
+      entry = typeof item.webkitGetAsEntry === "function" ? item.webkitGetAsEntry() : void 0;
+      if (entry) {
+        entries.push(entry);
+      } else {
+        file = typeof item.getAsFile === "function" ? item.getAsFile() : void 0;
+        if (file) {
+          filesFromItems.push(file);
+        }
+      }
+    }
+    if (entries.length === 0 && filesFromItems.length === 0) {
+      return CUI.resolvedPromise(Array.from(clipboardData.files || []));
+    }
+    if (entries.length === 0) {
+      return CUI.resolvedPromise(filesFromItems);
+    }
+    dfr = new CUI.Deferred();
+    promises = (function() {
+      var l, len, results1;
+      results1 = [];
+      for (l = 0, len = entries.length; l < len; l++) {
+        entry = entries[l];
+        results1.push(this.__traverseEntry(entry, ""));
+      }
+      return results1;
+    }).call(this);
+    CUI.when(promises).done(function() {
+      var files, l, len, result, results;
+      results = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      files = filesFromItems.slice();
+      for (l = 0, len = results.length; l < len; l++) {
+        result = results[l];
+        if (result) {
+          files = files.concat(result);
+        }
+      }
+      return dfr.resolve(files);
+    });
+    return dfr.promise();
+  };
+
   FileUpload.prototype.destroy = function() {
     this.resetDropZones();
+    this.resetPasteZones();
     FileUpload.__super__.destroy.call(this);
     return this;
   };
