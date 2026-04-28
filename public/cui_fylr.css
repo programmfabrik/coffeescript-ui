@@ -8734,8 +8734,8 @@ which will apply the class "use-css-grid-layout"
 }
 .cui-data-form.cui-data-form--multiple-fields > .cui-vertical-layout > .cui-vertical-layout-center > .cui-data-form-row > .cui-horizontal-layout-center {
   position: relative;
-  padding: 0.5rem;
-  border: 1px solid var(--field-group-border-color, #212121);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--field-group-border-color, #8b949c);
   --data-form-field-group-indicator-top: calc(0.25rem - 1px);
   --data-form-field-group-indicator-bottom: 1rem;
 }
