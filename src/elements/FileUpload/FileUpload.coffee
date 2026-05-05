@@ -10,6 +10,7 @@ class CUI.FileUpload extends CUI.Element
 		super(opts)
 		@__files = []
 		@__dropZones = []
+		@__pasteZones = []
 		@__batch_id = 0
 		@__batches_done = 0
 
@@ -485,8 +486,141 @@ class CUI.FileUpload extends CUI.Element
 		@__dropZones = []
 		@
 
+	# Paste events fire on the focused element, not on arbitrary divs, so the
+	# default listener target is `document`; consumers gate via `allow_paste`.
+	initPasteZone: (_opts={}) ->
+
+		opts = CUI.Element.readOpts _opts, "FileUpload.initPasteZone",
+			pasteZone:
+				check: (v) ->
+					CUI.util.isElement(v) or CUI.util.isElement(v.DOM)
+			multiple:
+				mandatory: true
+				default: true
+				check: (v) ->
+					v == true or v == false or v instanceof Function
+			allow_paste:
+				check: Function
+
+		pasteZone = opts.pasteZone?.DOM or opts.pasteZone or document
+
+		for pz in @__pasteZones
+			if pz == pasteZone
+				return @
+
+		multiple = opts.multiple
+
+		CUI.Events.listen
+			node: pasteZone
+			type: "paste"
+			instance: @
+			call: (ev) =>
+				target = ev.getNativeEvent().target
+				if CUI.FileUpload.isTypeableTarget(target)
+					return
+
+				if opts.allow_paste and not opts.allow_paste(ev)
+					return
+
+				cd = ev.getNativeEvent().clipboardData
+				if not cd or not CUI.FileUpload.clipboardHasFiles(cd)
+					return
+
+				# preventDefault must run synchronously before traversal goes async.
+				ev.stopPropagation()
+				ev.preventDefault()
+
+				CUI.FileUpload.getFilesFromClipboard(cd).done((allFiles) =>
+					queued = []
+					for file in allFiles
+						queued.push(file)
+						if multiple == false
+							break
+						if multiple instanceof Function and multiple() == false
+							break
+
+					if queued.length > 0
+						@queueFiles(queued)
+				)
+				return
+
+		@__pasteZones.push(pasteZone)
+		@
+
+	@isTypeableTarget: (target) ->
+		if not target or not target.tagName
+			return false
+		tag = target.tagName
+		if tag == "INPUT"
+			type = (target.type or "").toLowerCase()
+			return type in ["text", "search", "url", "tel", "email", "password", "number", ""]
+		if tag == "TEXTAREA"
+			return true
+		if target.isContentEditable
+			return true
+		false
+
+	resetPasteZones: ->
+		CUI.Events.ignore
+			instance: @
+
+		@__pasteZones = []
+		@
+
+	# Returns true if the clipboard appears to contain any file/directory entries.
+	# Synchronous so the paste handler can decide to preventDefault before going
+	# async to traverse directories.
+	@clipboardHasFiles: (clipboardData) ->
+		items = clipboardData.items
+		if items
+			for i in [0...items.length]
+				if items[i].kind == "file"
+					return true
+		return !!(clipboardData.files and clipboardData.files.length > 0)
+
+	# Async extraction of files from a ClipboardData. Mirrors getFilesFromDrop:
+	# uses webkitGetAsEntry to traverse pasted directories (each file inside a
+	# directory gets _relativePath set). Falls back to clipboardData.files only
+	# when items has no file entries, to avoid the web-image duplicate problem.
+	@getFilesFromClipboard: (clipboardData) ->
+		items = clipboardData.items
+		if not items
+			return CUI.resolvedPromise(Array.from(clipboardData.files or []))
+
+		entries = []
+		filesFromItems = []
+		for i in [0...items.length]
+			item = items[i]
+			if item.kind != "file"
+				continue
+			entry = item.webkitGetAsEntry?()
+			if entry
+				entries.push(entry)
+			else
+				file = item.getAsFile?()
+				if file
+					filesFromItems.push(file)
+
+		if entries.length == 0 and filesFromItems.length == 0
+			return CUI.resolvedPromise(Array.from(clipboardData.files or []))
+
+		if entries.length == 0
+			return CUI.resolvedPromise(filesFromItems)
+
+		dfr = new CUI.Deferred()
+		promises = (@__traverseEntry(entry, "") for entry in entries)
+		CUI.when(promises).done((results...) ->
+			files = filesFromItems.slice()
+			for result in results
+				if result
+					files = files.concat(result)
+			dfr.resolve(files)
+		)
+		dfr.promise()
+
 	destroy: ->
 		@resetDropZones()
+		@resetPasteZones()
 		super()
 		@
 
