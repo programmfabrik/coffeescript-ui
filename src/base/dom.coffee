@@ -355,7 +355,10 @@ class CUI.dom
 		if node.hasOwnProperty('DOM')
 			node = node.DOM
 
-		CUI.util.assert(CUI.util.isElement(node), "CUI.dom.empty", "top needs to be Element", node: node)
+		if not (node instanceof Node and CUI.util.isFunction(node.removeChild))
+			console.warn("CUI.dom.empty: node is not a DOM Node, ignoring.", node)
+			return null
+
 		while last = node.lastChild
 			node.removeChild(last)
 		node
