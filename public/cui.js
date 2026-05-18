@@ -45198,6 +45198,12 @@ CUI.FileUpload = (function(superClass) {
         "default": CUI.defaults.FileUpload.name,
         check: String
       },
+      headers: {
+        check: "PlainObject"
+      },
+      withCredentials: {
+        check: Boolean
+      },
       add_filename_to_url: {
         "default": false,
         mandatory: true,
@@ -45550,9 +45556,9 @@ CUI.FileUpload = (function(superClass) {
       url = file._file.upload_url;
     }
     if (this._add_filename_to_url) {
-      return file.upload(url + file.getName(), this._name);
+      return file.upload(url + file.getName(), this._name, this._headers, this._withCredentials);
     } else {
-      return file.upload(url, this._name);
+      return file.upload(url, this._name, this._headers, this._withCredentials);
     }
   };
 
@@ -46433,8 +46439,8 @@ CUI.FileUploadFile = (function(superClass) {
     return !!this.__upload;
   };
 
-  FileUploadFile.prototype.upload = function(url, name) {
-    var form, onDone;
+  FileUploadFile.prototype.upload = function(url, name, headers, withCredentials) {
+    var form, onDone, xhrOpts;
     CUI.util.assert(!this.__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", {
       file: this
     });
@@ -46444,10 +46450,17 @@ CUI.FileUploadFile = (function(superClass) {
       return function() {};
     })(this);
     if (this._file.size > 0) {
-      this.__upload = new CUI.XHR({
+      xhrOpts = {
         url: url,
         form: form
-      });
+      };
+      if (headers) {
+        xhrOpts.headers = headers;
+      }
+      if (withCredentials != null) {
+        xhrOpts.withCredentials = withCredentials;
+      }
+      this.__upload = new CUI.XHR(xhrOpts);
       this.__upload.start().progress((function(_this) {
         return function(type, loaded, total, percent) {
           if (type === "download") {

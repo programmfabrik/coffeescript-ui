@@ -136,7 +136,7 @@ class CUI.FileUploadFile extends CUI.Element
 	isUploading: ->
 		!!@__upload
 
-	upload: (url, name) ->
+	upload: (url, name, headers) ->
 		# console.debug "starting upload for", @_file.name
 		CUI.util.assert(not @__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", file: @)
 
@@ -147,9 +147,13 @@ class CUI.FileUploadFile extends CUI.Element
 
 		if @_file.size > 0
 
-			@__upload = new CUI.XHR
+			xhrOpts =
 				url: url
 				form: form
+			if headers
+				xhrOpts.headers = headers
+
+			@__upload = new CUI.XHR(xhrOpts)
 
 			@__upload
 			.start()
