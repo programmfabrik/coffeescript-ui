@@ -38,6 +38,10 @@
 
 	// obsolete
 	// &--padded {}
+
+	&.cui-form--output-only {
+		--form-cell-gap: $spacer-sm;
+	}
 }
 
 // * Form - Table
@@ -62,7 +66,7 @@
 
 .cui-form-tr,
 .cui-form-tr-header {
-	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
+	margin-bottom: var(--form-cell-gap, #{$form-cell-gap}); // ! make sure to use the same margin as for cui-form-row
 
 	// see base config > Datei Erzeugung > Vorschau > Versionen
 	// see objecttypes > PDFCreator > New > Add asset/Datei > Settings pane
@@ -245,7 +249,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
-	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
+	margin-bottom: var(--form-cell-gap, #{$form-cell-gap}); // ! make sure to use the same margin as for cui-form-tr
 
 	&:only-child {
 		margin-bottom: 0;
