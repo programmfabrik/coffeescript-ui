@@ -39,6 +39,7 @@
 	// obsolete
 	// &--padded {}
 
+	// use this if ALL rows in the form contain output only (no input fields)
 	&.cui-form--output-only {
 		--form-cell-gap: $spacer-sm;
 	}
