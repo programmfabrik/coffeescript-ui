@@ -40685,7 +40685,7 @@ CUI.DateTime = (function(superClass) {
       if (mom.bc) {
         value = "-" + mom.bc;
       } else {
-        value = mom.format(this.__input_format.store);
+        value = CUI.DateTime.formatMoment(mom, this.__input_format.store);
       }
     } else if (this._store_invalid && value.trim().length > 0) {
       value = 'invalid';
@@ -40890,18 +40890,8 @@ CUI.DateTime = (function(superClass) {
     return opts;
   };
 
-  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, longMatch, mom, ref, shortMatch, ua, us;
-    if (formats == null) {
-      formats = this.__input_formats;
-    }
-    if (use_formats == null) {
-      use_formats = formats;
-    }
-    stringValue = stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim() : void 0 : void 0;
-    if (!((stringValue != null ? stringValue.length : void 0) > 0)) {
-      return moment.invalid();
-    }
+  DateTime.prototype.__parseWithKnownFormats = function(stringValue, formats, use_formats) {
+    var format, i, len, mom;
     for (i = 0, len = formats.length; i < len; i++) {
       format = formats[i];
       mom = this.__parseFormat(format, stringValue);
@@ -40918,6 +40908,36 @@ CUI.DateTime = (function(superClass) {
         return mom;
       }
     }
+    return null;
+  };
+
+  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
+    var appendix, bareValue, checkBC, hasBCAppendix, i, len, longMatch, mom, ref, ref1, shortMatch, tzMatch, ua, us;
+    if (formats == null) {
+      formats = this.__input_formats;
+    }
+    if (use_formats == null) {
+      use_formats = formats;
+    }
+    stringValue = stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim() : void 0 : void 0;
+    if (!((stringValue != null ? stringValue.length : void 0) > 0)) {
+      return moment.invalid();
+    }
+    mom = this.__parseWithKnownFormats(stringValue, formats, use_formats);
+    if (mom) {
+      return mom;
+    }
+    tzMatch = stringValue.match(/\s*([+-]\d{2}:\d{2}|Z)$/);
+    if (tzMatch && tzMatch.index > 0) {
+      bareValue = stringValue.substring(0, tzMatch.index).trim();
+      if (bareValue.length > 0) {
+        mom = this.__parseWithKnownFormats(bareValue, formats, use_formats);
+        if (mom && ((ref = this.__input_format) != null ? ref.clock : void 0) === false) {
+          mom.fylrPartialTz = tzMatch[1];
+          return mom;
+        }
+      }
+    }
     if (!formats.some(function(format) {
       return format.support_bc;
     })) {
@@ -40930,9 +40950,9 @@ CUI.DateTime = (function(superClass) {
       stringValue = stringValue.substring(1);
     } else {
       us = stringValue.toLocaleUpperCase();
-      ref = CUI.DateTime.defaults.bc_appendix;
-      for (j = 0, len1 = ref.length; j < len1; j++) {
-        appendix = ref[j];
+      ref1 = CUI.DateTime.defaults.bc_appendix;
+      for (i = 0, len = ref1.length; i < len; i++) {
+        appendix = ref1[i];
         ua = appendix.toLocaleUpperCase();
         if (us.endsWith(" " + ua)) {
           stringValue = stringValue.substring(0, stringValue.length - ua.length).trim();
@@ -41000,7 +41020,7 @@ CUI.DateTime = (function(superClass) {
     if (mom.bc) {
       return "-" + mom.bc;
     } else {
-      return mom.format(this.__input_format[output_format]);
+      return CUI.DateTime.formatMoment(mom, this.__input_format[output_format]);
     }
   };
 
@@ -41669,7 +41689,14 @@ CUI.DateTime = (function(superClass) {
     if (parseZone && mom.year() > 0) {
       mom.parseZone();
     }
-    return mom.format(format);
+    return CUI.DateTime.__appendPartialTz(mom.format(format), mom);
+  };
+
+  DateTime.__appendPartialTz = function(str, mom) {
+    if (mom.fylrPartialTz) {
+      return str + mom.fylrPartialTz;
+    }
+    return str;
   };
 
   DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
@@ -41700,11 +41727,11 @@ CUI.DateTime = (function(superClass) {
       if (mom.year() < 1000 && add_AD) {
         replace = "0+" + (mom.year()) + "\\b";
         regexp = new RegExp(replace, "g");
-        return CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year()));
+        return CUI.DateTime.__appendPartialTz(CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year())), mom);
       }
       replace = "^\\+?0*" + (mom.year());
       regexp = new RegExp(replace);
-      return v.replace(regexp, "" + mom.year());
+      return CUI.DateTime.__appendPartialTz(v.replace(regexp, "" + mom.year()), mom);
     }
     mom.subtract(1, "year");
     v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output;
