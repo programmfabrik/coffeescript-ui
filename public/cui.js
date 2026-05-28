@@ -45201,9 +45201,6 @@ CUI.FileUpload = (function(superClass) {
       headers: {
         check: "PlainObject"
       },
-      withCredentials: {
-        check: Boolean
-      },
       add_filename_to_url: {
         "default": false,
         mandatory: true,
@@ -45556,9 +45553,9 @@ CUI.FileUpload = (function(superClass) {
       url = file._file.upload_url;
     }
     if (this._add_filename_to_url) {
-      return file.upload(url + file.getName(), this._name, this._headers, this._withCredentials);
+      return file.upload(url + file.getName(), this._name, this._headers);
     } else {
-      return file.upload(url, this._name, this._headers, this._withCredentials);
+      return file.upload(url, this._name, this._headers);
     }
   };
 
@@ -46439,7 +46436,7 @@ CUI.FileUploadFile = (function(superClass) {
     return !!this.__upload;
   };
 
-  FileUploadFile.prototype.upload = function(url, name, headers, withCredentials) {
+  FileUploadFile.prototype.upload = function(url, name, headers) {
     var form, onDone, xhrOpts;
     CUI.util.assert(!this.__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", {
       file: this
@@ -46456,9 +46453,6 @@ CUI.FileUploadFile = (function(superClass) {
       };
       if (headers) {
         xhrOpts.headers = headers;
-      }
-      if (withCredentials != null) {
-        xhrOpts.withCredentials = withCredentials;
       }
       this.__upload = new CUI.XHR(xhrOpts);
       this.__upload.start().progress((function(_this) {
