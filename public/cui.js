@@ -48323,13 +48323,14 @@ CUI.CodeInput = (function(superClass) {
     this.__aceEditor.getSession().setMode("ace/mode/" + this._mode);
     value = (ref = this.__data) != null ? ref[this._name] : void 0;
     if (value) {
-      if (CUI.util.isString(value)) {
-        try {
-          value = JSON.parse(value);
-        } catch (error) {}
-      }
       if (this._mode === "json") {
-        value = JSON.stringify(value, null, '\t');
+        if (CUI.util.isString(value)) {
+          try {
+            value = JSON.stringify(JSON.parse(value), null, '\t');
+          } catch (error) {}
+        } else {
+          value = JSON.stringify(value, null, '\t');
+        }
       }
       this.__aceEditor.setValue(value, -1);
       this.__aceEditor.clearSelection();
