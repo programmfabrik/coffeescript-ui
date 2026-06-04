@@ -31,11 +31,16 @@ class CUI.CodeInput extends CUI.Input
 
 		value = @__data?[@_name]
 		if value
-			if CUI.util.isString(value)
-				try # Workaround to format/indent
-					value = JSON.parse(value)
 			if @_mode == "json"
-				value = JSON.stringify(value, null, '\t')
+				# Pretty-print JSON content for display. Only reformat when the
+				# value really is JSON; otherwise leave it untouched so non-JSON
+				# content (e.g. JavaScript) is not corrupted into an escaped
+				# string literal when re-rendered.
+				if CUI.util.isString(value)
+					try # Workaround to format/indent
+						value = JSON.stringify(JSON.parse(value), null, '\t')
+				else
+					value = JSON.stringify(value, null, '\t')
 			@__aceEditor.setValue(value, -1) # -1 sets the cursor to the start
 			@__aceEditor.clearSelection()
 
