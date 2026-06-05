@@ -1147,7 +1147,6 @@ textarea {
   margin: 0;
   flex: 1 1 auto;
   box-sizing: border-box;
-  resize: vertical;
 }
 input.cui-input-shadow,
 textarea.cui-input-shadow {
