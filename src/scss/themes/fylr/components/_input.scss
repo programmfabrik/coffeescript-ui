@@ -16,7 +16,6 @@ textarea {
 	border-radius: $input-border-radius;
 	padding: $input-padding-y $input-padding-x;
 	flex: 1 1 auto;
-	resize: vertical;
 	vertical-align: bottom; // see listView demo
 
 	&::placeholder {
