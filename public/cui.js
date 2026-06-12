@@ -37062,7 +37062,9 @@ CUI.Button = (function(superClass) {
       })(this));
       return ret;
     }
-    activate();
+    if (this.__active) {
+      activate();
+    }
     return this;
   };
 
@@ -37097,7 +37099,9 @@ CUI.Button = (function(superClass) {
       })(this));
       return ret;
     }
-    deactivate();
+    if (!this.__active) {
+      deactivate();
+    }
     return this;
   };
 
