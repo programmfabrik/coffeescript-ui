@@ -772,7 +772,10 @@ class CUI.Button extends CUI.DOMElement
 				@__active = false
 			return ret
 
-		activate()
+		# a handler may have called deactivate() on us — that nested call
+		# already applied the final visuals, don't override them here
+		if @__active
+			activate()
 		@
 
 
@@ -801,7 +804,12 @@ class CUI.Button extends CUI.DOMElement
 				@__active = true
 			return ret
 
-		deactivate()
+		# a handler may have called activate() on us (e.g. Options re-checking
+		# the last box to enforce min_checked) — that nested call already
+		# applied the active visuals; removing the css class here would desync
+		# it from @__active (check icon on an unchecked-looking box)
+		if not @__active
+			deactivate()
 		@
 
 	setIconRight: (icon=null) ->
