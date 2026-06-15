@@ -40916,7 +40916,7 @@ CUI.DateTime = (function(superClass) {
   };
 
   DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, bareValue, checkBC, hasBCAppendix, i, len, longMatch, mom, ref, ref1, shortMatch, tzMatch, ua, us;
+    var appendix, bareValue, bcYearMatch, checkBC, hasBCAppendix, i, len, longMatch, mom, parts, ref, ref1, sep, shortMatch, tzMatch, ua, us;
     if (formats == null) {
       formats = this.__input_formats;
     }
@@ -40964,6 +40964,13 @@ CUI.DateTime = (function(superClass) {
           break;
         }
       }
+      if (!checkBC) {
+        bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/);
+        if (bcYearMatch) {
+          checkBC = true;
+          stringValue = bcYearMatch[1] + bcYearMatch[2];
+        }
+      }
     }
     if (!checkBC) {
       return moment.invalid();
@@ -40974,6 +40981,16 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     if (longMatch) {
+      if (stringValue.indexOf("-") > -1) {
+        parts = stringValue.split("-");
+        parts[0] = this.__padYear(parts[0]);
+        stringValue = parts.join("-");
+      } else {
+        sep = stringValue.indexOf("/") > -1 ? "/" : ".";
+        parts = stringValue.split(sep);
+        parts[parts.length - 1] = this.__padYear(parts[parts.length - 1]);
+        stringValue = parts.join(sep);
+      }
       mom = this.parse(stringValue);
       if (hasBCAppendix) {
         if (mom != null) {
@@ -41001,6 +41018,13 @@ CUI.DateTime = (function(superClass) {
       mom.bc = "" + mom.bc;
     }
     return mom;
+  };
+
+  DateTime.prototype.__padYear = function(year) {
+    if (!/^[0-9]+$/.test(year) || year.length >= 4) {
+      return year;
+    }
+    return ("0000" + year).slice(-4);
   };
 
   DateTime.prototype.parseValue = function(value, output_format) {
