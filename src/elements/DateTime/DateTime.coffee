@@ -699,6 +699,13 @@ class CUI.DateTime extends CUI.Input
 					hasBCAppendix = checkBC = true
 					break
 
+			# minus right in front of the year segment, e.g. "13.07.-99" or "01.01.-200"
+			if not checkBC
+				bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/)
+				if bcYearMatch
+					checkBC = true
+					stringValue = bcYearMatch[1] + bcYearMatch[2]
+
 		if not checkBC
 			return moment.invalid()
 
@@ -708,6 +715,19 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		if longMatch
+			# Pad the year to four digits so moment's strict formats (YYYY / DD.MM.YYYY)
+			# recognise short BC years like "99". In ISO order ("-" separator) the year
+			# is the first segment, otherwise (".", "/") it is the last one.
+			if stringValue.indexOf("-") > -1
+				parts = stringValue.split("-")
+				parts[0] = @__padYear(parts[0])
+				stringValue = parts.join("-")
+			else
+				sep = if stringValue.indexOf("/") > -1 then "/" else "."
+				parts = stringValue.split(sep)
+				parts[parts.length - 1] = @__padYear(parts[parts.length - 1])
+				stringValue = parts.join(sep)
+
 			#If we have a valid long date then we can call parse again
 			mom = @parse(stringValue)
 			if hasBCAppendix
@@ -734,6 +754,11 @@ class CUI.DateTime extends CUI.Input
 			mom.bc = ""+mom.bc
 		return mom
 
+
+	__padYear: (year) ->
+		if not /^[0-9]+$/.test(year) or year.length >= 4
+			return year
+		("0000" + year).slice(-4)
 
 	# like parse, but it used all known input formats
 	# to recognize the value
