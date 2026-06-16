@@ -469,7 +469,7 @@ class CUI.DateTime extends CUI.Input
 			if mom.bc
 				value = "-"+mom.bc
 			else
-				value = mom.format(@__input_format.store)
+				value = CUI.DateTime.formatMoment(mom, @__input_format.store)
 
 		else if @_store_invalid and value.trim().length > 0
 			value = 'invalid'
@@ -638,13 +638,8 @@ class CUI.DateTime extends CUI.Input
 	#              matched is not among them, init to the first check format.
 	#              these formats are the "allowed" formats, this is used in __checkInput
 
-	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
-		stringValue = stringValue?.trim?()
-		if not (stringValue?.length > 0)
-			return moment.invalid()
-
+	__parseWithKnownFormats: (stringValue, formats, use_formats) ->
 		for format in formats
-
 			mom = @__parseFormat(format, stringValue)
 			if mom
 				if format in use_formats
@@ -656,6 +651,31 @@ class CUI.DateTime extends CUI.Input
 				if mom.year() > @_max_year # Year must not be greater than max year.
 					return moment.invalid()
 				return mom
+		return null
+
+	parse: (stringValue, formats = @__input_formats, use_formats = formats) ->
+		stringValue = stringValue?.trim?()
+		if not (stringValue?.length > 0)
+			return moment.invalid()
+
+		mom = @__parseWithKnownFormats(stringValue, formats, use_formats)
+		if mom
+			return mom
+
+		# fylr ISO 8601 extension: partial-date values (year, year-month, date) may
+		# carry a trailing timezone offset like "+11:00", "-05:00" or "Z" (the
+		# bare ISO standard does not allow this on partial dates). If the input
+		# didn't match any known format, retry without the offset and, when the
+		# remainder parses as a partial-date format (clock: false), tag the moment
+		# with the offset so format/store can re-append it.
+		tzMatch = stringValue.match(/\s*([+-]\d{2}:\d{2}|Z)$/)
+		if tzMatch and tzMatch.index > 0
+			bareValue = stringValue.substring(0, tzMatch.index).trim()
+			if bareValue.length > 0
+				mom = @__parseWithKnownFormats(bareValue, formats, use_formats)
+				if mom and @__input_format?.clock == false
+					mom.fylrPartialTz = tzMatch[1]
+					return mom
 
 		if not formats.some((format) -> format.support_bc)
 			return moment.invalid()
@@ -679,6 +699,13 @@ class CUI.DateTime extends CUI.Input
 					hasBCAppendix = checkBC = true
 					break
 
+			# minus right in front of the year segment, e.g. "13.07.-99" or "01.01.-200"
+			if not checkBC
+				bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/)
+				if bcYearMatch
+					checkBC = true
+					stringValue = bcYearMatch[1] + bcYearMatch[2]
+
 		if not checkBC
 			return moment.invalid()
 
@@ -688,6 +715,19 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		if longMatch
+			# Pad the year to four digits so moment's strict formats (YYYY / DD.MM.YYYY)
+			# recognise short BC years like "99". In ISO order ("-" separator) the year
+			# is the first segment, otherwise (".", "/") it is the last one.
+			if stringValue.indexOf("-") > -1
+				parts = stringValue.split("-")
+				parts[0] = @__padYear(parts[0])
+				stringValue = parts.join("-")
+			else
+				sep = if stringValue.indexOf("/") > -1 then "/" else "."
+				parts = stringValue.split(sep)
+				parts[parts.length - 1] = @__padYear(parts[parts.length - 1])
+				stringValue = parts.join(sep)
+
 			#If we have a valid long date then we can call parse again
 			mom = @parse(stringValue)
 			if hasBCAppendix
@@ -715,6 +755,11 @@ class CUI.DateTime extends CUI.Input
 		return mom
 
 
+	__padYear: (year) ->
+		if not /^[0-9]+$/.test(year) or year.length >= 4
+			return year
+		("0000" + year).slice(-4)
+
 	# like parse, but it used all known input formats
 	# to recognize the value
 	parseValue: (value, output_format = null) ->
@@ -731,7 +776,7 @@ class CUI.DateTime extends CUI.Input
 		if mom.bc
 			return "-"+mom.bc
 		else
-			return mom.format(@__input_format[output_format])
+			return CUI.DateTime.formatMoment(mom, @__input_format[output_format])
 
 	__parseFormat: (f, s) ->
 		for k in CUI.DateTime.formatTypes
@@ -1511,7 +1556,15 @@ class CUI.DateTime extends CUI.Input
 		if parseZone and mom.year() > 0
 			mom.parseZone() # Only parseZone if necessary, in case it is wanted to keep the timezone.
 
-		return mom.format(format)
+		return CUI.DateTime.__appendPartialTz(mom.format(format), mom)
+
+	# Re-append the fylr partial-date timezone offset (see parse) so the value
+	# round-trips through storeValue / parseValue / format. Canonical ISO form
+	# has no separator between the date and the offset.
+	@__appendPartialTz: (str, mom) ->
+		if mom.fylrPartialTz
+			return str + mom.fylrPartialTz
+		return str
 
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
 	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false) ->
@@ -1537,12 +1590,12 @@ class CUI.DateTime extends CUI.Input
 			if mom.year() < 1000 and add_AD
 				replace = "0+#{mom.year()}\\b";
 				regexp = new RegExp(replace, "g");
-				return CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s",  v.replace(regexp, ""+mom.year()))
+				return CUI.DateTime.__appendPartialTz(CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s",  v.replace(regexp, ""+mom.year())), mom)
 
 			# remove the "+" and all possible zeros.
 			replace = "^\\+?0*#{mom.year()}";
 			regexp = new RegExp(replace);
-			return v.replace(regexp, ""+mom.year())
+			return CUI.DateTime.__appendPartialTz(v.replace(regexp, ""+mom.year()), mom)
 
 		mom.subtract(1, "year")
 		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output

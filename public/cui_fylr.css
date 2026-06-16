@@ -3572,7 +3572,6 @@ textarea {
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
   flex: 1 1 auto;
-  resize: vertical;
   vertical-align: bottom;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
@@ -6361,6 +6360,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
     margin-left: 0;
   }
 }
+.cui-form.cui-form--output-only {
+  --form-cell-gap: $spacer-sm;
+}
 
 /*
 <div class="cui-form">
@@ -6381,7 +6383,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 
 .cui-form-tr,
 .cui-form-tr-header {
-  margin-bottom: 1rem;
+  margin-bottom: var(--form-cell-gap, 1rem);
 }
 .cui-form-tr:not(:last-child):has(.cui-panel),
 .cui-form-tr-header:not(:last-child):has(.cui-panel) {
@@ -6554,7 +6556,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   display: flex;
   flex-direction: column;
   min-height: 0;
-  margin-bottom: 1rem;
+  margin-bottom: var(--form-cell-gap, 1rem);
 }
 .cui-form-row:only-child {
   margin-bottom: 0;

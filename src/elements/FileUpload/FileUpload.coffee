@@ -23,6 +23,8 @@ class CUI.FileUpload extends CUI.Element
 			name:
 				default: CUI.defaults.FileUpload.name
 				check: String
+			headers:
+				check: "PlainObject"
 			add_filename_to_url:
 				default: false
 				mandatory: true
@@ -292,9 +294,9 @@ class CUI.FileUpload extends CUI.Element
 		if file._file?.hasOwnProperty("upload_url")
 			url = file._file.upload_url
 		if @_add_filename_to_url
-			file.upload(url+file.getName(), @_name)
+			file.upload(url+file.getName(), @_name, @_headers)
 		else
-			file.upload(url, @_name)
+			file.upload(url, @_name, @_headers)
 
 	checkBatchDone: (file) ->
 		alarm = false

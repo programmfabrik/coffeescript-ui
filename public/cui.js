@@ -33404,9 +33404,10 @@ CUI.dom = (function() {
     if (node.hasOwnProperty('DOM')) {
       node = node.DOM;
     }
-    CUI.util.assert(CUI.util.isElement(node), "CUI.dom.empty", "top needs to be Element", {
-      node: node
-    });
+    if (!(node instanceof Node && CUI.util.isFunction(node.removeChild))) {
+      console.warn("CUI.dom.empty: node is not a DOM Node, ignoring.", node);
+      return null;
+    }
     while (last = node.lastChild) {
       node.removeChild(last);
     }
@@ -37061,7 +37062,9 @@ CUI.Button = (function(superClass) {
       })(this));
       return ret;
     }
-    activate();
+    if (this.__active) {
+      activate();
+    }
     return this;
   };
 
@@ -37096,7 +37099,9 @@ CUI.Button = (function(superClass) {
       })(this));
       return ret;
     }
-    deactivate();
+    if (!this.__active) {
+      deactivate();
+    }
     return this;
   };
 
@@ -40684,7 +40689,7 @@ CUI.DateTime = (function(superClass) {
       if (mom.bc) {
         value = "-" + mom.bc;
       } else {
-        value = mom.format(this.__input_format.store);
+        value = CUI.DateTime.formatMoment(mom, this.__input_format.store);
       }
     } else if (this._store_invalid && value.trim().length > 0) {
       value = 'invalid';
@@ -40889,18 +40894,8 @@ CUI.DateTime = (function(superClass) {
     return opts;
   };
 
-  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
-    var appendix, checkBC, format, hasBCAppendix, i, j, len, len1, longMatch, mom, ref, shortMatch, ua, us;
-    if (formats == null) {
-      formats = this.__input_formats;
-    }
-    if (use_formats == null) {
-      use_formats = formats;
-    }
-    stringValue = stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim() : void 0 : void 0;
-    if (!((stringValue != null ? stringValue.length : void 0) > 0)) {
-      return moment.invalid();
-    }
+  DateTime.prototype.__parseWithKnownFormats = function(stringValue, formats, use_formats) {
+    var format, i, len, mom;
     for (i = 0, len = formats.length; i < len; i++) {
       format = formats[i];
       mom = this.__parseFormat(format, stringValue);
@@ -40917,6 +40912,36 @@ CUI.DateTime = (function(superClass) {
         return mom;
       }
     }
+    return null;
+  };
+
+  DateTime.prototype.parse = function(stringValue, formats, use_formats) {
+    var appendix, bareValue, bcYearMatch, checkBC, hasBCAppendix, i, len, longMatch, mom, parts, ref, ref1, sep, shortMatch, tzMatch, ua, us;
+    if (formats == null) {
+      formats = this.__input_formats;
+    }
+    if (use_formats == null) {
+      use_formats = formats;
+    }
+    stringValue = stringValue != null ? typeof stringValue.trim === "function" ? stringValue.trim() : void 0 : void 0;
+    if (!((stringValue != null ? stringValue.length : void 0) > 0)) {
+      return moment.invalid();
+    }
+    mom = this.__parseWithKnownFormats(stringValue, formats, use_formats);
+    if (mom) {
+      return mom;
+    }
+    tzMatch = stringValue.match(/\s*([+-]\d{2}:\d{2}|Z)$/);
+    if (tzMatch && tzMatch.index > 0) {
+      bareValue = stringValue.substring(0, tzMatch.index).trim();
+      if (bareValue.length > 0) {
+        mom = this.__parseWithKnownFormats(bareValue, formats, use_formats);
+        if (mom && ((ref = this.__input_format) != null ? ref.clock : void 0) === false) {
+          mom.fylrPartialTz = tzMatch[1];
+          return mom;
+        }
+      }
+    }
     if (!formats.some(function(format) {
       return format.support_bc;
     })) {
@@ -40929,14 +40954,21 @@ CUI.DateTime = (function(superClass) {
       stringValue = stringValue.substring(1);
     } else {
       us = stringValue.toLocaleUpperCase();
-      ref = CUI.DateTime.defaults.bc_appendix;
-      for (j = 0, len1 = ref.length; j < len1; j++) {
-        appendix = ref[j];
+      ref1 = CUI.DateTime.defaults.bc_appendix;
+      for (i = 0, len = ref1.length; i < len; i++) {
+        appendix = ref1[i];
         ua = appendix.toLocaleUpperCase();
         if (us.endsWith(" " + ua)) {
           stringValue = stringValue.substring(0, stringValue.length - ua.length).trim();
           hasBCAppendix = checkBC = true;
           break;
+        }
+      }
+      if (!checkBC) {
+        bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/);
+        if (bcYearMatch) {
+          checkBC = true;
+          stringValue = bcYearMatch[1] + bcYearMatch[2];
         }
       }
     }
@@ -40949,6 +40981,16 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     if (longMatch) {
+      if (stringValue.indexOf("-") > -1) {
+        parts = stringValue.split("-");
+        parts[0] = this.__padYear(parts[0]);
+        stringValue = parts.join("-");
+      } else {
+        sep = stringValue.indexOf("/") > -1 ? "/" : ".";
+        parts = stringValue.split(sep);
+        parts[parts.length - 1] = this.__padYear(parts[parts.length - 1]);
+        stringValue = parts.join(sep);
+      }
       mom = this.parse(stringValue);
       if (hasBCAppendix) {
         if (mom != null) {
@@ -40978,6 +41020,13 @@ CUI.DateTime = (function(superClass) {
     return mom;
   };
 
+  DateTime.prototype.__padYear = function(year) {
+    if (!/^[0-9]+$/.test(year) || year.length >= 4) {
+      return year;
+    }
+    return ("0000" + year).slice(-4);
+  };
+
   DateTime.prototype.parseValue = function(value, output_format) {
     var format, i, input_formats, len, mom, ref;
     if (output_format == null) {
@@ -40999,7 +41048,7 @@ CUI.DateTime = (function(superClass) {
     if (mom.bc) {
       return "-" + mom.bc;
     } else {
-      return mom.format(this.__input_format[output_format]);
+      return CUI.DateTime.formatMoment(mom, this.__input_format[output_format]);
     }
   };
 
@@ -41668,7 +41717,14 @@ CUI.DateTime = (function(superClass) {
     if (parseZone && mom.year() > 0) {
       mom.parseZone();
     }
-    return mom.format(format);
+    return CUI.DateTime.__appendPartialTz(mom.format(format), mom);
+  };
+
+  DateTime.__appendPartialTz = function(str, mom) {
+    if (mom.fylrPartialTz) {
+      return str + mom.fylrPartialTz;
+    }
+    return str;
   };
 
   DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
@@ -41699,11 +41755,11 @@ CUI.DateTime = (function(superClass) {
       if (mom.year() < 1000 && add_AD) {
         replace = "0+" + (mom.year()) + "\\b";
         regexp = new RegExp(replace, "g");
-        return CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year()));
+        return CUI.DateTime.__appendPartialTz(CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year())), mom);
       }
       replace = "^\\+?0*" + (mom.year());
       regexp = new RegExp(replace);
-      return v.replace(regexp, "" + mom.year());
+      return CUI.DateTime.__appendPartialTz(v.replace(regexp, "" + mom.year()), mom);
     }
     mom.subtract(1, "year");
     v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output;
@@ -45197,6 +45253,9 @@ CUI.FileUpload = (function(superClass) {
         "default": CUI.defaults.FileUpload.name,
         check: String
       },
+      headers: {
+        check: "PlainObject"
+      },
       add_filename_to_url: {
         "default": false,
         mandatory: true,
@@ -45549,9 +45608,9 @@ CUI.FileUpload = (function(superClass) {
       url = file._file.upload_url;
     }
     if (this._add_filename_to_url) {
-      return file.upload(url + file.getName(), this._name);
+      return file.upload(url + file.getName(), this._name, this._headers);
     } else {
-      return file.upload(url, this._name);
+      return file.upload(url, this._name, this._headers);
     }
   };
 
@@ -46432,8 +46491,8 @@ CUI.FileUploadFile = (function(superClass) {
     return !!this.__upload;
   };
 
-  FileUploadFile.prototype.upload = function(url, name) {
-    var form, onDone;
+  FileUploadFile.prototype.upload = function(url, name, headers) {
+    var form, onDone, xhrOpts;
     CUI.util.assert(!this.__upload, "CUI.FileUploadFile.upload", "A file can only be uploaded once.", {
       file: this
     });
@@ -46443,10 +46502,14 @@ CUI.FileUploadFile = (function(superClass) {
       return function() {};
     })(this);
     if (this._file.size > 0) {
-      this.__upload = new CUI.XHR({
+      xhrOpts = {
         url: url,
         form: form
-      });
+      };
+      if (headers) {
+        xhrOpts.headers = headers;
+      }
+      this.__upload = new CUI.XHR(xhrOpts);
       this.__upload.start().progress((function(_this) {
         return function(type, loaded, total, percent) {
           if (type === "download") {
@@ -48288,13 +48351,14 @@ CUI.CodeInput = (function(superClass) {
     this.__aceEditor.getSession().setMode("ace/mode/" + this._mode);
     value = (ref = this.__data) != null ? ref[this._name] : void 0;
     if (value) {
-      if (CUI.util.isString(value)) {
-        try {
-          value = JSON.parse(value);
-        } catch (error) {}
-      }
       if (this._mode === "json") {
-        value = JSON.stringify(value, null, '\t');
+        if (CUI.util.isString(value)) {
+          try {
+            value = JSON.stringify(JSON.parse(value), null, '\t');
+          } catch (error) {}
+        } else {
+          value = JSON.stringify(value, null, '\t');
+        }
       }
       this.__aceEditor.setValue(value, -1);
       this.__aceEditor.clearSelection();
