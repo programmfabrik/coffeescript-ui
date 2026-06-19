@@ -916,7 +916,9 @@ class CUI.ListView extends CUI.SimplePane
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = CUI.dom.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				# __cells is populated in find_cells_and_rows with this exact element
+				# (same int row/col); avoids a full-grid querySelectorAll per colspan cell
+				cell = @__cells[parseInt(row_i)]?[parseInt(col_i)]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns
