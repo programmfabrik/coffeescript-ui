@@ -153,8 +153,16 @@ class CUI.ListView extends CUI.SimplePane
 			ignoreKeyEvents:
 				check: Boolean
 				default: false
+			hierarchyDragAndDrop:
+				check: Boolean
+				default: false
+			onHierarchyDrop:
+				check: Function
 
 	readOpts: ->
+		if @opts.rowMove and @opts.hierarchyDragAndDrop
+			throw new Error("rowMove and hierarchyDragAndDrop cannot be set together")
+
 		if @opts.header
 			@opts.header_center = @opts.header
 
@@ -1092,6 +1100,33 @@ class CUI.ListView extends CUI.SimplePane
 			for row in _rows
 				row_i = parseInt(row.getAttribute("row"))
 				@__rows[row_i].push(row)
+
+				if @_hierarchyDragAndDrop
+					# prevent root node from being draggable
+					if row_i > 0
+						new CUI.Draggable
+							element: row
+							axis: "y"
+							create: =>
+								return {
+									rowNode: CUI.dom.data(row, "listViewRow")
+								}
+
+					new CUI.Droppable
+						element: row
+						dropHelper: true
+						accept: (event, info) =>
+							rowNode = CUI.dom.data(row, "listViewRow")
+
+							if info.globalDrag.rowNode in rowNode.getPath(true)
+								return false
+
+							if rowNode == info.globalDrag.rowNode.getFather()
+								return false
+
+							return true
+						drop: (event, info) =>
+							@_onHierarchyDrop?(CUI.dom.data(row, "listViewRow"), info)
 
 			return
 

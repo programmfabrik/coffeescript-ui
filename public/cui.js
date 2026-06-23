@@ -52056,11 +52056,21 @@ CUI.ListView = (function(superClass) {
       ignoreKeyEvents: {
         check: Boolean,
         "default": false
+      },
+      hierarchyDragAndDrop: {
+        check: Boolean,
+        "default": false
+      },
+      onHierarchyDrop: {
+        check: Function
       }
     });
   };
 
   ListView.prototype.readOpts = function() {
+    if (this.opts.rowMove && this.opts.hierarchyDragAndDrop) {
+      throw new Error("rowMove and hierarchyDragAndDrop cannot be set together");
+    }
     if (this.opts.header) {
       this.opts.header_center = this.opts.header;
     }
@@ -53223,6 +53233,37 @@ CUI.ListView = (function(superClass) {
           row = _rows[n];
           row_i = parseInt(row.getAttribute("row"));
           _this.__rows[row_i].push(row);
+          if (_this._hierarchyDragAndDrop) {
+            if (row_i > 0) {
+              new CUI.Draggable({
+                element: row,
+                axis: "y",
+                create: function() {
+                  return {
+                    rowNode: CUI.dom.data(row, "listViewRow")
+                  };
+                }
+              });
+            }
+            new CUI.Droppable({
+              element: row,
+              dropHelper: true,
+              accept: function(event, info) {
+                var ref6, rowNode;
+                rowNode = CUI.dom.data(row, "listViewRow");
+                if (ref6 = info.globalDrag.rowNode, indexOf.call(rowNode.getPath(true), ref6) >= 0) {
+                  return false;
+                }
+                if (rowNode === info.globalDrag.rowNode.getFather()) {
+                  return false;
+                }
+                return true;
+              },
+              drop: function(event, info) {
+                return typeof _this._onHierarchyDrop === "function" ? _this._onHierarchyDrop(CUI.dom.data(row, "listViewRow"), info) : void 0;
+              }
+            });
+          }
         }
       };
     })(this);
