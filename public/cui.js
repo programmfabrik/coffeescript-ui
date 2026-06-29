@@ -40779,7 +40779,6 @@ CUI.DateTime = (function(superClass) {
 
   DateTime.prototype.updateDateTimePicker = function() {
     this.setMomentFromInput();
-    console.debug("updating popover...", this.__input_format);
     this.drawDate();
     this.setClock();
     this.setDigiClock();
@@ -40815,7 +40814,6 @@ CUI.DateTime = (function(superClass) {
       mom = this.__current_moment;
     }
     f = this.__input_format.digi_clock;
-    console.debug("setDigiClock", f, mom, mom.format(f));
     if (f) {
       this.__digiDisplay.display(mom.format(f));
     }
@@ -41125,7 +41123,6 @@ CUI.DateTime = (function(superClass) {
       this.__current_moment.bc = mom.bc;
       this.setInputFromMoment();
     }
-    console.info("CUI.DateTime.updateCalendar:", this.__current_moment.format(this.__input_format.input));
     this.markDay();
     return this;
   };
@@ -52942,7 +52939,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.__doLayout = function(opts) {
-    var add_css, cell, col_i, colspan, css, dim, display_col_i, fc, has_manually_sized_column, has_max_cols, i, idx, j, k, l, len1, len2, len3, len4, len5, len6, m, manual_col_width, n, o, p, qi, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, row, row_i, row_i2, row_info, rows, sel, width;
+    var add_css, cell, col_i, colspan, css, dim, display_col_i, fc, has_manually_sized_column, has_max_cols, i, idx, j, k, l, len1, len2, len3, len4, len5, len6, m, manual_col_width, n, o, p, qi, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, row, row_i, row_i2, row_info, rows, sel, width;
     if (opts == null) {
       opts = {};
     }
@@ -52992,9 +52989,9 @@ CUI.ListView = (function(superClass) {
       row_info = ref2[row_i];
       for (col_i in row_info) {
         colspan = row_info[col_i];
-        cell = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + "-cell[row=\"" + row_i + "\"][col=\"" + col_i + "\"]")[0];
+        cell = (ref3 = this.__cells[parseInt(row_i)]) != null ? ref3[parseInt(col_i)] : void 0;
         width = 0;
-        for (i = l = 0, ref3 = colspan; l < ref3; i = l += 1) {
+        for (i = l = 0, ref4 = colspan; l < ref4; i = l += 1) {
           width = width + this.__colWidths[parseInt(col_i) + i];
         }
         dim = CUI.dom.getDimensions(cell);
@@ -53008,31 +53005,31 @@ CUI.ListView = (function(superClass) {
       }
     }
     if (this.fixedColsCount > 0) {
-      ref4 = [0, 2];
-      for (m = 0, len3 = ref4.length; m < len3; m++) {
-        qi = ref4[m];
+      ref5 = [0, 2];
+      for (m = 0, len3 = ref5.length; m < len3; m++) {
+        qi = ref5[m];
         rows = [];
         if (opts.resetRows) {
           sel = ".cui-lv-tr-outer";
         } else {
           sel = "[cui-lv-tr-unmeasured=\"" + this.listViewCounter + "\"]";
         }
-        ref5 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + qi + "'] > ") + sel);
-        for (n = 0, len4 = ref5.length; n < len4; n++) {
-          row = ref5[n];
+        ref6 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + qi + "'] > ") + sel);
+        for (n = 0, len4 = ref6.length; n < len4; n++) {
+          row = ref6[n];
           rows[parseInt(CUI.dom.getAttribute(row, "row"))] = row;
           CUI.dom.removeAttribute(row, "cui-lv-tr-unmeasured");
         }
-        ref6 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + (qi + 1) + "'] > ") + sel);
-        for (idx = o = 0, len5 = ref6.length; o < len5; idx = ++o) {
-          row = ref6[idx];
+        ref7 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + (qi + 1) + "'] > ") + sel);
+        for (idx = o = 0, len5 = ref7.length; o < len5; idx = ++o) {
+          row = ref7[idx];
           row_i2 = parseInt(CUI.dom.getAttribute(row, "row"));
           CUI.dom.prepareSetDimensions(rows[row_i2]);
           row.__offsetHeight = row.offsetHeight;
         }
-        ref7 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + (qi + 1) + "'] > ") + sel);
-        for (idx = p = 0, len6 = ref7.length; p < len6; idx = ++p) {
-          row = ref7[idx];
+        ref8 = CUI.dom.matchSelector(this.grid, "." + this.__lvClass + ("-quadrant[cui-lv-quadrant='" + (qi + 1) + "'] > ") + sel);
+        for (idx = p = 0, len6 = ref8.length; p < len6; idx = ++p) {
+          row = ref8[idx];
           row_i2 = parseInt(CUI.dom.getAttribute(row, "row"));
           CUI.dom.setDimensions(rows[row_i2], {
             borderBoxHeight: row.__offsetHeight

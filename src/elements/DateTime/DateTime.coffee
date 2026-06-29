@@ -536,8 +536,6 @@ class CUI.DateTime extends CUI.Input
 		# 	,
 		# 		1000*30 # update the popover every 30 seconds
 
-		console.debug "updating popover...", @__input_format
-
 		@drawDate()
 		# @drawHourMinute()
 		@setClock()
@@ -568,7 +566,6 @@ class CUI.DateTime extends CUI.Input
 
 	setDigiClock: (mom = @__current_moment) ->
 		f = @__input_format.digi_clock
-		console.debug "setDigiClock", f, mom, mom.format(f)
 		if f
 			@__digiDisplay.display(mom.format(f))
 		@
@@ -836,8 +833,6 @@ class CUI.DateTime extends CUI.Input
 			@__current_moment = mom.clone()
 			@__current_moment.bc = mom.bc
 			@setInputFromMoment()
-
-		console.info("CUI.DateTime.updateCalendar:", @__current_moment.format(@__input_format.input))
 
 		@markDay()
 		@
