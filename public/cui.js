@@ -40963,7 +40963,7 @@ CUI.DateTime = (function(superClass) {
         }
       }
       if (!checkBC) {
-        bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/);
+        bcYearMatch = stringValue.match(/^((?:[0-9]{1,2}[.\/])+)-([0-9]+.*)$/);
         if (bcYearMatch) {
           checkBC = true;
           stringValue = bcYearMatch[1] + bcYearMatch[2];
@@ -40974,7 +40974,7 @@ CUI.DateTime = (function(superClass) {
       return moment.invalid();
     }
     shortMatch = stringValue.match(/^[0-9]+$/);
-    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/);
+    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+(?:[-\.\/][0-9]+)?/);
     if (!shortMatch && !longMatch) {
       return moment.invalid();
     }
