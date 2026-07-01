@@ -696,9 +696,10 @@ class CUI.DateTime extends CUI.Input
 					hasBCAppendix = checkBC = true
 					break
 
-			# minus right in front of the year segment, e.g. "13.07.-99" or "01.01.-200"
+			# minus right in front of the year segment: full date "13.07.-99" / "01.01.-200",
+			# year-month "06.-2026" or date-time "11.02.-2026 10:18" (a time may follow the year).
 			if not checkBC
-				bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/)
+				bcYearMatch = stringValue.match(/^((?:[0-9]{1,2}[.\/])+)-([0-9]+.*)$/)
 				if bcYearMatch
 					checkBC = true
 					stringValue = bcYearMatch[1] + bcYearMatch[2]
@@ -707,7 +708,7 @@ class CUI.DateTime extends CUI.Input
 			return moment.invalid()
 
 		shortMatch = stringValue.match(/^[0-9]+$/) #Find string like 2022
-		longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/) #Find 2202-05-13
+		longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+(?:[-\.\/][0-9]+)?/) #Find 2202-05-13 or year-month 05.2022
 		if not shortMatch and not longMatch
 			return moment.invalid()
 
