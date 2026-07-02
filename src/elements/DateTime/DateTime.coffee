@@ -707,6 +707,11 @@ class CUI.DateTime extends CUI.Input
 		if not checkBC
 			return moment.invalid()
 
+		# BC only: drop a trailing timezone offset ("Z" or "+00:53") so a BC date-time's
+		# clock time is read literally. Ancient dates carry non-integer historical (LMT)
+		# offsets; converting through them on reload would silently shift the time.
+		stringValue = stringValue.replace(/\s*(?:Z|[+-][0-9]{2}:[0-9]{2})$/, "")
+
 		shortMatch = stringValue.match(/^[0-9]+$/) #Find string like 2022
 		longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+(?:[-\.\/][0-9]+)?/) #Find 2202-05-13 or year-month 05.2022
 		if not shortMatch and not longMatch
