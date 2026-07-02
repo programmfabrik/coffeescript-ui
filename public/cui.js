@@ -40973,6 +40973,7 @@ CUI.DateTime = (function(superClass) {
     if (!checkBC) {
       return moment.invalid();
     }
+    stringValue = stringValue.replace(/\s*(?:Z|[+-][0-9]{2}:[0-9]{2})$/, "");
     shortMatch = stringValue.match(/^[0-9]+$/);
     longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+(?:[-\.\/][0-9]+)?/);
     if (!shortMatch && !longMatch) {
