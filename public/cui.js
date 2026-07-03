@@ -48736,6 +48736,10 @@ CUI.Input = (function(superClass) {
         "default": "off",
         check: String
       },
+      input_type: {
+        "default": "text",
+        check: String
+      },
       overwrite: {
         check: Boolean
       },
@@ -48973,7 +48977,7 @@ CUI.Input = (function(superClass) {
   Input.prototype.__createElement = function(input_type) {
     var oldSizes, resize, textarea_opts;
     if (input_type == null) {
-      input_type = "text";
+      input_type = this._input_type;
     }
     if (this._textarea === true) {
       textarea_opts = {
