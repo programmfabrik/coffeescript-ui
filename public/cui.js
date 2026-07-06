@@ -40963,7 +40963,7 @@ CUI.DateTime = (function(superClass) {
         }
       }
       if (!checkBC) {
-        bcYearMatch = stringValue.match(/^([0-9]{1,2}[.\/][0-9]{1,2}[.\/])-([0-9]+)$/);
+        bcYearMatch = stringValue.match(/^((?:[0-9]{1,2}[.\/])+)-([0-9]+.*)$/);
         if (bcYearMatch) {
           checkBC = true;
           stringValue = bcYearMatch[1] + bcYearMatch[2];
@@ -40973,8 +40973,9 @@ CUI.DateTime = (function(superClass) {
     if (!checkBC) {
       return moment.invalid();
     }
+    stringValue = stringValue.replace(/\s*(?:Z|[+-][0-9]{2}:[0-9]{2})$/, "");
     shortMatch = stringValue.match(/^[0-9]+$/);
-    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+[-\.\/][0-9]+/);
+    longMatch = stringValue.match(/^[0-9]+[-\.\/][0-9]+(?:[-\.\/][0-9]+)?/);
     if (!shortMatch && !longMatch) {
       return moment.invalid();
     }
@@ -48735,6 +48736,10 @@ CUI.Input = (function(superClass) {
         "default": "off",
         check: String
       },
+      input_type: {
+        "default": "text",
+        check: String
+      },
       overwrite: {
         check: Boolean
       },
@@ -48972,7 +48977,7 @@ CUI.Input = (function(superClass) {
   Input.prototype.__createElement = function(input_type) {
     var oldSizes, resize, textarea_opts;
     if (input_type == null) {
-      input_type = "text";
+      input_type = this._input_type;
     }
     if (this._textarea === true) {
       textarea_opts = {

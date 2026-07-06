@@ -72,6 +72,9 @@ class CUI.Input extends CUI.DataFieldInput
 			autocomplete:
 				default: "off"
 				check: String
+			input_type:
+				default: "text"
+				check: String
 			overwrite:
 				check: Boolean
 			checkInput:
@@ -246,7 +249,7 @@ class CUI.Input extends CUI.DataFieldInput
 	# - tab block advance
 	# - up/down cursor number decrement/increment
 	# - input masking
-	__createElement: (input_type="text") ->
+	__createElement: (input_type = @_input_type) ->
 		if @_textarea ==  true
 			textarea_opts =
 				placeholder: @getPlaceholder()
