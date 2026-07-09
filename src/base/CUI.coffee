@@ -11,7 +11,7 @@
 # @example Startup
 #
 
-marked = require('marked')
+{ marked, Renderer } = require('marked')
 
 class CUI
 
@@ -1016,13 +1016,8 @@ CUI.ready =>
 			document.body.classList.add("cui-browser-"+k)
 
 	CUI.defaults.marked_opts =
-		renderer: new marked.Renderer()
 		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		smartLists: true
-		smartypants: false
+		renderer: new Renderer()
 
 	# initialize a markdown renderer
 	marked.setOptions(CUI.defaults.marked_opts)

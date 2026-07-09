@@ -11,10 +11,8 @@ const APP_DIR = path.resolve(__dirname, 'src');
 module.exports = function (env, argv) {
 	const isProduction = !!(env && env.production);
 	const isBuildAll = !!(env && env.all);
-    
-    let plugins = [
-        // new HardSourceWebpackPlugin(), We comment out the plugin due to https://github.com/mzgoddard/hard-source-webpack-plugin/issues/480
 
+    let plugins = [
 		// use CleanWebpackPlugin to explicitly clear the not-needed folder ONLY
 		new CleanWebpackPlugin({
 			cleanStaleWebpackAssets: false,
@@ -76,7 +74,7 @@ module.exports = function (env, argv) {
                 }),
             ],
         },
-        devtool: (!isProduction ? 'source-map' : undefined),     
+        devtool: (!isProduction ? 'source-map' : undefined),
         module: {
             rules: [
                 {
@@ -107,7 +105,7 @@ module.exports = function (env, argv) {
                                 sourceMap: true,
                                 // debug: true
                             }
-                        },                        
+                        },
                         {
                             loader: 'sass-loader',
                             options: {
@@ -133,7 +131,7 @@ module.exports = function (env, argv) {
                         dataUrlCondition: {
                             maxSize: 150 * 1024 // 150 KB
                         },
-                    }        
+                    }
                 },
                 {
                     test: /\.(html)$/,
