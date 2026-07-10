@@ -51563,6 +51563,10 @@ CUI.Label = (function(superClass) {
       markdown_opts: {
         check: "PlainObject"
       },
+      sanitizeMarkdown: {
+        check: Boolean,
+        "default": true
+      },
       tooltip: {
         check: "PlainObject"
       },
@@ -51635,6 +51639,7 @@ CUI.Label = (function(superClass) {
   };
 
   Label.prototype.setText = function(__currentText, markdown) {
+    var htmlValue, renderedMarkdown;
     this.__currentText = __currentText;
     if (markdown == null) {
       markdown = this.__markdown;
@@ -51642,7 +51647,9 @@ CUI.Label = (function(superClass) {
     if (CUI.util.isEmpty(this.__currentText)) {
       this.empty("content");
     } else if (markdown) {
-      this.setContent(CUI.dom.htmlToNodes(DOMPurify.sanitize(marked(this.__currentText, this.__markdown_opts))));
+      renderedMarkdown = marked(this.__currentText, this.__markdown_opts);
+      htmlValue = this._sanitizeMarkdown ? DOMPurify.sanitize(renderedMarkdown) : renderedMarkdown;
+      this.setContent(CUI.dom.htmlToNodes(htmlValue));
       this.addClass("cui-label-markdown");
     } else if (this._text_node_func) {
       this.setContent(this._text_node_func(this.__currentText));
