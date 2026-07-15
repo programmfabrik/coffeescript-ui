@@ -17,6 +17,7 @@ src/**.js.map
 !public/cui_fylr.css
 !public/cui_debug.css
 !public/cui-tutorial.js
+!public/worker-*.js
 !demo/public/cui-demo.js
 !demo/public/cui-demo.css
 !demo/public/css
