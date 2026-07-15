@@ -24,10 +24,9 @@ class CUI.CodeInput extends CUI.Input
 		super()
 
 		@__aceEditor = Ace.edit(@__input,
-			useWorker: false
+			mode: "ace/mode/#{@_mode}"
 			selectionStyle: "text"
 		)
-		@__aceEditor.getSession().setMode("ace/mode/#{@_mode}");
 
 		value = @__data?[@_name]
 		if value
