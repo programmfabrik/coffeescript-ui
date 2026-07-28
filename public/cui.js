@@ -52130,11 +52130,13 @@ CUI.ListView = (function(superClass) {
     this.__inactive = !!inactive;
     if (this.grid) {
       if (this.__inactive) {
-        CUI.dom.addClass(this.grid, addClass);
-        this.__inactiveWaitBlock = new CUI.WaitBlock({
-          element: this.grid,
-          inactive: true
-        }).show();
+        if (!this.__inactiveWaitBlock) {
+          CUI.dom.addClass(this.grid, addClass);
+          this.__inactiveWaitBlock = new CUI.WaitBlock({
+            element: this.grid,
+            inactive: true
+          }).show();
+        }
       } else {
         if ((ref = this.__inactiveWaitBlock) != null) {
           ref.destroy();
