@@ -35418,6 +35418,9 @@ CUI.util = (function() {
     if (obj instanceof CUI.Dummy) {
       return obj;
     }
+    if (obj instanceof RegExp) {
+      return new RegExp(obj.source, obj.flags);
+    }
     if (CUI.util.isPlainObject(obj)) {
       new_obj = {};
       for (k in obj) {
@@ -35486,6 +35489,11 @@ CUI.util = (function() {
     if (obj instanceof CUI.Dummy) {
       visited.set(obj, obj);
       return obj;
+    }
+    if (obj instanceof RegExp) {
+      result = deep ? new RegExp(obj.source, obj.flags) : obj;
+      visited.set(obj, result);
+      return result;
     }
     if (CUI.util.isPlainObject(obj)) {
       copy = {};
