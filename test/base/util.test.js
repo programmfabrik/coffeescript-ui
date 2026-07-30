@@ -145,3 +145,36 @@ describe('CUI.util.mergeMap', () => {
         expect(result).toBe(targetMap);
     });
 });
+describe('CUI.util.copyObject with RegExp', () => {
+    // CUI.DateTime.initFormat caches a RegExp on the shared format objects of
+    // CUI.DateTimeFormats, so deep copies of those formats used to throw.
+    test("Deep copy keeps a working RegExp", () => {
+        let source = {
+            input: "DD.MM.YYYY HH:mm",
+            regexp: /^([0-3][0-9])\.([0-1][0-9])$/g
+        };
+        let copy = CUI.util.copyObject(source, true);
+        expect(copy.regexp).not.toBe(source.regexp);
+        expect(copy.regexp.source).toBe(source.regexp.source);
+        expect(copy.regexp.flags).toBe("g");
+        expect("31.12".match(copy.regexp)).toBeTruthy();
+    });
+
+    test("Deep copy in copyObjectV2 keeps a working RegExp", () => {
+        let source = {
+            regexp: /^[0-9]{4}$/i
+        };
+        let copy = CUI.util.copyObjectV2(source, true);
+        expect(copy.regexp).not.toBe(source.regexp);
+        expect(copy.regexp.source).toBe(source.regexp.source);
+        expect(copy.regexp.flags).toBe("i");
+    });
+
+    test("Shallow copy shares the RegExp", () => {
+        let source = {
+            regexp: /abc/
+        };
+        expect(CUI.util.copyObject(source).regexp).toBe(source.regexp);
+        expect(CUI.util.copyObjectV2(source).regexp).toBe(source.regexp);
+    });
+});

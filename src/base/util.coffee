@@ -305,6 +305,9 @@ class CUI.util
 		if obj instanceof CUI.Dummy
 			return obj
 
+		if obj instanceof RegExp
+			return new RegExp(obj.source, obj.flags)
+
 		if CUI.util.isPlainObject(obj)
 			new_obj = {}
 			for k, v of obj
@@ -363,6 +366,12 @@ class CUI.util
 		if obj instanceof CUI.Dummy
 			visited.set(obj, obj)
 			return obj
+
+		# Special handling for RegExp objects.
+		if obj instanceof RegExp
+			result = if deep then new RegExp(obj.source, obj.flags) else obj
+			visited.set(obj, result)
+			return result
 
 		# If the object is a plain object.
 		if CUI.util.isPlainObject(obj)
