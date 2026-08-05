@@ -76,6 +76,17 @@
 			}
 		}
 	}
+
+	// text_middle_ellipsis: the center gets the remaining space so the
+	// truncation code can measure against it (Button.__fitTextMiddle)
+	&.cui-button--text-middle-ellipsis {
+		.cui-button-visual {
+			.cui-button-center {
+				flex: 1 1 auto;
+				min-width: 0;
+			}
+		}
+	}
 }
 
 // type of cui-button-href that is rendered in a cui-item-list, see Asset.coffee
