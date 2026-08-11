@@ -8610,8 +8610,8 @@ which will apply the class "use-css-grid-layout"
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin-left: -4px;
-  margin-right: 2px;
+  margin-left: var(--tree-node-handle-margin-left, -4px);
+  margin-right: var(--tree-node-handle-margin-right, 2px);
 }
 .cui-tree-node-handle.cui-tree-node-is-closed {
   cursor: pointer;

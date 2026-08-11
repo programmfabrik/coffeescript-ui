@@ -212,8 +212,10 @@ class CUI.ListView extends CUI.SimplePane
 		@__inactive = !!inactive
 		if @grid
 			if @__inactive
-				CUI.dom.addClass(@grid, addClass)
-				@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
+				# repeated setInactive(true) would stack overlays and leak the previous one
+				if not @__inactiveWaitBlock
+					CUI.dom.addClass(@grid, addClass)
+					@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
 			else
 				@__inactiveWaitBlock?.destroy()
 				@__inactiveWaitBlock = null
