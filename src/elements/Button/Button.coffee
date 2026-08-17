@@ -135,6 +135,9 @@ class CUI.Button extends CUI.DOMElement
 		if @_class
 			@addClass(@_class)
 
+		if @_text_middle_ellipsis
+			@addClass("cui-button--text-middle-ellipsis")
+
 		if @_center
 			@append(@_center, "center")
 		else if @_text
@@ -477,6 +480,13 @@ class CUI.Button extends CUI.DOMElement
 
 			text:
 				check: String
+			# middle-truncate the text to what the button really fits: css can
+			# only truncate at the end, but for e.g. filenames the start and
+			# the extension are the telling parts. The untruncated text stays
+			# available in getText() and, when truncated, as title attribute.
+			text_middle_ellipsis:
+				default: false
+				check: Boolean
 			tooltip:
 				check: "PlainObject"
 			disabled:
@@ -935,6 +945,40 @@ class CUI.Button extends CUI.DOMElement
 			span.id = "button-text-"+@getUniqueId()
 			@setAria("labelledby", span.id)
 		@replace(span, "center")
+		if @_text_middle_ellipsis
+			@__fitTextMiddle()
+		return
+
+	# middle-truncate @__txt so it fits the center's real width: candidates
+	# are measured on the center itself, so font, size and letter spacing are
+	# whatever the browser renders
+	__fitTextMiddle: ->
+		center = @getCenter()
+		span = center?.firstChild
+		if not span or center.clientWidth == 0
+			# not rendered (yet), keep the full text
+			return
+		txt = @__txt
+		mid = (keep) ->
+			head = Math.ceil(keep / 2)
+			txt.substr(0, head) + "…" + txt.substr(txt.length - (keep - head))
+		fits = (s) ->
+			span.textContent = s
+			center.scrollWidth <= center.clientWidth
+		if fits(txt)
+			CUI.dom.removeAttribute(@DOM, "title")
+			return
+		CUI.dom.setAttribute(@DOM, "title", txt)
+		lo = 4
+		hi = txt.length - 1
+		while lo < hi
+			keep = Math.ceil((lo + hi) / 2)
+			if fits(mid(keep))
+				lo = keep
+			else
+				hi = keep - 1
+		span.textContent = mid(lo)
+		return
 
 	setTextMaxChars: (max_chars) ->
 		CUI.dom.setAttribute(@getCenter().firstChild, "data-max-chars", max_chars)
