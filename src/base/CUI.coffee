@@ -115,6 +115,10 @@ class CUI
 		asserts_alert: 'js' # or 'cui' or 'off' or 'debugger'
 		class: {}
 
+		# DOMPurify drops "target" by default, which would break links meant to open in a new tab
+		dompurify_opts:
+			ADD_ATTR: ["target"]
+
 	# Returns a resolved CUI.Promise.
 	@resolvedPromise: ->
 		dfr = new CUI.Deferred()

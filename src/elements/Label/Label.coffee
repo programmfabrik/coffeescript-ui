@@ -197,7 +197,7 @@ class CUI.Label extends CUI.DOMElement
 			@empty("content")
 		else if markdown
 			renderedMarkdown = marked(@__currentText, @__markdown_opts)
-			htmlValue = if @_sanitizeMarkdown then DOMPurify.sanitize(renderedMarkdown) else renderedMarkdown
+			htmlValue = if @_sanitizeMarkdown then DOMPurify.sanitize(renderedMarkdown, CUI.defaults.dompurify_opts) else renderedMarkdown
 			@setContent(CUI.dom.htmlToNodes(htmlValue))
 			@addClass("cui-label-markdown")
 		else if @_text_node_func

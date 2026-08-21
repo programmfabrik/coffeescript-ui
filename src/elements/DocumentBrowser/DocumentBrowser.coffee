@@ -51,8 +51,8 @@ class CUI.DocumentBrowser extends CUI.Element
 		renderer.image = ({ href, title, text }) =>
 			@__node.rendererImage(href, title, text)
 
-		renderer.link = ({ href, title, text }) =>
-			@__node.rendererLink(href, title, text)
+		renderer.link = ({ href, title, tokens }) =>
+			@__node.rendererLink(href, title, renderer.parser.parseInline(tokens))
 
 		@__words = {}
 
@@ -62,7 +62,7 @@ class CUI.DocumentBrowser extends CUI.Element
 	marked: (@__node, markdown) ->
 		dfr = new CUI.Deferred()
 		mark = (markdown) =>
-			dfr.resolve(DOMPurify.sanitize(marked(markdown, @__marked_opts)))
+			dfr.resolve(DOMPurify.sanitize(marked(markdown, @__marked_opts), CUI.defaults.dompurify_opts))
 		ret = @_getMarkdown(markdown)
 		if CUI.util.isPromise(ret)
 			ret

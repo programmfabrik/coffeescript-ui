@@ -216,7 +216,7 @@ class CUI.MarkdownInput extends CUI.Input
 		@__preview.innerHTML = @renderHTML()
 
 	renderHTML: ->
-		DOMPurify.sanitize(@_renderFunction(@getElement().value))
+		DOMPurify.sanitize(@_renderFunction(@getElement().value), CUI.defaults.dompurify_opts)
 
 	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
 

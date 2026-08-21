@@ -6404,8 +6404,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
-  -webkit-hyphens: auto;
-          hyphens: auto;
+  hyphens: auto;
 }
 
 .cui-form-value {
