@@ -69464,13 +69464,8 @@ module.exports = formatcoords;
 /*!***************************************!*\
   !*** ./base/DataField/DataField.html ***!
   \***************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69482,7 +69477,7 @@ var code = `<!--
 <div data-template="data-field"></div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69490,13 +69485,8 @@ var code = `<!--
 /*!*******************************!*\
   !*** ./base/Layer/Layer.html ***!
   \*******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69512,7 +69502,7 @@ var code = `<!--
 
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69520,13 +69510,8 @@ var code = `<!--
 /*!***********************************!*\
   !*** ./elements/Block/Block.html ***!
   \***********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69540,7 +69525,7 @@ var code = `<!--
 	<div class="cui-block-content"></div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69548,13 +69533,8 @@ var code = `<!--
 /*!*************************************************!*\
   !*** ./elements/BorderLayout/BorderLayout.html ***!
   \*************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69580,7 +69560,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69588,13 +69568,8 @@ var code = `<!--
 /*!*************************************!*\
   !*** ./elements/Button/Button.html ***!
   \*************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69617,7 +69592,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69625,13 +69600,8 @@ var code = `<!--
 /*!*****************************************!*\
   !*** ./elements/Button/ButtonHref.html ***!
   \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69647,7 +69617,7 @@ var code = `<!--
 </a>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69655,13 +69625,8 @@ var code = `<!--
 /*!********************************************!*\
   !*** ./elements/Button/ButtonHref_ng.html ***!
   \********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69679,7 +69644,7 @@ var code = `<!--
 </a>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69687,13 +69652,8 @@ var code = `<!--
 /*!****************************************!*\
   !*** ./elements/Button/Button_ng.html ***!
   \****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69729,7 +69689,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69737,13 +69697,8 @@ var code = `<!--
 /*!****************************************!*\
   !*** ./elements/Button/Buttonbar.html ***!
   \****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69756,7 +69711,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69764,13 +69719,8 @@ var code = `<!--
 /*!*****************************************!*\
   !*** ./elements/DateTime/DateTime.html ***!
   \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69819,7 +69769,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69827,13 +69777,8 @@ var code = `<!--
 /*!***************************************************!*\
   !*** ./elements/FileUpload/FileUploadButton.html ***!
   \***************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69852,7 +69797,7 @@ var code = `<!--
 </label>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69860,13 +69805,8 @@ var code = `<!--
 /*!*********************************************************!*\
   !*** ./elements/HorizontalLayout/HorizontalLayout.html ***!
   \*********************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69902,7 +69842,7 @@ var code = `<!--
 
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69910,13 +69850,8 @@ var code = `<!--
 /*!*****************************************!*\
   !*** ./elements/ItemList/ItemList.html ***!
   \*****************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69928,7 +69863,7 @@ var code = `<!--
 <div data-template="item-list-body" class="cui-item-list-body"></div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69936,13 +69871,8 @@ var code = `<!--
 /*!***********************************!*\
   !*** ./elements/Label/Label.html ***!
   \***********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -69965,7 +69895,7 @@ var code = `<!--
 	</div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69973,17 +69903,12 @@ var code = `<!--
 /*!***********************************************!*\
   !*** ./elements/Map/leaflet.attribution.html ***!
   \***********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -69991,13 +69916,8 @@ var code = `&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contribu
 /*!*************************************!*\
   !*** ./elements/Map/map-input.html ***!
   \*************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<div data-template="map-input">
     <div class="cui-data-field-left" data-slot="left"></div>
@@ -70010,7 +69930,7 @@ var code = `<div data-template="map-input">
     <div class="cui-icon-marker-arrow" data-slot="arrow"></div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70018,13 +69938,8 @@ var code = `<div data-template="map-input">
 /*!*******************************!*\
   !*** ./elements/Map/map.html ***!
   \*******************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<div data-template="map">
     <div class="cui-map-buttons-top">
@@ -70040,7 +69955,7 @@ var code = `<div data-template="map">
     </div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70048,13 +69963,8 @@ var code = `<div data-template="map">
 /*!**************************************************!*\
   !*** ./elements/MultiInput/MultiInputInput.html ***!
   \**************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70069,7 +69979,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70077,13 +69987,8 @@ var code = `<!--
 /*!***********************************************!*\
   !*** ./elements/MultiOutput/MultiOutput.html ***!
   \***********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70098,7 +70003,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70106,13 +70011,8 @@ var code = `<!--
 /*!***************************************!*\
   !*** ./elements/Options/Options.html ***!
   \***************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70136,7 +70036,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70144,13 +70044,8 @@ var code = `<!--
 /*!*********************************!*\
   !*** ./elements/Pane/Pane.html ***!
   \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70167,7 +70062,7 @@ var code = `<!--
 <div data-template="pane-fill-screen-placeholder">Placeholder</div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70175,13 +70070,8 @@ var code = `<!--
 /*!***********************************!*\
   !*** ./elements/Panel/Panel.html ***!
   \***********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70198,7 +70088,7 @@ var code = `<!--
 	</div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70206,13 +70096,8 @@ var code = `<!--
 /*!***************************************************!*\
   !*** ./elements/ProgressMeter/ProgressMeter.html ***!
   \***************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70232,7 +70117,7 @@ var code = `<!--
 	</div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70240,13 +70125,8 @@ var code = `<!--
 /*!*************************************!*\
   !*** ./elements/Slider/Slider.html ***!
   \*************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<div data-template='slider'>
 	<div data-slot='track_visual' class='cui-slider-track-visual'></div>
@@ -70257,7 +70137,7 @@ var code = `<div data-template='slider'>
 
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70265,13 +70145,8 @@ var code = `<div data-template='slider'>
 /*!*************************************************!*\
   !*** ./elements/StickyHeader/StickyHeader.html ***!
   \*************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70284,7 +70159,7 @@ var code = `<!--
 	<div class="cui-sticky-header-center"></div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70292,13 +70167,8 @@ var code = `<!--
 /*!********************************!*\
   !*** ./elements/Tabs/Tab.html ***!
   \********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70310,7 +70180,7 @@ var code = `<!--
 <div data-template="tab-body" class="cui-tab-body"></div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70318,13 +70188,8 @@ var code = `<!--
 /*!*********************************!*\
   !*** ./elements/Tabs/Tabs.html ***!
   \*********************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70335,7 +70200,7 @@ var code = `<!--
 
 <div data-template="tabs-bodies" class="cui-tabs-bodies"></div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70343,13 +70208,8 @@ var code = `<!--
 /*!*****************************************************!*\
   !*** ./elements/VerticalLayout/VerticalLayout.html ***!
   \*****************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70383,7 +70243,7 @@ var code = `<!--
 </div>
 `;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 
@@ -70391,13 +70251,8 @@ var code = `<!--
 /*!*******************************************!*\
   !*** ./elements/WaitBlock/WaitBlock.html ***!
   \*******************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+(module) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 // Module
 var code = `<!--
  * coffeescript-ui - Coffeescript User Interface System (CUI)
@@ -70414,7 +70269,7 @@ var code = `<!--
 	</div>
 </div>`;
 // Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+module.exports = code;
 
 /***/ },
 

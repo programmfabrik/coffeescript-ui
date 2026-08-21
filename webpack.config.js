@@ -145,7 +145,12 @@ module.exports = function (env, argv) {
                 },
                 {
                     test: /\.(html)$/,
-                    loader: 'html-loader'
+                    loader: 'html-loader',
+                    // html-loader 5 defaults to an ESM default export; the templates are
+                    // pulled in with require() and must arrive as a plain string.
+                    options: {
+                        esModule: false
+                    }
                 }
             ]
         },
