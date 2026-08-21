@@ -36075,6 +36075,9 @@ CUI.util = (function() {
     if (obj instanceof CUI.Dummy) {
       return obj;
     }
+    if (obj instanceof RegExp) {
+      return new RegExp(obj.source, obj.flags);
+    }
     if (CUI.util.isPlainObject(obj)) {
       new_obj = {};
       for (k in obj) {
@@ -36143,6 +36146,11 @@ CUI.util = (function() {
     if (obj instanceof CUI.Dummy) {
       visited.set(obj, obj);
       return obj;
+    }
+    if (obj instanceof RegExp) {
+      result = deep ? new RegExp(obj.source, obj.flags) : obj;
+      visited.set(obj, result);
+      return result;
     }
     if (CUI.util.isPlainObject(obj)) {
       copy = {};
@@ -36956,6 +36964,9 @@ CUI.Button = (function(superClass) {
     if (this._class) {
       this.addClass(this._class);
     }
+    if (this._text_middle_ellipsis) {
+      this.addClass("cui-button--text-middle-ellipsis");
+    }
     if (this._center) {
       this.append(this._center, "center");
     } else if (this._text) {
@@ -37343,6 +37354,10 @@ CUI.Button = (function(superClass) {
       },
       text: {
         check: String
+      },
+      text_middle_ellipsis: {
+        "default": false,
+        check: Boolean
       },
       tooltip: {
         check: "PlainObject"
@@ -37916,7 +37931,45 @@ CUI.Button = (function(superClass) {
       span.id = "button-text-" + this.getUniqueId();
       this.setAria("labelledby", span.id);
     }
-    return this.replace(span, "center");
+    this.replace(span, "center");
+    if (this._text_middle_ellipsis) {
+      this.__fitTextMiddle();
+    }
+  };
+
+  Button.prototype.__fitTextMiddle = function() {
+    var center, fits, hi, keep, lo, mid, span, txt;
+    center = this.getCenter();
+    span = center != null ? center.firstChild : void 0;
+    if (!span || center.clientWidth === 0) {
+      return;
+    }
+    txt = this.__txt;
+    mid = function(keep) {
+      var head;
+      head = Math.ceil(keep / 2);
+      return txt.substr(0, head) + "…" + txt.substr(txt.length - (keep - head));
+    };
+    fits = function(s) {
+      span.textContent = s;
+      return center.scrollWidth <= center.clientWidth;
+    };
+    if (fits(txt)) {
+      CUI.dom.removeAttribute(this.DOM, "title");
+      return;
+    }
+    CUI.dom.setAttribute(this.DOM, "title", txt);
+    lo = 4;
+    hi = txt.length - 1;
+    while (lo < hi) {
+      keep = Math.ceil((lo + hi) / 2);
+      if (fits(mid(keep))) {
+        lo = keep;
+      } else {
+        hi = keep - 1;
+      }
+    }
+    span.textContent = mid(lo);
   };
 
   Button.prototype.setTextMaxChars = function(max_chars) {
@@ -52780,11 +52833,13 @@ CUI.ListView = (function(superClass) {
     this.__inactive = !!inactive;
     if (this.grid) {
       if (this.__inactive) {
-        CUI.dom.addClass(this.grid, addClass);
-        this.__inactiveWaitBlock = new CUI.WaitBlock({
-          element: this.grid,
-          inactive: true
-        }).show();
+        if (!this.__inactiveWaitBlock) {
+          CUI.dom.addClass(this.grid, addClass);
+          this.__inactiveWaitBlock = new CUI.WaitBlock({
+            element: this.grid,
+            inactive: true
+          }).show();
+        }
       } else {
         if ((ref = this.__inactiveWaitBlock) != null) {
           ref.destroy();
