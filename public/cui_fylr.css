@@ -3165,11 +3165,6 @@ div:not(.cui-buttonbar-group) > .cui-button-select.cui-button--danger:not(.cui-d
 .cui-button-select.cui-button--has-caret .cui-button-visual .cui-button-right {
   margin-left: auto;
 }
-.cui-button-button.cui-button--text-middle-ellipsis .cui-button-visual .cui-button-center,
-.cui-button-select.cui-button--text-middle-ellipsis .cui-button-visual .cui-button-center {
-  flex: 1 1 auto;
-  min-width: 0;
-}
 
 .cui-button-href:not(.cui-button--primary, .cui-button--secondary, .cui-button-download) {
   --btn-border-color: transparent;
@@ -6409,8 +6404,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
-  -webkit-hyphens: auto;
-          hyphens: auto;
+  hyphens: auto;
 }
 
 .cui-form-value {

@@ -5,7 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-marked = require('marked')
+{ marked } = require('marked')
+DOMPurify = require("dompurify")
 
 class CUI.MarkdownInput extends CUI.Input
 	initOpts: ->
@@ -215,7 +216,7 @@ class CUI.MarkdownInput extends CUI.Input
 		@__preview.innerHTML = @renderHTML()
 
 	renderHTML: ->
-		@_renderFunction(@getElement().value)
+		DOMPurify.sanitize(@_renderFunction(@getElement().value), CUI.defaults.dompurify_opts)
 
 	@__escape_regexp: new RegExp('[\\'+('*-_\\![]()'.split("").join("\\"))+']','g')
 

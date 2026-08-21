@@ -5,7 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-marked = require('marked')
+{ marked } = require('marked')
+DOMPurify = require("dompurify")
+
 CUI.Template.loadTemplateText(require('./Label.html'));
 
 # @param [Object] options for {Label} creation
@@ -139,6 +141,9 @@ class CUI.Label extends CUI.DOMElement
 				check: Boolean
 			markdown_opts:
 				check: "PlainObject"
+			sanitizeMarkdown:
+				check: Boolean
+				default: true
 			tooltip:
 				check: "PlainObject"
 			group:
@@ -191,7 +196,9 @@ class CUI.Label extends CUI.DOMElement
 		if CUI.util.isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.dom.htmlToNodes(marked(@__currentText, @__markdown_opts)))
+			renderedMarkdown = marked(@__currentText, @__markdown_opts)
+			htmlValue = if @_sanitizeMarkdown then DOMPurify.sanitize(renderedMarkdown, CUI.defaults.dompurify_opts) else renderedMarkdown
+			@setContent(CUI.dom.htmlToNodes(htmlValue))
 			@addClass("cui-label-markdown")
 		else if @_text_node_func
 			@setContent(@_text_node_func(@__currentText))

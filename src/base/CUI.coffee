@@ -11,7 +11,7 @@
 # @example Startup
 #
 
-marked = require('marked')
+{ marked, Renderer } = require('marked')
 
 class CUI
 
@@ -114,6 +114,10 @@ class CUI
 		asserts: true
 		asserts_alert: 'js' # or 'cui' or 'off' or 'debugger'
 		class: {}
+
+		# DOMPurify drops "target" by default, which would break links meant to open in a new tab
+		dompurify_opts:
+			ADD_ATTR: ["target"]
 
 	# Returns a resolved CUI.Promise.
 	@resolvedPromise: ->
@@ -1016,13 +1020,8 @@ CUI.ready =>
 			document.body.classList.add("cui-browser-"+k)
 
 	CUI.defaults.marked_opts =
-		renderer: new marked.Renderer()
 		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		smartLists: true
-		smartypants: false
+		renderer: new Renderer()
 
 	# initialize a markdown renderer
 	marked.setOptions(CUI.defaults.marked_opts)

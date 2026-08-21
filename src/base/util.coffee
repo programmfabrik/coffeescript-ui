@@ -7,7 +7,7 @@
 CoordinatesParser = require('coordinate-parser');
 CoordinatesFormat = require('formatcoords');
 
-marked = require('marked')
+{ marked } = require('marked')
 moment = require('moment')
 
 class CUI.util
@@ -696,14 +696,8 @@ class CUI.util
 CUI.util.moment = moment
 CUI.util.marked = marked
 
-String.prototype.startsWith = (s) ->
-	@substr(0, s.length) == s
-
 String.prototype.startsWithIgnoreCase = (s) ->
 	@toUpperCase().startsWith(s.toUpperCase())
 
-String.prototype.endsWith = (s) ->
-	@substr(@length-s.length) == s
-
-RegExp.escape= (s) ->
-    s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+RegExp.escape = (s) ->
+	s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
