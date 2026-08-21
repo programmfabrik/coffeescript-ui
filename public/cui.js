@@ -32050,7 +32050,7 @@ CUI.Socket = (function(superClass) {
 
   Socket.prototype.send = function(msg) {
     if (this.getStatus() === "OPEN") {
-      return this.__websocket.send(msg);
+      return this.__webSocket.send(msg);
     }
   };
 
@@ -32059,9 +32059,9 @@ CUI.Socket = (function(superClass) {
     if (asText == null) {
       asText = true;
     }
-    status = this.__websocket.readyState;
+    status = this.__webSocket.readyState;
     if (asText) {
-      return this.states[status];
+      return CUI.Socket.states[status];
     }
     return status;
   };

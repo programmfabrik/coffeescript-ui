@@ -90,11 +90,11 @@ class CUI.Socket extends CUI.Element
 
   send: (msg) ->
     if @getStatus() == "OPEN"
-      @__websocket.send(msg)
+      @__webSocket.send(msg)
 
   getStatus: (asText = true) ->
-    status = @__websocket.readyState
+    status = @__webSocket.readyState
     if asText
-      return @states[status]
+      return CUI.Socket.states[status]
     return status
 
