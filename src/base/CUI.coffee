@@ -393,6 +393,26 @@ class CUI
 
 		@__startTimeout(timeout)
 
+	@__yieldQueue = []
+	@__yieldChannel = null
+
+	# Hands control back to the event loop so the browser can paint and handle
+	# input, without going through a timer. Chrome throttles timers in hidden
+	# tabs to one per second or less, which turns a chunked loop into minutes of
+	# dead waiting; message tasks are not throttled.
+	@yieldToEventLoop: (func) ->
+		if not window.MessageChannel
+			return @setTimeout(call: func, ms: 0)
+
+		if not @__yieldChannel
+			@__yieldChannel = new MessageChannel()
+			@__yieldChannel.port1.onmessage = =>
+				@__yieldQueue.shift()?()
+				return
+
+		@__yieldQueue.push(func)
+		@__yieldChannel.port2.postMessage(0)
+		return
 
 	@__scheduledCallbacks = []
 

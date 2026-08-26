@@ -241,10 +241,7 @@ class CUI.CSVData extends CUI.Element
 
 						if lines%1000==0 and opts.defer
 							dfr.notify(row_count: lines, file_read_idx: idx, file_length: len)
-							CUI.setTimeout
-								ms: 10
-								call: do_work
-
+							CUI.yieldToEventLoop(do_work)
 							return
 
 					continue
@@ -267,9 +264,7 @@ class CUI.CSVData extends CUI.Element
 				return info
 
 		if opts.defer
-			CUI.setTimeout
-				ms: 0
-				call: do_work
+			CUI.yieldToEventLoop(do_work)
 
 			dfr.done =>
 				; # @debug()

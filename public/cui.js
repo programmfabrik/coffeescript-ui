@@ -22650,10 +22650,7 @@ CUI.CSVData = (function(superClass) {
                   file_read_idx: idx,
                   file_length: len
                 });
-                CUI.setTimeout({
-                  ms: 10,
-                  call: do_work
-                });
+                CUI.yieldToEventLoop(do_work);
                 return;
               }
             }
@@ -22682,10 +22679,7 @@ CUI.CSVData = (function(superClass) {
       };
     })(this);
     if (opts.defer) {
-      CUI.setTimeout({
-        ms: 0,
-        call: do_work
-      });
+      CUI.yieldToEventLoop(do_work);
       dfr.done((function(_this) {
         return function() {};
       })(this));
@@ -23184,6 +23178,32 @@ CUI = (function() {
       this.__callTimeoutChangeCallbacks();
     }
     return this.__startTimeout(timeout);
+  };
+
+  CUI.__yieldQueue = [];
+
+  CUI.__yieldChannel = null;
+
+  CUI.yieldToEventLoop = function(func) {
+    if (!window.MessageChannel) {
+      return this.setTimeout({
+        call: func,
+        ms: 0
+      });
+    }
+    if (!this.__yieldChannel) {
+      this.__yieldChannel = new MessageChannel();
+      this.__yieldChannel.port1.onmessage = (function(_this) {
+        return function() {
+          var base;
+          if (typeof (base = _this.__yieldQueue.shift()) === "function") {
+            base();
+          }
+        };
+      })(this);
+    }
+    this.__yieldQueue.push(func);
+    this.__yieldChannel.port2.postMessage(0);
   };
 
   CUI.__scheduledCallbacks = [];
