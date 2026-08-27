@@ -41892,7 +41892,7 @@ CUI.DateTimeFormats["de-DE"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -41970,7 +41970,7 @@ CUI.DateTimeFormats["it-IT"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42048,7 +42048,7 @@ CUI.DateTimeFormats["es-ES"] = {
       display_short: "DD/MM/YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42127,7 +42127,7 @@ CUI.DateTimeFormats["en-US"] = {
       display_short: "YYYY-MM-DD hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
     }, {
       text: "Date+Time+Seconds",
       support_bc: false,
@@ -42206,7 +42206,7 @@ CUI.DateTimeFormats["ru-RU"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42284,7 +42284,7 @@ CUI.DateTimeFormats["pl-PL"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42362,7 +42362,7 @@ CUI.DateTimeFormats["cs-CZ"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42442,7 +42442,7 @@ CUI.DateTimeFormats["fi-FI"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Päivämäärä+Aika+Sekunnit",
       support_bc: false,
@@ -42522,7 +42522,7 @@ CUI.DateTimeFormats["sv-SE"] = {
       display_short: "DD.MM.YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42602,7 +42602,7 @@ CUI.DateTimeFormats["da-DK"] = {
       display_short: "DD/MM/YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42682,7 +42682,7 @@ CUI.DateTimeFormats["fr-FR"] = {
       display_short: "DD/MM/YYYY HH:mm",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm", "M/D/YYYY HH:DD:ss", "MM/D/YYYY HH:DD:ss", "M/DD/YYYY HH:DD:ss", "M/DD/YY HH:DD:ss", "MM/D/YY HH:DD:ss", "M/D/YYYY HH:DD", "MM/D/YYYY HH:DD", "M/DD/YYYY HH:DD", "M/DD/YY HH:DD", "MM/D/YY HH:DD"]
     }, {
       text: "Datum+Zeit+Sekunden",
       support_bc: false,
@@ -42761,7 +42761,7 @@ CUI.DateTimeFormats["tvl-TV"] = {
       display_short: "YYYY-MM-DD hh:mm A",
       display_attribute: "date-time",
       display_short_attribute: "date-time-short",
-      parse: ["YYYY-MM-DDTHH:mm:ss", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
+      parse: ["YYYY-MM-DDTHH:mm:ss", "YYYY-MM-DDTHH:mm", "YYYY-MM-DD HH:mm", "MM/DD/YYYY HH:mm:ss", "MM/DD/YYYYTHH:mm:ss.SSSZ", "MM/DD/YYYYTHH:mm:ssZ", "YYYY-MM-DD HH:mm:ss", "YYYY-MM-DDTHH:mm:ss.SSSZ", "YYYY-MM-DDTHH:mm:ss.SSSSZ", "YYYY-MM-DDTHH:mm:ssZ", "D.M.YYYY HH:mm:ss", "DD.M.YYYY HH:mm:ss", "D.MM.YYYY HH:mm:ss", "D.MM.YY HH:mm:ss", "DD.M.YY HH:mm:ss", "D.M.YYYY HH:mm", "DD.M.YYYY HH:mm", "D.MM.YYYY HH:mm", "D.MM.YY HH:mm", "DD.M.YY HH:mm"]
     }, {
       text: "Date+Time+Seconds",
       support_bc: false,
