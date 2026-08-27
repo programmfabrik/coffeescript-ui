@@ -7797,6 +7797,12 @@ which will apply the class "use-css-grid-layout"
 
 .cui-list-view-grid-quadrant-1 {
   flex: 1 1 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.cui-list-view-grid-quadrant-1::-webkit-scrollbar {
+  display: none;
 }
 .cui-list-view-grid-quadrant-1 .cui-lv-td:last-child::after {
   display: none;

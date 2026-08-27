@@ -52859,7 +52859,7 @@ CUI.ListView = (function(superClass) {
   };
 
   ListView.prototype.render = function() {
-    var add_quadrant, cls, col, html, j, on_scroll, outer, ref, selector, selectorFocus;
+    var add_quadrant, cls, col, html, j, k, len1, on_scroll, outer, ref, ref1, scroll_node, selector, selectorFocus;
     CUI.util.assert(!this.grid, "ListView.render", "ListView already rendered", {
       opts: this.opts
     });
@@ -52949,8 +52949,20 @@ CUI.ListView = (function(superClass) {
       this.__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-" + col)[0]);
     }
     on_scroll = (function(_this) {
-      return function() {
-        _this.__syncScrolling();
+      return function(ev) {
+        var node;
+        node = (ev != null ? ev.getCurrentTarget() : void 0) || _this.quadrant[3];
+        if (_this.__scrollMaster) {
+          if (_this.__scrollMaster !== node) {
+            return;
+          }
+        } else {
+          _this.__scrollMaster = node;
+          window.requestAnimationFrame(function() {
+            _this.__scrollMaster = null;
+          });
+        }
+        _this.__syncScrolling(node);
         if (typeof _this._onScroll === "function") {
           _this._onScroll();
         }
@@ -52986,12 +52998,19 @@ CUI.ListView = (function(superClass) {
         })(this)
       });
     } else {
-      CUI.Events.listen({
-        node: this.quadrant[3],
-        type: "scroll",
-        call: on_scroll
-      });
+      ref1 = [this.quadrant[3], this.quadrant[1]];
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        scroll_node = ref1[k];
+        if (scroll_node) {
+          CUI.Events.listen({
+            node: scroll_node,
+            type: "scroll",
+            call: on_scroll
+          });
+        }
+      }
     }
+    this.__scrollMaster = null;
     this.__currentScroll = {
       top: 0,
       left: 0
@@ -53023,8 +53042,8 @@ CUI.ListView = (function(superClass) {
         selector: selectorFocus,
         call: (function(_this) {
           return function(ev) {
-            var ref1, row;
-            if ((ref1 = ev.getKeyboard()) !== "Return" && ref1 !== "Space") {
+            var ref2, row;
+            if ((ref2 = ev.getKeyboard()) !== "Return" && ref2 !== "Space") {
               return;
             }
             row = CUI.dom.data(ev.getCurrentTarget(), "listViewRow");
@@ -53136,12 +53155,17 @@ CUI.ListView = (function(superClass) {
     return this.quadrant[3].scrollLeft = scroll.left;
   };
 
-  ListView.prototype.__syncScrolling = function() {
+  ListView.prototype.__syncScrolling = function(source) {
+    var header_leads;
+    header_leads = (source != null) && source === this.quadrant[1];
+    if (header_leads) {
+      this.quadrant[3].scrollLeft = this.quadrant[1].scrollLeft;
+    }
     this.__currentScroll = this.__getScrolling();
     if (this.fixedColsCount > 0) {
       this.quadrant[2].scrollTop = this.__currentScroll.top;
     }
-    if (this.fixedRowsCount > 0) {
+    if (this.fixedRowsCount > 0 && !header_leads) {
       this.quadrant[1].scrollLeft = this.__currentScroll.left;
     }
     if (this.__fillRowQ3) {
