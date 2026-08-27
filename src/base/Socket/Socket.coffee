@@ -18,6 +18,12 @@ class CUI.Socket extends CUI.Element
         check: (v) ->
           v.trim().length > 0
 
+      # Subprotocols offered in the handshake. The only place a browser can put
+      # anything of its own into a WebSocket handshake, since the API accepts no
+      # request headers.
+      protocols:
+        check: Array
+
       onmessage:
         check: Function
 
@@ -58,7 +64,10 @@ class CUI.Socket extends CUI.Element
         dfr.reject()
       return
     try
-      @__webSocket = new WebSocket(@_url)
+      if @_protocols
+        @__webSocket = new WebSocket(@_url, @_protocols)
+      else
+        @__webSocket = new WebSocket(@_url)
       @__webSocket.onerror = (e) =>
         reject()
       @__webSocket.onopen = (ev) =>
@@ -90,10 +99,10 @@ class CUI.Socket extends CUI.Element
 
   send: (msg) ->
     if @getStatus() == "OPEN"
-      @__websocket.send(msg)
+      @__webSocket.send(msg)
 
   getStatus: (asText = true) ->
-    status = @__websocket.readyState
+    status = @__webSocket.readyState
     if asText
       return @states[status]
     return status

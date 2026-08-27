@@ -32606,6 +32606,9 @@ CUI.Socket = (function(superClass) {
           return v.trim().length > 0;
         }
       },
+      protocols: {
+        check: Array
+      },
       onmessage: {
         check: Function
       },
@@ -32655,7 +32658,11 @@ CUI.Socket = (function(superClass) {
       }
     };
     try {
-      this.__webSocket = new WebSocket(this._url);
+      if (this._protocols) {
+        this.__webSocket = new WebSocket(this._url, this._protocols);
+      } else {
+        this.__webSocket = new WebSocket(this._url);
+      }
       this.__webSocket.onerror = (function(_this) {
         return function(e) {
           return reject();
@@ -32707,7 +32714,7 @@ CUI.Socket = (function(superClass) {
 
   Socket.prototype.send = function(msg) {
     if (this.getStatus() === "OPEN") {
-      return this.__websocket.send(msg);
+      return this.__webSocket.send(msg);
     }
   };
 
@@ -32716,7 +32723,7 @@ CUI.Socket = (function(superClass) {
     if (asText == null) {
       asText = true;
     }
-    status = this.__websocket.readyState;
+    status = this.__webSocket.readyState;
     if (asText) {
       return this.states[status];
     }
