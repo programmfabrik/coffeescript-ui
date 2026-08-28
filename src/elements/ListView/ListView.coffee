@@ -316,10 +316,8 @@ class CUI.ListView extends CUI.SimplePane
 		on_scroll = (ev) =>
 			node = ev?.getCurrentTarget() or @quadrant[3]
 
-			# Q1 (header) and Q3 (body) drive each other's scrollLeft. Whoever moves
-			# first leads until the next frame, so the scroll events caused by our own
-			# writes on the other quadrant don't bounce the position back (both
-			# quadrants can clamp scrollLeft at slightly different maxima).
+			# header (Q1) and body (Q3) write each other's scrollLeft: whoever moves
+			# first leads until the next frame, so our own writes don't bounce it back
 			if @__scrollMaster
 				if @__scrollMaster != node
 					return
@@ -492,11 +490,13 @@ class CUI.ListView extends CUI.SimplePane
 		@quadrant[3].scrollLeft = scroll.left
 
 	__syncScrolling: (source) ->
-
 		header_leads = source? and source == @quadrant[1]
 
 		if header_leads
 			@quadrant[3].scrollLeft = @quadrant[1].scrollLeft
+			# the header renders a few pixels wider than the body, keep it from
+			# scrolling where the body cannot follow
+			@quadrant[1].scrollLeft = @quadrant[3].scrollLeft
 
 		@__currentScroll = @__getScrolling()
 
