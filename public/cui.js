@@ -53160,6 +53160,7 @@ CUI.ListView = (function(superClass) {
     header_leads = (source != null) && source === this.quadrant[1];
     if (header_leads) {
       this.quadrant[3].scrollLeft = this.quadrant[1].scrollLeft;
+      this.quadrant[1].scrollLeft = this.quadrant[3].scrollLeft;
     }
     this.__currentScroll = this.__getScrolling();
     if (this.fixedColsCount > 0) {
