@@ -104,6 +104,6 @@ class CUI.Socket extends CUI.Element
   getStatus: (asText = true) ->
     status = @__webSocket.readyState
     if asText
-      return @states[status]
+      return CUI.Socket.states[status]
     return status
 

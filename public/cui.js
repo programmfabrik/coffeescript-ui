@@ -32725,7 +32725,7 @@ CUI.Socket = (function(superClass) {
     }
     status = this.__webSocket.readyState;
     if (asText) {
-      return this.states[status];
+      return CUI.Socket.states[status];
     }
     return status;
   };
