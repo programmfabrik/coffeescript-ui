@@ -5299,8 +5299,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-buttonbar .cui-buttonbar-group .cui-select:not(:last-child, .cui-last-visible-child) .cui-button-visual {
   border-right: 0 !important;
 }
-.cui-buttonbar .cui-buttonbar-group .cui-button:first-child:not(:only-child) .cui-button-visual,
-.cui-buttonbar .cui-buttonbar-group .cui-select:first-child:not(:only-child) .cui-button-visual {
+.cui-buttonbar .cui-buttonbar-group .cui-button:first-child:not(:only-child, :has(+ .cui-button-hidden)) .cui-button-visual,
+.cui-buttonbar .cui-buttonbar-group .cui-select:first-child:not(:only-child, :has(+ .cui-button-hidden)) .cui-button-visual {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
