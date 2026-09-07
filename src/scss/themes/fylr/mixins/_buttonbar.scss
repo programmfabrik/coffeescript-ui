@@ -14,7 +14,7 @@
 				border-right: 0 !important;
 			}
 
-			&:first-child:not(:only-child) .cui-button-visual {
+			&:first-child:not(:only-child):not(:has(+ .cui-button-hidden)) .cui-button-visual {
 				border-top-right-radius: 0;
 				border-bottom-right-radius: 0;
 			}
