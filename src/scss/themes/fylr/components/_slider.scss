@@ -51,9 +51,10 @@
 
 .cui-slider-handle {
 	position: absolute;
-	margin-top: -#{math.div($slider-handle-size, 2)};
-	width: $slider-handle-size;
-	height: $slider-handle-size;
+	// margin-top: -#{math.div($slider-handle-size, 2)};
+	margin-top: calc(-1 * (var(--slider-handle-size, #{$slider-handle-size}) / 2));
+	width: var(--slider-handle-size, #{$slider-handle-size});
+	height: var(--slider-handle-size, #{$slider-handle-size});
 	background: $slider-handle-background;
 	border: $slider-handle-border-width solid $slider-handle-border-color;
 	border-radius: $slider-handle-border-radius;
