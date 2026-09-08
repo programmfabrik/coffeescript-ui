@@ -86,12 +86,17 @@ textarea {
 				border-color: color.scale($danger, $saturation: 50%, $alpha: -95%);
 				background: color.adjust($danger, $alpha: -0.85);
 
-
 				.cui-list-view-row-selectable:hover &, 
 				.cui-list-view-row-selectable.cui-selected & {
 					border-color: transparent;
 					background: color.scale($danger, $lightness: 50%);
 				}
+			}
+
+			.cui-form-hint:has(+ &) {
+				--label-secondary-opacity: 1;
+				
+				color: $danger;
 			}
 		}
 	}
