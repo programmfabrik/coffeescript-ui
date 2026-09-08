@@ -8,7 +8,6 @@
     "build:watch": "npm run rmdist && webpack --watch --progress",
     "build:all": "npm run rmdist && npm run gulp && webpack --progress --env development=true --env all=true && webpack --progress --env production=true --env all=true",
     "build:min": "npm run build:production",
-    "build:docs": "node_modules/coffee-script/bin/coffee GenerateDocs.coffee",
     "test": "echo \"tests wouldn’t run in jest. jest was removed but tests are kept in case anyone wants to make them work again.\"",
     "rmdist": "rimraf public/*",
     "gulp": "gulp svgstore thirdparty"
@@ -43,14 +42,13 @@
     "moment": "^2.30.1",
     "moment-timezone": "^0.6.2",
     "marked": "^18.0.5",
-    "dompurify": "3.4.12"
+    "dompurify": "3.4.15"
   },
   "devDependencies": {
     "autoprefixer": "^10.5.3",
     "cheerio": "^1.0.0",
     "chokidar": "^4.0.3",
     "clean-webpack-plugin": "^4.0.0",
-    "codo": "^2.1.2",
     "coffee-loader": "0.9.0",
     "coffeescript": "^1.12.7",
     "css-loader": "^7.1.2",
