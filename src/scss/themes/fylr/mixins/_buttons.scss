@@ -183,6 +183,24 @@
 	}
 }
 
+// Help button is ROUND
+@mixin button-plain-help() {
+	@include button-plain();
+	@include button-xs();
+
+	.cui-button-visual {
+		min-width: $btn-height-xs;
+		width: $btn-height-xs;
+		border-radius: 50%;
+	}
+}
+
+// Help button inverted
+@mixin button-plain-help-inverted() {
+	@include button-plain-help();
+	@include button-color($white, $body-color, $white, $body-color, $white, $body-color);
+}
+
 
 // * Button colors
 

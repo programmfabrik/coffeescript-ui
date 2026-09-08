@@ -4495,6 +4495,7 @@ textarea {
   align-items: center;
   position: relative;
 }
+
 .cui-slider-track-visual {
   position: relative;
   height: 100%;
@@ -4519,22 +4520,25 @@ textarea {
   width: var(--slider-distance);
   background-color: #393c3f;
 }
+
 .cui-slider-track {
   position: absolute;
   left: 0;
   right: 1rem;
   top: 50%;
 }
+
 .cui-slider-handle {
   position: absolute;
-  margin-top: -0.5rem;
-  width: 1rem;
-  height: 1rem;
+  margin-top: calc(-1 * var(--slider-handle-size, 1rem) / 2);
+  width: var(--slider-handle-size, 1rem);
+  height: var(--slider-handle-size, 1rem);
   background: #393c3f;
   border: 0 solid transparent;
   border-radius: 999px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
 }
+
 .cui-slider-text {
   width: 40px;
   text-align: center;
@@ -4860,6 +4864,9 @@ textarea {
 
 .cui-block-content .cui-form-table {
   width: 100%;
+}
+.cui-block-content .cui-form-hint {
+  margin-bottom: 1rem;
 }
 
 /* see: 
@@ -5295,8 +5302,8 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-buttonbar .cui-buttonbar-group .cui-select:not(:last-child, .cui-last-visible-child) .cui-button-visual {
   border-right: 0 !important;
 }
-.cui-buttonbar .cui-buttonbar-group .cui-button:first-child:not(:only-child) .cui-button-visual,
-.cui-buttonbar .cui-buttonbar-group .cui-select:first-child:not(:only-child) .cui-button-visual {
+.cui-buttonbar .cui-buttonbar-group .cui-button:first-child:not(:only-child, :has(+ .cui-button-hidden)) .cui-button-visual,
+.cui-buttonbar .cui-buttonbar-group .cui-select:first-child:not(:only-child, :has(+ .cui-button-hidden)) .cui-button-visual {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -7797,6 +7804,12 @@ which will apply the class "use-css-grid-layout"
 
 .cui-list-view-grid-quadrant-1 {
   flex: 1 1 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.cui-list-view-grid-quadrant-1::-webkit-scrollbar {
+  display: none;
 }
 .cui-list-view-grid-quadrant-1 .cui-lv-td:last-child::after {
   display: none;

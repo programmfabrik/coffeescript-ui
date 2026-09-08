@@ -313,8 +313,21 @@ class CUI.ListView extends CUI.SimplePane
 		for col in [0..@colsCount-1] by 1
 			@__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
 
-		on_scroll = =>
-			@__syncScrolling()
+		on_scroll = (ev) =>
+			node = ev?.getCurrentTarget() or @quadrant[3]
+
+			# header (Q1) and body (Q3) write each other's scrollLeft: whoever moves
+			# first leads until the next frame, so our own writes don't bounce it back
+			if @__scrollMaster
+				if @__scrollMaster != node
+					return
+			else
+				@__scrollMaster = node
+				window.requestAnimationFrame =>
+					@__scrollMaster = null
+					return
+
+			@__syncScrolling(node)
 			@_onScroll?()
 
 			if @quadrant[3].scrollTop > 0
@@ -342,11 +355,13 @@ class CUI.ListView extends CUI.SimplePane
 					else
 						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")
 		else
-			CUI.Events.listen
-				node: @quadrant[3]
-				type: "scroll"
-				call: on_scroll
+			for scroll_node in [@quadrant[3], @quadrant[1]] when scroll_node
+				CUI.Events.listen
+					node: scroll_node
+					type: "scroll"
+					call: on_scroll
 
+		@__scrollMaster = null
 		@__currentScroll = top: 0, left: 0
 
 		if @hasSelectableRows()
@@ -474,13 +489,20 @@ class CUI.ListView extends CUI.SimplePane
 		@quadrant[3].scrollTop = scroll.top
 		@quadrant[3].scrollLeft = scroll.left
 
-	__syncScrolling: ->
+	__syncScrolling: (source) ->
+		header_leads = source? and source == @quadrant[1]
+
+		if header_leads
+			@quadrant[3].scrollLeft = @quadrant[1].scrollLeft
+			# the header renders a few pixels wider than the body, keep it from
+			# scrolling where the body cannot follow
+			@quadrant[1].scrollLeft = @quadrant[3].scrollLeft
 
 		@__currentScroll = @__getScrolling()
 
 		if @fixedColsCount > 0
 			@quadrant[2].scrollTop = @__currentScroll.top
-		if @fixedRowsCount > 0
+		if @fixedRowsCount > 0 and not header_leads
 			@quadrant[1].scrollLeft = @__currentScroll.left
 
 		if @__fillRowQ3

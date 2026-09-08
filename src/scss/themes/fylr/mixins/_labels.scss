@@ -72,6 +72,13 @@
 	}
 }
 
+@mixin label-title-sm() {
+	@include label-title();
+
+	font-size: $font-size-sm;
+	letter-spacing: 0.06em;
+}
+
 // horizontaler teiler, schnellzugriff
 @mixin label-title-light($letter-spacing: true) {
 	@include label-title($letter-spacing);

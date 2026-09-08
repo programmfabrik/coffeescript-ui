@@ -375,6 +375,16 @@
 .cui-list-view-grid-quadrant-1 {
 	flex: 1 1 auto;
 
+	// the header scrolls horizontally together with the body (Q3); its scrollbar
+	// stays hidden, a second one would eat into the header row height
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
 	.cui-lv-td:last-child::after {
 		display: none;
 	}
