@@ -3640,6 +3640,10 @@ textarea {
   border-color: transparent;
   background: rgb(237.5, 154, 162);
 }
+.cui-form-hint:has(+ .cui-input.cui-input-has-check-input.cui-input-invalid) {
+  --label-secondary-opacity: 1;
+  color: #dc3545;
+}
 .cui-input.cui-maximize-vertical {
   display: flex;
   flex-direction: column;
