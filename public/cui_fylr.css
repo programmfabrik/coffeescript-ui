@@ -4865,6 +4865,9 @@ textarea {
 .cui-block-content .cui-form-table {
   width: 100%;
 }
+.cui-block-content .cui-form-hint {
+  margin-bottom: 1rem;
+}
 
 /* see: 
 admin > usermanagement > system rights
