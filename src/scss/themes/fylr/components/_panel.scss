@@ -4,7 +4,9 @@
 
 // Panel
 .cui-panel {
-	border-bottom: 1px solid $panel-border-color;
+	&:not(:last-child) {
+		border-bottom: 1px solid $panel-border-color;
+	}
 
 	&-closed {
 		> .cui-panel-body {
