@@ -6880,7 +6880,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   font-weight: 700;
 }
 
-.cui-panel {
+.cui-panel:not(:last-child) {
   border-bottom: 1px solid #212121;
 }
 .cui-panel-closed > .cui-panel-body {
