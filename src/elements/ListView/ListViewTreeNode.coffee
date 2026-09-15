@@ -358,12 +358,22 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				@__loadingDeferred.reject(@)
 			@__loadingDeferred = null
 
-		load_children = =>
+		# loaded: children came from getChildren, not from a given array
+		load_children = (loaded = false) =>
 			CUI.util.assert(CUI.util.isArray(@children), "ListViewTreeNode.open", "children to be loaded must be an Array", children: @children, listViewTreeNode: @)
 
 			# console.debug @._key, @getUniqueId(), "children loaded", @children.length
 
 			if @children.length == 0
+				if loaded and not @isRoot()
+					# nothing came back: close again, so the opener asks hasChildren()
+					# next time instead of pointing at an empty branch
+					@__loadingDeferred = null
+					@is_open = false
+					@children = null
+					@close()
+					dfr.resolve(@)
+					return
 				if not @isRoot()
 					@replaceSelf()
 				do_resolve()
@@ -414,14 +424,14 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 				ret = func.call(@)
 				if CUI.util.isArray(ret)
 					@children = ret
-					load_children()
+					load_children(true)
 				else
 					CUI.util.assert(CUI.util.isPromise(ret), "#{CUI.util.getObjectClass(@)}.open", "returned children are not of type Promise or Array", children: ret)
 					ret
 					.done (@children) =>
 						if dfr != @__loadingDeferred
 							return
-						load_children()
+						load_children(true)
 						return
 					.fail(do_reject)
 			else
