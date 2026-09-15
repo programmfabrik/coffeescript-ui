@@ -1,3 +1,6 @@
+@use '../variables' as *;
+@use '../mixins/pane' as *;
+
 // * Tooltip
 
 /*
@@ -41,13 +44,13 @@
 	color: $tooltip-color;
 	border-radius: $border-radius-sm;
 	box-shadow:
-		0 0 0 1px hsla(0, 0%, 0%, 0.1),
-		0 7px 14px hsla(0, 0%, 0%, 0.1);
+		0 0 0 1px hsl(0deg 0% 0% / 10%),
+		0 7px 14px hsl(0deg 0% 0% / 10%);
 
 	.cui-label {
 		font-size: $tooltip-font-size;
 		line-height: $line-height-sm;
-		padding: $spacer-xs $spacer-sm 1.25*$spacer-xs;
+		padding: $spacer-xs $spacer-sm 1.25 * $spacer-xs;
 	}
 
 	> .cui-pane > .cui-vertical-layout-center {

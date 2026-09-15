@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use 'disabled' as *;
+@use 'text-truncate' as *;
+@use 'icons' as *;
+
 // * Buttons
 
 /*
@@ -35,7 +40,7 @@
 
 	.cui-button-left {
 		padding-left: $padding-x;
-		margin-right: -0.5*$padding-x;
+		margin-right: -0.5 * $padding-x;
 
 		// reset, do not use :not, so we can easily override these styles if needed
 		&:empty,
@@ -47,7 +52,7 @@
 
 	.cui-button-right {
 		padding-right: $padding-x;
-		margin-left: -0.5*$padding-x;
+		margin-left: -0.5 * $padding-x;
 
 		// reset, do not use :not, so we can easily override these styles if needed
 		&:empty,
@@ -64,7 +69,7 @@
 
 		// there are some button that have an empty center element, adjust accordingly
 		&:empty {
-			margin-left: -0.5*$padding-x;
+			margin-left: -0.5 * $padding-x;
 			// display: none; // ! don't hide this, things will blow up
 		}
 	}
@@ -146,7 +151,7 @@
 
 	.ez5-path + & {
 		.cui-button-visual {
-			margin-left: -0.5*$spacer-xs;
+			margin-left: -0.5 * $spacer-xs;
 		}
 	}
 }
@@ -158,10 +163,7 @@
 
 	.cui-button-visual {
 		.cui-button-left {
-			.svg-close {
-				width: 9px;
-				height: 9px;
-			}
+			@include icon-close-xs();
 		}
 	}
 }
@@ -181,6 +183,24 @@
 	}
 }
 
+// Help button is ROUND
+@mixin button-plain-help() {
+	@include button-plain();
+	@include button-xs();
+
+	.cui-button-visual {
+		min-width: $btn-height-xs;
+		width: $btn-height-xs;
+		border-radius: 50%;
+	}
+}
+
+// Help button inverted
+@mixin button-plain-help-inverted() {
+	@include button-plain-help();
+	@include button-color($white, $body-color, $white, $body-color, $white, $body-color);
+}
+
 
 // * Button colors
 
@@ -192,8 +212,7 @@
 	}
 
 	&:not(.cui-disabled) {
-		&:hover,
-		&:focus {
+		&:hover {
 			.cui-button-visual {
 				color: var(--btn-color-hover, #{$color-hover});
 				background-color: var(--btn-background-hover, #{$background-hover});
@@ -203,7 +222,7 @@
 		&:focus {
 			outline: none;
 	
-			.cui-button-visual {
+			> .cui-button-visual {
 				@include button-focus();
 			}
 		}
@@ -239,7 +258,7 @@
 	// special case when two adjoining buttons within a button group can be active, e.g. ez5-result-manager-button-options
 	&.cui-active + .cui-active.cui-layer-open {
 		.cui-button-visual {
-			border-left-color: currentColor;
+			border-left-color: currentcolor;
 		}
 	}
 }
@@ -325,6 +344,10 @@
 		&:hover {
 			--btn-border-color: #{$btn-inverted-hover-border-color};
 		}
+
+		&:focus {
+			--focus-shadow-inner-color: transparent;
+		}
 	}
 }
 
@@ -336,6 +359,7 @@
 		height: auto;
 		line-height: $line-height-base;
 		align-items: baseline;
+		min-width: 0;
 		
 		.cui-button-center {
 			text-decoration: underline;
@@ -352,6 +376,19 @@
 		.cui-button-center:only-child {
 			padding-right: 0;
 		}
+
+		// very special case, where clients build custom buttons with only a right icon (better would be to use the left spot for the icon)
+		// see uni-heidelberg (.ez5-custom-data-type-ubhdgnd)
+		.cui-button-left:empty + .cui-button-center:empty {
+			margin: 0;
+			padding: 0;
+		}
+
+		.cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+			padding-right: 0;
+			margin-left: 0;
+		}
+		// end: special case
 	}
 
 	&:not(.cui-disabled) {
@@ -404,13 +441,13 @@
 
 // Explicitely add back button border, only needed if it was removed before (e.g. via the button-link())
 @mixin button-border() {
-	--btn-border-color: currentColor;
+	--btn-border-color: currentcolor;
 	--btn-border-width: #{$btn-border-width};
 
 	&:not(.cui-disabled) {
 		&:hover,
 		&:focus {
-			--btn-border-color: currentColor;
+			--btn-border-color: currentcolor;
 		}
 	}
 }
@@ -424,6 +461,12 @@
 			.cui-button-visual {
 				text-shadow: 0 0 0 rgba(#000, 0.4); // darken the text color
 				box-shadow: none; // reset from button-color()
+			}
+		}
+
+		&:focus {
+			.cui-button-visual {
+				--btn-border-width: 1px;
 			}
 		}
 	}
@@ -482,8 +525,7 @@
 			border-left: var(--combobox-divider-border, #{$combobox-divider-border});
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-		}
-		@else if $button-position == 'left' {
+		} @else if $button-position == 'left' {
 			z-index: 1;
 			position: relative;
 			border-right: var(--combobox-divider-border, #{$combobox-divider-border});
@@ -508,8 +550,7 @@
 
 				@if $button-position == 'right' {
 					border-left-color: $btn-active-background !important;
-				}
-				@else if $button-position == 'left' {
+				} @else if $button-position == 'left' {
 					border-right-color: $btn-active-background !important;
 				}
 			}
@@ -564,7 +605,7 @@
 
 	.fa {
 		font-size: $icon-font-size-lg;
-		text-shadow: 0 1px 7px rgba(0, 0, 0, 0.2);
+		text-shadow: 0 1px 7px rgb(0 0 0 / 20%);
 		margin-left: 3px;
 	}
 }

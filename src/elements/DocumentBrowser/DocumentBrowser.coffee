@@ -5,7 +5,8 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-marked = require('marked')
+{ marked, Renderer } = require('marked')
+DOMPurify = require("dompurify")
 
 class CUI.DocumentBrowser extends CUI.Element
 
@@ -43,14 +44,15 @@ class CUI.DocumentBrowser extends CUI.Element
 		@__marked_opts = CUI.util.copyObject(@_marked_opts)
 
 		if not @__marked_opts.renderer
-			@__marked_opts.renderer = new marked.Renderer()
+			@__marked_opts.renderer = new Renderer()
+
 		renderer = @__marked_opts.renderer
 
-		renderer.image = (href, title, text) =>
+		renderer.image = ({ href, title, text }) =>
 			@__node.rendererImage(href, title, text)
 
-		renderer.link = (href, title, text) =>
-			@__node.rendererLink(href, title, text)
+		renderer.link = ({ href, title, tokens }) =>
+			@__node.rendererLink(href, title, renderer.parser.parseInline(tokens))
 
 		@__words = {}
 
@@ -60,7 +62,7 @@ class CUI.DocumentBrowser extends CUI.Element
 	marked: (@__node, markdown) ->
 		dfr = new CUI.Deferred()
 		mark = (markdown) =>
-			dfr.resolve(marked(markdown, @__marked_opts))
+			dfr.resolve(DOMPurify.sanitize(marked(markdown, @__marked_opts), CUI.defaults.dompurify_opts))
 		ret = @_getMarkdown(markdown)
 		if CUI.util.isPromise(ret)
 			ret

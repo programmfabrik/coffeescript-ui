@@ -41,6 +41,9 @@ class CUI.MultiInput extends CUI.DataFieldInput
 			user_selectable:
 				default: false
 				check: Boolean
+			copyPlaceholder:
+				default: false
+				check: Boolean
 
 	readOpts: ->
 		super()
@@ -212,6 +215,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				undo_support: false
 				content_size: @_content_size
 				placeholder: @_placeholder?[key.name] or @_placeholder?["default"]
+				copyPlaceholder: @_copyPlaceholder and not CUI.util.isEmpty(@_placeholder?[key.name])
 				onDataInit: (field, data) =>
 					if @__user_selectable and CUI.util.isEmpty(data[field.getName()])
 						field.hide()

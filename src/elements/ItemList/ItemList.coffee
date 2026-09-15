@@ -228,6 +228,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 						if item.hasLeft()
 							list_has_button_left = true
 
+						if item.__tooltipOpts and (not item.__tooltipOpts.placement or not item.__tooltipOpts.placements)
+							item.__tooltipOpts.placements = ["w", "e"]
+
 					if item instanceof CUI.Button or
 						item instanceof CUI.DataField or
 						item instanceof CUI.Label
@@ -261,6 +264,12 @@ class CUI.ItemList extends CUI.VerticalLayout
 
 					if menu
 						opts.menu_parent = menu
+
+					if not opts.tooltip
+						opts.tooltip = {}
+
+					if not opts.tooltip.placement or not opts.tooltip.placements
+						opts.tooltip.placements = ["w", "e"]
 
 					btn = new CUI.defaults.class.Button(opts)
 

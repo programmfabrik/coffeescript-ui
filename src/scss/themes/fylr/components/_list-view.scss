@@ -1,3 +1,9 @@
+@use '../variables' as *;
+@use '../mixins/clickable' as *;
+@use '../mixins/list-view' as *;
+@use '../mixins/list-view-use-css-grid-layout' as *;
+@use '../mixins/pane' as *;
+
 // * List View & List View Grid
 
 .cui-list-view {
@@ -27,13 +33,15 @@
 	--list-view-selected-row-background: #{$list-view-selected-row-background};
 	// hover
 	--list-view-hover-row-background: #{$list-view-hover-row-background};
+	// invalid
+	--list-view-invalid-row-background: #{$danger-bg-light};
 
 
 	min-height: 0;
 	flex-direction: column;
 	// todo: what background color ? cui-pane has 'light' background by default, ListView extends Pane class
 	background-color: transparent; // reset from cui-pane
-	font-size: $list-view-font-size; // todo
+	font-size: $list-view-font-size;
 	line-height: $line-height-sm;
 	border: var(--list-view-border-width) solid var(--list-view-border-color);
 
@@ -93,7 +101,7 @@
 	width: $list-view-data-width;
 	min-height: var(--list-view-inner-row-min-height);
 
-	&:not(.cui-lv-row-move-handle-column):not(.cui-lv-td-rotate-90) {
+	&:not(.cui-lv-row-move-handle-column, .cui-lv-td-rotate-90) {
 		min-width: 40px; // make sure the shortest icon-only buttons in the default size are visible in the column
 	}
 	
@@ -147,6 +155,11 @@
 	.cui-button {
 		max-width: 100%; // allow button text-overflow ellipsis
 	}
+
+	.cui-icon-input,
+	.cui-color-input {
+		width: 100%;
+	}
 }
 
 .cui-lv-th,
@@ -178,11 +191,39 @@
 
 	// be careful to apply a default select state, it's probably best to do this contextually in the theme
 	&.cui-selected,
-	&.cui-selected:hover,
-	&.cui-selected:focus {
+	&.cui-selected:hover {
 		> .cui-lv-tr {
 			box-shadow: inset 0 0 0 var(--list-view-selected-row-border-width) var(--list-view-selected-row-border-color);
 			background-color: var(--list-view-selected-row-background);
+		}
+	}
+
+	&.cui-row-invalid {
+		position: relative;
+
+		> .cui-label-validation {
+			position: absolute;
+			top: $spacer-sm;
+			left: $spacer-sm;
+			z-index: 1;
+		}
+
+		> .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+			display: none;
+		}
+	}
+
+	&.cui-row-invalid,
+	&.cui-row-invalid:hover {
+		> .cui-lv-tr {
+			background-color: var(--list-view-invalid-row-background);
+		}
+	}
+
+	&.cui-row-invalid:focus {
+		> .cui-lv-tr {
+			// todo: do wee need a different focus style here ?
+			// background-color: var(--list-view-invalid-row-background);
 		}
 	}
 }
@@ -201,7 +242,7 @@
 		align-items: flex-end;
 		min-height: auto; // reset min-height, so labels appear centered, when they are in fact aligned "flex-end". Flex-end is needed in case the header contains rotate-90
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -316,7 +357,7 @@
 		position: relative;
 		overflow: visible;
 
-		&:not(:last-child):not(:empty) {
+		&:not(:last-child, :empty) {
 			border-color: var(--list-view-header-column-border-color);
 			border-width: var(--list-view-header-column-border-width);
 		}
@@ -333,6 +374,16 @@
 
 .cui-list-view-grid-quadrant-1 {
 	flex: 1 1 auto;
+
+	// the header scrolls horizontally together with the body (Q3); its scrollbar
+	// stays hidden, a second one would eat into the header row height
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
 
 	.cui-lv-td:last-child::after {
 		display: none;
@@ -395,12 +446,17 @@
 
 .cui-list-view-row-selectable,
 .cui-lv-tree-node--is-branch {
-	@include clickable;
+	@include clickable();
 
-	&:hover,
-	&:focus {
+	&:hover {
 		> .cui-lv-tr {
 			background-color: var(--list-view-hover-row-background);
+		}
+	}
+
+	&:focus-visible {
+		> .cui-lv-tr {
+			@include list-view-row-focus();
 		}
 	}
 }
@@ -448,13 +504,15 @@
 }
 
 .cui-lv-row-move-handle-column {
+	cursor: default; // reset .cui-drag-drop-select-draggable
+
 	&::after {
 		display: none;
 	}
 
 	&.cui-lv-td {
 		width: $list-view-move-handle-width;
-		padding-left: 0.5*$table-padding-x;
+		padding-left: 0.5 * $table-padding-x;
 		padding-right: 0;
 		border: 0 !important; // ! column width calculation will be off otherwise
 	}
@@ -464,13 +522,11 @@
 	}
 
 	.cui-list-view-row-movable & {
-		cursor: -webkit-grab;
-		cursor: grab;
-
 		.cui-drag-handle-row {
 			display: block;
 			margin: 0;
 			margin-top: 0.45em;
+			cursor: grab;
 		}
 	}
 }

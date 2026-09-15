@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../mixins/checkbox' as *;
+@use '../mixins/labels' as *;
+
 // Group of options, like checkboxes or radio buttons
 // with optional top and bottom containers
 
@@ -5,7 +9,7 @@
 	max-width: none;
 
 	.cui-button-checkbox {
-		word-break: break-word;
+		overflow-wrap: break-word;
 
 		@include checkbox-sm();
 
@@ -24,12 +28,12 @@
 	font-weight: $font-weight-bold;
 }
 
-.cui-options-hint {
-	@include label-form-hint();
-
+.cui-options-hint {	
 	max-width: 250px;
 	padding: 0 !important;
 	margin: $form-hint-margin-bottom ($checkbox-size + $checkbox-margin) $form-hint-margin-bottom 0;
+	
+	@include label-form-hint();
 }
 
 // align options with label if there is only one option

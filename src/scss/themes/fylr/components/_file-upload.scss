@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 // File Upload Drop Zone
 .cui-file-upload-drop-zone {
 	position: relative;
@@ -12,6 +14,6 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	box-shadow: 0 0 0 2px var(--brand-color, #{theme-color('primary')}) inset;
+	box-shadow: 0 0 0 2px var(--brand-color, #{$primary}) inset;
 	z-index: 1;
 }

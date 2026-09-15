@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 // Console
 .cui-console {
 	padding: $spacer-sm;
@@ -9,7 +11,7 @@
 	}
 
 	.cui-label:not(:last-child) {
-		border-bottom: 1px solid gray('300');
+		border-bottom: 1px solid $gray-300;
 		padding-bottom: $spacer-xs;
 	}
 }

@@ -17,6 +17,10 @@ class CUI.Modal extends CUI.LayerPane
 	constructor: (opts) ->
 		super(opts)
 
+		if @_header_buttons
+			for btnOpts in @_header_buttons
+				@__addCustomHeaderButton(btnOpts)
+
 		toggleFillScreenButton = CUI.Pane.getToggleFillScreenButton(tooltip: @_fill_screen_button_tooltip)
 		@__addHeaderButton("fill_screen_button", toggleFillScreenButton)
 
@@ -80,6 +84,9 @@ class CUI.Modal extends CUI.LayerPane
 				check: "PlainObject"
 			onToggleFillScreen:
 				check: Function
+			# custom buttons to add to the header
+			header_buttons:
+				check: Array
 
 		@mergeOpt "placement",
 			default: "c"
@@ -102,6 +109,18 @@ class CUI.Modal extends CUI.LayerPane
 		CUI.util.assert(btn instanceof CUI.Button, "Modal.__addHeaderButton", "Button needs to be instance of Button", btn: btn)
 
 		CUI.util.assert(@__pane instanceof CUI.SimplePane, "new #{@__cls}", "opts.#{pname} can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
+
+		@append(btn, "header_right")
+		return btn
+
+	__addCustomHeaderButton: (_btn) ->
+		if CUI.util.isPlainObject(_btn)
+			btn = new CUI.defaults.class.Button(_btn)
+		else
+			btn = _btn
+
+		CUI.util.assert(btn instanceof CUI.Button, "Modal.__addCustomHeaderButton", "Button needs to be instance of Button", btn: btn)
+		CUI.util.assert(@__pane instanceof CUI.SimplePane, "new #{@__cls}", "opts.header_buttons can only be used if opts.pane is instance of SimplePane.", pane: @__pane, opts: @opts)
 
 		@append(btn, "header_right")
 		return btn

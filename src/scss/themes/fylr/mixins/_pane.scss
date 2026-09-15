@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use 'buttons' as *;
+@use 'typography' as *;
+
 @mixin pane-padding() {
 	padding: $pane-padding;
 }
@@ -25,10 +29,73 @@
 	
 	.cui-horizontal-layout-left > .cui-label {
 		@include h3(0);
+
+		.cui-label-icon {
+			margin-left: $spacer-xs;
+			margin-right: -$spacer-xs;
+
+			.fa {
+				font-size: $font-size-xl;
+			}
+		}
 	}
 	
 	// Default: all buttons within a direct cui-pane-header should be plain buttons
 	.cui-button {
 		@include button-plain();
 	}
+
+	.cui-buttonbar {
+		gap: 0; // make buttonbar more compact
+
+		// make buttonbar even more compact when there are at least two buttons
+		&:has(.cui-button:nth-child(2)) {
+			.cui-button-visual {
+				min-width: 28px;
+			}
+		}
+	}
+
+	.cui-pane-close-button:not(.cui-disabled) {
+		$pane-close-button-offset: 4px;
+		
+		transform: translateX($pane-close-button-offset);
+
+		.cui-button-visual {
+			min-width: 20px; // make explicetely narrower to move to the very right
+		}
+
+		&:focus .cui-button-visual.cui-button-visual {
+			box-shadow: none !important;
+			border: 0;
+
+			&::after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 5px;
+				left: 0.5 * $pane-close-button-offset;
+				width: calc(100% - (2 * $pane-close-button-offset));
+				height: calc(100% - 10px);
+				outline: 2px solid $focused;
+				border-radius: 0.5px;
+			}
+		}
+	}
+
+	// Pane Header title is clickable and works as a pane-close-button
+	.cui-pane-title-button {
+		@include button-color-reset();
+
+		.cui-button-visual {
+			@include h3(0);
+
+			justify-content: space-between;
+
+			.cui-button-center {
+				padding-left: 2px;
+				padding-right: 2px;
+			}
+		}
+	}		
 }

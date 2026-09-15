@@ -11,7 +11,7 @@
 # @example Startup
 #
 
-marked = require('marked')
+{ marked, Renderer } = require('marked')
 
 class CUI
 
@@ -114,6 +114,10 @@ class CUI
 		asserts: true
 		asserts_alert: 'js' # or 'cui' or 'off' or 'debugger'
 		class: {}
+
+		# DOMPurify drops "target" by default, which would break links meant to open in a new tab
+		dompurify_opts:
+			ADD_ATTR: ["target"]
 
 	# Returns a resolved CUI.Promise.
 	@resolvedPromise: ->
@@ -636,7 +640,7 @@ class CUI
 		s.join("")
 
 	@decodeURIComponentNicely: (v) ->
-		decodeURIComponent(v)
+		decodeURIComponent((v or "").replace(/\+/g, " "))
 
 	@decodeUrlData: (url, replacer = null, connect = "&", connect_pair = "=", use_array=false) ->
 		params = {}
@@ -707,7 +711,9 @@ class CUI
 
 	# Deprecated -> Use CUI.util
 	@isPlainObject: (v) ->
-		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
+		return false unless v? and typeof v is "object"
+		proto = Object.getPrototypeOf(v)
+		proto is Object.prototype or proto is null
 
 	# Deprecated -> Use CUI.util
 	@isEmptyObject: (v) ->
@@ -904,7 +910,7 @@ class CUI
 	@browser: (->
 		map =
 			opera: `(!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0`
-			firefox: `typeof InstallTrigger !== 'undefined'`
+			firefox: `typeof InstallTrigger !== 'undefined'` # TODO: InstallTrigger is deprecated, remove
 			safari: `Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0`
 			ie: `/*@cc_on!@*/false || !!document.documentMode`
 			chrome: !!window.chrome and !!window.chrome.webstore
@@ -1014,13 +1020,8 @@ CUI.ready =>
 			document.body.classList.add("cui-browser-"+k)
 
 	CUI.defaults.marked_opts =
-		renderer: new marked.Renderer()
 		gfm: true
-		tables: true
-		breaks: false
-		pedantic: false
-		smartLists: true
-		smartypants: false
+		renderer: new Renderer()
 
 	# initialize a markdown renderer
 	marked.setOptions(CUI.defaults.marked_opts)

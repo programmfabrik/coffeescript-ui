@@ -5,7 +5,9 @@
  * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
 ###
 
-marked = require('marked')
+{ marked } = require('marked')
+DOMPurify = require("dompurify")
+
 CUI.Template.loadTemplateText(require('./Label.html'));
 
 # @param [Object] options for {Label} creation
@@ -139,6 +141,9 @@ class CUI.Label extends CUI.DOMElement
 				check: Boolean
 			markdown_opts:
 				check: "PlainObject"
+			sanitizeMarkdown:
+				check: Boolean
+				default: true
 			tooltip:
 				check: "PlainObject"
 			group:
@@ -191,7 +196,9 @@ class CUI.Label extends CUI.DOMElement
 		if CUI.util.isEmpty(@__currentText)
 			@empty("content")
 		else if markdown
-			@setContent(CUI.dom.htmlToNodes(marked(@__currentText, @__markdown_opts)))
+			renderedMarkdown = marked(@__currentText, @__markdown_opts)
+			htmlValue = if @_sanitizeMarkdown then DOMPurify.sanitize(renderedMarkdown, CUI.defaults.dompurify_opts) else renderedMarkdown
+			@setContent(CUI.dom.htmlToNodes(htmlValue))
 			@addClass("cui-label-markdown")
 		else if @_text_node_func
 			@setContent(@_text_node_func(@__currentText))
@@ -324,6 +331,45 @@ class CUI.Label extends CUI.DOMElement
 			nodes.push(a_node)
 
 		append_text()
+		return nodes
+
+	# Let us specify a regex to parse the text and generate
+	# dom elements. suitable to use as text_node_func.
+	@parseWithRegex = (text, regexp, getElement) ->
+		nodes = []
+		lastIndex = 0
+
+		unless regexp.global
+			throw new Error "RegExp must have the /g flag"
+
+		# Reset in case it was used before
+		regexp.lastIndex = 0
+
+		while match = regexp.exec text
+			matchText = match[0]
+			matchIndex = match.index
+
+			# Append any text before this match as a text node
+			if matchIndex > lastIndex
+				preText = text.substring(lastIndex, matchIndex)
+				nodes.push CUI.dom.text(preText)
+
+			# Generate a node for the matched text the user needs to provide a getElement function
+			node = getElement(matchText, matchIndex, text)
+			if node?
+				nodes.push node
+			else
+				# If getElement returns null/undefined, fall back to plain text
+				nodes.push CUI.dom.text(matchText)
+
+			# Move past this match
+			lastIndex = regexp.lastIndex
+
+		# Append any remaining text after last match
+		if lastIndex < text.length
+			tail = text.substring(lastIndex)
+			nodes.push CUI.dom.text(tail)
+
 		return nodes
 
 

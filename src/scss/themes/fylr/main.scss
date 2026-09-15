@@ -9,75 +9,68 @@
 @use 'sass:math';
 
 // Third Party Components loaded from thirdparty
-@import '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
+@use '../../thirdparty/leaflet/dist/leaflet'; // without .css extension!
 // add compatibility with leaflet defaulticon heuristics, // https://github.com/ghybs/leaflet-defaulticon-compatibility, https://github.com/Leaflet/Leaflet/issues/4849
-@import '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
+@use '../../thirdparty/leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility'; // without .css extension
 
 // CUI
 // -------------------------------------
-// common, vars, mixins
-@import '_functions';
-@import '_variables';
-@import '_mixins';
-// todo: make obsolete
-// stylelint-disable
-@import 'body_ng';
-// stylelint-enable
-@import '_root';
-@import '_resets';
-@import '_cursors';
-@import '_typography';
-@import '_global';
+// common
+@use '_root';
+@use '_resets';
+@use '_cursors';
+@use '_typography';
+@use '_global';
 // flex layout, import BEFORE any components, because it can be used within and adjusted by individual components
-@import '_flex-layout';
+@use '_flex-layout';
 
 // components (order might be important, because the components inherit from each other)
 
 // 1.) "atoms" - very low level components
-@import '../../icons/_svg-dimensions';
-@import 'components/_data-max-char';
-@import 'components/_icons';
-@import 'components/_labels';
-@import 'components/_buttons';
-@import 'components/_input';
-@import 'components/_output';
-@import 'components/_checkbox';
-@import 'components/_file-upload';
-@import 'components/_handles'; // handles for dragging, resizing etc.
-@import 'components/_slider';
-@import 'components/_data-field';
-@import 'components/_block';
-@import 'components/_drag-drop';
-@import 'components/_sticky-header';
-@import 'components/_digi-display';
-@import 'components/_console';
-@import 'components/_css-swatch';
+@use '../../icons/_svg-dimensions';
+@use 'components/_data-max-char';
+@use 'components/_icons';
+@use 'components/_labels';
+@use 'components/_buttons';
+@use 'components/_input';
+@use 'components/_output';
+@use 'components/_checkbox';
+@use 'components/_file-upload';
+@use 'components/_handles'; // handles for dragging, resizing etc.
+@use 'components/_slider';
+@use 'components/_data-field';
+@use 'components/_block';
+@use 'components/_drag-drop';
+@use 'components/_sticky-header';
+@use 'components/_digi-display';
+@use 'components/_console';
+@use 'components/_css-swatch';
 
 // 2.) "molecules" - atom combinations
-@import 'components/_buttonbar';
-@import 'components/_progress-meter';
-@import 'components/_item-list';
-@import 'components/_options';
-@import 'components/_table';
-@import 'components/_date-time'; // calendar
+@use 'components/_buttonbar';
+@use 'components/_progress-meter';
+@use 'components/_item-list';
+@use 'components/_options';
+@use 'components/_table';
+@use 'components/_date-time'; // calendar
 
-// todo: specific order needed ??
-@import 'components/_forms';
-@import 'components/_panel';
-@import 'components/_toolbar'; // inside of pane
-@import 'components/_pane';
-@import 'components/_list-view'; // extends pane
-@import 'components/_list-view-tree'; // extends listView
-@import 'components/_data-table'; // special case if list-view
-@import 'components/_data-form'; // special form
-@import 'components/_tabs'; // extends pane
-@import 'components/_layer';
-@import 'components/_menu'; // after layer
-@import 'components/_dialogs'; // confirmation-dialog, prompt, alert etc., extends layer
-@import 'components/_popover'; // extends modal and layer
-@import 'components/_tooltip'; // extends layerPane and layer
-@import 'components/_developer-menu'; // extends layerPane and layer
-@import 'components/_map';
+// specific order needed ??
+@use 'components/_forms';
+@use 'components/_panel';
+@use 'components/_toolbar'; // inside of pane
+@use 'components/_pane';
+@use 'components/_list-view'; // extends pane
+@use 'components/_list-view-tree'; // extends listView
+@use 'components/_data-table'; // special case if list-view
+@use 'components/_data-form'; // special form
+@use 'components/_tabs'; // extends pane
+@use 'components/_layer';
+@use 'components/_menu'; // after layer
+@use 'components/_dialogs'; // confirmation-dialog, prompt, alert etc., extends layer
+@use 'components/_popover'; // extends modal and layer
+@use 'components/_tooltip'; // extends layerPane and layer
+@use 'components/_developer-menu'; // extends layerPane and layer
+@use 'components/_map';
 
 
 // 3.) "organisms" -

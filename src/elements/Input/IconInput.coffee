@@ -18,6 +18,11 @@ class CUI.IconInput extends CUI.Input
                 @__input.focus()
         super()
 
+    getValueForStore: (value) ->
+        if CUI.util.isString(value)
+            return value.trim()
+        value
+
     onDataChanged: (ev, info) ->
         super(ev, info)
         @__toggleIcon()
@@ -31,8 +36,9 @@ class CUI.IconInput extends CUI.Input
             @_leftControlElement.removeClass('is-empty')
 
     __toggleIcon: ->
-        if @__input.value.length > 0
-            @_leftControlElement.setIcon(@__input.value)
+        value = @__input.value.trim()
+        if value.length > 0
+            @_leftControlElement.setIcon(value)
             @_leftControlElement.removeClass('is-empty')
         else
             @_leftControlElement.setIcon("")

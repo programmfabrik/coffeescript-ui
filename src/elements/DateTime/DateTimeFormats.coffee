@@ -30,6 +30,8 @@ CUI.DateTimeFormats["de-DE"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ss.SSSSZ"
@@ -87,7 +89,7 @@ CUI.DateTimeFormats["de-DE"] =
 		]
 	,
 		text: "Datum"
-		support_bc: false
+		support_bc: true
 		input: "DD.MM.YYYY"
 		invalid: "Datum ungültig"
 		display: "dd, DD.MM.YYYY"
@@ -109,6 +111,8 @@ CUI.DateTimeFormats["de-DE"] =
 			"M/DD/YYYY"
 			"Y-M-D"
 			"D.M.Y"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"
@@ -172,6 +176,8 @@ CUI.DateTimeFormats["it-IT"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -229,6 +235,8 @@ CUI.DateTimeFormats["it-IT"] =
 			"YYYYMMDD"
 			"YYYY-M-D"
 			"Y-M-D"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"
@@ -292,6 +300,8 @@ CUI.DateTimeFormats["es-ES"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ss.SSSSZ"
@@ -414,6 +424,8 @@ CUI.DateTimeFormats["en-US"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"MM/DD/YYYY HH:mm:ss"
 			"MM/DD/YYYYTHH:mm:ss.SSSZ"
 			"MM/DD/YYYYTHH:mm:ssZ"
@@ -478,6 +490,8 @@ CUI.DateTimeFormats["en-US"] =
 			"YYYYMMDD"
 			"YYYY-M-D"
 			"Y-M-D"
+			"M/D/Y"
+			"MM/DD/Y"
 		]
 	,
 		text: "Jahr-Monat"
@@ -545,6 +559,8 @@ CUI.DateTimeFormats["ru-RU"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -685,6 +701,8 @@ CUI.DateTimeFormats["pl-PL"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -825,6 +843,8 @@ CUI.DateTimeFormats["cs-CZ"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -967,6 +987,8 @@ CUI.DateTimeFormats["fi-FI"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -1109,6 +1131,8 @@ CUI.DateTimeFormats["sv-SE"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -1251,6 +1275,8 @@ CUI.DateTimeFormats["da-DK"] =
 		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -1393,6 +1419,8 @@ CUI.DateTimeFormats["fr-FR"] =
 # timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
 		parse: [
 			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
 			"YYYY-MM-DD HH:mm:ss"
 			"YYYY-MM-DDTHH:mm:ss.SSSZ"
 			"YYYY-MM-DDTHH:mm:ssZ"
@@ -1504,6 +1532,143 @@ CUI.DateTimeFormats["fr-FR"] =
 		store: "YYYY"
 		type: "year"
 		# digi_clock: false
+		clock: false
+		parse: [
+			"Y"
+		]
+	]
+
+CUI.DateTimeFormats["tvl-TV"] =
+	timezone: "Europe/Berlin"
+	moment_locale: "en-US"
+	tab_date: "Date"
+	tab_time: "Time"
+	tab_week: "Wk"
+	formats: [
+		text: "Date+Time"
+		support_bc: false
+		invalid: "Invalid Date"
+		type: "date_time"
+		clock: true
+		store: "YYYY-MM-DDTHH:mm:00Z"
+		clock_am_pm: true
+		clock_seconds: false
+		# digi_clock: "HH:mm"
+		input: "YYYY-MM-DD hh:mm A"
+		display: "dd, YYYY-MM-DD hh:mm A"
+		display_short: "YYYY-MM-DD hh:mm A"
+		display_attribute: "date-time"
+		display_short_attribute: "date-time-short"
+		# timezone_display: "dddd, DD.MM.YYYY HH:mm zZ"
+		parse: [
+			"YYYY-MM-DDTHH:mm:ss"
+			"YYYY-MM-DDTHH:mm"
+			"YYYY-MM-DD HH:mm"
+			"MM/DD/YYYY HH:mm:ss"
+			"MM/DD/YYYYTHH:mm:ss.SSSZ"
+			"MM/DD/YYYYTHH:mm:ssZ"
+			"YYYY-MM-DD HH:mm:ss"
+			"YYYY-MM-DDTHH:mm:ss.SSSZ"
+			"YYYY-MM-DDTHH:mm:ss.SSSSZ"
+			"YYYY-MM-DDTHH:mm:ssZ"
+			"D.M.YYYY HH:mm:ss"
+			"DD.M.YYYY HH:mm:ss"
+			"D.MM.YYYY HH:mm:ss"
+			"D.MM.YY HH:mm:ss"
+			"DD.M.YY HH:mm:ss"
+			"D.M.YYYY HH:mm"
+			"DD.M.YYYY HH:mm"
+			"D.MM.YYYY HH:mm"
+			"D.MM.YY HH:mm"
+			"DD.M.YY HH:mm"
+		]
+	,
+		text: "Date+Time+Seconds"
+		support_bc: false
+		invalid: "Invalid Date"
+# input: "YYYY-MM-DD HH:mm:ss"
+		type: "date_time_seconds"
+		store: "YYYY-MM-DDTHH:mm:ssZ"
+		input: "YYYY-MM-DD HH:mm:ss"
+		display: "dd, YYYY-MM-DD HH:mm:ss"
+		display_short: "YYYY-MM-DD HH:mm:ss"
+		display_attribute: "date-time-seconds"
+		display_short_attribute: "date-time-seconds-short"
+# timezone_display: "dddd, DD.MM.YYYY HH:mm:ss zZ"
+		clock: true
+		clock_am_pm: true
+		clock_seconds: true
+# digi_clock: "HH:mm:ss"
+		parse: [
+			"MM/DD/YYYY HH:mm:ss"
+			"D.M.YYYY HH:mm:ss"
+			"DD.M.YYYY HH:mm:ss"
+			"D.MM.YYYY HH:mm:ss"
+			"D.MM.YY HH:mm:ss"
+			"DD.M.YY HH:mm:ss"
+		]
+	,
+		text: "Date"
+		support_bc: false
+		input: "YYYY-MM-DD"
+		invalid: "Invalid date"
+		display: "dd, YYYY-MM-DD"
+		display_short: "YYYY-MM-DD"
+		display_attribute: "date"
+		display_short_attribute: "date-short"
+		store: "YYYY-MM-DD"
+		type: "date"
+# digi_clock: false
+		clock: false
+		parse: [
+			"MM/DD/YYYY"
+			"D.M.YYYY"
+			"D.MM.YYYY"
+			"DD.M.YYYY"
+			"YYYYMMDD"
+			"YYYY-M-D"
+			"Y-M-D"
+			"M/D/Y"
+			"MM/DD/Y"
+		]
+	,
+		text: "Jahr-Monat"
+		support_bc: false
+		input: "YYYY-MM"
+		invalid: "Invalid date"
+		store: "YYYY-MM"
+		display: "MMMM YYYY"
+		display_short: "YYYY-MM"
+		display_attribute: "year-month"
+		display_short_attribute: "year-month-short"
+		type: "year_month"
+# digi_clock: false
+		clock: false
+		parse: [
+			"MM YYYY"
+			"MM/YYYY"
+			"MM.YYYY"
+			"M.YYYY"
+			"YYYY-M"
+			"YYYY-MM"
+			"MM-YYYY"
+			"M-YYYY"
+			"YYYY-M"
+			"YYYY.M"
+			"YYYY/M"
+		]
+	,
+		text: "Jahr"
+		support_bc: true
+		input: "Y"
+		invalid: "Invalid date"
+		display: "Y"
+		display_short: "Y"
+		display_attribute: "year"
+		display_short_attribute: "year"
+		store: "YYYY"
+		type: "year"
+# digi_clock: false
 		clock: false
 		parse: [
 			"Y"

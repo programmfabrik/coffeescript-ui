@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+@use '../mixins/forms' as *;
+@use '../mixins/labels' as *;
+
 // cui-form
 // cui-form-table
 // cui-form-container
@@ -31,13 +36,13 @@
 
 	@include form-key-value-inline(); // default, override in different context using form-key-value-stacked()
 
-	// needs to apply padding on a contextual basis
-	// padding: $spacer-sm;
+	// obsolete
+	// &--padded {}
 
-	// todo: make obsolete
-	// &--padded {
-	// 	padding: $form-padding;
-	// }
+	// use this if ALL rows in the form contain output only (no input fields)
+	&.cui-form--output-only {
+		--form-cell-gap: $spacer-sm;
+	}
 }
 
 // * Form - Table
@@ -62,7 +67,7 @@
 
 .cui-form-tr,
 .cui-form-tr-header {
-	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-row
+	margin-bottom: var(--form-cell-gap, #{$form-cell-gap}); // ! make sure to use the same margin as for cui-form-row
 
 	// see base config > Datei Erzeugung > Vorschau > Versionen
 	// see objecttypes > PDFCreator > New > Add asset/Datei > Settings pane
@@ -84,7 +89,7 @@
 // Examples: search > Table Options ("Repeat data for each row")
 .cui-form-field-type--checkbox + .cui-form-field-type--checkbox, 					// see admin > usermanagement > system-rights
 .cui-form-field-type--checkbox + .cui-form-row > .cui-form.has-custom-checkbox { 	// see export-manager > tab "Advanced"
-	margin-top: -0.5*$form-cell-gap;
+	margin-top: -0.5 * $form-cell-gap;
 }
 
 // base styles, see form-key-value-stacked() or form-key-value-inline() for more specific styles
@@ -105,8 +110,6 @@
 	flex-direction: column;
 	
 	> .cui-options {
-		// margin-bottom: $spacer-sm; // todo: this adds extra margin, the parent .cui-form-tr already has a margin
-
 		.cui-options-center {
 			min-height: 0;
 		}
@@ -247,7 +250,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
-	margin-bottom: $form-cell-gap; // ! make sure to use the same margin as for cui-form-tr
+	margin-bottom: var(--form-cell-gap, #{$form-cell-gap}); // ! make sure to use the same margin as for cui-form-tr
 
 	&:only-child {
 		margin-bottom: 0;
@@ -315,9 +318,9 @@
 	@include form-hint();
 
 	.cui-label {
-		@include label-form-hint();
-		
 		padding: 0 !important;
+
+		@include label-form-hint();
 	}
 
 	.cui-button {
@@ -326,12 +329,10 @@
 }
 
 .cui-input-invalid-hint {
-	color: theme-color('danger');
+	color: $danger;
 }
 
 .cui-form-hint {
-	// max-width: $data-field-width; // todo: do we really want to restrict the width, why?
-
 	.cui-checkbox + &,
 	.cui-data-field.cui-maximize-horizontal + & {
 		max-width: 100%;
@@ -377,6 +378,19 @@
 			.cui-empty-label {
 				padding: 0;
 			}
+		}
+	}
+}
+
+// Special forms with checkboxes
+.cui-form--has-checkbox-labels {
+	.cui-form-field-type--checkbox {
+		.cui-form-hint {
+			padding-left: calc(#{$checkbox-size} + #{$checkbox-margin} + 1px);
+		}
+
+		.cui-checkbox {
+			font-weight: $font-weight-bold;
 		}
 	}
 }

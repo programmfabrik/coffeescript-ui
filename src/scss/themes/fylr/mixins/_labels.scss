@@ -1,4 +1,6 @@
-// todo:
+@use 'sass:color';
+@use '../variables' as *;
+
 @mixin label-sm() {
 	font-size: $font-size-sm;
 	line-height: $line-height-sm;
@@ -65,17 +67,23 @@
 	
 	@if $letter-spacing {
 		letter-spacing: 3px;
-	}
-	@else {
+	} @else {
 		letter-spacing: 0.03em;
 	}
+}
+
+@mixin label-title-sm() {
+	@include label-title();
+
+	font-size: $font-size-sm;
+	letter-spacing: 0.06em;
 }
 
 // horizontaler teiler, schnellzugriff
 @mixin label-title-light($letter-spacing: true) {
 	@include label-title($letter-spacing);
 	
-	color: gray('500');
+	color: $gray-500;
 }
 
 @mixin label-subtitle() {
@@ -83,19 +91,29 @@
 }
 
 @mixin label-muted() {
-	color: theme-color('muted');
+	color: $muted;
 
 	.cui-selected & {
-		color: gray('100');
+		color: $gray-100;
 	}
 }
 
 @mixin label-danger() {
-	color: theme-color('danger');
+	color: $danger;
+}
+
+@mixin label-warning() {
+	color: color.adjust($warning, $lightness: -28%);
+
+	.cui-label-content > * {
+		display: inline;
+		background-color: color.scale($warning, $saturation: 50%, $lightness: 20%, $alpha: -85%);
+		line-height: 1.4;
+	}
 }
 
 @mixin label-empty() {
-	color: theme-color('muted');
+	color: $muted;
 
 	.cui-selected & {
 		color: var(--brand-foreground-text-color, #{$white}); // e.g. Datamodel or Locationmanager when adding a new object type or mask in the left column		
@@ -115,9 +133,9 @@
 	font-weight: $font-weight-normal;
 }
 
-@mixin label-form-hint() {
-	@include label-secondary();
-	
+@mixin label-form-hint() {	
 	font-size: $form-hint-font-size;
 	line-height: $form-hint-line-height;
+
+	@include label-secondary();
 }

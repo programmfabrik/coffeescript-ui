@@ -1,6 +1,9 @@
+@use 'sass:map';
+@use '../variables' as *;
+
 @mixin _headline($size: 'h1', $margin-bottom: $headings-margin-bottom) {
 	font-family: $headings-font-family;
-	font-size: headline-size($size);
+	font-size: map.get($headline-sizes, $size);
 	font-weight: $headings-font-weight;
 	line-height: $headings-line-height;
 	color: $headings-color;

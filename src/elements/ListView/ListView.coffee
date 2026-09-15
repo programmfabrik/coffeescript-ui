@@ -92,7 +92,7 @@ class CUI.ListView extends CUI.SimplePane
 		if @_useCSSGridLayout
 			@__useCSSGridLayout = true
 			@addClass("use-css-grid-layout")
-			CUI.dom.setStyle(@, "--grid-column-count": @__cols.length, "")			
+			CUI.dom.setStyle(@, "--grid-column-count": @__cols.length, "")
 
 		@addClass("cui-list-view")
 
@@ -204,8 +204,10 @@ class CUI.ListView extends CUI.SimplePane
 		@__inactive = !!inactive
 		if @grid
 			if @__inactive
-				CUI.dom.addClass(@grid, addClass)
-				@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
+				# repeated setInactive(true) would stack overlays and leak the previous one
+				if not @__inactiveWaitBlock
+					CUI.dom.addClass(@grid, addClass)
+					@__inactiveWaitBlock = new CUI.WaitBlock(element: @grid, inactive: true).show()
 			else
 				@__inactiveWaitBlock?.destroy()
 				@__inactiveWaitBlock = null
@@ -311,19 +313,32 @@ class CUI.ListView extends CUI.SimplePane
 		for col in [0..@colsCount-1] by 1
 			@__fillCells.push(CUI.dom.matchSelector(outer, ".cui-list-view-grid-fill-col-#{col}")[0])
 
-		on_scroll = =>
-			@__syncScrolling()
+		on_scroll = (ev) =>
+			node = ev?.getCurrentTarget() or @quadrant[3]
+
+			# header (Q1) and body (Q3) write each other's scrollLeft: whoever moves
+			# first leads until the next frame, so our own writes don't bounce it back
+			if @__scrollMaster
+				if @__scrollMaster != node
+					return
+			else
+				@__scrollMaster = node
+				window.requestAnimationFrame =>
+					@__scrollMaster = null
+					return
+
+			@__syncScrolling(node)
 			@_onScroll?()
-			
+
 			if @quadrant[3].scrollTop > 0
 				CUI.dom.addClass(@grid, "is-scrolling-vertically")
-			else 
+			else
 				CUI.dom.removeClass(@grid, "is-scrolling-vertically")
 
 			if @quadrant[3].scrollLeft > 0
 				CUI.dom.addClass(@grid, "is-scrolling-horizontally")
-			else 
-				CUI.dom.removeClass(@grid, "is-scrolling-horizontally")				
+			else
+				CUI.dom.removeClass(@grid, "is-scrolling-horizontally")
 
 		if @__useCSSGridLayout
 			CUI.Events.listen
@@ -332,19 +347,21 @@ class CUI.ListView extends CUI.SimplePane
 				call: (ev) =>
 					if @grid.scrollTop > 0
 						CUI.dom.addClass(@grid, "is-scrolling-vertically")
-					else 
+					else
 						CUI.dom.removeClass(@grid, "is-scrolling-vertically")
 
 					if @grid.scrollLeft > 0
 						CUI.dom.addClass(@grid, "is-scrolling-horizontally")
-					else 
-						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")						
-		else 
-			CUI.Events.listen
-				node: @quadrant[3]
-				type: "scroll"
-				call: on_scroll
+					else
+						CUI.dom.removeClass(@grid, "is-scrolling-horizontally")
+		else
+			for scroll_node in [@quadrant[3], @quadrant[1]] when scroll_node
+				CUI.Events.listen
+					node: scroll_node
+					type: "scroll"
+					call: on_scroll
 
+		@__scrollMaster = null
 		@__currentScroll = top: 0, left: 0
 
 		if @hasSelectableRows()
@@ -472,13 +489,20 @@ class CUI.ListView extends CUI.SimplePane
 		@quadrant[3].scrollTop = scroll.top
 		@quadrant[3].scrollLeft = scroll.left
 
-	__syncScrolling: ->
+	__syncScrolling: (source) ->
+		header_leads = source? and source == @quadrant[1]
+
+		if header_leads
+			@quadrant[3].scrollLeft = @quadrant[1].scrollLeft
+			# the header renders a few pixels wider than the body, keep it from
+			# scrolling where the body cannot follow
+			@quadrant[1].scrollLeft = @quadrant[3].scrollLeft
 
 		@__currentScroll = @__getScrolling()
 
 		if @fixedColsCount > 0
 			@quadrant[2].scrollTop = @__currentScroll.top
-		if @fixedRowsCount > 0
+		if @fixedRowsCount > 0 and not header_leads
 			@quadrant[1].scrollLeft = @__currentScroll.left
 
 		if @__fillRowQ3
@@ -574,10 +598,14 @@ class CUI.ListView extends CUI.SimplePane
 		dfr.promise()
 
 	getCellByTarget: ($target) ->
-		if CUI.dom.is($target, ".cui-lv-td")
+		# find the closest listview cell element of the mousemove target
+		# this is necessary when the mousemove target is a descendant of the cell and the cell element itself never gets to be the direct event target
+		target = CUI.dom.closest($target, ".cui-lv-td")
+
+		if target
 			cell =
-				col_i: parseInt($target.getAttribute("col"))
-				row_i: parseInt($target.getAttribute("row"))
+				col_i: parseInt(target.getAttribute("col"))
+				row_i: parseInt(target.getAttribute("row"))
 
 			cell.display_col_i = @getDisplayColIdx(cell.col_i)
 			cell.display_row_i = @getDisplayRowIdx(cell.row_i)
@@ -904,7 +932,9 @@ class CUI.ListView extends CUI.SimplePane
 
 		for row_i, row_info of @__colspanRows
 			for col_i, colspan of row_info
-				cell = CUI.dom.matchSelector(@grid, "."+@__lvClass+"-cell[row=\""+row_i+"\"][col=\""+col_i+"\"]")[0]
+				# __cells is populated in find_cells_and_rows with this exact element
+				# (same int row/col); avoids a full-grid querySelectorAll per colspan cell
+				cell = @__cells[parseInt(row_i)]?[parseInt(col_i)]
 				width = 0
 				for i in [0...colspan] by 1
 					# we assume that colspanned columns

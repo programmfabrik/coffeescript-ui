@@ -1,8 +1,10 @@
+@use '../variables' as *;
+
 @mixin icon($code, $font-size: $icon-font-size) {
 	content: $code;
 	display: inline-block;
 	// stylelint-disable-next-line
-	font: normal normal normal #{$font-size} 'FontAwesome';
+	font: normal normal normal var(--icon-font-size, #{$font-size}) 'FontAwesome';
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -10,7 +12,7 @@
 
 @mixin icon-close-xs() {
 	.svg-close {
-		width: 9px;
-		height: 9px;
+		width: $icon-font-size-xs;
+		height: $icon-font-size-xs;
 	}
 }

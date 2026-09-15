@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .cui-drag-drop-select-draggable,
 .cui-drag-drop-select-sortable {
 	cursor: grab;
@@ -7,7 +9,7 @@
 	cursor: default;
 }
 
-//* Drag & Drop
+// * Drag & Drop
 
 // copy of the element in drag state
 .cui-drag-drop-select-helper {
@@ -45,7 +47,7 @@
 }
 
 .cui-droppable-target-helper {
-	//overwrite any other animation, its just temporary
+	// overwrite any other animation, its just temporary
 	transition: transform 300ms ease !important;
 }
 

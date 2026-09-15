@@ -1,5 +1,7 @@
+@use '../variables' as *;
+
 @mixin table-zebra() {
-	//.cui-table
+	// .cui-table
 
 	@include table-no-border();
 

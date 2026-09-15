@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 // ItemList
 .cui-item-list-body {
 	display: flex;
@@ -21,7 +23,6 @@
 			box-shadow: none;
 
 			// make sure the buttons could wrap onto new line
-			// todo: get use case			
 			height: auto;
 			min-height: $item-list-height;
 			line-height: $line-height-sm;
@@ -96,7 +97,7 @@
 
 	// Options within item-list
 	// --------------------------------
-	// todo: style in a real world example (these are the original styles from ng theme)
+	// todo: find use-case (these are the original styles from ng theme)
 	.cui-options .cui-button {
 		padding: 0;
 		flex: 1 1 auto;
@@ -114,7 +115,7 @@
 	// --------------------------------
 	// see Menu.coffee, RootMenu.coffee (root has pretty much its own custom styling)
 	&.cui-item-list--has-button-left {
-		$indent: 1.5*$spacer;
+		$indent: 1.5 * $spacer;
 
 		// this button always has a left side
 		.cui-button-left {

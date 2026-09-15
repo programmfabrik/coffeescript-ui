@@ -7,7 +7,7 @@
 CoordinatesParser = require('coordinate-parser');
 CoordinatesFormat = require('formatcoords');
 
-marked = require('marked')
+{ marked } = require('marked')
 moment = require('moment')
 
 class CUI.util
@@ -305,6 +305,9 @@ class CUI.util
 		if obj instanceof CUI.Dummy
 			return obj
 
+		if obj instanceof RegExp
+			return new RegExp(obj.source, obj.flags)
+
 		if CUI.util.isPlainObject(obj)
 			new_obj = {}
 			for k, v of obj
@@ -336,6 +339,10 @@ class CUI.util
 		if obj is null or typeof obj in ['string', 'number', 'boolean', 'function']
 			return obj
 
+		# If its a promise, we don't copy it.
+		if CUI.util.isPromise(obj)
+			return obj
+
 		# If the object has already been copied, return its copy to handle cyclic references.
 		if visited.has(obj)
 			return visited.get(obj)
@@ -359,6 +366,12 @@ class CUI.util
 		if obj instanceof CUI.Dummy
 			visited.set(obj, obj)
 			return obj
+
+		# Special handling for RegExp objects.
+		if obj instanceof RegExp
+			result = if deep then new RegExp(obj.source, obj.flags) else obj
+			visited.set(obj, result)
+			return result
 
 		# If the object is a plain object.
 		if CUI.util.isPlainObject(obj)
@@ -604,7 +617,9 @@ class CUI.util
 		v and typeof(v) == "function"
 
 	@isPlainObject: (v) ->
-		v and typeof(v) == "object" and v.constructor?.prototype.hasOwnProperty("isPrototypeOf")
+		return false unless v? and typeof v is "object"
+		proto = Object.getPrototypeOf(v)
+		proto is Object.prototype or proto is null
 
 	@isEmptyObject: (v) ->
 		for k of v
@@ -681,14 +696,8 @@ class CUI.util
 CUI.util.moment = moment
 CUI.util.marked = marked
 
-String.prototype.startsWith = (s) ->
-	@substr(0, s.length) == s
-
 String.prototype.startsWithIgnoreCase = (s) ->
 	@toUpperCase().startsWith(s.toUpperCase())
 
-String.prototype.endsWith = (s) ->
-	@substr(@length-s.length) == s
-
-RegExp.escape= (s) ->
-    s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+RegExp.escape = (s) ->
+	s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')

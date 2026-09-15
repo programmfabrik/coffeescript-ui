@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 @mixin toolbar-gap() {
 	--toolbar-gap: #{$spacer-sm};
 
