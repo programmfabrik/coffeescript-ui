@@ -84,13 +84,16 @@ class CUI.Checkbox extends CUI.DataFieldInput
 	isIndeterminate: ->
 		return @_indeterminate
 
-	registerLabel: (lbl) ->
+	registerLabel: (lbl, stopProp = false) ->
 		lbl.setAttribute('data-label-clickable', '1')
 		CUI.Events.listen
 			type: 'click'
 			node: lbl
 			call: (ev) =>
 				@getButton().onClickAction(ev)
+
+				if stopProp 
+					ev.stopPropagation()
 		@
 
 	getButton: ->
