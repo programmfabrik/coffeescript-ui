@@ -550,6 +550,8 @@ class CUI.DateTimeRangeGrammar
 			output = CUI.DateTimeRangeGrammar.range(from, to)
 			if output
 				return output
+			# An unknown 'to' must not be dropped silently, the input would be saved as a single date.
+			return error: "NoDateRangeFound #{input}"
 
 		output = CUI.DateTimeRangeGrammar.getFromTo(from)
 		if output
