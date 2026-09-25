@@ -44040,6 +44040,9 @@ CUI.DateTimeRangeGrammar = (function() {
       if (output) {
         return output;
       }
+      return {
+        error: "NoDateRangeFound " + input
+      };
     }
     output = CUI.DateTimeRangeGrammar.getFromTo(from);
     if (output) {
