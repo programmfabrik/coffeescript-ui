@@ -5570,6 +5570,10 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   opacity: var(--label-secondary-opacity, 0.65);
 }
 
+.cui-options--implicit-all .cui-button-checkbox.cui-active > .cui-button-visual > .cui-button-left i {
+  opacity: 0.5;
+}
+
 .cui-options-center {
   min-height: 24px;
 }

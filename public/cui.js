@@ -60691,6 +60691,10 @@ CUI.Options = (function(superClass) {
         "default": "No options available.",
         check: String
       },
+      empty_means_all: {
+        "default": false,
+        check: Boolean
+      },
       columns: {
         check: function(v) {
           if (CUI.util.isInteger(v) && v <= 12) {
@@ -60762,6 +60766,15 @@ CUI.Options = (function(superClass) {
     return this.__options_data = {};
   };
 
+  Options.prototype.__isImplicitAll = function() {
+    return this._empty_means_all && !this._radio && CUI.util.isEmpty(this.getValue());
+  };
+
+  Options.prototype.__updateImplicitAllClass = function() {
+    CUI.dom.setClass(this.DOM, "cui-options--implicit-all", this.__isImplicitAll());
+    return this;
+  };
+
   Options.prototype.setData = function(data) {
     Options.__super__.setData.call(this, data);
     if (this._radio) {
@@ -60776,7 +60789,7 @@ CUI.Options = (function(superClass) {
   };
 
   Options.prototype.__setDataOnOptions = function(init_data) {
-    var cb, i, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2, ref3;
+    var cb, check_changed, i, implicit_all, j, l, len, len1, len2, opt, opt_unchecked, ref, ref1, ref2, ref3;
     if (init_data == null) {
       init_data = true;
     }
@@ -60805,12 +60818,17 @@ CUI.Options = (function(superClass) {
         }
       }
     } else {
+      implicit_all = this.__isImplicitAll();
+      this.__updateImplicitAllClass();
+      if (init_data && this._check_changed) {
+        check_changed = JSON.parse(this.getCheckChangedValue());
+      }
       ref2 = this.__checkboxes;
       for (l = 0, len2 = ref2.length; l < len2; l++) {
         cb = ref2[l];
         opt = cb.getOptValue();
         opt_unchecked = cb.getOptValueUnchecked();
-        if (((ref3 = this.getValue()) != null ? ref3.indexOf(opt) : void 0) > -1) {
+        if (implicit_all || ((ref3 = this.getValue()) != null ? ref3.indexOf(opt) : void 0) > -1) {
           this.__options_data[cb.getName()] = opt;
         } else {
           this.__options_data[cb.getName()] = opt_unchecked;
@@ -60818,7 +60836,7 @@ CUI.Options = (function(superClass) {
         if (!init_data) {
           continue;
         }
-        if (this._check_changed && JSON.parse(this.getCheckChangedValue()).indexOf(opt) > -1) {
+        if (check_changed && ((this._empty_means_all && check_changed.length === 0) || check_changed.indexOf(opt) > -1)) {
           cb.setCheckChangedValue(opt);
         } else {
           cb.setCheckChangedValue(opt_unchecked);
@@ -60923,6 +60941,8 @@ CUI.Options = (function(superClass) {
     Options.__super__.storeValue.call(this, value, flags);
     if (flags.__set_on_data) {
       this.__setDataOnOptions();
+    } else {
+      this.__updateImplicitAllClass();
     }
     return this;
   };
@@ -61130,7 +61150,7 @@ CUI.Options = (function(superClass) {
           }
         };
         opt.onDeactivate = function(_cb, flags) {
-          var arr, c, checkbox, j, l, len1, len2, len3, m, option, ref2, ref3, ref4;
+          var arr, c, cb, checkbox, j, l, len1, len2, len3, m, option, ref2, ref3, ref4;
           _opt.indeterminate = false;
           if (_this._radio) {
             ref2 = _this.__checkboxes;
@@ -61163,8 +61183,27 @@ CUI.Options = (function(superClass) {
                 _this.storeValue(_cb.getValue(), flags);
               }
             } else {
-              CUI.util.removeFromArray(_cb.getOptValue(), arr = _this.getValue().slice(0));
+              if (_this.__isImplicitAll()) {
+                arr = (function() {
+                  var len4, n, ref5, results;
+                  ref5 = this.__checkboxes;
+                  results = [];
+                  for (n = 0, len4 = ref5.length; n < len4; n++) {
+                    cb = ref5[n];
+                    if (cb !== _cb) {
+                      results.push(cb.getOptValue());
+                    }
+                  }
+                  return results;
+                }).call(_this);
+              } else {
+                CUI.util.removeFromArray(_cb.getOptValue(), arr = _this.getValue().slice(0));
+              }
               _this.storeValue(arr, flags);
+              if (_this.__isImplicitAll()) {
+                _this.__setDataOnOptions(false);
+                _this.displayValue();
+              }
               if (_this._sortable) {
                 order_options_by_value_array();
                 _this.reload();
