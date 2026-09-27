@@ -36,6 +36,13 @@
 	@include label-form-hint();
 }
 
+// nothing selected means everything, see opts.empty_means_all
+.cui-options--implicit-all {
+	.cui-button-checkbox.cui-active > .cui-button-visual > .cui-button-left i {
+		opacity: $disabled-opacity;
+	}
+}
+
 // align options with label if there is only one option
 .cui-options-center {
 	min-height: 24px;
