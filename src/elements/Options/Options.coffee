@@ -60,6 +60,11 @@ class CUI.Options extends CUI.DataField
 				default: "No options available."
 				check: String
 
+			# an empty value selects everything, show all options checked (dimmed) then
+			empty_means_all:
+				default: false
+				check: Boolean
+
 			columns:
 				check: (v) ->
 					if (CUI.util.isInteger(v) and v <= 12) # max 12 columns
@@ -111,6 +116,13 @@ class CUI.Options extends CUI.DataField
 				@__radio = @_radio
 		@__options_data = {}
 
+	__isImplicitAll: ->
+		@_empty_means_all and not @_radio and CUI.util.isEmpty(@getValue())
+
+	__updateImplicitAllClass: ->
+		CUI.dom.setClass(@DOM, "cui-options--implicit-all", @__isImplicitAll())
+		@
+
 	setData: (data) ->
 		super(data)
 		if @_radio
@@ -141,10 +153,15 @@ class CUI.Options extends CUI.DataField
 				else
 					cb.setCheckChangedValue(cb.getOptValueUnchecked())
 		else
+			implicit_all = @__isImplicitAll()
+			@__updateImplicitAllClass()
+			if init_data and @_check_changed
+				check_changed = JSON.parse(@getCheckChangedValue())
+
 			for cb in @__checkboxes
 				opt = cb.getOptValue()
 				opt_unchecked = cb.getOptValueUnchecked()
-				if @getValue()?.indexOf(opt) > -1
+				if implicit_all or @getValue()?.indexOf(opt) > -1
 					@__options_data[cb.getName()] = opt
 				else
 					@__options_data[cb.getName()] = opt_unchecked
@@ -152,7 +169,7 @@ class CUI.Options extends CUI.DataField
 				if not init_data
 					continue
 
-				if @_check_changed and JSON.parse(@getCheckChangedValue()).indexOf(opt) > -1
+				if check_changed and ((@_empty_means_all and check_changed.length == 0) or check_changed.indexOf(opt) > -1)
 					cb.setCheckChangedValue(opt)
 				else
 					cb.setCheckChangedValue(opt_unchecked)
@@ -218,6 +235,8 @@ class CUI.Options extends CUI.DataField
 		super(value, flags)
 		if flags.__set_on_data
 			@__setDataOnOptions()
+		else
+			@__updateImplicitAllClass()
 		@
 
 	displayValue: ->
@@ -394,8 +413,15 @@ class CUI.Options extends CUI.DataField
 							if not flags.prior_activate
 								@storeValue(_cb.getValue(), flags)
 						else
-							CUI.util.removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
+							if @__isImplicitAll()
+								# unchecking one of the implicit options keeps all the others
+								arr = (cb.getOptValue() for cb in @__checkboxes when cb != _cb)
+							else
+								CUI.util.removeFromArray(_cb.getOptValue(), arr = @getValue().slice(0))
 							@storeValue(arr, flags)
+							if @__isImplicitAll()
+								@__setDataOnOptions(false)
+								@displayValue()
 
 							if @_sortable
 								order_options_by_value_array()
