@@ -127,6 +127,8 @@ class CUI.ListView extends CUI.SimplePane
 				check: Boolean
 			colResize:
 				check: Boolean
+			colMove:
+				check: Boolean
 			useCSSGridLayout:
 				check: Boolean
 			selectableRows:
@@ -140,6 +142,8 @@ class CUI.ListView extends CUI.SimplePane
 			onScroll:
 				check: Function
 			onColumnResize:
+				check: Function
+			onColumnMove:
 				check: Function
 			header:
 				deprecated: true
@@ -190,6 +194,9 @@ class CUI.ListView extends CUI.SimplePane
 
 	hasResizableColumns: ->
 		@__colResize
+
+	hasMovableColumns: ->
+		!!@_colMove
 
 	hasCSSGridLayout: ->
 		@__useCSSGridLayout
@@ -674,6 +681,35 @@ class CUI.ListView extends CUI.SimplePane
 					after: after
 		@
 
+	moveCol: (from_col_i, to_col_i, after=false, trigger_col_moved=true) ->
+
+		CUI.util.assert(from_col_i >= @fixedColsCount and to_col_i >= @fixedColsCount, "ListView.moveCol", "from_col_i and to_col_i must not be in the fixed area of the list view", from_col_i: from_col_i, to_col_i: to_col_i, fixed_i: @fixedColsCount)
+
+		if from_col_i == to_col_i
+			return @
+
+		if after
+			func = CUI.dom.insertAfter
+		else
+			func = CUI.dom.insertBefore
+
+		# rows whose colspan swallowed one of the two cells keep their layout
+		for cells in @__cells when cells
+			if cells[from_col_i] and cells[to_col_i]
+				func(cells[to_col_i], cells[from_col_i])
+
+		func(@__fillCells[to_col_i], @__fillCells[from_col_i])
+
+		display_from_col_i = @getDisplayColIdx(from_col_i)
+		display_to_col_i = @getDisplayColIdx(to_col_i)
+
+		@moveInOrderArray(from_col_i, to_col_i, @colsOrder, after)
+		@__scheduleLayout()
+
+		if trigger_col_moved
+			@_onColumnMove?(display_from_col_i, display_to_col_i, after)
+		@
+
 
 	rowAddClass: (row_i, cls) ->
 		rows = @getRow(row_i)
@@ -907,8 +943,7 @@ class CUI.ListView extends CUI.SimplePane
 
 		# set width on colspan cells
 		@__colWidths = []
-		for fc, display_col_i in @__fillCells
-			col_i = @getColIdx(display_col_i)
+		for fc, col_i in @__fillCells
 			manual_col_width = @__manualColWidths[col_i]
 			if manual_col_width > 0
 				has_manually_sized_column =  true
@@ -923,8 +958,7 @@ class CUI.ListView extends CUI.SimplePane
 				fc.style.removeProperty("width")
 				fc.style.removeProperty("flex")
 
-		for fc, display_col_i in @__fillCells
-			col_i = @getColIdx(display_col_i)
+		for fc, col_i in @__fillCells
 			@__colWidths[col_i] = fc.offsetWidth
 
 		if @__maximize_horizontal

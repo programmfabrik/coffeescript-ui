@@ -21,6 +21,9 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 			resizable:
 				default: true
 				check: Boolean
+			movable:
+				default: true
+				check: Boolean
 			label:
 				check: (v) ->
 					if CUI.util.isPlainObject(v) or v instanceof CUI.Label
@@ -53,11 +56,16 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 		if listView.hasCSSGridLayout() && @_colspan
 			CUI.dom.setStyle(@__element, "--colspan": @_colspan, "")
 
-		if not listView.hasResizableColumns()
-			return @__element
-
 		coldef = listView.getColdef(@getColumnIdx())
-		if coldef == "fixed"
+
+		if @isMovable()
+			@addClass("cui-lv-th--movable")
+			new CUI.ListViewColMove
+				element: @__element
+				row: @getRow()
+				column: @
+
+		if not listView.hasResizableColumns() or coldef == "fixed"
 			return @__element
 
 		move_handle = CUI.dom.element("DIV", class: "cui-lv-col-resize-handle")
@@ -69,6 +77,13 @@ class CUI.ListViewHeaderColumn extends CUI.ListViewColumn
 
 		CUI.dom.append(@__element, move_handle)
 		@__element
+
+	isMovable: ->
+		listView = @getRow().getListView()
+		@_movable and
+			listView.hasMovableColumns() and
+			@getColumnIdx() >= listView.fixedColsCount and
+			listView.getColdef(@getColumnIdx()) != "fixed"
 
 	render: ->
 		if @_spacer

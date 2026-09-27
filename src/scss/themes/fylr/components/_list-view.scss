@@ -503,6 +503,27 @@
 	opacity: 0.2;
 }
 
+// Move a column via drag & drop of its header
+.cui-lv-th--movable {
+	cursor: grab;
+}
+
+.cui-lv-col-move-target {
+	width: 4px;
+	background: $list-view-move-target-area-background;
+	margin-left: -2px;
+	position: absolute;
+	z-index: 4;
+	pointer-events: none !important;
+}
+
+.cui-lv-col-move {
+	position: absolute;
+	z-index: 4;
+	background: $list-view-move-target-area-background;
+	opacity: 0.2;
+}
+
 .cui-lv-row-move-handle-column {
 	cursor: default; // reset .cui-drag-drop-select-draggable
 
