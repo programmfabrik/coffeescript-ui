@@ -2420,10 +2420,12 @@ a[role="button"].cui-button-appearance-link {
 	> .cui-button,
 	> .cui-button-button,
 	> .cui-data-field-input {
-		+ .cui-button,
-		+ .cui-button-button,
-		+ .cui-data-field-input {
-			margin-left: $padding;
+		&:not(.cui-button-hidden) {
+			+ .cui-button,
+			+ .cui-button-button,
+			+ .cui-data-field-input {
+				margin-left: $padding;
+			}
 		}
 	}
 
