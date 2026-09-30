@@ -38,6 +38,8 @@ class CUI.Tooltip extends CUI.LayerPane
 		@mergeOpts
 			element:
 				mandatory: true
+			show_ms:
+				default: 600
 
 		@addOpts
 			text:
