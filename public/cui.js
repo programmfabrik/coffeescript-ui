@@ -41338,6 +41338,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return v;
     }
+    mom.fylrPartialTz = null;
     return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input, false, this._avoid_bc_conversion);
   };
 
@@ -41349,6 +41350,9 @@ CUI.DateTime = (function(superClass) {
     if (!CUI.util.isEmpty(value != null ? value.trim() : void 0)) {
       mom = this.parse(value);
       if (!mom.isValid()) {
+        return false;
+      }
+      if (mom.fylrPartialTz && value !== this.getValueForDisplay()) {
         return false;
       }
       if (mom.bc || value.startsWith("-") || mom.year() < 0) {
