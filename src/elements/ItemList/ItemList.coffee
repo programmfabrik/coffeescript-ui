@@ -342,13 +342,25 @@ class CUI.ItemList extends CUI.VerticalLayout
 			call: (ev) =>
 				@DOM.focus()
 				item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0]
-				if CUI.dom.hasClass(item, CUI.defaults.class.Button.defaults.active_css_class)
+				index = @__getButtonIndex(item)
+				if not CUI.util.isNull(index) and index == @__preActiveIndex
 					return
 
 				@__deselectPreActivated()
-				index = @__getButtonIndex(item)
 				if not CUI.util.isNull(index)
 					@__preActivateButtonByIndex(index)
+				return
+
+		CUI.Events.listen
+			type: "mouseleave"
+			node: @DOM
+			call: =>
+				# moving into its submenu, the item stays highlighted
+				if @__getButtonByIndex(@__preActiveIndex)?.hasClass("cui-layer-open")
+					return
+
+				@__deselectPreActivated()
+				@__preActiveIndex = null
 				return
 
 		return
@@ -402,6 +414,9 @@ class CUI.ItemList extends CUI.VerticalLayout
 	__deselectPreActivated: ->
 		buttons = @__getButtonItems()
 		for button in buttons
+			# the selected item shares the class, it must keep it
+			if CUI.dom.data(button, "element").isActive()
+				continue
 			if CUI.dom.hasClass(button, CUI.defaults.class.Button.defaults.active_css_class)
 				CUI.dom.removeClass(button, CUI.defaults.class.Button.defaults.active_css_class)
 		return

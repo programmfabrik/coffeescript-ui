@@ -51914,14 +51914,28 @@ CUI.ItemList = (function(superClass) {
           var index, item;
           _this.DOM.focus();
           item = CUI.dom.parents(ev.getTarget(), ".cui-button-button")[0];
-          if (CUI.dom.hasClass(item, CUI.defaults["class"].Button.defaults.active_css_class)) {
+          index = _this.__getButtonIndex(item);
+          if (!CUI.util.isNull(index) && index === _this.__preActiveIndex) {
             return;
           }
           _this.__deselectPreActivated();
-          index = _this.__getButtonIndex(item);
           if (!CUI.util.isNull(index)) {
             _this.__preActivateButtonByIndex(index);
           }
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      type: "mouseleave",
+      node: this.DOM,
+      call: (function(_this) {
+        return function() {
+          var ref;
+          if ((ref = _this.__getButtonByIndex(_this.__preActiveIndex)) != null ? ref.hasClass("cui-layer-open") : void 0) {
+            return;
+          }
+          _this.__deselectPreActivated();
+          _this.__preActiveIndex = null;
         };
       })(this)
     });
@@ -51998,6 +52012,9 @@ CUI.ItemList = (function(superClass) {
     buttons = this.__getButtonItems();
     for (i = 0, len = buttons.length; i < len; i++) {
       button = buttons[i];
+      if (CUI.dom.data(button, "element").isActive()) {
+        continue;
+      }
       if (CUI.dom.hasClass(button, CUI.defaults["class"].Button.defaults.active_css_class)) {
         CUI.dom.removeClass(button, CUI.defaults["class"].Button.defaults.active_css_class);
       }
