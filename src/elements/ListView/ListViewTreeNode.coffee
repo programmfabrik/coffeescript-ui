@@ -383,7 +383,7 @@ class CUI.ListViewTreeNode extends CUI.ListViewRow
 
 			CUI.chunkWork.call @,
 				items: @children
-				chunk_size: 5
+				chunk_size: @getTree()?.getOpenChunkSize?() or 5
 				timeout: 1
 				call: (items) =>
 					CUI.chunkWork.call @,
