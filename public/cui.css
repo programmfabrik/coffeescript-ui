@@ -3264,15 +3264,15 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-buttonbar .cui-label-content {
   align-self: center;
 }
-.cui-buttonbar > .cui-button + .cui-button,
-.cui-buttonbar > .cui-button + .cui-button-button,
-.cui-buttonbar > .cui-button + .cui-data-field-input,
-.cui-buttonbar > .cui-button-button + .cui-button,
-.cui-buttonbar > .cui-button-button + .cui-button-button,
-.cui-buttonbar > .cui-button-button + .cui-data-field-input,
-.cui-buttonbar > .cui-data-field-input + .cui-button,
-.cui-buttonbar > .cui-data-field-input + .cui-button-button,
-.cui-buttonbar > .cui-data-field-input + .cui-data-field-input {
+.cui-buttonbar > .cui-button:not(.cui-button-hidden) + .cui-button,
+.cui-buttonbar > .cui-button:not(.cui-button-hidden) + .cui-button-button,
+.cui-buttonbar > .cui-button:not(.cui-button-hidden) + .cui-data-field-input,
+.cui-buttonbar > .cui-button-button:not(.cui-button-hidden) + .cui-button,
+.cui-buttonbar > .cui-button-button:not(.cui-button-hidden) + .cui-button-button,
+.cui-buttonbar > .cui-button-button:not(.cui-button-hidden) + .cui-data-field-input,
+.cui-buttonbar > .cui-data-field-input:not(.cui-button-hidden) + .cui-button,
+.cui-buttonbar > .cui-data-field-input:not(.cui-button-hidden) + .cui-button-button,
+.cui-buttonbar > .cui-data-field-input:not(.cui-button-hidden) + .cui-data-field-input {
   margin-left: 10px;
 }
 .cui-buttonbar > .cui-button + .cui-buttonbar-group,
