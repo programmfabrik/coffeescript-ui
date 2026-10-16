@@ -54995,6 +54995,12 @@ CUI.ListViewTree = (function(superClass) {
       onClose: {
         check: Function
       },
+      openChunkSize: {
+        "default": 5,
+        check: function(v) {
+          return CUI.util.isInteger(v) && v >= 1;
+        }
+      },
       onBeforeSelect: {
         check: Function
       }
@@ -55010,6 +55016,10 @@ CUI.ListViewTree = (function(superClass) {
       this.__selectableRows = this._selectable;
     }
     return this;
+  };
+
+  ListViewTree.prototype.getOpenChunkSize = function() {
+    return this._openChunkSize;
   };
 
   ListViewTree.prototype.getRowMoveTool = function(opts) {
@@ -55918,6 +55928,7 @@ CUI.ListViewTreeNode = (function(superClass) {
     })(this);
     load_children = (function(_this) {
       return function(loaded) {
+        var ref;
         if (loaded == null) {
           loaded = false;
         }
@@ -55943,7 +55954,7 @@ CUI.ListViewTreeNode = (function(superClass) {
         _this.initChildren();
         CUI.chunkWork.call(_this, {
           items: _this.children,
-          chunk_size: 5,
+          chunk_size: ((ref = _this.getTree()) != null ? typeof ref.getOpenChunkSize === "function" ? ref.getOpenChunkSize() : void 0 : void 0) || 5,
           timeout: 1,
           call: function(items) {
             return CUI.chunkWork.call(_this, {
