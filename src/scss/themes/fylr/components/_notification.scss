@@ -1,0 +1,60 @@
+// * Notification
+
+/*
+<div class="cui-notification-container">
+	<div class="cui-notification cui-notification--shown" role="status">
+		<div class="cui-label"> ... </div>
+	</div>
+</div>
+*/
+
+@use '../variables' as *;
+
+// on top of the layers and the fullscreen views, which also sit on $layer-z-index
+.cui-notification-container {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	z-index: $layer-z-index + 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $spacer-sm;
+	width: max-content;
+	max-width: calc(100vw - 2 * #{$spacer});
+	padding-top: $spacer;
+	transform: translateX(-50%);
+	pointer-events: none;
+}
+
+// slides in from above the window
+.cui-notification {
+	display: flex;
+	align-items: center;
+	max-width: 480px;
+	padding: $spacer-sm $spacer;
+	background-color: $layer-background;
+	border-radius: $layer-border-radius;
+	box-shadow:
+		0 2px 4px 0 rgba($layer-shadow-color, 0.2),
+		0 6px 20px 4px rgba($layer-shadow-color, 0.15);
+	opacity: 0;
+	transform: translateY(calc(-100% - #{$spacer}));
+	transition:
+		transform 300ms ease-out,
+		opacity 300ms ease-out;
+	pointer-events: auto;
+	cursor: default;
+	user-select: none;
+}
+
+.cui-notification--shown {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cui-notification {
+		transition: none;
+	}
+}
