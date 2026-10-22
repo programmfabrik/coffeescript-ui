@@ -30856,6 +30856,16 @@ CUI.Layer = (function(superClass) {
 
   Layer.FILL_SPACE_CHECK_ARRAY = ["auto", "both", "horizontal", "vertical"];
 
+  Layer.findRoots = function(selector) {
+    var fullscreen, roots;
+    roots = CUI.dom.children(document.body, selector);
+    fullscreen = CUI.dom.fullscreenElement();
+    if (fullscreen) {
+      roots = roots.concat(CUI.dom.children(fullscreen, selector));
+    }
+    return roots;
+  };
+
   function Layer(opts) {
     var bc, body_clone, cls;
     Layer.__super__.constructor.call(this, opts);
@@ -31829,7 +31839,7 @@ CUI.Layer = (function(superClass) {
 
   Layer.prototype.__updateLayerStackCounter = function() {
     var el, i, idx, layer_elements, len, total;
-    layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-layer-root");
+    layer_elements = CUI.Layer.findRoots(".cui-layer-root");
     total = layer_elements.length;
     for (idx = i = 0, len = layer_elements.length; i < len; idx = ++i) {
       el = layer_elements[idx];
@@ -31854,7 +31864,7 @@ CUI.Layer = (function(superClass) {
       this.position();
       return this;
     }
-    document.body.appendChild(this.__layer_root.DOM);
+    (CUI.dom.fullscreenElement() || document.body).appendChild(this.__layer_root.DOM);
     if (this.__element) {
       CUI.dom.addClass(this.__getOriginalElement(), this.getElementOpenClass());
       ref = CUI.dom.parentsScrollable(this.__element);
@@ -32007,13 +32017,14 @@ CUI.Layer = (function(superClass) {
 })(CUI.DOMElement);
 
 CUI.ready(function() {
+  var fullscreen_element;
   CUI.Events.listen({
     type: ["mousedown", "touchend"],
     capture: true,
     node: document.body,
     call: function(ev, info) {
       var element, i, layer, layer_element, layer_elements, target;
-      layer_elements = CUI.dom.find("body > .cui-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru");
+      layer_elements = CUI.Layer.findRoots(".cui-layer-root, .cui-pane-fill-screen-is-on, .cui-layer-prevent-click-thru");
       target = ev.getTarget();
       for (i = layer_elements.length - 1; i >= 0; i += -1) {
         layer_element = layer_elements[i];
@@ -32049,15 +32060,24 @@ CUI.ready(function() {
       }
     }
   });
-  return CUI.Events.listen({
+  CUI.Events.listen({
     type: ["keyup"],
     node: document.body,
     call: function(ev) {
-      var layer, layer_element, layer_elements, ref;
+      var layer, layer_element, layer_elements, ref, root;
       if (ev.keyCode() !== 27 || CUI.globalDrag) {
         return;
       }
-      layer_elements = CUI.dom.find("body > .cui-layer-root > .cui-layer:not(.cui-tooltip)");
+      layer_elements = ((function() {
+        var i, len, ref, results;
+        ref = CUI.Layer.findRoots(".cui-layer-root");
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          root = ref[i];
+          results.push(CUI.dom.children(root, ".cui-layer:not(.cui-tooltip)"));
+        }
+        return results;
+      })()).flat();
       layer_element = layer_elements[layer_elements.length - 1];
       if (!layer_element) {
         return;
@@ -32072,6 +32092,22 @@ CUI.ready(function() {
         layer.doCancel(ev);
         return false;
       }
+    }
+  });
+  fullscreen_element = null;
+  return CUI.Events.listen({
+    type: "fullscreenchange",
+    node: window,
+    call: function() {
+      var i, len, ref, root;
+      if (fullscreen_element) {
+        ref = CUI.dom.children(fullscreen_element, ".cui-layer-root");
+        for (i = 0, len = ref.length; i < len; i++) {
+          root = ref[i];
+          document.body.appendChild(root);
+        }
+      }
+      fullscreen_element = CUI.dom.fullscreenElement() || null;
     }
   });
 });
