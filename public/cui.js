@@ -60302,6 +60302,210 @@ CUI.MultiOutput = (function(superClass) {
 
 /***/ },
 
+/***/ "./elements/Notification/Notification.coffee"
+/*!***************************************************!*\
+  !*** ./elements/Notification/Notification.coffee ***!
+  \***************************************************/
+(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+/* provided dependency */ var CUI = __webpack_require__(/*! ./base/CUI.coffee */ "./base/CUI.coffee");
+
+/*
+ * coffeescript-ui - Coffeescript User Interface System (CUI)
+ * Copyright (c) 2013 - 2016 Programmfabrik GmbH
+ * MIT Licence
+ * https://github.com/programmfabrik/coffeescript-ui, http://www.coffeescript-ui.org
+ */
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
+CUI.Notification = (function(superClass) {
+  extend(Notification, superClass);
+
+  function Notification() {
+    return Notification.__super__.constructor.apply(this, arguments);
+  }
+
+  Notification.__container = null;
+
+  Notification.__byGroup = {};
+
+  Notification.prototype.initOpts = function() {
+    Notification.__super__.initOpts.call(this);
+    return this.addOpts({
+      text: {
+        mandatory: true,
+        check: String
+      },
+      icon: {
+        check: function(v) {
+          return CUI.util.isString(v) || v instanceof CUI.Icon;
+        }
+      },
+      show_ms: {
+        "default": 3000,
+        check: function(v) {
+          return CUI.util.isInteger(v) && v >= 0;
+        }
+      },
+      group: {
+        check: String
+      }
+    });
+  };
+
+  Notification.prototype.readOpts = function() {
+    Notification.__super__.readOpts.call(this);
+    this.__label = new CUI.Label({
+      text: this._text,
+      icon: this._icon,
+      multiline: true
+    });
+    this.registerDOMElement(CUI.dom.div(null, {
+      role: "status",
+      "aria-live": "polite"
+    }));
+    CUI.dom.append(this.DOM, this.__label.DOM);
+    CUI.Events.listen({
+      type: "mouseenter",
+      node: this.DOM,
+      instance: this,
+      call: (function(_this) {
+        return function() {
+          return CUI.clearTimeout(_this.__hideTimeout);
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      type: "mouseleave",
+      node: this.DOM,
+      instance: this,
+      call: (function(_this) {
+        return function() {
+          return _this.__startTimeout();
+        };
+      })(this)
+    });
+    CUI.Events.listen({
+      type: "click",
+      node: this.DOM,
+      instance: this,
+      call: (function(_this) {
+        return function() {
+          return _this.hide();
+        };
+      })(this)
+    });
+    return this;
+  };
+
+  Notification.prototype.show = function() {
+    var ref;
+    if (this.isDestroyed() || this.__shown) {
+      return this;
+    }
+    this.__shown = true;
+    if (this._group) {
+      if ((ref = CUI.Notification.__byGroup[this._group]) != null) {
+        ref.hide();
+      }
+      CUI.Notification.__byGroup[this._group] = this;
+    }
+    CUI.dom.append(CUI.Notification.__getContainer(), this.DOM);
+    this.DOM.offsetHeight;
+    CUI.dom.addClass(this.DOM, "cui-notification--shown");
+    this.__startTimeout();
+    return this;
+  };
+
+  Notification.prototype.update = function(opts) {
+    if (opts.text) {
+      this.__label.setText(opts.text);
+    }
+    if (opts.icon) {
+      this.__label.setIcon(opts.icon);
+    }
+    this.__startTimeout();
+    return this;
+  };
+
+  Notification.prototype.hide = function() {
+    if (!this.__shown) {
+      return this;
+    }
+    this.__shown = false;
+    CUI.clearTimeout(this.__hideTimeout);
+    if (this._group && CUI.Notification.__byGroup[this._group] === this) {
+      delete CUI.Notification.__byGroup[this._group];
+    }
+    CUI.dom.removeClass(this.DOM, "cui-notification--shown");
+    CUI.setTimeout({
+      ms: 400,
+      call: (function(_this) {
+        return function() {
+          return _this.destroy();
+        };
+      })(this)
+    });
+    return this;
+  };
+
+  Notification.prototype.isShown = function() {
+    return !!this.__shown;
+  };
+
+  Notification.prototype.destroy = function() {
+    CUI.clearTimeout(this.__hideTimeout);
+    CUI.Events.ignore({
+      instance: this
+    });
+    return Notification.__super__.destroy.call(this);
+  };
+
+  Notification.prototype.__startTimeout = function() {
+    CUI.clearTimeout(this.__hideTimeout);
+    if (this._show_ms > 0) {
+      this.__hideTimeout = CUI.setTimeout({
+        ms: this._show_ms,
+        call: (function(_this) {
+          return function() {
+            return _this.hide();
+          };
+        })(this)
+      });
+    }
+  };
+
+  Notification.__getContainer = function() {
+    if (!CUI.dom.isInDOM(this.__container)) {
+      this.__container = CUI.dom.div("cui-notification-container");
+      document.body.appendChild(this.__container);
+    }
+    return this.__container;
+  };
+
+  Notification.show = function(opts) {
+    var current;
+    if (opts.group) {
+      current = this.__byGroup[opts.group];
+    }
+    if (current != null ? current.isShown() : void 0) {
+      return current.update(opts);
+    }
+    return new CUI.Notification(opts).show();
+  };
+
+  return Notification;
+
+})(CUI.DOMElement);
+
+CUI.notify = function(opts) {
+  return CUI.Notification.show(opts);
+};
+
+
+/***/ },
+
 /***/ "./elements/ObjectDumper/ObjectDumper.coffee"
 /*!***************************************************!*\
   !*** ./elements/ObjectDumper/ObjectDumper.coffee ***!
@@ -65380,6 +65584,8 @@ __webpack_require__(/*! ./elements/ConfirmationChoice/ConfirmationChoice.coffee 
 __webpack_require__(/*! ./elements/ConfirmationChoice/Alert.coffee */ "./elements/ConfirmationChoice/Alert.coffee");
 
 __webpack_require__(/*! ./elements/ConfirmationChoice/Toaster.coffee */ "./elements/ConfirmationChoice/Toaster.coffee");
+
+__webpack_require__(/*! ./elements/Notification/Notification.coffee */ "./elements/Notification/Notification.coffee");
 
 __webpack_require__(/*! ./elements/ConfirmationChoice/Spinner.coffee */ "./elements/ConfirmationChoice/Spinner.coffee");
 
