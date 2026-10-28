@@ -331,7 +331,7 @@ class CUI.DateTime extends CUI.Input
 			when "store"
 				return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone)
 			else
-				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], @_add_AD, @_avoid_bc_conversion)
+				return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], @_add_AD, @_avoid_bc_conversion, @_locale)
 
 	regexpMatcher: ->
 		YYYY:
@@ -408,7 +408,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return value
 
-		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay(),false, @_avoid_bc_conversion)
+		return CUI.DateTime.formatMomentWithBc(mom, @getCurrentFormatDisplay(),false, @_avoid_bc_conversion, @_locale)
 
 	getValueForInput: (v = @getValue()) ->
 		if CUI.util.isEmpty(v?.trim())
@@ -419,7 +419,7 @@ class CUI.DateTime extends CUI.Input
 			return v
 
 		mom.fylrPartialTz = null
-		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input,false, @_avoid_bc_conversion)
+		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input,false, @_avoid_bc_conversion, @_locale)
 
 	__checkInput: (value) ->
 		@__calendarButton?.enable()
@@ -1554,7 +1554,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return null
 
-		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion)
+		@formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion, dt._locale)
 
 	@formatMoment: (mom, format, parseZone) ->
 		if mom.bc
@@ -1574,7 +1574,11 @@ class CUI.DateTime extends CUI.Input
 		return str
 
 	# BC appendix always adds one year. Therefore year 0 is 1 BC.
-	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false) ->
+	@formatMomentWithBc: (mom, format, add_AD = false, avoid_bc_conversion = false, locale = null) ->
+		# The locale can bring its own BC/AD texts (fylr sends them per database language).
+		bc_appendix = CUI.DateTimeFormats[locale]?.bc_appendix_output or CUI.DateTime.defaults.bc_appendix_output
+		ad_prefix = CUI.DateTimeFormats[locale]?.ad_prefix_output or CUI.DateTime.defaults.ad_prefix_output
+
 		if avoid_bc_conversion
 			# We remove the leading zeros from the year
 			year = mom.year()
@@ -1585,11 +1589,11 @@ class CUI.DateTime extends CUI.Input
 			return result
 
 		if mom.year() == 0
-			return "1 #{CUI.DateTime.defaults.bc_appendix_output}"
+			return "1 #{bc_appendix}"
 
 		if mom.bc
 			bc = parseInt(mom.bc) + 1
-			return "#{(bc)} #{CUI.DateTime.defaults.bc_appendix_output}"
+			return "#{(bc)} #{bc_appendix}"
 
 		if mom.year() > 0
 			v = mom.format(format)
@@ -1597,7 +1601,7 @@ class CUI.DateTime extends CUI.Input
 			if mom.year() < 1000 and add_AD
 				replace = "0+#{mom.year()}\\b";
 				regexp = new RegExp(replace, "g");
-				return CUI.DateTime.__appendPartialTz(CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s",  v.replace(regexp, ""+mom.year())), mom)
+				return CUI.DateTime.__appendPartialTz(ad_prefix.replace("%(date)s",  v.replace(regexp, ""+mom.year())), mom)
 
 			# remove the "+" and all possible zeros.
 			replace = "^\\+?0*#{mom.year()}";
@@ -1605,7 +1609,7 @@ class CUI.DateTime extends CUI.Input
 			return CUI.DateTime.__appendPartialTz(v.replace(regexp, ""+mom.year()), mom)
 
 		mom.subtract(1, "year")
-		v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output
+		v = mom.format(format) + " " + bc_appendix
 		# remove the "-" and all possible zeros.
 		replace = "\\-0*#{-1 * mom.year()}";
 		regexp = new RegExp(replace);
