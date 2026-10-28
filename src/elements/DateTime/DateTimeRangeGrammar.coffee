@@ -7,6 +7,7 @@ class CUI.DateTimeRangeGrammar
 	@REGEXP_CENTURY = /^[0-9]+th$/ # Matches Year ending with th.
 	@REGEXP_SPACE = /\s+/
 	@REGEXP_DASH = /[\–\—]/g # Matches 'EN' and 'EM' dashes.
+	@REGEXP_ERA_SUFFIX = /([0-9])(B\.C\.|BCE|BC|A\.D\.|AD|CE|AC)(?=\s|$)/gi # Matches an era glued to the year, like 33BC.
 	@TYPE_DATE = "DATE"
 	@TYPE_YEAR = "YEAR"
 	@TYPE_YEAR_DOT = "YEAR_DOT"
@@ -495,6 +496,7 @@ class CUI.DateTimeRangeGrammar
 		input = input.trim()
 
 		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
+		input = input.replace(DateTimeRangeGrammar.REGEXP_ERA_SUFFIX, "$1 $2")
 
 		tokens = []
 		for s in input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)

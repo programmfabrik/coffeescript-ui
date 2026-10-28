@@ -696,7 +696,8 @@ class CUI.DateTime extends CUI.Input
 			us = stringValue.toLocaleUpperCase()
 			for appendix in CUI.DateTime.defaults.bc_appendix
 				ua = appendix.toLocaleUpperCase()
-				if us.endsWith(" "+ua)
+				# "33 BC" or "33BC"
+				if ua and us.endsWith(ua) and /[0-9\s]$/.test(us.substring(0, us.length - ua.length))
 					stringValue = stringValue.substring(0, stringValue.length - ua.length).trim()
 					hasBCAppendix = checkBC = true
 					break
