@@ -473,7 +473,7 @@ class CUI.DateTimeRangeGrammar
 		if possibleString
 			return possibleString
 
-		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
+		return "#{format_fn(from)} #{DateTimeRangeGrammar.EN_DASH} #{format_fn(to)}"
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input, locale = CUI.DateTime.getLocale()) ->
