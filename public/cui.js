@@ -41712,7 +41712,7 @@ CUI.DateTime = (function(superClass) {
       for (i = 0, len = ref1.length; i < len; i++) {
         appendix = ref1[i];
         ua = appendix.toLocaleUpperCase();
-        if (us.endsWith(" " + ua)) {
+        if (ua && us.endsWith(ua) && /[0-9\s]$/.test(us.substring(0, us.length - ua.length))) {
           stringValue = stringValue.substring(0, stringValue.length - ua.length).trim();
           hasBCAppendix = checkBC = true;
           break;
@@ -43679,6 +43679,8 @@ CUI.DateTimeRangeGrammar = (function() {
 
   DateTimeRangeGrammar.REGEXP_DASH = /[\–\—]/g;
 
+  DateTimeRangeGrammar.REGEXP_ERA_SUFFIX = /([0-9])(B\.C\.|BCE|BC|A\.D\.|AD|CE|AC)(?=\s|$)/gi;
+
   DateTimeRangeGrammar.TYPE_DATE = "DATE";
 
   DateTimeRangeGrammar.TYPE_YEAR = "YEAR";
@@ -44011,6 +44013,7 @@ CUI.DateTimeRangeGrammar = (function() {
     }
     input = input.trim();
     input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH);
+    input = input.replace(DateTimeRangeGrammar.REGEXP_ERA_SUFFIX, "$1 $2");
     tokens = [];
     ref = input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE);
     for (i = 0, len = ref.length; i < len; i++) {
