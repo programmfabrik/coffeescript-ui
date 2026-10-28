@@ -41265,7 +41265,7 @@ CUI.DateTime = (function(superClass) {
       case "store":
         return CUI.DateTime.formatMoment(mom, output_format[_output_format], parseZone);
       default:
-        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], this._add_AD, this._avoid_bc_conversion);
+        return CUI.DateTime.formatMomentWithBc(mom, output_format[_output_format], this._add_AD, this._avoid_bc_conversion, this._locale);
     }
   };
 
@@ -41360,7 +41360,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return value;
     }
-    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay(), false, this._avoid_bc_conversion);
+    return CUI.DateTime.formatMomentWithBc(mom, this.getCurrentFormatDisplay(), false, this._avoid_bc_conversion, this._locale);
   };
 
   DateTime.prototype.getValueForInput = function(v) {
@@ -41376,7 +41376,7 @@ CUI.DateTime = (function(superClass) {
       return v;
     }
     mom.fylrPartialTz = null;
-    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input, false, this._avoid_bc_conversion);
+    return CUI.DateTime.formatMomentWithBc(mom, this.__input_format.input, false, this._avoid_bc_conversion, this._locale);
   };
 
   DateTime.prototype.__checkInput = function(value) {
@@ -42461,7 +42461,7 @@ CUI.DateTime = (function(superClass) {
     if (!mom.isValid()) {
       return null;
     }
-    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion);
+    return this.formatMomentWithBc(mom, dt.getCurrentFormatDisplay(), dt._add_AD, dt._avoid_bc_conversion, dt._locale);
   };
 
   DateTime.formatMoment = function(mom, format, parseZone) {
@@ -42481,14 +42481,19 @@ CUI.DateTime = (function(superClass) {
     return str;
   };
 
-  DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion) {
-    var absYear, bc, regexp, replace, result, v, year;
+  DateTime.formatMomentWithBc = function(mom, format, add_AD, avoid_bc_conversion, locale) {
+    var absYear, ad_prefix, bc, bc_appendix, ref, ref1, regexp, replace, result, v, year;
     if (add_AD == null) {
       add_AD = false;
     }
     if (avoid_bc_conversion == null) {
       avoid_bc_conversion = false;
     }
+    if (locale == null) {
+      locale = null;
+    }
+    bc_appendix = ((ref = CUI.DateTimeFormats[locale]) != null ? ref.bc_appendix_output : void 0) || CUI.DateTime.defaults.bc_appendix_output;
+    ad_prefix = ((ref1 = CUI.DateTimeFormats[locale]) != null ? ref1.ad_prefix_output : void 0) || CUI.DateTime.defaults.ad_prefix_output;
     if (avoid_bc_conversion) {
       year = mom.year();
       absYear = Math.abs(year);
@@ -42498,25 +42503,25 @@ CUI.DateTime = (function(superClass) {
       return result;
     }
     if (mom.year() === 0) {
-      return "1 " + CUI.DateTime.defaults.bc_appendix_output;
+      return "1 " + bc_appendix;
     }
     if (mom.bc) {
       bc = parseInt(mom.bc) + 1;
-      return bc + " " + CUI.DateTime.defaults.bc_appendix_output;
+      return bc + " " + bc_appendix;
     }
     if (mom.year() > 0) {
       v = mom.format(format);
       if (mom.year() < 1000 && add_AD) {
         replace = "0+" + (mom.year()) + "\\b";
         regexp = new RegExp(replace, "g");
-        return CUI.DateTime.__appendPartialTz(CUI.DateTime.defaults.ad_prefix_output.replace("%(date)s", v.replace(regexp, "" + mom.year())), mom);
+        return CUI.DateTime.__appendPartialTz(ad_prefix.replace("%(date)s", v.replace(regexp, "" + mom.year())), mom);
       }
       replace = "^\\+?0*" + (mom.year());
       regexp = new RegExp(replace);
       return CUI.DateTime.__appendPartialTz(v.replace(regexp, "" + mom.year()), mom);
     }
     mom.subtract(1, "year");
-    v = mom.format(format) + " " + CUI.DateTime.defaults.bc_appendix_output;
+    v = mom.format(format) + " " + bc_appendix;
     replace = "\\-0*" + (-1 * mom.year());
     regexp = new RegExp(replace);
     return v.replace(regexp, "" + (-1 * mom.year()));
@@ -43983,7 +43988,7 @@ CUI.DateTimeRangeGrammar = (function() {
     if (possibleString) {
       return possibleString;
     }
-    return from + " " + DateTimeRangeGrammar.EN_DASH + " " + to;
+    return (format_fn(from)) + " " + DateTimeRangeGrammar.EN_DASH + " " + (format_fn(to));
   };
 
   DateTimeRangeGrammar.stringToDateRange = function(input, locale) {
