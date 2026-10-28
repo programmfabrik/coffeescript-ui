@@ -16,6 +16,14 @@ class CUI.Layer extends CUI.DOMElement
 
 	@FILL_SPACE_CHECK_ARRAY = ["auto", "both", "horizontal", "vertical"]
 
+	# in fullscreen the browser draws only the fullscreen element, so layers live there too; topmost last
+	@findRoots: (selector) ->
+		roots = CUI.dom.children(document.body, selector)
+		fullscreen = CUI.dom.fullscreenElement()
+		if fullscreen
+			roots = roots.concat(CUI.dom.children(fullscreen, selector))
+		roots
+
 	constructor: (opts) ->
 		super(opts)
 
@@ -1088,7 +1096,7 @@ class CUI.Layer extends CUI.DOMElement
 		# count all active layers and set a counter to the body
 		# and to each, so a layer knows its stack number
 
-		layer_elements = CUI.dom.matchSelector(document.documentElement, "body > .cui-layer-root")
+		layer_elements = CUI.Layer.findRoots(".cui-layer-root")
 		total = layer_elements.length
 
 		for el, idx in layer_elements
@@ -1122,7 +1130,7 @@ class CUI.Layer extends CUI.DOMElement
 		# 	top: 0
 		# 	left: 0
 
-		document.body.appendChild(@__layer_root.DOM)
+		(CUI.dom.fullscreenElement() or document.body).appendChild(@__layer_root.DOM)
 
 		if @__element
 			CUI.dom.addClass(@__getOriginalElement(), @getElementOpenClass())
@@ -1247,7 +1255,7 @@ CUI.ready ->
 		node: document.body
 		call: (ev, info) ->
 
-			layer_elements = CUI.dom.find("body > .cui-layer-root, body > .cui-pane-fill-screen-is-on, body > .cui-layer-prevent-click-thru")
+			layer_elements = CUI.Layer.findRoots(".cui-layer-root, .cui-pane-fill-screen-is-on, .cui-layer-prevent-click-thru")
 			target = ev.getTarget()
 			for layer_element in layer_elements by -1
 
@@ -1294,7 +1302,7 @@ CUI.ready ->
 			if ev.keyCode() != 27 or CUI.globalDrag
 				return
 
-			layer_elements = CUI.dom.find("body > .cui-layer-root > .cui-layer:not(.cui-tooltip)")
+			layer_elements = (CUI.dom.children(root, ".cui-layer:not(.cui-tooltip)") for root in CUI.Layer.findRoots(".cui-layer-root")).flat()
 			layer_element = layer_elements[layer_elements.length-1]
 
 			# console.error ev.getType(), ev, layer_elements
@@ -1312,4 +1320,16 @@ CUI.ready ->
 			if layer.isKeyboardCancellable(ev)
 				layer.doCancel(ev)
 				return false
+			return
+
+	# the layers opened in fullscreen go back to the body when it ends
+	fullscreen_element = null
+	CUI.Events.listen
+		type: "fullscreenchange"
+		node: window
+		call: ->
+			if fullscreen_element
+				for root in CUI.dom.children(fullscreen_element, ".cui-layer-root")
+					document.body.appendChild(root)
+			fullscreen_element = CUI.dom.fullscreenElement() or null
 			return

@@ -418,6 +418,7 @@ class CUI.DateTime extends CUI.Input
 		if not mom.isValid()
 			return v
 
+		mom.fylrPartialTz = null
 		return CUI.DateTime.formatMomentWithBc(mom, @__input_format.input,false, @_avoid_bc_conversion)
 
 	__checkInput: (value) ->
@@ -426,6 +427,10 @@ class CUI.DateTime extends CUI.Input
 		if not CUI.util.isEmpty(value?.trim())
 			mom = @parse(value)
 			if not mom.isValid()
+				return false
+
+			# Partial-date TZ offsets are read-only: only the untouched stored value may carry one.
+			if mom.fylrPartialTz and value != @getValueForDisplay()
 				return false
 
 			if mom.bc or value.startsWith("-") or mom.year() < 0

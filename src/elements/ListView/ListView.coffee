@@ -580,16 +580,21 @@ class CUI.ListView extends CUI.SimplePane
 		else if @__selectableRows == "multiple"
 			# If CTRL key is pressed, then It is allowed to select more rows.
 			if ev?.ctrlKey() or ev?.metaKey()
+				@__selectionAnchor = rowChosen
 				selectRowChosen()
-			# If Shift key is pressed then all next or previous rows are selected.
+			# If Shift key is pressed then all rows between the last clicked one and this one are selected.
 			else if ev?.shiftKey() and @getSelectedRows().length > 0
-				selectedRow = @getSelectedRows().pop()
-				idxSelectedRow = selectedRow.getRowIdx()
-				idxClickedRow = rowChosen.getRowIdx()
-				while(idxClickedRow != idxSelectedRow)
-					@getListViewRow(idxClickedRow).select(ev)
-					if idxClickedRow > idxSelectedRow then idxClickedRow-- else idxClickedRow++
+				anchorRow = if @__selectionAnchor?.isSelected() then @__selectionAnchor else @getSelectedRows().pop()
+				# Walk the display order, row_i stops matching it once rows have been moved.
+				idxAnchorRow = @getDisplayRowIdx(anchorRow.getRowIdx())
+				idxClickedRow = @getDisplayRowIdx(rowChosen.getRowIdx())
+				for idx in [Math.min(idxAnchorRow, idxClickedRow)..Math.max(idxAnchorRow, idxClickedRow)]
+					row = @getListViewRow(@getRowIdx(idx))
+					if not row.isSelected()
+						row.select(ev)
+				dfr.resolve()
 			else
+				@__selectionAnchor = rowChosen
 				# Otherwise all rows are deselected except for the clicked one.
 				deselectAllRows(false)
 		else
