@@ -29,8 +29,8 @@
 	width: 100%; // see datamodel >  definition > options popover
 
 	.cui-selected &,
-	*:hover &,
-	*:focus & {
+	.cui-list-view-row-selectable:hover &,
+	.cui-list-view-row-selectable:focus-within & {
 		background-color: transparent;
 	}
 
