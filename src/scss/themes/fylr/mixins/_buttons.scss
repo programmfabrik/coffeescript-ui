@@ -231,7 +231,7 @@
 			.cui-button-visual {
 				color: var(--btn-color-hover, #{$color-hover});
 				background-color: var(--btn-background-hover, #{$background-hover});
-				box-shadow: inset 0 0 0 20px rgba(#000, 0.08); // darken the background
+				box-shadow: inset 0 0 0 40px rgba(#000, 0.08); // darken the background
 			}
 		}
 	}
