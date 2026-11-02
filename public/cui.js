@@ -26414,7 +26414,7 @@ CUI.Draggable = (function(superClass) {
     }
     if (helper === "clone") {
       clone_source = this.getCloneSourceForHelper();
-      hn = clone_source.cloneNode(true);
+      hn = CUI.dom.cloneNode(clone_source);
       hn.classList.remove("cui-selected");
       offset = {
         top: CUI.globalDrag.start.top,
@@ -34273,10 +34273,33 @@ CUI.dom = (function() {
     return !!node.__clone;
   };
 
+  dom.cloneNode = function(node) {
+    var canvas, clone, cloneImages, i, idx, images, img, len1, scale;
+    clone = node.cloneNode(true);
+    images = node.querySelectorAll("img[src^='blob:']");
+    if (images.length === 0) {
+      return clone;
+    }
+    cloneImages = clone.querySelectorAll("img[src^='blob:']");
+    for (idx = i = 0, len1 = images.length; i < len1; idx = ++i) {
+      img = images[idx];
+      if (!img.complete || img.naturalWidth === 0 || img.clientWidth === 0) {
+        continue;
+      }
+      scale = Math.min(1, window.devicePixelRatio * Math.max(img.clientWidth / img.naturalWidth, img.clientHeight / img.naturalHeight));
+      canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.naturalWidth * scale);
+      canvas.height = Math.round(img.naturalHeight * scale);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      cloneImages[idx].src = canvas.toDataURL();
+    }
+    return clone;
+  };
+
   dom.initAnimatedClone = function(node, selector) {
     var clone, clone_child, dim, div, i, idx, len1, offset, ref, watched_nodes;
     this.removeAnimatedClone(node);
-    clone = node.cloneNode(true);
+    clone = this.cloneNode(node);
     node.__clone = clone;
     if (selector) {
       watched_nodes = CUI.dom.matchSelector(node, selector);
