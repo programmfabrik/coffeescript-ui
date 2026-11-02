@@ -488,13 +488,33 @@ class CUI.dom
 	@hasAnimatedClone: (node) ->
 		!!node.__clone
 
+	# cloneNode(true) that keeps loaded images whose blob url is already revoked (fylr thumbnails).
+	@cloneNode: (node) ->
+		clone = node.cloneNode(true)
+		images = node.querySelectorAll("img[src^='blob:']")
+		if images.length == 0
+			return clone
+
+		cloneImages = clone.querySelectorAll("img[src^='blob:']")
+		for img, idx in images
+			if not img.complete or img.naturalWidth == 0 or img.clientWidth == 0
+				continue
+			# Displayed size is enough, drawing a big original would slow down the drag start.
+			scale = Math.min(1, window.devicePixelRatio * Math.max(img.clientWidth / img.naturalWidth, img.clientHeight / img.naturalHeight))
+			canvas = document.createElement("canvas")
+			canvas.width = Math.round(img.naturalWidth * scale)
+			canvas.height = Math.round(img.naturalHeight * scale)
+			canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height)
+			cloneImages[idx].src = canvas.toDataURL()
+		return clone
+
 	# if selector is set, watch matched nodes
 	#
 	@initAnimatedClone: (node, selector) ->
 
 		@removeAnimatedClone(node)
 
-		clone = node.cloneNode(true)
+		clone = @cloneNode(node)
 
 		node.__clone = clone
 
