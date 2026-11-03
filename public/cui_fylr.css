@@ -4238,7 +4238,7 @@ textarea {
   justify-content: flex-start;
 }
 .cui-button-checkbox > .cui-button-visual > .cui-button-left {
-  min-width: 16px;
+  min-width: var(--checkbox-size, 16px);
   margin-right: 6px;
 }
 .cui-button-checkbox > .cui-button-visual > .cui-button-left span,
@@ -4248,8 +4248,8 @@ textarea {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 16px;
-  height: 16px;
+  width: var(--checkbox-size, 16px);
+  height: var(--checkbox-size, 16px);
   border: 1px solid var(--checkbox-border-color, #4d5257);
   background: var(--checkbox-background, #ffffff);
   font-size: 12px;
