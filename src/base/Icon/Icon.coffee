@@ -119,6 +119,7 @@ class CUI.Icon extends CUI.Element
 		minus: "fa-minus"
 		no_right: "fa-slack"
 		north: "fa-angle-up"
+		panorama: "svg-panorama"
 		play: "fa-play"
 		plus: "fa-plus"
 		print: "fa-print"

@@ -27,7 +27,7 @@ textarea {
 		color: $body-color;
 	}
 
-	&:focus {
+	&:focus-visible {
 		@include input-focus();
 	}
 
@@ -55,6 +55,23 @@ input {
 		line-height: $line-height-base;
 		padding: $input-padding-y;
 	}
+
+	// Chrome/Safari native "clear" (x) button on [type=search]: restyle instead of
+	// leaving the unstyled system icon, keep its built-in click-to-clear behavior
+	&[type='search']::-webkit-search-cancel-button {
+		appearance: none;
+		width: 10px;
+		height: 10px;
+		cursor: pointer;
+		background-color: var(--search-input-cancel-button-color, #{$muted});
+		// stylelint-disable-next-line property-no-vendor-prefix -- autoprefixer's default targets may drop this; keep it explicit for Safari
+		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 1l8 8M9 1l-8 8' stroke='%23000' stroke-width='1.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") center / contain no-repeat;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 1l8 8M9 1l-8 8' stroke='%23000' stroke-width='1.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E") center / contain no-repeat;
+
+		&:hover {
+			background-color: var(--search-input-cancel-button-color-hover, #{$body-color});
+		}
+	}	
 }
 
 textarea {

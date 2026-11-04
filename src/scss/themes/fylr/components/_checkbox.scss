@@ -58,7 +58,7 @@
 		justify-content: flex-start;
 		
 		> .cui-button-left {
-			min-width: $checkbox-size;
+			min-width: var(--checkbox-size, #{$checkbox-size});
 			margin-right: $checkbox-margin;
 			
 			// empty checkbox: span
@@ -70,8 +70,8 @@
 				display: inline-flex;
 				justify-content: center;
 				align-items: center;
-				width: $checkbox-size;
-				height: $checkbox-size;
+				width: var(--checkbox-size, #{$checkbox-size});
+				height: var(--checkbox-size, #{$checkbox-size});
 				border: 1px solid var(--checkbox-border-color, #{$checkbox-border-color});
 				background: var(--checkbox-background, #{$checkbox-background});
 				font-size: $checkbox-icon-size;
