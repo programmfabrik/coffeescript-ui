@@ -9692,6 +9692,141 @@ which will apply the class "use-css-grid-layout"
 }
 
 /*
+<div class="cui-notification-container">
+	<div class="cui-notification cui-notification--shown" role="status">
+		<div class="cui-label"> ... </div>
+		<a class="cui-button cui-notification-action"> ... </a>
+	</div>
+</div>
+*/
+.cui-notification-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: calc(100vw - 2 * 1rem);
+  padding-top: 1rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.cui-notification {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 480px;
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+  background-color: #212121;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(77, 82, 87, 0.3), 0 6px 20px 4px rgba(77, 82, 87, 0.25);
+  opacity: 0;
+  transform: translateY(calc(-100% - 1rem));
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+  pointer-events: auto;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.cui-notification .cui-label {
+  color: inherit;
+}
+
+.cui-notification-action {
+  --btn-border-color: transparent;
+  --btn-border-width: 0;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.cui-notification-action .cui-button-visual {
+  background-color: var(--btn-background, transparent);
+  color: var(--btn-color, #212121);
+  border: var(--btn-border-width, 1px) solid var(--btn-border-color, #212121);
+}
+.cui-notification-action:not(.cui-disabled):hover .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+}
+.cui-notification-action:not(.cui-disabled):focus {
+  outline: none;
+}
+.cui-notification-action:not(.cui-disabled):focus > .cui-button-visual {
+  outline: none;
+  border-color: #0261f8;
+  box-shadow: inset 0 0 0 var(--focus-shadow-outer-width, 2px) var(--focus-shadow-outer-color, #0261f8), inset 0 0 0 var(--focus-shadow-inner-width, 4px) var(--focus-shadow-inner-color, #ffffff) !important;
+}
+.cui-notification-action:not(.cui-disabled):active .cui-button-visual {
+  color: var(--btn-color-hover, #212121);
+  background-color: var(--btn-background-hover, transparent);
+  box-shadow: inset 0 0 0 var(--btn-box-shadow-spread-active, 40px) rgba(0, 0, 0, 0.08);
+}
+.cui-notification-action.cui-active .cui-button-visual, .cui-notification-action.cui-layer-open .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-notification-action.cui-active:not(.cui-disabled):hover .cui-button-visual, .cui-notification-action.cui-active:not(.cui-disabled):focus .cui-button-visual, .cui-notification-action.cui-layer-open:not(.cui-disabled):hover .cui-button-visual, .cui-notification-action.cui-layer-open:not(.cui-disabled):focus .cui-button-visual {
+  color: var(--btn-color-active, #212121);
+  background-color: var(--btn-background-active, transparent);
+}
+.cui-notification-action.cui-active + .cui-active.cui-layer-open .cui-button-visual {
+  border-left-color: currentcolor;
+}
+.cui-notification-action:not(.cui-disabled):hover, .cui-notification-action:not(.cui-disabled):focus {
+  --btn-border-color: transparent;
+}
+.cui-notification-action .cui-button-visual {
+  height: auto;
+  line-height: 1.5;
+  align-items: baseline;
+  min-width: 0;
+}
+.cui-notification-action .cui-button-visual .cui-button-center {
+  text-decoration: underline;
+  word-break: break-all;
+  white-space: normal;
+}
+.cui-notification-action .cui-button-visual .cui-button-center:first-child,
+.cui-notification-action .cui-button-visual .cui-button-left:empty + .cui-button-center {
+  padding-left: 0;
+}
+.cui-notification-action .cui-button-visual .cui-button-center:last-child,
+.cui-notification-action .cui-button-visual .cui-button-center:only-child {
+  padding-right: 0;
+}
+.cui-notification-action .cui-button-visual .cui-button-left:empty + .cui-button-center:empty {
+  margin: 0;
+  padding: 0;
+}
+.cui-notification-action .cui-button-visual .cui-button-left:empty + .cui-button-center:empty + .cui-button-right {
+  padding-right: 0;
+  margin-left: 0;
+}
+.cui-notification-action:not(.cui-disabled):hover .cui-button-visual .cui-button-center, .cui-notification-action:not(.cui-disabled):focus .cui-button-visual .cui-button-center {
+  text-decoration: none;
+}
+
+.cui-notification--shown {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cui-notification {
+    transition: none;
+  }
+}
+/*
 <div class="cui-layer-root cui-layer-root-tooltip">
 	<div class="cui-layer cui-tooltip">
 		<div class="cui-simple-pane cui-vertical-layout cui-pane cui-layer-pane"> ... </div>
