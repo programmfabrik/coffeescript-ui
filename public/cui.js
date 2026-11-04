@@ -64978,6 +64978,9 @@ CUI.Tooltip = (function(superClass) {
     this.mergeOpts({
       element: {
         mandatory: true
+      },
+      show_ms: {
+        "default": 400
       }
     });
     this.addOpts({
