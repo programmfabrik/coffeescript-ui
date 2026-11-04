@@ -67,6 +67,7 @@
 @use 'components/_layer';
 @use 'components/_menu'; // after layer
 @use 'components/_dialogs'; // confirmation-dialog, prompt, alert etc., extends layer
+@use 'components/_notification';
 @use 'components/_popover'; // extends modal and layer
 @use 'components/_tooltip'; // extends layerPane and layer
 @use 'components/_developer-menu'; // extends layerPane and layer

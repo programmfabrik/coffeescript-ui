@@ -1,0 +1,79 @@
+// * Notification
+
+/*
+<div class="cui-notification-container">
+	<div class="cui-notification cui-notification--shown" role="status">
+		<div class="cui-label"> ... </div>
+		<a class="cui-button cui-notification-action"> ... </a>
+	</div>
+</div>
+*/
+
+@use '../variables' as *;
+@use '../mixins/buttons' as *;
+
+// on top of the layers and the fullscreen views, which also sit on $layer-z-index
+.cui-notification-container {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	z-index: $layer-z-index + 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $spacer-sm;
+	width: max-content;
+	max-width: calc(100vw - 2 * #{$spacer});
+	padding-top: $spacer;
+	transform: translateX(-50%);
+	pointer-events: none;
+}
+
+// slides in from above the window, dark so it stands out on the light pages (the border keeps it apart from the dark fullscreen)
+.cui-notification {
+	display: flex;
+	align-items: center;
+	gap: $spacer;
+	max-width: 480px;
+	padding: $spacer-sm $spacer;
+	color: $layer-header-color;
+	background-color: $layer-header-background;
+	border: 1px solid rgba($white, 0.15);
+	border-radius: $layer-border-radius;
+	box-shadow:
+		0 2px 4px 0 rgba($layer-shadow-color, 0.3),
+		0 6px 20px 4px rgba($layer-shadow-color, 0.25);
+	opacity: 0;
+	transform: translateY(calc(-100% - #{$spacer}));
+	transition:
+		transform 300ms ease-out,
+		opacity 300ms ease-out;
+	pointer-events: auto;
+	cursor: default;
+	user-select: none;
+}
+
+.cui-notification .cui-label {
+	color: inherit;
+}
+
+.cui-notification-action {
+	@include button-link();
+
+	--btn-color: #{$layer-header-color};
+	--btn-color-hover: #{$layer-header-color};
+
+	flex-shrink: 0;
+	font-weight: $font-weight-bold;
+}
+
+.cui-notification--shown {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cui-notification {
+		transition: none;
+	}
+}
