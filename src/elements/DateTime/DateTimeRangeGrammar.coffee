@@ -7,6 +7,7 @@ class CUI.DateTimeRangeGrammar
 	@REGEXP_CENTURY = /^[0-9]+th$/ # Matches Year ending with th.
 	@REGEXP_SPACE = /\s+/
 	@REGEXP_DASH = /[\–\—]/g # Matches 'EN' and 'EM' dashes.
+	@REGEXP_ERA_SUFFIX = /([0-9])(B\.C\.|BCE|BC|A\.D\.|AD|CE|AC)(?=\s|$)/gi # Matches an era glued to the year, like 33BC.
 	@TYPE_DATE = "DATE"
 	@TYPE_YEAR = "YEAR"
 	@TYPE_YEAR_DOT = "YEAR_DOT"
@@ -267,10 +268,14 @@ class CUI.DateTimeRangeGrammar
 		if not CUI.util.isString(from) and not CUI.util.isString(to)
 			return
 
-		if avoid_bc
-			format_fn = CUI.DateTime.formatWithoutBC
-		else
-			format_fn = CUI.DateTime.format
+		if not CUI.DateTimeFormats[locale]
+			return
+
+		# Dates are written in the format of the requested locale, not in the frontend one.
+		format_fn = (date) ->
+			if avoid_bc
+				return CUI.DateTime.formatWithoutBC(date, "display_short", null, false, locale)
+			return CUI.DateTime.format(date, "display_short", null, false, locale)
 
 		# In case that to or from are an empty string, force it to be null, otherwise the date check will fail.
 		if to == ""
@@ -296,7 +301,7 @@ class CUI.DateTimeRangeGrammar
 			fromYear = fromMoment.year()
 
 		if from == to
-			return format_fn(from, "display_short")
+			return format_fn(from)
 
 		if CUI.DateTimeRangeGrammar.REGEXP_YEAR.test(to)
 			toIsYear = true
@@ -307,10 +312,10 @@ class CUI.DateTimeRangeGrammar
 			toYear = toMoment.year()
 
 		if not fromIsYear and CUI.util.isNull(to)
-			return from
+			return format_fn(from)
 
 		if not toIsYear and CUI.util.isNull(from)
-			return to
+			return format_fn(to)
 
 		grammars = CUI.DateTimeRangeGrammar.PARSE_GRAMMARS[locale]
 		if not grammars
@@ -334,7 +339,7 @@ class CUI.DateTimeRangeGrammar
 					else if possibleStringArray[value] == "CENTURY"
 						parameters[index] += "th"
 					else if CUI.util.isString(parameters[index])
-						parameters[index] = format_fn(parameters[index], "display_short",)
+						parameters[index] = format_fn(parameters[index])
 					possibleStringArray[value] = parameters[index]
 
 			possibleString = possibleStringArray.join(" ")
@@ -453,9 +458,9 @@ class CUI.DateTimeRangeGrammar
 
 		if fromIsYear or toIsYear
 			if fromIsYear
-				from = format_fn(from, "display_short")
+				from = format_fn(from)
 			if toIsYear
-				to = format_fn(to, "display_short")
+				to = format_fn(to)
 
 				# Removes the 'BC' / v. Chr. from 'from' to only show it in the end. For example: 15 - 10 v. Chr.
 				fromSplit = from.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)
@@ -468,11 +473,19 @@ class CUI.DateTimeRangeGrammar
 		if possibleString
 			return possibleString
 
-		return "#{from} #{DateTimeRangeGrammar.EN_DASH} #{to}"
+		return "#{format_fn(from)} #{DateTimeRangeGrammar.EN_DASH} #{format_fn(to)}"
 
 	# Main method to check against every grammar.
 	@stringToDateRange: (input, locale = CUI.DateTime.getLocale()) ->
+		# Dates in the input are parsed with the formats of the given locale.
+		previousParseLocale = CUI.DateTimeRangeGrammar.__parseLocale
+		CUI.DateTimeRangeGrammar.__parseLocale = if CUI.DateTimeFormats[locale] then locale else null
+		try
+			return CUI.DateTimeRangeGrammar.__stringToDateRange(input, locale)
+		finally
+			CUI.DateTimeRangeGrammar.__parseLocale = previousParseLocale
 
+	@__stringToDateRange: (input, locale) ->
 		if locale not in CUI.DateTimeRangeGrammar.SUPPORTED_LOCALES
 			console.warn("Locale not supported for stringToDateRange: #{locale}, using default locale: #{CUI.DateTimeRangeGrammar.DEFAULT_LOCALE}")
 			locale = CUI.DateTimeRangeGrammar.DEFAULT_LOCALE
@@ -483,6 +496,7 @@ class CUI.DateTimeRangeGrammar
 		input = input.trim()
 
 		input = input.replace(DateTimeRangeGrammar.REGEXP_DASH, DateTimeRangeGrammar.DASH)
+		input = input.replace(DateTimeRangeGrammar.REGEXP_ERA_SUFFIX, "$1 $2")
 
 		tokens = []
 		for s in input.split(CUI.DateTimeRangeGrammar.REGEXP_SPACE)
@@ -538,6 +552,8 @@ class CUI.DateTimeRangeGrammar
 			output = CUI.DateTimeRangeGrammar.range(from, to)
 			if output
 				return output
+			# An unknown 'to' must not be dropped silently, the input would be saved as a single date.
+			return error: "NoDateRangeFound #{input}"
 
 		output = CUI.DateTimeRangeGrammar.getFromTo(from)
 		if output
@@ -711,7 +727,10 @@ class CUI.DateTimeRangeGrammar
 		if not CUI.util.isString(inputString)
 			return
 
-		dateTime = new CUI.DateTime()
+		opts = {}
+		if CUI.DateTimeRangeGrammar.__parseLocale
+			opts.locale = CUI.DateTimeRangeGrammar.__parseLocale
+		dateTime = new CUI.DateTime(opts)
 		momentInput = dateTime.parseValue(inputString);
 
 		if !momentInput.isValid() and inputString.startsWith(DateTimeRangeGrammar.DASH)
