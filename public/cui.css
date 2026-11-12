@@ -4387,6 +4387,26 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   opacity: 0.3;
 }
 
+.cui-lv-th--movable {
+  cursor: grab;
+}
+
+.cui-lv-col-move-target {
+  width: 4px;
+  background: var(--highlight);
+  margin-left: -2px;
+  position: absolute;
+  z-index: 4;
+  pointer-events: none !important;
+}
+
+.cui-lv-col-move {
+  position: absolute;
+  z-index: 4;
+  background: var(--highlight);
+  opacity: 0.3;
+}
+
 .cui-lv-td {
   padding: 4px 10px;
   width: 125px;

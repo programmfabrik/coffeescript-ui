@@ -37,6 +37,11 @@ class CUI.ListViewTree extends CUI.ListView
 				check: Function
 			onClose:
 				check: Function
+			# an opened node adds its children in chunks of this size, with a timeout in between
+			openChunkSize:
+				default: 5
+				check: (v) ->
+					CUI.util.isInteger(v) and v >= 1
 
 			# called from ListViewTreeNode
 			onBeforeSelect:
@@ -48,6 +53,9 @@ class CUI.ListViewTree extends CUI.ListView
 			CUI.util.assert(@_selectableRows == undefined, "new CUI.ListViewTree", "opts.selectable cannot be used with opts.selectableRows, use selectableRows only.", opts: @opts)
 			@__selectableRows = @_selectable
 		@
+
+	getOpenChunkSize: ->
+		@_openChunkSize
 
 	getRowMoveTool: (opts = {}) ->
 		opts.rowMoveWithinNodesOnly = @_rowMoveWithinNodesOnly
