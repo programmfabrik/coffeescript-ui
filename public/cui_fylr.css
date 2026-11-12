@@ -4888,7 +4888,7 @@ textarea {
 .cui-block-content .cui-form-table {
   width: 100%;
 }
-.cui-block-content .cui-form-hint {
+.cui-block-content .cui-form-hint:not(:has([hidden])) {
   margin-bottom: 1rem;
 }
 
@@ -4970,7 +4970,7 @@ search > schnellzugriff > mappen > einstellungen > new user/group > optionen
   padding-top: 0;
   padding-bottom: 0.25rem;
 }
-.cui-form-block--has-checkbox .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+.cui-form-block--has-checkbox .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint:not(:has([hidden])) {
   order: 0;
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -6385,7 +6385,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   .cui-form .cui-form-value .cui-list-view {
     --form-key-padding-top: 0;
   }
-  .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint {
+  .cui-form .cui-form-tr--has-key > .cui-form-value > .cui-form-hint:not(:has([hidden])) {
     order: 1;
     margin-top: 0.5rem;
     margin-bottom: 0;
@@ -6612,7 +6612,7 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-container.cui-form--horizontal > .cui-form-row.cui-maximize-horizontal {
   flex-grow: 1;
 }
-.cui-form-row > .cui-form-hint {
+.cui-form-row > .cui-form-hint:not(:has([hidden])) {
   order: 1;
   margin-top: 0.5rem;
   margin-bottom: 0;
@@ -6626,11 +6626,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin-right: 0;
 }
 
-.cui-hint,
-.cui-form-hint,
-.cui-input-invalid-hint,
-.cui-input-valid-hint,
-.cui-input-empty-hint {
+.cui-hint:not(:has([hidden])),
+.cui-form-hint:not(:has([hidden])),
+.cui-input-invalid-hint:not(:has([hidden])),
+.cui-input-valid-hint:not(:has([hidden])),
+.cui-input-empty-hint:not(:has([hidden])) {
   order: 0;
   margin-top: 0;
   margin-bottom: 0.5rem;
@@ -6643,11 +6643,11 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
   margin-bottom: 0;
   margin-left: 0;
 }
-.cui-form-tr--has-no-key > .cui-form-value > .cui-hint,
-.cui-form-tr--has-no-key > .cui-form-value > .cui-form-hint,
-.cui-form-tr--has-no-key > .cui-form-value > .cui-input-invalid-hint,
-.cui-form-tr--has-no-key > .cui-form-value > .cui-input-valid-hint,
-.cui-form-tr--has-no-key > .cui-form-value > .cui-input-empty-hint {
+.cui-form-tr--has-no-key > .cui-form-value > .cui-hint:not(:has([hidden])),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-form-hint:not(:has([hidden])),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-invalid-hint:not(:has([hidden])),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-valid-hint:not(:has([hidden])),
+.cui-form-tr--has-no-key > .cui-form-value > .cui-input-empty-hint:not(:has([hidden])) {
   order: 1;
   margin-top: 0.5rem;
   margin-bottom: 0;

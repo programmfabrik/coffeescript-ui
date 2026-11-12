@@ -3486,31 +3486,31 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   line-height: 1.38;
 }
 
-.cui-form-hint {
+.cui-form-hint:not(:has([hidden])) {
   max-width: 275px;
   margin-bottom: 5px;
 }
-.cui-checkbox + .cui-form-hint, .cui-data-field.cui-maximize-horizontal + .cui-form-hint {
+.cui-checkbox + .cui-form-hint:not(:has([hidden])), .cui-data-field.cui-maximize-horizontal + .cui-form-hint:not(:has([hidden])) {
   max-width: 100%;
 }
-.cui-data-form + .cui-form-hint {
+.cui-data-form + .cui-form-hint:not(:has([hidden])) {
   margin-bottom: 10px;
 }
-.cui-checkbox + .cui-form-hint {
+.cui-checkbox + .cui-form-hint:not(:has([hidden])) {
   margin-bottom: 0;
 }
-.cui-form-hint .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
+.cui-form-hint:not(:has([hidden])) .cui-label-icon:not(:empty) + .cui-label-content:not(:empty) {
   padding-left: 7px;
 }
-.cui-form-hint .fa {
+.cui-form-hint:not(:has([hidden])) .fa {
   font-size: 12px;
 }
-.cui-form-hint .cui-label-multiline {
+.cui-form-hint:not(:has([hidden])) .cui-label-multiline {
   flex-grow: 1;
   display: flex;
   align-items: flex-start;
 }
-.cui-form-hint .cui-label-multiline .cui-label-content {
+.cui-form-hint:not(:has([hidden])) .cui-label-multiline .cui-label-content {
   flex-basis: 0%;
 }
 
@@ -5080,8 +5080,8 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
 .cui-form-tr-header {
   display: flex;
 }
-.cui-form-tr.cui-form-tr--has-no-key .cui-form-hint,
-.cui-form-tr-header.cui-form-tr--has-no-key .cui-form-hint {
+.cui-form-tr.cui-form-tr--has-no-key .cui-form-hint:not(:has([hidden])),
+.cui-form-tr-header.cui-form-tr--has-no-key .cui-form-hint:not(:has([hidden])) {
   order: 1;
   margin-top: 5px;
 }
@@ -5098,8 +5098,8 @@ a[role=button].cui-button-appearance-link > .cui-button-center {
   }
 }
 @media screen and (min-width: 768px) {
-  .cui-form-tr.cui-form-tr--has-key .cui-form-hint,
-  .cui-form-tr-header.cui-form-tr--has-key .cui-form-hint {
+  .cui-form-tr.cui-form-tr--has-key .cui-form-hint:not(:has([hidden])),
+  .cui-form-tr-header.cui-form-tr--has-key .cui-form-hint:not(:has([hidden])) {
     order: 1;
     margin-top: 5px;
   }
