@@ -8524,6 +8524,26 @@ which will apply the class "use-css-grid-layout"
   opacity: 0.2;
 }
 
+.cui-lv-th--movable {
+  cursor: grab;
+}
+
+.cui-lv-col-move-target {
+  width: 4px;
+  background: rgba(2, 97, 248, 0.5);
+  margin-left: -2px;
+  position: absolute;
+  z-index: 4;
+  pointer-events: none !important;
+}
+
+.cui-lv-col-move {
+  position: absolute;
+  z-index: 4;
+  background: rgba(2, 97, 248, 0.5);
+  opacity: 0.2;
+}
+
 .cui-lv-row-move-handle-column {
   cursor: default;
 }
