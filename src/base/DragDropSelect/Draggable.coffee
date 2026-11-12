@@ -597,7 +597,7 @@ class CUI.Draggable extends CUI.DragDropSelect
 		if helper == "clone"
 			clone_source = @getCloneSourceForHelper()
 
-			hn = clone_source.cloneNode(true)
+			hn = CUI.dom.cloneNode(clone_source)
 			hn.classList.remove("cui-selected")
 
 			# offset the layer to the click
