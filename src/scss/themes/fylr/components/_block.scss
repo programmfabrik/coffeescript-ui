@@ -87,7 +87,7 @@
 		width: 100%;
 	}
 
-	.cui-form-hint {
+	.cui-form-hint:not(:has([hidden])) {
 		margin-bottom: $spacer;
 	}
 }

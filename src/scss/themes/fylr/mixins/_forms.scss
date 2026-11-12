@@ -13,9 +13,11 @@
 // * default = before the input (and after the key)
 // hint will be rendered in the DOM before the input/value by default
 @mixin form-hint-before() {
-	order: 0;
-	margin-top: 0;
-	margin-bottom: $form-hint-margin-bottom;
+	&:not(:has([hidden])) {		
+		order: 0;
+		margin-top: 0;
+		margin-bottom: $form-hint-margin-bottom;
+	}
 
 	// if hint is rendered before a checkbox we reset margin and indent to 0
 	&:has(+ .cui-checkbox) {
@@ -29,9 +31,11 @@
 // - a form field does not have a key
 // - the key-value pairs are rendered "inline" via form-key-value-inline(), for example in the base config on large screens
 @mixin form-hint-after() {
-	order: 1;
-	margin-top: $form-hint-margin-bottom;
-	margin-bottom: 0;
+	&:not(:has([hidden])) {
+		order: 1;
+		margin-top: $form-hint-margin-bottom;
+		margin-bottom: 0;
+	}
 
 	// if hint is rendered after a checkbox we reset margin to 0 and indent the hint
 	&:has(+ .cui-checkbox) {

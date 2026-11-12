@@ -2696,7 +2696,7 @@ a[role="button"].cui-button-appearance-link {
 	}
 }
 
-.cui-form-hint {
+.cui-form-hint:not(:has([hidden])) {
 	max-width: $input-width;
 	margin-bottom: 5px;
 	
@@ -4761,7 +4761,7 @@ a[role="button"].cui-button-appearance-link {
 	display: flex; // display side-by-side
 
 	// change order for hints for values that have no key
-	&.cui-form-tr--has-no-key .cui-form-hint {
+	&.cui-form-tr--has-no-key .cui-form-hint:not(:has([hidden])) {
 		order: 1;
 		margin-top: 5px;
 	}
@@ -4780,7 +4780,7 @@ a[role="button"].cui-button-appearance-link {
 	// >= 768
 	// change order
 	@media screen and (min-width: 768px) {
-		&.cui-form-tr--has-key .cui-form-hint {
+		&.cui-form-tr--has-key .cui-form-hint:not(:has([hidden])) {
 			order: 1;
 			margin-top: 5px;
 		}
