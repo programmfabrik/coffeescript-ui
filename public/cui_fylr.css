@@ -1407,8 +1407,9 @@ a:not(.cui-button-button) {
 a:not(.cui-button-button):hover, a:not(.cui-button-button):focus {
   color: var(--link-hover-color, #212121);
   text-decoration: none;
+  outline: none;
 }
-a:not(.cui-button-button):focus {
+a:not(.cui-button-button):focus-visible {
   outline: 1px solid #0261f8;
   box-shadow: inset 0 0 0 1px #0261f8, 0 0 0 1px #0261f8;
 }
