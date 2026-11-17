@@ -13,6 +13,7 @@ src/**.js
 src/**.js.map
 !public/cui.js
 !public/cui.min.js
+!public/cui.thirdparty.json
 !public/cui.css
 !public/cui_fylr.css
 !public/cui_debug.css
