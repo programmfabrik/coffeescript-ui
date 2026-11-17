@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const ThirdpartyPlugin = require('./thirdparty-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const APP_DIR = path.resolve(__dirname, 'src');
@@ -41,6 +42,11 @@ module.exports = function (env, argv) {
 				path.resolve(__dirname, "node_modules/ace-builds/src-min-noconflict/worker-html.js"),
 				path.resolve(__dirname, "node_modules/ace-builds/src-min-noconflict/worker-css.js"),
 			]
+		}),
+		// the third-party packages inside the bundle, checked in next to it
+		new ThirdpartyPlugin({
+			filename: 'cui.thirdparty.json',
+			copies: APP_DIR + '/scss/thirdparty',
 		})
 	];
 
