@@ -35,6 +35,12 @@ textarea {
 		background-color: $input-background-disabled;
 	}
 
+	// the disabled look is the opacity of .cui-data-field-disabled, without the grey text of the browser
+	&:disabled {
+		color: fieldtext;
+		-webkit-text-fill-color: currentcolor;
+	}
+
 	// keep this exactly here, do not move into .cui-input selector
 	&.cui-input-shadow {
 		position: absolute;

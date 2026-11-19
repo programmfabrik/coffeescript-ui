@@ -212,6 +212,7 @@ class CUI.MultiInput extends CUI.DataFieldInput
 				onKeyup: @_onKeyup
 				attr: @_attr
 				name: key.name
+				disabled: @isDisabled()
 				undo_support: false
 				content_size: @_content_size
 				placeholder: @_placeholder?[key.name] or @_placeholder?["default"]
