@@ -50563,6 +50563,9 @@ CUI.Input = (function(superClass) {
     var _controlElement, j, k, len1, ref;
     Input.__super__.render.call(this);
     this.replace(this.__createElement(), this.getTemplateKeyForRender());
+    if (this.isDisabled()) {
+      this.__input.setAttribute("disabled", true);
+    }
     if (this._controlElement) {
       if (CUI.util.isFunction(this._controlElement)) {
         _controlElement = this._controlElement(this);
@@ -60153,6 +60156,7 @@ CUI.MultiInput = (function(superClass) {
         onKeyup: this._onKeyup,
         attr: this._attr,
         name: key.name,
+        disabled: this.isDisabled(),
         undo_support: false,
         content_size: this._content_size,
         placeholder: ((ref1 = this._placeholder) != null ? ref1[key.name] : void 0) || ((ref2 = this._placeholder) != null ? ref2["default"] : void 0),

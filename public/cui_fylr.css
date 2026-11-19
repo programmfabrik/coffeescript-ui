@@ -3608,6 +3608,11 @@ textarea:focus-visible {
 .cui-data-field-disabled textarea {
   background-color: #ffffff;
 }
+input:disabled,
+textarea:disabled {
+  color: fieldtext;
+  -webkit-text-fill-color: currentcolor;
+}
 input.cui-input-shadow,
 textarea.cui-input-shadow {
   position: absolute;
