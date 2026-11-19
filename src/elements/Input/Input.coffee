@@ -983,6 +983,10 @@ class CUI.Input extends CUI.DataFieldInput
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
 
+		# disable() ran before the element existed
+		if @isDisabled()
+			@__input.setAttribute("disabled", true)
+
 		if @_controlElement
 			# if controlElement is a function we call it to get the element
 			if CUI.util.isFunction(@_controlElement)
