@@ -982,6 +982,11 @@ class CUI.Input extends CUI.DataFieldInput
 	render: ->
 		super()
 		@replace(@__createElement(), @getTemplateKeyForRender())
+		# DataField.render disables a field disabled before it renders (the
+		# "disabled" option, disable() in onDataInit) before the input element
+		# exists: disable the element now
+		if @isDisabled()
+			@__input.setAttribute("disabled", true)
 
 		if @_controlElement
 			# if controlElement is a function we call it to get the element
