@@ -6487,6 +6487,9 @@ todo (nice-to-have): we could possibly further optimize here to reduce JS code
 .cui-form-value > .cui-select .cui-button-select .cui-button-visual .cui-button-right {
   padding-right: 0.6rem;
 }
+.cui-form-value > .cui-form-hint {
+  max-width: var(--form-data-max-width);
+}
 .cui-form-field-type--select .cui-form-value .cui-data-field-input {
   --btn-background: #ffffff;
   --btn-border-color: transparent;
