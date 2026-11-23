@@ -132,6 +132,10 @@
 		}
 	}
 
+	> .cui-form-hint {
+		max-width: var(--form-data-max-width); 
+	}
+
 	// these elements do not have the class cui-select, so we need to apply styles here again
 
 	/*
