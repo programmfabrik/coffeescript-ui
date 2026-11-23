@@ -20,7 +20,7 @@
 		margin-bottom: $block-margin;
 	}
 
-	*:not(.cui-block) + & {
+	*:not(.cui-block, .cui-template-empty) + & {
 		margin-top: $block-margin; // ? not sure we should do it globally, reset for nested blocks
 	}
 
