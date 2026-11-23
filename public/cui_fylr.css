@@ -4845,7 +4845,7 @@ textarea {
 .cui-block:not(:last-child) {
   margin-bottom: 1rem;
 }
-*:not(.cui-block) + .cui-block {
+*:not(.cui-block, .cui-template-empty) + .cui-block {
   margin-top: 1rem;
 }
 .cui-block .cui-block-header:empty,
