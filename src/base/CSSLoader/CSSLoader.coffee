@@ -27,7 +27,7 @@ class CUI.CSSLoader extends CUI.Element
 				check: String
 
 	__getCSSNodes: ->
-		CUI.dom.matchSelector(document.documentElement, "link[name=\""+@__cssName+"\"]")
+		CUI.dom.matchSelector(document.head, "link[name=\""+@__cssName+"\"]")
 
 	getActiveCSS: ->
 		for cssNode in @__getCSSNodes()
