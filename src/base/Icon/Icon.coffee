@@ -61,8 +61,9 @@ class CUI.Icon extends CUI.Element
 
 	copy: ->
 		copyIcon = super()
-		styles = CUI.dom.getStyle(@)
-		CUI.dom.setStyle(copyIcon, styles)
+		# svg icons (CUI.dom.setStyle needs an HTMLElement) carry their sizing in CSS, nothing to copy over
+		if copyIcon.DOM instanceof HTMLElement
+			CUI.dom.setStyle(copyIcon, CUI.dom.getStyle(@))
 		return copyIcon
 
 	hide: ->
@@ -100,6 +101,7 @@ class CUI.Icon extends CUI.Element
 		file_text_active : "fa-file-text"
 		file: "fa-file"
 		filter: "fa-filter"
+		folder_check: "svg-folder-check"
 		folder_shared_upload: "svg-folder-shared-upload"
 		folder_shared: "svg-folder-shared"
 		folder_upload: "svg-folder-upload"
