@@ -808,6 +808,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   height: 14px;
 }
 
+.svg-folder-check {
+  width: 15px;
+  height: 19px;
+}
+
 .svg-folder-shared-upload {
   width: 15px;
   height: 19px;
