@@ -31,6 +31,9 @@ class CUI.ListView extends CUI.SimplePane
 		if @_rowMove
 			CUI.util.assert(not @_rowMovePlaceholder, "new CUI.ListView", "opts.rowMove cannot be used with opts.rowMovePlaceholder", opts: @opts)
 
+		if @_rowMoveHandle == "right"
+			CUI.util.assert(@_fixedCols == 0 and not @_useCSSGridLayout, "new CUI.ListView", "opts.rowMoveHandle \"right\" cannot be used with opts.fixedCols or opts.useCSSGridLayout", opts: @opts)
+
 		if @_rowMove or @_rowMovePlaceholder
 			@__cols.splice(0,0, "fixed")
 			if not @__colClasses
@@ -120,6 +123,12 @@ class CUI.ListView extends CUI.SimplePane
 			rowMoveFixedRows:
 				default: 0
 				check: "Integer"
+			# "right" shows the row move handle at the end of the row, a tree
+			# then starts at the left edge. The handle stays the first column,
+			# only its place in the row changes
+			rowMoveHandle:
+				default: "left"
+				check: ["left", "right"]
 			# if set, add a rowMovePlaceholder to
 			# all rows
 			rowMovePlaceholder:
@@ -235,6 +244,9 @@ class CUI.ListView extends CUI.SimplePane
 
 		if @_rowMove
 			cls.push("cui-list-view-has-row-move")
+
+		if (@_rowMove or @_rowMovePlaceholder) and @_rowMoveHandle == "right"
+			cls.push("cui-list-view-row-move-handle-right")
 
 		if @__maxCols.length > 0
 			cls.push("cui-list-view-grid-has-maximized-columns")

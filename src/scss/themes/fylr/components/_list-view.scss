@@ -499,8 +499,25 @@
 .cui-lv-row-move {
 	position: absolute;
 	z-index: 4;
-	background: $list-view-move-target-area-background;
-	opacity: 0.2;
+
+	// the handle in full, the area faint (.cui-lv-draggable sets 0.5)
+	&.cui-lv-draggable {
+		opacity: 1;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: $list-view-move-target-area-background;
+		opacity: 0.2;
+	}
+
+	// the handle of the dragged row, placed by ListViewRowMove
+	> .cui-drag-handle-row {
+		position: absolute;
+		margin: 0;
+	}
 }
 
 // Move a column via drag & drop of its header
@@ -548,6 +565,21 @@
 			margin: 0;
 			margin-top: 0.45em;
 			cursor: grab;
+		}
+	}
+}
+
+// rowMoveHandle "right": the handle column at the end of the row. It stays
+// the first column, only its place in the row changes; the child combinators
+// leave the handles of a list nested in a row where they are
+.cui-list-view-row-move-handle-right {
+	> .cui-list-view-grid-quadrant,
+	> .cui-list-view-grid-inner-top > .cui-list-view-grid-quadrant,
+	> .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant {
+		> .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-row-move-handle-column.cui-lv-td {
+			order: 1;
+			padding-left: 0;
+			padding-right: 0.5 * $table-padding-x;
 		}
 	}
 }

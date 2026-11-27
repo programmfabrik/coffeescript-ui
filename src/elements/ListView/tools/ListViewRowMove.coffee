@@ -22,7 +22,21 @@ class CUI.ListViewRowMove extends CUI.ListViewDraggable
 		@__listView = @_row.getListView()
 
 	get_helper: (ev, gd, diff) ->
-		@get_marker("cui-lv-row-move")
+		helper = @get_marker("cui-lv-row-move")
+
+		# the dragged row keeps its handle, at its place in the row
+		handle = CUI.dom.matchSelector(@element, ".cui-drag-handle-row")[0]
+		if handle
+			row_rect = @__listView.getRowGridRect(@__row_i)
+			handle_rect = handle.getBoundingClientRect()
+			handle_copy = CUI.dom.element("DIV", class: "cui-drag-handle-row")
+			CUI.dom.setStyle(handle_copy,
+				top: handle_rect.top - row_rect.top_abs
+				left: handle_rect.left - row_rect.left_abs
+				width: handle_rect.width
+			)
+			helper.appendChild(handle_copy)
+		helper
 
 	get_helper_contain_element: ->
 		@__listView.getBottom()

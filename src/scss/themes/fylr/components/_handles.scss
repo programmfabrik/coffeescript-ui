@@ -12,6 +12,55 @@
 	background-size: 100% 2px;
 }
 
+// no handle tooltip while a row is dragged (Draggable sets body[data-cursor]):
+// the pointer passes the handles of the other rows
+body[data-cursor] .cui-layer-root-row-move-handle-tooltip {
+	display: none !important;
+}
+
+// shown only while the pointer is on its row; devices without hover (touch)
+// always show it. The child combinators keep a hovered row from showing the
+// handles of a list nested in it
+@media (hover: hover) and (pointer: fine) {
+	// list view, data form rows (the left column holds only the handle, its
+	// is-hidden and read-only opacity stay), sortable options
+	.cui-lv-row-move-handle-column > .cui-drag-handle-row,
+	.cui-data-form-row > .cui-horizontal-layout-left,
+	.cui-options-sortable-drag-handle {
+		opacity: 0;
+		transition: opacity 0.15s ease;
+	}
+
+	// not while something is dragged (Draggable sets body[data-cursor]): the
+	// dragged copy shows a handle, the rows passed on the way do not
+	body:not([data-cursor]) {
+		.cui-lv-tr-outer:hover > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row,
+		.cui-data-form-row:hover > .cui-horizontal-layout-left,
+		.cui-options-sortable-option:hover > .cui-options-sortable-drag-handle {
+			opacity: 1;
+		}
+
+		// the handle alone in the fixed columns: its row there is not the
+		// hovered one, the row with the same number among the other columns is
+		.cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom {
+			@for $row from 0 through 100 {
+				&:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row='#{$row}']:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row='#{$row}'] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	// the dragged copy of a data form row or an option (Sortable clones it)
+	.cui-drag-drop-select-helper {
+		&.cui-data-form-row > .cui-horizontal-layout-left,
+		&.cui-options-sortable-option > .cui-options-sortable-drag-handle {
+			opacity: 1;
+			transition: none;
+		}
+	}
+}
+
 // * Resizable handle
 
 .cui-resizable-handle {
