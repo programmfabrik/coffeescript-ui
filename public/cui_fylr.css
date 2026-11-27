@@ -4365,6 +4365,330 @@ textarea {
   background-size: 100% 2px;
 }
 
+body[data-cursor] .cui-layer-root-row-move-handle-tooltip {
+  display: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cui-lv-row-move-handle-column > .cui-drag-handle-row,
+  .cui-data-form-row > .cui-horizontal-layout-left,
+  .cui-options-sortable-drag-handle {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  body:not([data-cursor]) .cui-lv-tr-outer:hover > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row,
+  body:not([data-cursor]) .cui-data-form-row:hover > .cui-horizontal-layout-left,
+  body:not([data-cursor]) .cui-options-sortable-option:hover > .cui-options-sortable-drag-handle {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="0"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="0"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="1"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="1"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="2"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="2"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="3"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="3"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="4"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="4"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="5"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="5"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="6"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="6"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="7"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="7"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="8"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="8"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="9"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="9"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="10"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="10"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="11"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="11"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="12"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="12"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="13"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="13"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="14"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="14"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="15"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="15"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="16"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="16"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="17"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="17"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="18"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="18"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="19"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="19"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="20"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="20"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="21"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="21"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="22"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="22"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="23"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="23"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="24"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="24"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="25"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="25"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="26"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="26"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="27"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="27"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="28"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="28"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="29"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="29"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="30"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="30"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="31"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="31"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="32"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="32"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="33"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="33"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="34"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="34"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="35"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="35"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="36"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="36"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="37"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="37"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="38"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="38"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="39"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="39"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="40"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="40"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="41"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="41"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="42"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="42"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="43"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="43"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="44"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="44"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="45"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="45"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="46"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="46"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="47"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="47"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="48"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="48"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="49"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="49"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="50"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="50"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="51"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="51"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="52"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="52"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="53"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="53"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="54"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="54"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="55"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="55"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="56"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="56"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="57"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="57"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="58"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="58"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="59"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="59"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="60"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="60"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="61"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="61"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="62"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="62"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="63"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="63"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="64"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="64"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="65"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="65"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="66"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="66"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="67"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="67"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="68"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="68"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="69"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="69"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="70"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="70"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="71"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="71"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="72"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="72"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="73"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="73"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="74"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="74"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="75"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="75"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="76"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="76"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="77"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="77"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="78"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="78"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="79"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="79"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="80"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="80"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="81"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="81"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="82"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="82"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="83"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="83"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="84"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="84"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="85"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="85"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="86"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="86"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="87"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="87"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="88"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="88"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="89"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="89"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="90"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="90"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="91"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="91"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="92"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="92"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="93"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="93"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="94"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="94"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="95"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="95"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="96"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="96"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="97"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="97"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="98"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="98"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="99"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="99"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  body:not([data-cursor]) .cui-list-view-grid-fixed-col-has-only-row-move-handle .cui-list-view-grid-inner-bottom:has(.cui-list-view-grid-quadrant-3 > .cui-lv-tr-outer[row="100"]:hover) .cui-list-view-grid-quadrant-2 > .cui-lv-tr-outer[row="100"] > .cui-lv-tr > .cui-lv-row-move-handle-column > .cui-drag-handle-row {
+    opacity: 1;
+  }
+  .cui-drag-drop-select-helper.cui-data-form-row > .cui-horizontal-layout-left, .cui-drag-drop-select-helper.cui-options-sortable-option > .cui-options-sortable-drag-handle {
+    opacity: 1;
+    transition: none;
+  }
+}
 .cui-resizable-handle {
   position: absolute;
 }
@@ -8534,8 +8858,20 @@ which will apply the class "use-css-grid-layout"
 .cui-lv-row-move {
   position: absolute;
   z-index: 4;
+}
+.cui-lv-row-move.cui-lv-draggable {
+  opacity: 1;
+}
+.cui-lv-row-move::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: rgba(2, 97, 248, 0.5);
   opacity: 0.2;
+}
+.cui-lv-row-move > .cui-drag-handle-row {
+  position: absolute;
+  margin: 0;
 }
 
 .cui-lv-th--movable {
@@ -8578,6 +8914,14 @@ which will apply the class "use-css-grid-layout"
   margin: 0;
   margin-top: 0.45em;
   cursor: grab;
+}
+
+.cui-list-view-row-move-handle-right > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-row-move-handle-column.cui-lv-td,
+.cui-list-view-row-move-handle-right > .cui-list-view-grid-inner-top > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-row-move-handle-column.cui-lv-td,
+.cui-list-view-row-move-handle-right > .cui-list-view-grid-inner-bottom > .cui-list-view-grid-quadrant > .cui-lv-tr-outer > .cui-lv-tr > .cui-lv-row-move-handle-column.cui-lv-td {
+  order: 1;
+  padding-left: 0;
+  padding-right: 0.25rem;
 }
 
 .cui-lv-col-resize-handle {
